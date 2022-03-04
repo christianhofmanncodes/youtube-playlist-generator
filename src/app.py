@@ -96,5 +96,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-#https://www.youtube.com/watch_videos?video_ids=f5_wn8mexmM&title=Das%20ist%20meine%20Playlist
