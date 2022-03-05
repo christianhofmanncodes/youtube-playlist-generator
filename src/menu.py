@@ -1,4 +1,12 @@
-from options import option_one, option_two, option_three, option_four, option_five
+from options import (
+    option_one,
+    option_two,
+    option_three,
+    option_four,
+    option_five,
+    option_six,
+    option_seven,
+)
 
 
 def main_menu():
@@ -8,7 +16,8 @@ def main_menu():
     print("[3] for adding a title to the playlist")
     print("[4] for changing or deleting the title of the playlist")
     print("[5] for deleting certain videos from the playlist")
-    print("[6] for quitting the program")
+    print("[6] for generating the URL from playlist")
+    print("[7] for quitting the program")
 
     option = input("Enter your choice: ")
     if option == "1":
@@ -22,7 +31,11 @@ def main_menu():
     elif option == "5":
         option_five()
     elif option == "6":
-        exit(0)
+        option_six()
+    elif option == "7":
+        option_seven()
     else:
-        print("Invalid option. Please enter a number between 1 and 5. Or hit [6] for quitting the program.\n")
+        print(
+            "Invalid option. Please enter a number between 1 and 5. Or hit [6] for quitting the program.\n"
+        )
         main_menu()

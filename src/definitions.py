@@ -1,7 +1,5 @@
 import csv
-
-
-YOUTUBE_PLAYLIST_URL = "https://www.youtube.com/watch_videos?video_ids="
+import config
 
 
 def input_url_or_id():
@@ -60,10 +58,18 @@ def read_csv_and_add_content_to_list():
         return list(csv.reader(read_obj))
 
 
-def append_id_to_csv(id):
+def add_id_to_csv(id):
     print("Adding new ID to list...")
-    with open("video_ids.csv", "a") as writer:
-        return writer.write(f"{id},")
+    with open("video_ids.csv", "a", newline="") as writer:
+        return writer.write(f"{id}\n")
+
+
+def delete_items_from_playlist(list):
+    print("Which item do you want to delete from the playlist?")
+    list.remove(get_input())
+    print(list)
+    with open("video_ids.csv", "w", newline="") as file:
+        file.writerow(list)  # todo: fix not writing in new lines
 
 
 def check_if_another_video_should_be_added():
@@ -82,8 +88,8 @@ def replace_space_in_title(title):
     return title.replace(" ", "%20")
 
 
-def check_if_youtube_url_contains_playlist_title(string):
-    if "&title=" in string:
+def check_if_youtube_url_contains_no_playlist_title(string):
+    if config.youtube_playlist_title == "":
         return True
 
 
@@ -100,8 +106,7 @@ def add_title_to_playlist():
 
     if check_if_space_in_title(title):
         title = replace_space_in_title(title)
-    with open("youtube_url.txt", "a") as writer:
-        return writer.write(f"&title={title}")
+        return title
 
 
 def ask_if_playlist_should_be_deleted():
@@ -118,7 +123,8 @@ def reset_playlist():
     with open("video_ids.csv", "w+") as writer:
         writer.write("")
     print("A new playlist was sucessfully created.")
+    print("You can now add videos to your playlist.")
 
 
 def create_playlist_url(video_ids, playlist_title):
-    return f"{YOUTUBE_PLAYLIST_URL}{video_ids}&title={playlist_title}"
+    return f"{config.youtube_playlist_url}{video_ids}&title={playlist_title}"
