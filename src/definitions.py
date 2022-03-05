@@ -69,7 +69,7 @@ def delete_items_from_playlist(list):
     list.remove(get_input())
     print(list)
     with open("video_ids.csv", "w", newline="") as file:
-        file.writerow(list)  # todo: fix not writing in new lines
+        file.writerow(list)  # TODO fix not writing in new lines
 
 
 def check_if_another_video_should_be_added():
@@ -101,7 +101,7 @@ def check_if_playlist_title_should_be_added():
 
 
 def add_title_to_playlist():
-    print("What title do you want to choose for your playlist?")
+    print("What title do you want to choose for your playlist?")  # TODO fix if no title should be added &title=
     title = get_input()
 
     if check_if_space_in_title(title):
