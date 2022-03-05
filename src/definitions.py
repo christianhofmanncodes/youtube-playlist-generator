@@ -106,7 +106,7 @@ def add_title_to_playlist():
 
     if check_if_space_in_title(title):
         title = replace_space_in_title(title)
-        return title
+    return title
 
 
 def ask_if_playlist_should_be_deleted():
