@@ -66,10 +66,16 @@ def add_id_to_csv(id):
 
 def delete_items_from_playlist(list):
     print("Which item do you want to delete from the playlist?")
-    list.remove(get_input())
-    print(list)
-    with open("video_ids.csv", "w", newline="") as file:
-        file.writerow(list)  # TODO fix not writing in new lines
+    try:
+        id = get_input()
+        list.remove(id)
+        print(list)
+        with open("video_ids.csv", "w") as file:
+            file.writerow(list)  # TODO fix not writing in new lines
+    except IndexError:
+        print(f"\nThere is no item {id} in the list you specified!\n")
+    except Exception:
+        print("An error accured while writing to the file!")
 
 
 def check_if_another_video_should_be_added():
