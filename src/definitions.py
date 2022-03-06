@@ -48,8 +48,8 @@ def create_comma_seperated_string(list):
     return ",".join(list)
 
 
-def read_content_from_file():
-    with open("youtube_url.txt", "r") as reader:
+def read_content_from_file(path):
+    with open(path, "r") as reader:
         return reader.read()
 
 
@@ -76,7 +76,7 @@ def check_if_another_video_should_be_added():
     print("Do you want to add another video to the playlist?")
     print("Press [y] for yes and [n] for no.")
     if get_input() == "y":
-        main()
+        return True
 
 
 def check_if_space_in_title(title):
@@ -84,29 +84,52 @@ def check_if_space_in_title(title):
         return True
 
 
-def replace_space_in_title(title):
-    return title.replace(" ", "%20")
+def replace_space_in_title(title_with_space):
+    return title_with_space.replace(" ", "%20")
 
 
-def check_if_youtube_url_contains_no_playlist_title(string):
-    if config.youtube_playlist_title == "":
+def has_no_playlist_title(playlist_title):
+    if playlist_title == "":
         return True
+    print(f"There is already a title for your YouTube playlist: {config.youtube_playlist_title}")
+    print("Do you want to change it?")
+    if want_playlist_title():
+        change_title_from_playlist()
 
 
-def check_if_playlist_title_should_be_added():
+def want_playlist_title():
     print("There is no title for your playlist yet. Do you want to add one?")
     print("Press [y] for yes and [n] for no.")
     if get_input() == "y":
         return True
 
 
-def add_title_to_playlist():
-    print("What title do you want to choose for your playlist?")  # TODO fix if no title should be added &title=
+def get_title_for_playlist():  # TODO: fix issue with no title output if it has no spaces
+    print("What title do you want to choose for your playlist?")
     title = get_input()
 
     if check_if_space_in_title(title):
         title = replace_space_in_title(title)
     return title
+
+
+def add_title_to_playlist(playlist_title):
+    if has_no_playlist_title(playlist_title):
+        if not want_playlist_title():
+            return False
+        config.youtube_playlist_title = get_title_for_playlist()
+        print(f"Playlist title {config.youtube_playlist_title} successfully added.")
+        return True
+
+
+def change_title_from_playlist():
+    if not check_if_youtube_url_contains_no_playlist_title(
+        config.youtube_playlist_title
+    ):
+        config.youtube_playlist_title = add_title_to_playlist()
+        print(f"Title {config.youtube_playlist_title} successfully changed.")
+    elif check_if_playlist_title_should_be_added():
+        add_title_to_playlist()
 
 
 def ask_if_playlist_should_be_deleted():
@@ -126,5 +149,9 @@ def reset_playlist():
     print("You can now add videos to your playlist.")
 
 
-def create_playlist_url(video_ids, playlist_title):
+def create_playlist_url_with_title(video_ids, playlist_title):
     return f"{config.youtube_playlist_url}{video_ids}&title={playlist_title}"
+
+
+def create_playlist_url_without_title(video_ids):
+    return f"{config.youtube_playlist_url}{video_ids}"
