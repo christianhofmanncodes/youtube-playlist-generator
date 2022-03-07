@@ -12,12 +12,12 @@ def get_input():
     return str(input())
 
 
-def check_if_string_is_valid_url(string):
+def is_string_valid_url(string):
     if "http://" in string or "https://" in string:
         return True
 
 
-def check_if_string_is_youtube_url(string):
+def is_string_valid_youtube_url(string):
     if "watch?" in string:
         return True
 
@@ -63,10 +63,10 @@ def add_id_to_csv(id):
     print("\nAdding new ID to list...\n")
     with open("video_ids.csv", "a", newline="") as writer:
         return writer.write(f"{id}\n")
-    
-    
+
+
 def convert_list_to_table(list):
-    return pd.DataFrame(data = list)
+    return pd.DataFrame(data=list)
 
 
 def delete_items_from_playlist(list):
@@ -76,7 +76,7 @@ def delete_items_from_playlist(list):
         list.remove(id)
         with open("video_ids.csv", "w", newline="") as file:
             for id in list:
-                file.write(id + '\n')
+                file.write(id + "\n")
         print(f"\nItem {id} succesfully deleted from playlist.\n")
     except IndexError:
         print(f"\nThere is no item {id} in the list you specified!\n")
@@ -84,14 +84,14 @@ def delete_items_from_playlist(list):
         print("\nAn error accured while writing to the file!\n")
 
 
-def check_if_another_video_should_be_added():
+def want_another_video_added():
     print("\nDo you want to add another video to the playlist?\n")
     print("Press [y] for yes and [n] for no.")
     if get_input() == "y":
         return True
 
 
-def check_if_space_in_title(title):
+def has_space_in_title(title):
     if " " in title:
         return True
 
@@ -100,11 +100,17 @@ def replace_space_in_title(title_with_space):
     return title_with_space.replace(" ", "%20")
 
 
+def get_human_readable_title(title):
+    return title.replace("%20", " ")
+
+
 def has_no_playlist_title(playlist_title):
     print("\nThere is no title for your playlist yet. Do you want to add one?\n")
     if playlist_title == "":
         return True
-    print(f"\nThere is already a title for your YouTube playlist: {config.youtube_playlist_title}\n")
+    print(
+        f"\nThere is already a title for your YouTube playlist: {config.youtube_playlist_title}\n"
+    )
     print("Do you want to change it?")
     if want_playlist_title():
         change_title_from_playlist()
@@ -116,11 +122,11 @@ def want_playlist_title():
         return True
 
 
-def get_title_for_playlist():  # TODO: fix issue with no title output if it has no spaces
+def get_title_for_playlist():
     print("\nWhat title do you want to choose for your playlist?\n")
     title = get_input()
 
-    if check_if_space_in_title(title):
+    if has_space_in_title(title):
         title = replace_space_in_title(title)
     return title
 
@@ -144,7 +150,7 @@ def change_title_from_playlist():
         add_title_to_playlist()
 
 
-def ask_if_playlist_should_be_deleted():
+def want_playlist_title_deleted():
     print("\nDo you really want to create a new playlist?\n")
     print("That deletes all of your videos!")
     print("Press [y] yes or [n] for no.")
