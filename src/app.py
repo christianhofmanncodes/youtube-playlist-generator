@@ -31,7 +31,7 @@ def option_one():
     if is_empty_csv("video_ids.csv"):
         reset_playlist()
 
-    elif ask_if_playlist_should_be_deleted():
+    elif want_playlist_title_deleted():
         reset_playlist()
     else:
         print("\nYou didn't choose to create a new playlist.\n")
@@ -40,7 +40,7 @@ def option_one():
 
 def option_two():
     input = input_url_or_id()
-    if check_if_string_is_valid_url(input) and check_if_string_is_youtube_url(
+    if is_string_valid_url(input) and is_string_valid_youtube_url(
         input
     ):  # if input is a valid YouTube URL
         id = cut_url_to_id(input)
@@ -56,7 +56,9 @@ def option_three():
     tuple = read_csv_and_add_content_to_tuple()
     list = join_tuple(tuple)
 
-    print(f"\nThese video ids are currently in your playlist: {convert_list_to_table(list)}\n")
+    print(
+        f"\nThese video ids are currently in your playlist: {convert_list_to_table(list)}\n"
+    )
     delete_items_from_playlist(list)
     main_menu()
 
@@ -68,7 +70,11 @@ def option_four():
         comma_seperated_string = create_comma_seperated_string(list)
         playlist_title = config.youtube_playlist_title
         if add_title_to_playlist(playlist_title):
-            print(create_playlist_url_with_title(comma_seperated_string, config.youtube_playlist_title))
+            print(
+                create_playlist_url_with_title(
+                    comma_seperated_string, config.youtube_playlist_title
+                )
+            )
         else:
             print(create_playlist_url_without_title(comma_seperated_string))
     main_menu()
