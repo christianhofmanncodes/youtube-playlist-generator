@@ -55,9 +55,10 @@ def option_two():
 def option_three():
     tuple = read_csv_and_add_content_to_tuple()
     list = join_tuple(tuple)
+    list_without_duplicates = remove_duplicates_from_list(list)
 
     print(
-        f"\nThese video ids are currently in your playlist: {convert_list_to_table(list)}\n"
+        f"\nThese video ids are currently in your playlist: {convert_list_to_table(list_without_duplicates)}\n"
     )
     delete_items_from_playlist(list)
     main_menu()
