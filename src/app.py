@@ -9,16 +9,16 @@ def main_menu():
     print("[4] to generate the URL for the playlist")
     print("[5] to exit the program")
 
-    option = input("Please select an option: ")
-    if option == "1":
+    choice = input("Please select an option: ")
+    if choice == "1":
         option_one()
-    elif option == "2":
+    elif choice == "2":
         option_two()
-    elif option == "3":
+    elif choice == "3":
         option_three()
-    elif option == "4":
+    elif choice == "4":
         option_four()
-    elif option == "5":
+    elif choice == "5":
         option_five()
     else:
         print(
@@ -48,7 +48,7 @@ def option_two():
         id = input
 
     add_id_to_csv(id)
-    print("\nVideo added successfully to playlist.\n")
+    print(f"\nVideo {id} was successfully added to the playlist.\n")
     main_menu()
 
 
@@ -70,7 +70,8 @@ def option_four():
         list = join_tuple(tuple)
         comma_seperated_string = create_comma_seperated_string(list)
         playlist_title = config.youtube_playlist_title
-        if add_title_to_playlist(playlist_title):
+        add_title_to_playlist(playlist_title)
+        if config.youtube_playlist_title != "":
             print(
                 create_playlist_url_with_title(
                     comma_seperated_string, config.youtube_playlist_title
