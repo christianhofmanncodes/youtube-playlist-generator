@@ -9,7 +9,7 @@ def main_menu():
     print("[4] to generate the URL for the playlist")
     print("[5] to exit the program")
 
-    choice = input("Please select an option: ")
+    choice = input("\nPlease select an option: ")
     if choice == "1":
         option_one()
     elif choice == "2":
@@ -35,7 +35,7 @@ def option_one():
         reset_playlist()
     else:
         print("\nYou didn't choose to create a new playlist.\n")
-    main_menu()
+    main()
 
 
 def option_two():
@@ -87,7 +87,9 @@ def option_five():
 
 
 def main():
-    print("\nWelcome to the YouTube Playlist Generator by Christian Hofmann\n")
+    print("-"*62)
+    print("Welcome to the YouTube Playlist Generator by Christian Hofmann")
+    print("-"*62)
     main_menu()
 
 
