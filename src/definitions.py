@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def input_url_or_id():
-    print("\nPlease enter a new ID or URL of a YouTube video::\n")
+    print("\nPlease enter a new ID or URL of a YouTube video:\n")
     return get_input()
 
 
@@ -64,7 +64,7 @@ def remove_duplicates_from_list(x):
 
 
 def add_id_to_csv(id):
-    print("\nAdding new ID to playlist...\n")
+    print(f"\nAdding new ID {id} to playlist...\n")
     with open("video_ids.csv", "a", newline="") as writer:
         return writer.write(f"{id}\n")
 
@@ -82,10 +82,8 @@ def delete_items_from_playlist(list):
             for id in list:
                 file.write(id + "\n")
         print(f"\nItem {id} succesfully deleted from playlist.\n")
-    except IndexError:
-        print(f"\nThere is no item {id} in the playlist!\n")
     except Exception:
-        print("\nAn error occurred while writing to the file!\n")
+        print(f"\nThere is no item {id} in the playlist!\n")
 
 
 def want_another_video_added():
@@ -111,16 +109,19 @@ def get_human_readable_title(title):
 def has_no_playlist_title(playlist_title):
     if playlist_title == "":
         print("\nThere is no title for your playlist yet. Would you like to add one?\n")
-        return True
+        # if want_playlist_title():
+        #     config.youtube_playlist_title = get_title_for_playlist()
+        # else:
+        #     config.youtube_playlist_title = ""
     else:
         has_playlist_title(playlist_title)
 
 
 def has_playlist_title(playlist_title):
     print(
-        f"\nThere is already a title for your YouTube playlist: {config.youtube_playlist_title}\n"
+        f"\nThere is already a title for your YouTube playlist: {config.youtube_playlist_title}"
         )
-    print("Do you want to change it?")
+    print("Do you want to change it?\n")
     if want_playlist_title():
         change_title_from_playlist()
 
@@ -141,12 +142,12 @@ def get_title_for_playlist():
 
 
 def add_title_to_playlist(playlist_title):    
-    if has_no_playlist_title(playlist_title):
-        if want_playlist_title() == False:
-            config.youtube_playlist_title = ""
-        else:
-            config.youtube_playlist_title = get_title_for_playlist()
-            print(f"\nPlaylist title {config.youtube_playlist_title} successfully added.\n")
+    has_no_playlist_title(playlist_title)
+    if want_playlist_title() == False:
+        config.youtube_playlist_title = ""
+    else:
+        config.youtube_playlist_title = get_title_for_playlist()
+        print(f"\nPlaylist title {config.youtube_playlist_title} successfully added.\n")
 
 
 def change_title_from_playlist():
@@ -155,8 +156,8 @@ def change_title_from_playlist():
 
 
 def want_playlist_title_deleted():
-    print("\nDo you really want to create a new playlist?\n")
-    print("That deletes all of your videos!")
+    print("\nDo you really want to create a new playlist?")
+    print("That deletes all of your videos!\n")
     print("Press [y] yes or [n] for no.")
     input = get_input()
     if input == "y":
@@ -172,8 +173,8 @@ def reset_playlist():
 
 
 def create_playlist_url_with_title(video_ids, playlist_title):
-    return f"{config.youtube_playlist_url}{video_ids}&title={playlist_title}"
+    return f"\nHere's your URL for the playlist:\n{config.youtube_playlist_url}{video_ids}&title={playlist_title}\n"
 
 
 def create_playlist_url_without_title(video_ids):
-    return f"{config.youtube_playlist_url}{video_ids}"
+    return f"\nHere's your URL for the playlist:\n{config.youtube_playlist_url}{video_ids}\n"
