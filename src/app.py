@@ -60,7 +60,7 @@ def option_three():
     print(
         f"\nThese video ids are currently in your playlist: {convert_list_to_table(list_without_duplicates)}\n"
     )
-    delete_items_from_playlist(list)
+    delete_items_from_playlist(list_without_duplicates)
     main_menu()
 
 
