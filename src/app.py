@@ -34,7 +34,7 @@ def option_one():
     elif ask_if_playlist_should_be_deleted():
         reset_playlist()
     else:
-        print("You didn't choose to create a new playlist.")
+        print("\nYou didn't choose to create a new playlist.\n")
     main_menu()
 
 
@@ -48,7 +48,7 @@ def option_two():
         id = input
 
     add_id_to_csv(id)
-    print(f"Video added successfully to playlist {config.youtube_playlist_title}.")
+    print("\nVideo added successfully to playlist.\n")
     main_menu()
 
 
@@ -56,7 +56,7 @@ def option_three():
     tuple = read_csv_and_add_content_to_tuple()
     list = join_tuple(tuple)
 
-    print(list)
+    print(f"\nThese video ids are currently in your playlist: {convert_list_to_table(list)}\n")
     delete_items_from_playlist(list)
     main_menu()
 
