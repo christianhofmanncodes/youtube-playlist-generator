@@ -1,9 +1,10 @@
 import csv
 import config
+import pandas as pd
 
 
 def input_url_or_id():
-    print("Please input new ID or URL from YouTube Video:")
+    print("\nPlease input new ID or URL from YouTube Video:\n")
     return get_input()
 
 
@@ -59,27 +60,32 @@ def read_csv_and_add_content_to_list():
 
 
 def add_id_to_csv(id):
-    print("Adding new ID to list...")
+    print("\nAdding new ID to list...\n")
     with open("video_ids.csv", "a", newline="") as writer:
         return writer.write(f"{id}\n")
+    
+    
+def convert_list_to_table(list):
+    return pd.DataFrame(data = list)
 
 
 def delete_items_from_playlist(list):
-    print("Which item do you want to delete from the playlist?")
+    print("\nWhich item do you want to delete from the playlist?\n")
     try:
         id = get_input()
         list.remove(id)
-        print(list)
-        with open("video_ids.csv", "w") as file:
-            file.writerow(list)  # TODO fix not writing in new lines
+        with open("video_ids.csv", "w", newline="") as file:
+            for id in list:
+                file.write(id + '\n')
+        print(f"\nItem {id} succesfully deleted from playlist.\n")
     except IndexError:
         print(f"\nThere is no item {id} in the list you specified!\n")
     except Exception:
-        print("An error accured while writing to the file!")
+        print("\nAn error accured while writing to the file!\n")
 
 
 def check_if_another_video_should_be_added():
-    print("Do you want to add another video to the playlist?")
+    print("\nDo you want to add another video to the playlist?\n")
     print("Press [y] for yes and [n] for no.")
     if get_input() == "y":
         return True
@@ -95,23 +101,23 @@ def replace_space_in_title(title_with_space):
 
 
 def has_no_playlist_title(playlist_title):
+    print("\nThere is no title for your playlist yet. Do you want to add one?\n")
     if playlist_title == "":
         return True
-    print(f"There is already a title for your YouTube playlist: {config.youtube_playlist_title}")
+    print(f"\nThere is already a title for your YouTube playlist: {config.youtube_playlist_title}\n")
     print("Do you want to change it?")
     if want_playlist_title():
         change_title_from_playlist()
 
 
 def want_playlist_title():
-    print("There is no title for your playlist yet. Do you want to add one?")
     print("Press [y] for yes and [n] for no.")
     if get_input() == "y":
         return True
 
 
 def get_title_for_playlist():  # TODO: fix issue with no title output if it has no spaces
-    print("What title do you want to choose for your playlist?")
+    print("\nWhat title do you want to choose for your playlist?\n")
     title = get_input()
 
     if check_if_space_in_title(title):
@@ -124,7 +130,7 @@ def add_title_to_playlist(playlist_title):
         if not want_playlist_title():
             return False
         config.youtube_playlist_title = get_title_for_playlist()
-        print(f"Playlist title {config.youtube_playlist_title} successfully added.")
+        print(f"\nPlaylist title {config.youtube_playlist_title} successfully added.\n")
         return True
 
 
@@ -133,13 +139,13 @@ def change_title_from_playlist():
         config.youtube_playlist_title
     ):
         config.youtube_playlist_title = add_title_to_playlist()
-        print(f"Title {config.youtube_playlist_title} successfully changed.")
+        print(f"\nTitle {config.youtube_playlist_title} successfully changed.\n")
     elif check_if_playlist_title_should_be_added():
         add_title_to_playlist()
 
 
 def ask_if_playlist_should_be_deleted():
-    print("Do you really want to create a new playlist?")
+    print("\nDo you really want to create a new playlist?\n")
     print("That deletes all of your videos!")
     print("Press [y] yes or [n] for no.")
     input = get_input()
@@ -148,11 +154,11 @@ def ask_if_playlist_should_be_deleted():
 
 
 def reset_playlist():
-    print("Removing all videos from playlist...")
+    print("\nRemoving all videos from playlist...\n")
     with open("video_ids.csv", "w+") as writer:
         writer.write("")
-    print("A new playlist was sucessfully created.")
-    print("You can now add videos to your playlist.")
+    print("\nA new playlist was sucessfully created.\n")
+    print("\nYou can now add videos to your playlist.\n")
 
 
 def create_playlist_url_with_title(video_ids, playlist_title):
