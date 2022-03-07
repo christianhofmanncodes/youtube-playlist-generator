@@ -59,6 +59,10 @@ def read_csv_and_add_content_to_list():
         return list(csv.reader(read_obj))
 
 
+def remove_duplicates_from_list(x):
+    return list(dict.fromkeys(x))
+
+
 def add_id_to_csv(id):
     print("\nAdding new ID to list...\n")
     with open("video_ids.csv", "a", newline="") as writer:
