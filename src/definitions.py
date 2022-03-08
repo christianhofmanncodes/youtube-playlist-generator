@@ -1,6 +1,7 @@
 import csv
 import config
 import pandas as pd
+import webbrowser
 
 
 def input_url_or_id():
@@ -173,8 +174,22 @@ def reset_playlist():
 
 
 def create_playlist_url_with_title(video_ids, playlist_title):
-    return f"\nHere's your URL for the playlist:\n{config.youtube_playlist_url}{video_ids}&title={playlist_title}\n"
+    return f"{config.youtube_playlist_url}{video_ids}&title={playlist_title}"
 
 
 def create_playlist_url_without_title(video_ids):
-    return f"\nHere's your URL for the playlist:\n{config.youtube_playlist_url}{video_ids}\n"
+    return f"{config.youtube_playlist_url}{video_ids}"
+
+
+def open_url_in_webbrowser(url):
+    print(f"\nOpening {url} in new Web browser tab...\n")
+    webbrowser.open_new_tab(url)
+
+
+def output_generated_playlist_url():
+    if config.youtube_playlist_title != "":
+        config.youtube_generated_playlist_url = create_playlist_url_with_title(comma_seperated_string, config.youtube_playlist_title)
+    else:
+        config.youtube_generated_playlist_url = create_playlist_url_without_title(comma_seperated_string)
+    print(f"\nHere's your URL for the playlist: {config.youtube_generated_playlist_url}")
+    open_url_in_webbrowser(config.youtube_generated_playlist_url)
