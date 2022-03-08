@@ -1,5 +1,10 @@
-from definitions import *
 import config
+from definitions import *
+from os import system, name
+
+
+def clear():
+    _ = system('cls') if name == 'nt' else system('clear')
 
 
 def main_menu():
@@ -22,15 +27,14 @@ def main_menu():
         option_five()
     else:
         print(
-            "\nInvalid option. Please enter a number between 1 and 4. Or press [5] to exit the program.\n"
+            "\nInvalid option. Please enter a number between [1] and [4]. Or press [5] to exit the program.\n"
         )
         main_menu()
 
 
 def option_one():
     if is_empty_csv("video_ids.csv"):
-        reset_playlist()
-
+        print("\nYour playlist is already empty!\n")
     elif want_playlist_title_deleted():
         reset_playlist()
     else:
@@ -46,9 +50,8 @@ def option_two():
         id = cut_url_to_id(input)
     else:
         id = input
-
     add_id_to_csv(id)
-    print(f"\nVideo {id} was successfully added to the playlist.\n")
+    print(f"\nVideo '{id}' was successfully added to the playlist.\n")
     main_menu()
 
 
@@ -71,14 +74,9 @@ def option_four():
         comma_seperated_string = create_comma_seperated_string(list)
         playlist_title = config.youtube_playlist_title
         add_title_to_playlist(playlist_title)
-        if config.youtube_playlist_title != "":
-            print(
-                create_playlist_url_with_title(
-                    comma_seperated_string, config.youtube_playlist_title
-                )
-            )
-        else:
-            print(create_playlist_url_without_title(comma_seperated_string))
+        output_generated_playlist_url()
+    else:
+        print("\nYour playlist is empty! Add at least two videos in order to generate a playlist URL.\n")
     main_menu()
 
 
@@ -87,6 +85,7 @@ def option_five():
 
 
 def main():
+    #clear()
     print("-"*62)
     print("Welcome to the YouTube Playlist Generator by Christian Hofmann")
     print("-"*62)
