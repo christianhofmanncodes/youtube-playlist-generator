@@ -35,7 +35,7 @@ def main_menu():
 def option_one():
     if is_empty_csv("video_ids.csv"):
         print("\nYour playlist is already empty!\n")
-    elif want_playlist_title_deleted():
+    elif want_playlist_deleted():
         reset_playlist()
     else:
         print("\nYou didn't choose to create a new playlist.\n")
@@ -74,7 +74,7 @@ def option_four():
         comma_seperated_string = create_comma_seperated_string(list)
         playlist_title = config.youtube_playlist_title
         add_title_to_playlist(playlist_title)
-        output_generated_playlist_url()
+        output_generated_playlist_url(comma_seperated_string)
     else:
         print("\nYour playlist is empty! Add at least two videos in order to generate a playlist URL.\n")
     main_menu()

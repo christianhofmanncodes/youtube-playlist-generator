@@ -5,12 +5,12 @@ import webbrowser
 
 
 def input_url_or_id():
-    print("\nPlease enter a new ID or URL of a YouTube video:\n")
-    return get_input()
+    message = "\nPlease enter a new ID or URL of a YouTube video: "
+    return get_input(message)
 
 
-def get_input():
-    return str(input())
+def get_input(message):
+    return str(input(message))
 
 
 def is_string_valid_url(string):
@@ -65,7 +65,7 @@ def remove_duplicates_from_list(x):
 
 
 def add_id_to_csv(id):
-    print(f"\nAdding new ID {id} to playlist...\n")
+    print(f"\nAdding new ID '{id}' to playlist...")
     with open("video_ids.csv", "a", newline="") as writer:
         return writer.write(f"{id}\n")
 
@@ -75,23 +75,22 @@ def convert_list_to_table(list):
 
 
 def delete_items_from_playlist(list):
-    print("\nWhich item do you want to delete from the playlist?\n")
+    message ="Which item do you want to delete from the playlist?: "
     try:
-        id = get_input()
-        list.remove(id)
+        id_to_be_removed = get_input(message)
+        list.remove(id_to_be_removed)
         with open("video_ids.csv", "w", newline="") as file:
             for id in list:
                 file.write(id + "\n")
-        print(f"\nItem {id} succesfully deleted from playlist.\n")
+        print(f"\nItem '{id_to_be_removed}' succesfully deleted from playlist.\n")
     except Exception:
-        print(f"\nThere is no item {id} in the playlist!\n")
+        print(f"\nThere is no item {id_to_be_removed} in the playlist!\n")
 
 
 def want_another_video_added():
     print("\nDo you want to add another video to the playlist?\n")
-    print("Press [y] for yes and [n] for no.")
-    if get_input() == "y":
-        return True
+    message = "Press [y] for yes and [n] for no: "
+    return get_input(message) == "y"
 
 
 def has_space_in_title(title):
@@ -110,15 +109,10 @@ def get_human_readable_title(title):
 def has_no_playlist_title(playlist_title):
     if playlist_title == "":
         print("\nThere is no title for your playlist yet. Would you like to add one?\n")
-        # if want_playlist_title():
-        #     config.youtube_playlist_title = get_title_for_playlist()
-        # else:
-        #     config.youtube_playlist_title = ""
-    else:
-        has_playlist_title(playlist_title)
+        return True
 
 
-def has_playlist_title(playlist_title):
+def has_playlist_title():
     print(
         f"\nThere is already a title for your YouTube playlist: {config.youtube_playlist_title}"
         )
@@ -128,14 +122,13 @@ def has_playlist_title(playlist_title):
 
 
 def want_playlist_title():
-    print("Press [y] for yes and [n] for no.")
-    if get_input() == "y":
-        return True
+    message = "Press [y] for yes and [n] for no: "
+    return get_input(message) == "y"
 
 
 def get_title_for_playlist():
-    print("\nWhat title do you want to choose for your playlist?\n")
-    title = get_input()
+    message = "\nWhat title do you want to choose for your playlist?\n"
+    title = get_input(message)
 
     if has_space_in_title(title):
         title = replace_space_in_title(title)
@@ -143,33 +136,34 @@ def get_title_for_playlist():
 
 
 def add_title_to_playlist(playlist_title):    
-    has_no_playlist_title(playlist_title)
-    if want_playlist_title() == False:
-        config.youtube_playlist_title = ""
+    if has_no_playlist_title(playlist_title) == True:
+        if want_playlist_title() == False:
+            config.youtube_playlist_title = ""
+        else:
+            config.youtube_playlist_title = get_title_for_playlist()
+            print(f"\nPlaylist title '{get_human_readable_title(config.youtube_playlist_title)}' successfully added.\n")
     else:
-        config.youtube_playlist_title = get_title_for_playlist()
-        print(f"\nPlaylist title {config.youtube_playlist_title} successfully added.\n")
+        has_playlist_title()
 
 
 def change_title_from_playlist():
     config.youtube_playlist_title = get_title_for_playlist()
-    print(f"\nTitle {config.youtube_playlist_title} successfully changed.\n")
+    print(f"\nTitle '{get_human_readable_title(config.youtube_playlist_title)}' successfully changed.\n")
 
 
-def want_playlist_title_deleted():
+def want_playlist_deleted():
     print("\nDo you really want to create a new playlist?")
     print("That deletes all of your videos!\n")
-    print("Press [y] yes or [n] for no.")
-    input = get_input()
-    if input == "y":
-        return True
+    message = "Press [y] yes or [n] for no: "
+    input = get_input(message)
+    return input == "y"
 
 
 def reset_playlist():
-    print("\nRemoving all videos from playlist...\n")
+    print("\nRemoving all videos from playlist...")
     with open("video_ids.csv", "w+") as writer:
         writer.write("")
-    print("\nA new playlist was sucessfully created.\n")
+    print("\nA new playlist was successfully created.")
     print("\nYou can now add videos to your playlist.\n")
 
 
@@ -186,10 +180,10 @@ def open_url_in_webbrowser(url):
     webbrowser.open_new_tab(url)
 
 
-def output_generated_playlist_url():
+def output_generated_playlist_url(comma_seperated_string):
     if config.youtube_playlist_title != "":
         config.youtube_generated_playlist_url = create_playlist_url_with_title(comma_seperated_string, config.youtube_playlist_title)
     else:
         config.youtube_generated_playlist_url = create_playlist_url_without_title(comma_seperated_string)
-    print(f"\nHere's your URL for the playlist: {config.youtube_generated_playlist_url}")
+    print(f"Here's your URL for the playlist: {config.youtube_generated_playlist_url}")
     open_url_in_webbrowser(config.youtube_generated_playlist_url)
