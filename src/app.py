@@ -1,4 +1,5 @@
 import config
+import sys
 from definitions import *
 from os import system, name
 
@@ -81,7 +82,7 @@ def option_four():
 
 
 def option_five():
-    exit(0)
+    sys.exit(0)
 
 
 def main():
