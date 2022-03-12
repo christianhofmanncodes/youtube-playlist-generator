@@ -49,10 +49,13 @@ def option_zero():
     list = join_tuple(tuple)
     list_without_duplicates = remove_duplicates_from_list(list)
 
+    list_with_video_ids = convert_list_to_table(list_without_duplicates)
+
     if list:
         print(
-            f"\nThese video ids are currently in your playlist: {convert_list_to_table(list_without_duplicates)}\n"
+            f"\nThese video ids are currently in your playlist: {list_with_video_ids}\n"
         )
+        print(f"sum of video ids: {count_items_in_table(list_with_video_ids)}\n")
     else:
         print("There are no videos in your playlist yet.\n")
     main_menu()
@@ -108,9 +111,9 @@ def option_four():
         add_title_to_playlist(playlist_title)
 
         generate_video_ids_url(comma_seperated_string)
-        generate_playlist_url(config.youtube_generated_video_ids_url)
-        output_generated_playlist_url()
-        open_playlist_url_in_webbrowser()
+        if generate_playlist_url(config.youtube_generated_video_ids_url):
+            output_generated_playlist_url()
+            open_playlist_url_in_webbrowser()
     else:
         print(
             "\nYour playlist is empty! Add at least two videos in order to generate a playlist URL.\n"
