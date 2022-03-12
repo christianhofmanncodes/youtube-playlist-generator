@@ -21,13 +21,17 @@ def is_string_valid_url(string):
 
 
 def is_string_valid_youtube_url(string):
-    if "watch?" in string:
+    if "watch?" in string or "be/" in string:
         return True
 
 
 def cut_url_to_id(url):
-    get_id = url.split("v=")
-    return get_id[-1]
+    if "v=" in url:
+        get_id = url.split("v=")
+        return get_id[-1]
+    elif "be/" in url:
+        get_id = url.split("be/")
+        return get_id[-1]
 
 
 def read_csv_and_add_content_to_tuple():
@@ -86,7 +90,7 @@ def delete_items_from_playlist(list):
                 file.write(id + "\n")
         print(f"\nItem '{id_to_be_removed}' succesfully deleted from playlist.\n")
     except Exception:
-        print(f"\nThere is no item {id_to_be_removed} in the playlist!\n")
+        print(f"\nThere is no item '{id_to_be_removed}' in the playlist!\n")
 
 
 def want_another_video_added():
