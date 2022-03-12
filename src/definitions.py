@@ -77,7 +77,11 @@ def add_id_to_csv(id):
 
 
 def convert_list_to_table(list):
-    return pd.DataFrame(data=list)
+    return pd.DataFrame(data=list, columns=["video_ids"])
+
+
+def count_items_in_table(pandas_dataframe):
+    return str(pandas_dataframe.shape[0])
 
 
 def delete_items_from_playlist(list):
@@ -202,16 +206,23 @@ def generate_video_ids_url(comma_seperated_string):
 
 
 def generate_playlist_url(video_ids_url):
-    ssl._create_default_https_context = ssl._create_unverified_context
-    response = request.urlopen(video_ids_url)
+    try:
+        ssl._create_default_https_context = ssl._create_unverified_context
+        response = request.urlopen(video_ids_url)
 
-    playlist_link = response.geturl()
-    playlist_link = playlist_link.split("list=")[1]
+        playlist_link = response.geturl()
+        playlist_link = playlist_link.split("list=")[1]
 
-    config.youtube_generated_playlist_url = (
-        f"https://www.youtube.com/playlist?list={playlist_link}"
-        + "&disable_polymer=true"
-    )
+        config.youtube_generated_playlist_url = (
+            f"https://www.youtube.com/playlist?list={playlist_link}"
+            + "&disable_polymer=true"
+        )
+        return True
+    except Exception as error:
+        print(
+            "\nThere was an error with creating the playlist url. Check if all video ids are valid and correct.\n"
+        )
+        return False
 
 
 def output_generated_playlist_url():
