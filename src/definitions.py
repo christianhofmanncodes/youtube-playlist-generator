@@ -2,6 +2,8 @@ import csv
 import config
 import pandas as pd
 import webbrowser
+import ssl
+from urllib import request
 
 
 def input_url_or_id():
@@ -172,11 +174,11 @@ def reset_playlist():
 
 
 def create_playlist_url_with_title(video_ids, playlist_title):
-    return f"{config.youtube_playlist_url}{video_ids}&title={playlist_title}"
+    return f"{config.youtube_playlist_base_url}{video_ids}&title={playlist_title}"
 
 
 def create_playlist_url_without_title(video_ids):
-    return f"{config.youtube_playlist_url}{video_ids}"
+    return f"{config.youtube_playlist_base_url}{video_ids}"
 
 
 def open_url_in_webbrowser(url):
@@ -184,14 +186,33 @@ def open_url_in_webbrowser(url):
     webbrowser.open_new_tab(url)
 
 
-def output_generated_playlist_url(comma_seperated_string):
+def generate_video_ids_url(comma_seperated_string):
     if config.youtube_playlist_title != "":
-        config.youtube_generated_playlist_url = create_playlist_url_with_title(
+        config.youtube_generated_video_ids_url = create_playlist_url_with_title(
             comma_seperated_string, config.youtube_playlist_title
         )
     else:
-        config.youtube_generated_playlist_url = create_playlist_url_without_title(
+        config.youtube_generated_video_ids_url = create_playlist_url_without_title(
             comma_seperated_string
         )
+
+
+def generate_playlist_url(video_ids_url):
+    ssl._create_default_https_context = ssl._create_unverified_context
+    response = request.urlopen(video_ids_url)
+
+    playlist_link = response.geturl()
+    playlist_link = playlist_link.split("list=")[1]
+
+    config.youtube_generated_playlist_url = (
+        f"https://www.youtube.com/playlist?list={playlist_link}"
+        + "&disable_polymer=true"
+    )
+
+
+def output_generated_playlist_url():
     print(f"Here's your URL for the playlist: {config.youtube_generated_playlist_url}")
+
+
+def open_playlist_url_in_webbrowser():
     open_url_in_webbrowser(config.youtube_generated_playlist_url)

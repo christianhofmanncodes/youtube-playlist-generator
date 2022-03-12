@@ -84,7 +84,11 @@ def option_four():
         comma_seperated_string = create_comma_seperated_string(list)
         playlist_title = config.youtube_playlist_title
         add_title_to_playlist(playlist_title)
-        output_generated_playlist_url(comma_seperated_string)
+
+        generate_video_ids_url(comma_seperated_string)
+        generate_playlist_url(config.youtube_generated_video_ids_url)
+        output_generated_playlist_url()
+        open_playlist_url_in_webbrowser()
     else:
         print(
             "\nYour playlist is empty! Add at least two videos in order to generate a playlist URL.\n"
