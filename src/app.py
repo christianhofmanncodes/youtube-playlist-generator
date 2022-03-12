@@ -1,6 +1,28 @@
 import config
 import sys
-from definitions import *
+from definitions import (
+    read_csv_and_add_content_to_tuple,
+    join_tuple,
+    remove_duplicates_from_list,
+    convert_list_to_table,
+    is_empty_csv,
+    input_url_or_id,
+    is_string_valid_url,
+    add_id_to_csv,
+    want_another_video_added,
+    count_items_in_table,
+    want_playlist_deleted,
+    reset_playlist,
+    is_string_valid_youtube_url,
+    cut_url_to_id,
+    delete_items_from_playlist,
+    create_comma_seperated_string,
+    add_title_to_playlist,
+    generate_video_ids_url,
+    generate_playlist_url,
+    output_generated_playlist_url,
+    open_playlist_url_in_webbrowser,
+)
 from os import system, name
 
 
