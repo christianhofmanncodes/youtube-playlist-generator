@@ -41,6 +41,7 @@ def main_menu():
 
 
 def option_one():
+    clear()
     if is_empty_csv("video_ids.csv"):
         print("\nYour playlist is already empty!\n")
     elif want_playlist_deleted():
@@ -51,6 +52,7 @@ def option_one():
 
 
 def option_two():
+    clear()
     input = input_url_or_id()
     if is_string_valid_url(input) and is_string_valid_youtube_url(
         input
@@ -66,6 +68,7 @@ def option_two():
 
 
 def option_three():
+    clear()
     tuple = read_csv_and_add_content_to_tuple()
     list = join_tuple(tuple)
     list_without_duplicates = remove_duplicates_from_list(list)
@@ -78,6 +81,7 @@ def option_three():
 
 
 def option_four():
+    clear()
     if not is_empty_csv("video_ids.csv"):
         tuple = read_csv_and_add_content_to_tuple()
         list = join_tuple(tuple)
