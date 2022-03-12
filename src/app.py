@@ -105,9 +105,9 @@ def option_five():
 
 
 def main():
-    if config.first_start == 1:
+    if config.first_start == True:
         welcome_message()
-        config.first_start = 0
+        config.first_start = False
     main_menu()
 
 
