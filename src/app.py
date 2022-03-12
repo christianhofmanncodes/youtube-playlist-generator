@@ -16,6 +16,7 @@ def welcome_message():
 
 
 def main_menu():
+    print("[0] to view current playlist")
     print("[1] to create a new playlist")
     print("[2] to add videos to the playlist")
     print("[3] to delete certain videos from the playlist")
@@ -23,7 +24,9 @@ def main_menu():
     print("[5] to exit the program")
 
     choice = input("\nPlease select an option: ")
-    if choice == "1":
+    if choice == "0":
+        option_zero()
+    elif choice == "1":
         option_one()
     elif choice == "2":
         option_two()
@@ -35,9 +38,24 @@ def main_menu():
         option_five()
     else:
         print(
-            "\nInvalid option. Please enter a number between [1] and [4]. Or press [5] to exit the program.\n"
+            "\nInvalid option. Please enter a number between [0] and [4]. Or press [5] to exit the program.\n"
         )
         main_menu()
+
+
+def option_zero():
+    clear()
+    tuple = read_csv_and_add_content_to_tuple()
+    list = join_tuple(tuple)
+    list_without_duplicates = remove_duplicates_from_list(list)
+
+    if list:
+        print(
+            f"\nThese video ids are currently in your playlist: {convert_list_to_table(list_without_duplicates)}\n"
+        )
+    else:
+        print("There are no videos in your playlist yet.\n")
+    main_menu()
 
 
 def option_one():
@@ -48,7 +66,7 @@ def option_one():
         reset_playlist()
     else:
         print("\nYou didn't choose to create a new playlist.\n")
-    main()
+    main_menu()
 
 
 def option_two():
