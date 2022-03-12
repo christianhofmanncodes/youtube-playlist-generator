@@ -5,14 +5,14 @@ from os import system, name
 
 
 def clear():
-    _ = system('cls') if name == 'nt' else system('clear')
-    
-    
+    _ = system("cls") if name == "nt" else system("clear")
+
+
 def welcome_message():
     clear()
-    print("-"*62)
+    print("-" * 62)
     print("Welcome to the YouTube Playlist Generator by Christian Hofmann")
-    print("-"*62)
+    print("-" * 62)
 
 
 def main_menu():
@@ -41,7 +41,7 @@ def main_menu():
 
 
 def option_one():
-    if is_empty_csv("src/video_ids.csv"):
+    if is_empty_csv("video_ids.csv"):
         print("\nYour playlist is already empty!\n")
     elif want_playlist_deleted():
         reset_playlist()
@@ -78,7 +78,7 @@ def option_three():
 
 
 def option_four():
-    if not is_empty_csv("src/video_ids.csv"):
+    if not is_empty_csv("video_ids.csv"):
         tuple = read_csv_and_add_content_to_tuple()
         list = join_tuple(tuple)
         comma_seperated_string = create_comma_seperated_string(list)
@@ -86,7 +86,9 @@ def option_four():
         add_title_to_playlist(playlist_title)
         output_generated_playlist_url(comma_seperated_string)
     else:
-        print("\nYour playlist is empty! Add at least two videos in order to generate a playlist URL.\n")
+        print(
+            "\nYour playlist is empty! Add at least two videos in order to generate a playlist URL.\n"
+        )
     main_menu()
 
 

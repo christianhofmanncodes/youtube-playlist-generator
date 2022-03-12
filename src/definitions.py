@@ -29,7 +29,7 @@ def cut_url_to_id(url):
 
 
 def read_csv_and_add_content_to_tuple():
-    with open("src/video_ids.csv", "r", newline="") as read_obj:
+    with open("video_ids.csv", "r", newline="") as read_obj:
         return tuple(csv.reader(read_obj))
 
 
@@ -56,7 +56,7 @@ def read_content_from_file(path):
 
 
 def read_csv_and_add_content_to_list():
-    with open("src/video_ids.csv", "r") as read_obj:
+    with open("video_ids.csv", "r") as read_obj:
         return list(csv.reader(read_obj))
 
 
@@ -66,7 +66,7 @@ def remove_duplicates_from_list(x):
 
 def add_id_to_csv(id):
     print(f"\nAdding new ID '{id}' to playlist...")
-    with open("src/video_ids.csv", "a", newline="") as writer:
+    with open("video_ids.csv", "a", newline="") as writer:
         return writer.write(f"{id}\n")
 
 
@@ -75,11 +75,11 @@ def convert_list_to_table(list):
 
 
 def delete_items_from_playlist(list):
-    message ="Which item do you want to delete from the playlist?: "
+    message = "Which item do you want to delete from the playlist?: "
     try:
         id_to_be_removed = get_input(message)
         list.remove(id_to_be_removed)
-        with open("src/video_ids.csv", "w", newline="") as file:
+        with open("video_ids.csv", "w", newline="") as file:
             for id in list:
                 file.write(id + "\n")
         print(f"\nItem '{id_to_be_removed}' succesfully deleted from playlist.\n")
@@ -115,7 +115,7 @@ def has_no_playlist_title(playlist_title):
 def has_playlist_title():
     print(
         f"\nThere is already a title for your YouTube playlist: {config.youtube_playlist_title}"
-        )
+    )
     print("Do you want to change it?\n")
     if want_playlist_title():
         change_title_from_playlist()
@@ -135,20 +135,24 @@ def get_title_for_playlist():
     return title
 
 
-def add_title_to_playlist(playlist_title):    
+def add_title_to_playlist(playlist_title):
     if has_no_playlist_title(playlist_title) == True:
         if want_playlist_title() == False:
             config.youtube_playlist_title = ""
         else:
             config.youtube_playlist_title = get_title_for_playlist()
-            print(f"\nPlaylist title '{get_human_readable_title(config.youtube_playlist_title)}' successfully added.\n")
+            print(
+                f"\nPlaylist title '{get_human_readable_title(config.youtube_playlist_title)}' successfully added.\n"
+            )
     else:
         has_playlist_title()
 
 
 def change_title_from_playlist():
     config.youtube_playlist_title = get_title_for_playlist()
-    print(f"\nTitle '{get_human_readable_title(config.youtube_playlist_title)}' successfully changed.\n")
+    print(
+        f"\nTitle '{get_human_readable_title(config.youtube_playlist_title)}' successfully changed.\n"
+    )
 
 
 def want_playlist_deleted():
@@ -161,7 +165,7 @@ def want_playlist_deleted():
 
 def reset_playlist():
     print("\nRemoving all videos from playlist...")
-    with open("src/video_ids.csv", "w+") as writer:
+    with open("video_ids.csv", "w+") as writer:
         writer.write("")
     print("\nA new playlist was successfully created.")
     print("\nYou can now add videos to your playlist.\n")
@@ -182,8 +186,12 @@ def open_url_in_webbrowser(url):
 
 def output_generated_playlist_url(comma_seperated_string):
     if config.youtube_playlist_title != "":
-        config.youtube_generated_playlist_url = create_playlist_url_with_title(comma_seperated_string, config.youtube_playlist_title)
+        config.youtube_generated_playlist_url = create_playlist_url_with_title(
+            comma_seperated_string, config.youtube_playlist_title
+        )
     else:
-        config.youtube_generated_playlist_url = create_playlist_url_without_title(comma_seperated_string)
+        config.youtube_generated_playlist_url = create_playlist_url_without_title(
+            comma_seperated_string
+        )
     print(f"Here's your URL for the playlist: {config.youtube_generated_playlist_url}")
     open_url_in_webbrowser(config.youtube_generated_playlist_url)
