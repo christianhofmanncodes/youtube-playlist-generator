@@ -161,7 +161,9 @@ class AskClearDialog(QDialog):
         self.buttonBox.rejected.connect(self.reject)
 
         self.layout = QVBoxLayout()
-        message = QLabel(item.text())
+        message = QLabel(
+            "Do you really want to clear your playlist? That deletes all of your items!"
+        )
         self.layout.addWidget(message)
         self.layout.addWidget(self.buttonBox)
         self.setLayout(self.layout)
