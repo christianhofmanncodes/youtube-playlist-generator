@@ -234,9 +234,9 @@ background-color: rgb(227, 6, 19);</string>
    <widget class="QLabel" name="label_credits">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>130</x>
       <y>490</y>
-      <width>171</width>
+      <width>201</width>
       <height>41</height>
      </rect>
     </property>
