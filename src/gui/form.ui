@@ -152,6 +152,9 @@ p, li { white-space: pre-wrap; }
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_generate">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -210,6 +213,9 @@ background-color: rgb(227, 6, 19);</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_copy">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>370</x>
@@ -259,6 +265,9 @@ background-color: rgb(227, 6, 19);</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_delete_item">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -278,6 +287,9 @@ background-color: rgb(227, 6, 19);</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_clear_playlist">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>10</x>

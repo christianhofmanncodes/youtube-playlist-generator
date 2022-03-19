@@ -12,6 +12,7 @@ from PyQt6.QtWidgets import (
     QDialog,
     QDialogButtonBox,
     QLabel,
+    QMessageBox,
 )
 from qt_material import apply_stylesheet
 
@@ -27,17 +28,67 @@ class Ui(QMainWindow):
         self.pushButton_generate.clicked.connect(self.generateButtonPressed)
         self.pushButton_delete_item.clicked.connect(self.deleteItemButtonClicked)
         self.pushButton_clear_playlist.clicked.connect(self.clearPlaylistButtonClicked)
+        self.listWidget_playlist_items.itemDoubleClicked.connect(self.doubleClicked)
+
+    def doubleClicked(self, item):
+        QMessageBox.information(self, "Info", item.text())
 
     def addButtonPressed(self):
         text = self.textEdit_url_id.toPlainText()
         if text != "":
-            self.listWidget_playlist_items.addItem(str(text))
+            if Ui.is_string_valid_url(self, text) and Ui.is_string_valid_youtube_url(
+                self, text
+            ):
+                id = Ui.cut_url_to_id(self, text)
+                self.listWidget_playlist_items.addItem(str(id))
+            else:
+                self.listWidget_playlist_items.addItem(str(text))
             self.textEdit_url_id.clear()
+            self.pushButton_clear_playlist.setEnabled(True)
+            self.pushButton_delete_item.setEnabled(True)
+            if Ui.playlist_widget_has_enough_items(self):
+                self.pushButton_generate.setEnabled(True)
+
+    def is_string_valid_url(self, string):
+        if "http://" in string or "https://" in string:
+            return True
+
+    def is_string_valid_youtube_url(self, string):
+        if "watch?" in string or "be/" in string:
+            return True
+
+    def cut_url_to_id(self, url):
+        if "v=" in url:
+            get_id = url.split("v=")
+            return get_id[-1]
+        elif "be/" in url:
+            get_id = url.split("be/")
+            return get_id[-1]
+
+    def playlist_widget_has_enough_items(self):
+        playlist = self.listWidget_playlist_items
+        playlist_items = [playlist.item(x) for x in range(playlist.count())]
+        if len(playlist_items) >= 2:
+            return True
+
+    def is_playlist_widget_empty(self):
+        playlist = self.listWidget_playlist_items
+        playlist_items = [playlist.item(x) for x in range(playlist.count())]
+        if not playlist_items:
+            return True
+
+    def disable_delete_clear_generate_buttons(self):
+        self.pushButton_clear_playlist.setEnabled(False)
+        self.pushButton_delete_item.setEnabled(False)
+        self.pushButton_generate.setEnabled(False)
 
     def clearPlaylistButtonClicked(self):
         dlg = AskClearDialog(self)
         if dlg.exec():
             self.listWidget_playlist_items.clear()
+            if Ui.is_playlist_widget_empty(self):
+                Ui.disable_delete_clear_generate_buttons(self)
+                self.pushButton_copy.setEnabled(False)
         else:
             print("No item was deleted!")
 
@@ -49,9 +100,16 @@ class Ui(QMainWindow):
             self.listWidget_playlist_items.takeItem(
                 self.listWidget_playlist_items.row(item)
             )
+        if Ui.is_playlist_widget_empty(self):
+            Ui.disable_delete_clear_generate_buttons(self)
+        elif not Ui.playlist_widget_has_enough_items(self):
+            self.pushButton_generate.setEnabled(False)
+
+    def has_textedit_playlist_generated_url_content(self):
+        if self.textEdit_playlist_generated_url.toPlainText() != "":
+            return True
 
     def copyButtonPressed(self):
-        # self.textEdit_playlist_generated_url.setText("Test")
         text = self.textEdit_playlist_generated_url.toPlainText()
         QApplication.clipboard().setText(text)
 
@@ -69,20 +127,11 @@ class Ui(QMainWindow):
 
     def generateButtonPressed(self):
         self.textEdit_playlist_generated_url.setText("Button 'Generate' clicked!")
-        playlist = self.listWidget_playlist_items
-        print(playlist)
-
-        playlist_items = [playlist.item(x) for x in range(playlist.count())]
-        print(playlist_items)
-
-        # items = []
-        # for index in range(self.listWidget_playlist_items.count()):
-        #     print(index)
-        #     self.listWidget_playlist_items.setCurrentRow(index)
-        #     item = self.listWidget_playlist_items.currentItem()
-        #     items.append(item)
-        # items.append(self.listWidget_playlist_items.item(index))
-        # print(items)
+        if Ui.has_textedit_playlist_generated_url_content(self):
+            self.pushButton_copy.setEnabled(True)
+            playlist = self.listWidget_playlist_items
+            playlist_items = [playlist.item(x).text for x in range(playlist.count())]
+            print(playlist_items)
 
 
 class AskClearDialog(QDialog):
