@@ -101,7 +101,7 @@
      <bool>true</bool>
     </property>
     <property name="alternatingRowColors">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit_playlist_generated_url">
@@ -159,10 +159,10 @@ background-color: rgb(227, 6, 19);</string>
    <widget class="QPushButton" name="pushButton_export">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>350</y>
-      <width>141</width>
-      <height>61</height>
+      <x>350</x>
+      <y>490</y>
+      <width>101</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="cursor">
@@ -176,9 +176,9 @@ background-color: rgb(227, 6, 19);</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>350</y>
-      <width>141</width>
-      <height>61</height>
+      <y>490</y>
+      <width>101</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="cursor">
@@ -213,9 +213,9 @@ background-color: rgb(227, 6, 19);</string>
    <widget class="QLabel" name="label_credits">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>150</x>
       <y>490</y>
-      <width>441</width>
+      <width>171</width>
       <height>41</height>
      </rect>
     </property>
@@ -240,7 +240,45 @@ background-color: rgb(227, 6, 19);</string>
      <set>Qt::AlignCenter</set>
     </property>
     <property name="wordWrap">
-     <bool>false</bool>
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_delete_item">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>350</y>
+      <width>141</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Delete Item</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_clear_playlist">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>350</y>
+      <width>141</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Clear Playlist</string>
     </property>
    </widget>
   </widget>
