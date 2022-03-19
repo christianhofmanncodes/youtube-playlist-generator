@@ -1,5 +1,6 @@
 import sys
 from PyQt6 import uic
+from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QClipboard
 from PyQt6.QtWidgets import (
     QMainWindow,
@@ -31,7 +32,19 @@ class Ui(QMainWindow):
         self.listWidget_playlist_items.itemDoubleClicked.connect(self.doubleClicked)
 
     def doubleClicked(self, item):
-        QMessageBox.information(self, "Info", item.text())
+        listwidget = self.listWidget_playlist_items
+        for index in range(listwidget.count()):
+            item = listwidget.item(index)
+            item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEditable)
+        Ui.make_item_editable(self)
+
+    def make_item_editable(self):
+        index = self.listWidget_playlist_items.currentIndex()
+        if index.isValid():
+            item = self.listWidget_playlist_items.itemFromIndex(index)
+            if not item.isSelected():
+                item.setSelected(True)
+            self.listWidget_playlist_items.edit(index)
 
     def addButtonPressed(self):
         text = self.textEdit_url_id.toPlainText()
@@ -148,9 +161,7 @@ class AskClearDialog(QDialog):
         self.buttonBox.rejected.connect(self.reject)
 
         self.layout = QVBoxLayout()
-        message = QLabel(
-            "Do you really want to clear your playlist? That will delete all your items!"
-        )
+        message = QLabel(item.text())
         self.layout.addWidget(message)
         self.layout.addWidget(self.buttonBox)
         self.setLayout(self.layout)
