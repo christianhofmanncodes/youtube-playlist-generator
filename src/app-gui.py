@@ -156,15 +156,29 @@ class Ui(QMainWindow):
         return ",".join(list)
 
     def generate_video_ids_url(self, comma_seperated_string):
-        if self.textEdit_playlist_title.toPlainText() != "":
+        if self.textEdit_playlist_title.toPlainText() == "":
+            playlist_url = Ui.create_playlist_url_without_title(comma_seperated_string)
+
+        elif Ui.has_space_in_title(self.textEdit_playlist_title.toPlainText()):
+            title_no_spaces = Ui.replace_space_in_title(
+                self.textEdit_playlist_title.toPlainText()
+            )
+            playlist_url = Ui.create_playlist_url_with_title(
+                comma_seperated_string, title_no_spaces
+            )
+        else:
             playlist_url = Ui.create_playlist_url_with_title(
                 comma_seperated_string, self.textEdit_playlist_title.toPlainText()
             )
-        else:
-            playlist_url = Ui.create_playlist_url_without_title(comma_seperated_string)
-
         self.textEdit_playlist_generated_url.setText(playlist_url)
         Ui.open_playlist_url_in_webbrowser(playlist_url)
+
+    def has_space_in_title(title):
+        if " " in title:
+            return True
+
+    def replace_space_in_title(title_with_space):
+        return title_with_space.replace(" ", "%20")
 
     def create_playlist_url_with_title(video_ids, playlist_title):
         return f"https://www.youtube.com/watch_videos?video_ids={video_ids}&title={playlist_title}"
