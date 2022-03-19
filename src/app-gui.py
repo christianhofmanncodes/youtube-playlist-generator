@@ -9,6 +9,9 @@ from PyQt6.QtWidgets import (
     QListWidget,
     QPushButton,
     QVBoxLayout,
+    QDialog,
+    QDialogButtonBox,
+    QLabel,
 )
 from qt_material import apply_stylesheet
 
@@ -32,7 +35,11 @@ class Ui(QMainWindow):
             self.textEdit_url_id.clear()
 
     def clearPlaylistButtonClicked(self):
-        self.listWidget_playlist_items.clear()
+        dlg = AskClearDialog(self)
+        if dlg.exec():
+            self.listWidget_playlist_items.clear()
+        else:
+            print("No item was deleted!")
 
     def deleteItemButtonClicked(self):
         listItems = self.listWidget_playlist_items.selectedItems()
@@ -62,6 +69,42 @@ class Ui(QMainWindow):
 
     def generateButtonPressed(self):
         self.textEdit_playlist_generated_url.setText("Button 'Generate' clicked!")
+        playlist = self.listWidget_playlist_items
+        print(playlist)
+
+        playlist_items = [playlist.item(x) for x in range(playlist.count())]
+        print(playlist_items)
+
+        # items = []
+        # for index in range(self.listWidget_playlist_items.count()):
+        #     print(index)
+        #     self.listWidget_playlist_items.setCurrentRow(index)
+        #     item = self.listWidget_playlist_items.currentItem()
+        #     items.append(item)
+        # items.append(self.listWidget_playlist_items.item(index))
+        # print(items)
+
+
+class AskClearDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        self.setWindowTitle("Are you sure?")
+        self.setFixedSize(450, 140)
+
+        QBtn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
+
+        self.buttonBox = QDialogButtonBox(QBtn)
+        self.buttonBox.accepted.connect(self.accept)
+        self.buttonBox.rejected.connect(self.reject)
+
+        self.layout = QVBoxLayout()
+        message = QLabel(
+            "Do you really want to clear your playlist? That will delete all your items!"
+        )
+        self.layout.addWidget(message)
+        self.layout.addWidget(self.buttonBox)
+        self.setLayout(self.layout)
 
 
 def main():

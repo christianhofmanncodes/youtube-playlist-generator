@@ -52,6 +52,15 @@
     <property name="cursor" stdset="0">
      <cursorShape>IBeamCursor</cursorShape>
     </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustToContents</enum>
+    </property>
     <property name="placeholderText">
      <string>URL or ID</string>
     </property>
@@ -99,6 +108,12 @@
     </property>
     <property name="dragEnabled">
      <bool>true</bool>
+    </property>
+    <property name="dragDropMode">
+     <enum>QAbstractItemView::DragOnly</enum>
+    </property>
+    <property name="defaultDropAction">
+     <enum>Qt::MoveAction</enum>
     </property>
     <property name="alternatingRowColors">
      <bool>false</bool>
