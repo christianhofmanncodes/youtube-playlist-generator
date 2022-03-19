@@ -142,7 +142,16 @@ class Ui(QMainWindow):
         export_dlg.exec()
 
     def generateButtonPressed(self):
-        self.textEdit_playlist_generated_url.setText("Button 'Generate' clicked!")
+        if self.textEdit_playlist_title.toPlainText() == "":
+            dlg = AskEmptyPlaylistTitle(self)
+            if dlg.exec():
+                Ui.generate_playlist(self)
+        else:
+            Ui.generate_playlist(self)
+
+    def generate_playlist(self):
+        self.textEdit_playlist_generated_url.setText("Playlist is being generated...")
+
         if Ui.has_textedit_playlist_generated_url_content(self):
             self.pushButton_copy.setEnabled(True)
             playlist = self.listWidget_playlist_items
@@ -230,6 +239,26 @@ class AskClearDialog(QDialog):
         message = QLabel(
             "Do you really want to clear your playlist? That deletes all of your items!"
         )
+        self.layout.addWidget(message)
+        self.layout.addWidget(self.buttonBox)
+        self.setLayout(self.layout)
+
+
+class AskEmptyPlaylistTitle(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        self.setWindowTitle("Your playlist title is currently empty")
+        self.setFixedSize(450, 140)
+
+        QBtn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
+
+        self.buttonBox = QDialogButtonBox(QBtn)
+        self.buttonBox.accepted.connect(self.accept)
+        self.buttonBox.rejected.connect(self.reject)
+
+        self.layout = QVBoxLayout()
+        message = QLabel("There is no title for playlist yet. Do you want to proceed?")
         self.layout.addWidget(message)
         self.layout.addWidget(self.buttonBox)
         self.setLayout(self.layout)
