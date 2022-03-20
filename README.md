@@ -11,7 +11,7 @@ A fun program based on Python to generate YouTube Playlists without an account.
 ## Navigation
 
 - [Functions](#functions)
-  - [Coming soon](#comming-soon)
+  - [Coming soon](#coming-soon)
   - [Support](#support)
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
