@@ -147,18 +147,21 @@ class Ui(QMainWindow):
         self.listWidget_playlist_items.addItems(playlist_ids)
 
     def importButtonPressed(self):
-        if filename := QFileDialog.getOpenFileName(
-            self,
-            "Import YouTube Playlist file",
-            "",
-            "YouTube Playlist file (*.ytplaylist)",
-        ):
-            ytplaylist_dict = Ui.read_json_file(self, filename[0])
-            print(ytplaylist_dict)
-            Ui.import_from_dict(self, ytplaylist_dict)
-            self.pushButton_clear_playlist.setEnabled(True)
-            self.pushButton_delete_item.setEnabled(True)
-            self.pushButton_generate.setEnabled(True)
+        try:
+            if filename := QFileDialog.getOpenFileName(
+                self,
+                "Import YouTube Playlist file",
+                "",
+                "YouTube Playlist file (*.ytplaylist)",
+            ):
+                ytplaylist_dict = Ui.read_json_file(self, filename[0])
+                print(ytplaylist_dict)
+                Ui.import_from_dict(self, ytplaylist_dict)
+                self.pushButton_clear_playlist.setEnabled(True)
+                self.pushButton_delete_item.setEnabled(True)
+                self.pushButton_generate.setEnabled(True)
+        except Exception:
+            print("No file was imported.")
 
     def export_ytplaylist_file(self, filename, ytplaylist_dict):
         with open(filename, "w") as f:
@@ -172,19 +175,22 @@ class Ui(QMainWindow):
         return [playlist.item(x).text() for x in range(playlist.count())]
 
     def exportButtonPressed(self):
-        if filename := QFileDialog.getSaveFileName(
-            self,
-            "Export YouTube Playlist file",
-            "",
-            "YouTube Playlist file (*.ytplaylist)",
-        ):
-            print(filename[0])
-            ytplaylist_dict = Ui.generate_dict_from_fields(
+        try:
+            if filename := QFileDialog.getSaveFileName(
                 self,
-                self.textEdit_playlist_title.toPlainText(),
-                Ui.output_list_from_playlist_ids(self),  # NEEDS TO BE CHANGED
-            )
-            Ui.export_ytplaylist_file(self, filename[0], ytplaylist_dict)
+                "Export YouTube Playlist file",
+                "",
+                "YouTube Playlist file (*.ytplaylist)",
+            ):
+                print(filename[0])
+                ytplaylist_dict = Ui.generate_dict_from_fields(
+                    self,
+                    self.textEdit_playlist_title.toPlainText(),
+                    Ui.output_list_from_playlist_ids(self),  # NEEDS TO BE CHANGED
+                )
+                Ui.export_ytplaylist_file(self, filename[0], ytplaylist_dict)
+        except Exception:
+            print("No file was exported.")
 
     def generateButtonPressed(self):
         if self.textEdit_playlist_title.toPlainText() == "":
