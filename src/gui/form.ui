@@ -255,7 +255,7 @@ background-color: rgb(227, 6, 19);</string>
      <string notr="true">color: rgb(126, 126, 126);</string>
     </property>
     <property name="text">
-     <string>YouTube Playlist Generator by Christian Hofmann</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YouTube Playlist Generator by Christian Hofmann | &lt;a href=&quot;settings&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Settings&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

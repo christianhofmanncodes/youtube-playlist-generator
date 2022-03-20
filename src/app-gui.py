@@ -18,6 +18,7 @@ from PyQt6.QtWidgets import (
     QDialogButtonBox,
     QLabel,
     QMessageBox,
+    QRadioButton,
 )
 from qt_material import apply_stylesheet
 
@@ -34,6 +35,7 @@ class Ui(QMainWindow):
         self.pushButton_delete_item.clicked.connect(self.deleteItemButtonClicked)
         self.pushButton_clear_playlist.clicked.connect(self.clearPlaylistButtonClicked)
         self.listWidget_playlist_items.itemDoubleClicked.connect(self.doubleClicked)
+        self.label_credits.linkActivated.connect(self.creditsLabelClicked)
 
     def doubleClicked(self, item):
         listwidget = self.listWidget_playlist_items
@@ -131,7 +133,7 @@ class Ui(QMainWindow):
         text = self.textEdit_playlist_generated_url.toPlainText()
         QApplication.clipboard().setText(text)
 
-    def read_ytplaylist_file(self, filename):
+    def read_json_file(self, filename):
         with open(filename, "r") as f:
             data = json.load(f)
         return data
@@ -151,7 +153,7 @@ class Ui(QMainWindow):
             "",
             "YouTube Playlist file (*.ytplaylist)",
         ):
-            ytplaylist_dict = Ui.read_ytplaylist_file(self, filename[0])
+            ytplaylist_dict = Ui.read_json_file(self, filename[0])
             print(ytplaylist_dict)
             Ui.import_from_dict(self, ytplaylist_dict)
             self.pushButton_clear_playlist.setEnabled(True)
@@ -264,6 +266,140 @@ class Ui(QMainWindow):
     def open_playlist_url_in_webbrowser(playlist_url):
         Ui.open_url_in_webbrowser(playlist_url)
 
+    def save_settings_to_conf_file(self, settings_dict):
+        with open("settings.config", "w") as f:
+            json.dump(settings_dict, f, indent=4)
+
+    def get_settings(self):
+        return Ui.read_json_file(self, "settings.config")
+
+    def load_settings(self, settings_dict):
+        program_language = settings_dict["programLanguage"]
+        open_url_automatically = settings_dict["openURLautomatically"]
+        copy_url_toclipboard = settings_dict["copyURLtoclipboard"]
+
+        shortcut_import_new_playlist = settings_dict["keyboardShortcuts"][0][
+            "importNewPlaylist"
+        ]
+        shortcut_export_playlist = settings_dict["keyboardShortcuts"][0][
+            "exportPlaylist"
+        ]
+        shortcut_clear_playlist = settings_dict["keyboardShortcuts"][0]["clearPlaylist"]
+        shortcut_generate_playlist = settings_dict["keyboardShortcuts"][0][
+            "generatePlaylist"
+        ]
+        if program_language == "English":
+            SettingsDialog(self).comboBox_language.setCurrentIndex(0)
+        elif program_language == "Deutsch":
+            SettingsDialog(self).comboBox_language.setCurrentIndex(1)
+
+        if open_url_automatically == True:
+            SettingsDialog(self).checkBox_option1.setCheckState(Qt.CheckState.Checked)
+
+        elif open_url_automatically == False:
+            SettingsDialog(self).checkBox_option1.setCheckState(Qt.CheckState.Unchecked)
+
+        if copy_url_toclipboard == True:
+            SettingsDialog(self).checkBox_option2.setCheckState(Qt.CheckState.Checked)
+
+        elif copy_url_toclipboard == False:
+            SettingsDialog(self).checkBox_option2.setCheckState(Qt.CheckState.Unchecked)
+
+        SettingsDialog(self).keySequenceEdit_option1.setKeySequence(
+            shortcut_import_new_playlist
+        )
+
+        SettingsDialog(self).keySequenceEdit_option2.setKeySequence(
+            shortcut_export_playlist
+        )
+
+        SettingsDialog(self).keySequenceEdit_option3.setKeySequence(
+            shortcut_clear_playlist
+        )
+
+        SettingsDialog(self).keySequenceEdit_option4.setKeySequence(
+            shortcut_generate_playlist
+        )
+
+    def output_settings_as_dict(
+        self,
+        checkbox_option1_state,
+        checkbox_option2_state,
+        key_sequence_option1_content,
+        key_sequence_option2_content,
+        key_sequence_option3_content,
+        key_sequence_option4_content,
+        combo_box_program_language_text,
+    ):
+
+        if checkbox_option1_state is True:
+            checkbox_option1_state == "true"
+        elif checkbox_option1_state is False:
+            checkbox_option1_state == "false"
+
+        if checkbox_option2_state is True:
+            checkbox_option2_state == "true"
+        elif checkbox_option2_state is False:
+            checkbox_option2_state == "false"
+
+        return {
+            "programLanguage": combo_box_program_language_text,
+            "openURLautomatically": checkbox_option1_state,
+            "copyURLtoclipboard": checkbox_option2_state,
+            "keyboardShortcuts": [
+                {
+                    "importNewPlaylist": key_sequence_option1_content,
+                    "exportPlaylist": key_sequence_option2_content,
+                    "clearPlaylist": key_sequence_option3_content,
+                    "generatePlaylist": key_sequence_option4_content,
+                }
+            ],
+        }
+
+    def creditsLabelClicked(self):
+        settings_dict = Ui.get_settings(self)
+        Ui.load_settings(self, settings_dict)
+        dlg = SettingsDialog(self)
+
+        if dlg.exec():
+            checkbox_option1_state = dlg.checkBox_option1.isChecked()
+            checkbox_option2_state = dlg.checkBox_option2.isChecked()
+
+            key_sequence_option1_content = (
+                dlg.keySequenceEdit_option1.keySequence().toString()
+            )
+            key_sequence_option2_content = (
+                dlg.keySequenceEdit_option2.keySequence().toString()
+            )
+            key_sequence_option3_content = (
+                dlg.keySequenceEdit_option3.keySequence().toString()
+            )
+            key_sequence_option4_content = (
+                dlg.keySequenceEdit_option4.keySequence().toString()
+            )
+
+            combo_box_program_language_text = dlg.comboBox_language.currentText()
+
+            print(f"Option 1: {checkbox_option1_state}")
+            print(f"Option 2: {checkbox_option2_state}")
+            print(f"Keyboard Shortcut 1: {key_sequence_option1_content}")
+            print(f"Keyboard Shortcut 2: {key_sequence_option2_content}")
+            print(f"Keyboard Shortcut 3: {key_sequence_option3_content}")
+            print(f"Keyboard Shortcut 4: {key_sequence_option4_content}")
+            print(f"Program language: {combo_box_program_language_text}")
+
+            settings_dict = Ui.output_settings_as_dict(
+                self,
+                checkbox_option1_state,
+                checkbox_option2_state,
+                key_sequence_option1_content,
+                key_sequence_option2_content,
+                key_sequence_option3_content,
+                key_sequence_option4_content,
+                combo_box_program_language_text,
+            )
+            Ui.save_settings_to_conf_file(self, settings_dict)
+
 
 class AskClearDialog(QDialog):
     def __init__(self, parent=None):
@@ -307,11 +443,28 @@ class AskEmptyPlaylistTitle(QDialog):
         self.setLayout(self.layout)
 
 
+class InfoDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        uic.loadUi("src/gui/info_dialog.ui", self)
+
+
+class SettingsDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        uic.loadUi("src/gui/settings_dialog.ui", self)
+        self.pushButton_info.clicked.connect(self.infoButtonPressed)
+
+    def infoButtonPressed(self):
+        dlg = InfoDialog(self)
+        dlg.exec()
+
+
 def main():
     app = QApplication(sys.argv)
     apply_stylesheet(app, theme="dark_red.xml")
     window = Ui()
-    window.show()  # show window
+    window.show()
     sys.exit(app.exec())
 
 
