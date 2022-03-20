@@ -1,6 +1,7 @@
 import sys
 import webbrowser
 import ssl
+import json
 from urllib import request
 from PyQt6 import uic
 from PyQt6.QtCore import Qt
@@ -105,6 +106,7 @@ class Ui(QMainWindow):
             if Ui.is_playlist_widget_empty(self):
                 Ui.disable_delete_clear_generate_buttons(self)
                 self.pushButton_copy.setEnabled(False)
+                self.textEdit_playlist_title.clear()
         else:
             print("No item was deleted!")
 
@@ -129,17 +131,55 @@ class Ui(QMainWindow):
         text = self.textEdit_playlist_generated_url.toPlainText()
         QApplication.clipboard().setText(text)
 
+    def read_ytplaylist_file(self, filename):
+        with open(filename, "r") as f:
+            data = json.load(f)
+        return data
+
+    def import_from_dict(self, dict):
+        playlist_title = dict["playlistTitle"]
+        playlist_ids = dict["playlistIDs"]
+
+        self.textEdit_playlist_title.setText(playlist_title)
+        print(playlist_ids)
+        self.listWidget_playlist_items.addItems(playlist_ids)
+
     def importButtonPressed(self):
-        import_dlg = QFileDialog(self)
-        import_dlg.setWindowTitle("Please import your playlist-file")
-        import_dlg.exec()
+        if filename := QFileDialog.getOpenFileName(
+            self,
+            "Import YouTube Playlist file",
+            "",
+            "YouTube Playlist file (*.ytplaylist)",
+        ):
+            ytplaylist_dict = Ui.read_ytplaylist_file(self, filename[0])
+            print(ytplaylist_dict)
+            Ui.import_from_dict(self, ytplaylist_dict)
+
+    def export_ytplaylist_file(self, filename, ytplaylist_dict):
+        with open(filename, "w") as f:
+            json.dump(ytplaylist_dict, f, indent=4)
+
+    def generate_dict_from_fields(self, playlist_title, playlist_ids):
+        return {"playlistTitle": playlist_title, "playlistIDs": playlist_ids}
+
+    def output_list_from_playlist_ids(self):
+        playlist = self.listWidget_playlist_items
+        return [playlist.item(x).text() for x in range(playlist.count())]
 
     def exportButtonPressed(self):
-        export_dlg = QFileDialog(self)
-        export_dlg.setWindowTitle(
-            "Please define a location to export your playlist-file"
-        )
-        export_dlg.exec()
+        if filename := QFileDialog.getSaveFileName(
+            self,
+            "Export YouTube Playlist file",
+            "",
+            "YouTube Playlist file (*.ytplaylist)",
+        ):
+            print(filename[0])
+            ytplaylist_dict = Ui.generate_dict_from_fields(
+                self,
+                self.textEdit_playlist_title.toPlainText(),
+                Ui.output_list_from_playlist_ids(self),  # NEEDS TO BE CHANGED
+            )
+            Ui.export_ytplaylist_file(self, filename[0], ytplaylist_dict)
 
     def generateButtonPressed(self):
         if self.textEdit_playlist_title.toPlainText() == "":
