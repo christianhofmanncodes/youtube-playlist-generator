@@ -154,6 +154,9 @@ class Ui(QMainWindow):
             ytplaylist_dict = Ui.read_ytplaylist_file(self, filename[0])
             print(ytplaylist_dict)
             Ui.import_from_dict(self, ytplaylist_dict)
+            self.pushButton_clear_playlist.setEnabled(True)
+            self.pushButton_delete_item.setEnabled(True)
+            self.pushButton_generate.setEnabled(True)
 
     def export_ytplaylist_file(self, filename, ytplaylist_dict):
         with open(filename, "w") as f:
