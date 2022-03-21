@@ -1,5 +1,5 @@
 import config
-import sys
+import sys, os
 from definitions import (
     read_csv_and_add_content_to_tuple,
     join_tuple,
@@ -24,6 +24,9 @@ from definitions import (
     open_playlist_url_in_webbrowser,
 )
 from os import system, name
+
+
+basedir = os.path.dirname(__file__)
 
 
 def clear():
@@ -85,7 +88,7 @@ def option_zero():
 
 def option_one():
     clear()
-    if is_empty_csv("video_ids.csv"):
+    if is_empty_csv(f"{os.path.join(basedir, 'data', 'video_ids.csv')}"):
         print("\nYour playlist is already empty!\n")
     elif want_playlist_deleted():
         reset_playlist()
@@ -125,7 +128,7 @@ def option_three():
 
 def option_four():
     clear()
-    if not is_empty_csv("video_ids.csv"):
+    if not is_empty_csv(f"{os.path.join(basedir, 'data', 'video_ids.csv')}"):
         tuple = read_csv_and_add_content_to_tuple()
         list = join_tuple(tuple)
         comma_seperated_string = create_comma_seperated_string(list)

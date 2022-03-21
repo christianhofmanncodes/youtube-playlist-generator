@@ -3,7 +3,11 @@ import config
 import pandas as pd
 import webbrowser
 import ssl
+import os
 from urllib import request
+
+
+basedir = os.path.dirname(__file__)
 
 
 def input_url_or_id():
@@ -35,7 +39,9 @@ def cut_url_to_id(url):
 
 
 def read_csv_and_add_content_to_tuple():
-    with open("video_ids.csv", "r", newline="") as read_obj:
+    with open(
+        f"{os.path.join(basedir, 'data', 'video_ids.csv')}", "r", newline=""
+    ) as read_obj:
         return tuple(csv.reader(read_obj))
 
 
@@ -62,7 +68,7 @@ def read_content_from_file(path):
 
 
 def read_csv_and_add_content_to_list():
-    with open("video_ids.csv", "r") as read_obj:
+    with open(f"{os.path.join(basedir, 'data', 'video_ids.csv')}", "r") as read_obj:
         return list(csv.reader(read_obj))
 
 
@@ -72,7 +78,9 @@ def remove_duplicates_from_list(x):
 
 def add_id_to_csv(id):
     print(f"\nAdding new ID '{id}' to playlist...")
-    with open("video_ids.csv", "a", newline="") as writer:
+    with open(
+        f"{os.path.join(basedir, 'data', 'video_ids.csv')}", "a", newline=""
+    ) as writer:
         return writer.write(f"{id}\n")
 
 
@@ -89,7 +97,9 @@ def delete_items_from_playlist(list):
     try:
         id_to_be_removed = get_input(message)
         list.remove(id_to_be_removed)
-        with open("video_ids.csv", "w", newline="") as file:
+        with open(
+            f"{os.path.join(basedir, 'data', 'video_ids.csv')}", "w", newline=""
+        ) as file:
             for id in list:
                 file.write(id + "\n")
         print(f"\nItem '{id_to_be_removed}' succesfully deleted from playlist.\n")
@@ -175,7 +185,7 @@ def want_playlist_deleted():
 
 def reset_playlist():
     print("\nRemoving all videos from playlist...")
-    with open("video_ids.csv", "w+") as writer:
+    with open(f"{os.path.join(basedir, 'data', 'video_ids.csv')}", "w+") as writer:
         writer.write("")
     print("\nA new playlist was successfully created.")
     print("\nYou can now add videos to your playlist.\n")
