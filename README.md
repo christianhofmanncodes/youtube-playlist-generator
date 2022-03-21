@@ -67,11 +67,13 @@ Tested on Python 3.10.2
 2. Install newest version of Python
 3. Install pandas with `pip install pandas`
 4. Install pyqt6 with `pip install pyqt6`
-5. Run the file
+5. Install qt_material with `pip install qt_material`
+6. Run the file
    - If you want to use the console version: `python src/console/app.py`
    - If you want to use the GUI version: `python src/giu/app-gui.py`
 
-Note: On Linux and macOS you need to use `pip3` and `python3`.
+Note: On Linux and macOS you need to use `pip3` and `python3`.  
+3rd step is only necessary if you want to use the console version. Otherwise you can skip that step.
 
 ## License
 
