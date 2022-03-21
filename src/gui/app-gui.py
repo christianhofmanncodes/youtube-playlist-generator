@@ -1,4 +1,4 @@
-import sys
+import sys, os
 import webbrowser
 import ssl
 import json
@@ -22,11 +22,13 @@ from PyQt6.QtWidgets import (
 )
 from qt_material import apply_stylesheet
 
+basedir = os.path.dirname(__file__)
+
 
 class Ui(QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
-        uic.loadUi("src/gui/form.ui", self)
+        uic.loadUi(f"{os.path.join(basedir, 'forms', 'form.ui')}", self)
         self.pushButton_add.clicked.connect(self.addButtonPressed)
         self.pushButton_copy.clicked.connect(self.copyButtonPressed)
         self.pushButton_import.clicked.connect(self.importButtonPressed)
@@ -273,11 +275,13 @@ class Ui(QMainWindow):
         Ui.open_url_in_webbrowser(playlist_url)
 
     def save_settings_to_conf_file(self, settings_dict):
-        with open("settings.config", "w") as f:
+        with open(f"{os.path.join(basedir, 'config', 'settings.config')}", "w") as f:
             json.dump(settings_dict, f, indent=4)
 
     def get_settings(self):
-        return Ui.read_json_file(self, "settings.config")
+        return Ui.read_json_file(
+            self, f"{os.path.join(basedir, 'config', 'settings.config')}"
+        )
 
     def load_settings(self, settings_dict):
         program_language = settings_dict["programLanguage"]
@@ -452,13 +456,13 @@ class AskEmptyPlaylistTitle(QDialog):
 class InfoDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        uic.loadUi("src/gui/info_dialog.ui", self)
+        uic.loadUi(f"{os.path.join(basedir, 'forms', 'info_dialog.ui')}", self)
 
 
 class SettingsDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        uic.loadUi("src/gui/settings_dialog.ui", self)
+        uic.loadUi(f"{os.path.join(basedir, 'forms', 'settings_dialog.ui')}", self)
         self.pushButton_info.clicked.connect(self.infoButtonPressed)
 
     def infoButtonPressed(self):
