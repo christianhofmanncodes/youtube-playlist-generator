@@ -8,21 +8,21 @@
 ![Python Version](https://img.shields.io/badge/python-3.10.2-yellow)
 ![License](https://img.shields.io/badge/license-GNU%20v3.0-blue)
 
-A fun program based on Python to generate YouTube Playlists without an account.
+A fun program based on Python to generate YouTube playlists without an account.
 
-## Appendix
+## Please note
 
 This project contains both a console and a GUI version.
-Choose the version to your likings.
+Choose the version that you prefer.
 
 ## Features
 
 - Add URL or ID
 - Specify playlist title
-- Clear playlist (deletes all items in playlist)
+- Clear playlist (deletes all items in the playlist)
 - Delete specific items
 - Generate playlist URL
-- Open generated URL automatically in default Web Browser
+- Automatically open generated URL in default web browser
 - Copy URL to clipboard
 - Import .ytplaylist file
 - Export to .ytplaylist file
@@ -40,9 +40,9 @@ Choose the version to your likings.
 ## Installation
 
 Just download and run the newest version from the Releases.
-Select your file accordingly to the OS (Windows, Linux or macOS) you are running.
+Choose your file according to the operating system (Windows, Linux or macOS) you are using.
 
-Start the program. Now you can either create a new playlist by adding a URL or ID one by one to the playlist or you can import a `.ytplaylist` file. If you want to save your playlist you can export the playlist with all its items and playlist title to a `.ytplaylist` file. Hand it over to a friend, if you want.
+Launch the program. Now you can either create a new playlist by adding an URL or ID to the playlist one by one, or you can import a `.ytplaylist` file. If you want to save your playlist, you can export the playlist to a `.ytplaylist` file with all its items and the playlist title. Share it with a friend if you want.
 
 ## Run Locally
 
@@ -72,24 +72,24 @@ Install dependencies
   pip install qt_material
 ```
 
-Run the app (console-version)
+Run the app (console version)
 
 ```bash
   python src/console/app.py
 ```
 
-Run the app (GUI-version)
+Run the app (GUI version)
 
 ```bash
   python src/gui/app-gui.py
 ```
 
-Note: On Linux and macOS you need to use `pip3` and `python3`.  
-3rd step is only necessary if you want to use the console version. Otherwise you can skip that step.
+Note: On Linux and macOS you have to use `pip3` and `python3`.  
+Pandas only needs to be installed if you want to use the console version.
 
 ## Roadmap
 
-- Change order of playlist items
+- Change the order of playlist items
 
 - Add keyboard shortcuts
 
@@ -97,13 +97,13 @@ Note: On Linux and macOS you need to use `pip3` and `python3`.
 
 ## FAQ
 
-#### How did you came up with this project?
+#### How did you come up with this project?
 
-A friend of mine actually wanted to build a YouTube playlist together with me. But I had no idea how to do it because I don't have a Google account and I didn't wanted to create one either. So I've came up with the idea to create a little program that could handle it.
+A friend of mine wanted to build a YouTube playlist with me. But I had no idea how to do it because I don't have a Google account and I didn't want to create one either. So I came up with the idea to develop a neat little program that could do that.
 
-#### Which type of links are supported?
+#### What types of links are supported?
 
-The program supports both YouTube and Invidious links of any instance.
+The program supports both YouTube and Invidious links of any type.
 
 ```
 https://www.youtube.com/watch?v=
@@ -133,4 +133,4 @@ This code is free software licensed under the [GPL v3.0](https://choosealicense.
 
 ## Feedback
 
-If you have any feedback, please reach out to me at christianhofmann@mail.de
+If you have any feedback, please reach out to me at: christianhofmann@mail.de
