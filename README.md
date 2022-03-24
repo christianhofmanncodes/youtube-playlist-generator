@@ -68,7 +68,7 @@ Install dependencies
 
 ```bash
   pip install pandas
-  pip install pyqt6
+  pip install PyQt6
   pip install qt_material
 ```
 
