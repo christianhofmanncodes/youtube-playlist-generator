@@ -1,3 +1,4 @@
+"""definitions module"""
 import csv
 import os
 import ssl
