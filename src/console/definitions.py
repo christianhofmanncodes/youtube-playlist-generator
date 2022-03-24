@@ -1,10 +1,10 @@
 import csv
-import config
-import pandas as pd
-import webbrowser
-import ssl
 import os
+import pandas as pd
+import ssl
 from urllib import request
+import webbrowser
+import config
 
 
 basedir = os.path.dirname(__file__)
@@ -32,25 +32,30 @@ def is_string_valid_youtube_url(string):
 def cut_url_to_id(url):
     if "v=" in url:
         get_id = url.split("v=")
-        return get_id[-1]
     elif "be/" in url:
         get_id = url.split("be/")
-        return get_id[-1]
+    return get_id[-1]
 
 
 def read_csv_and_add_content_to_tuple():
     with open(
-        f"{os.path.join(basedir, 'data', 'video_ids.csv')}", "r", newline=""
+        f"{os.path.join(basedir, 'data', 'video_ids.csv')}",
+        "r",
+        newline="",
+        encoding="UTF-8",
     ) as read_obj:
         return tuple(csv.reader(read_obj))
 
 
-def join_tuple(tuple):
-    return list(map(" ".join, tuple))
+def join_tuple(content_tuple):
+    return list(map(" ".join, content_tuple))
 
 
 def is_empty_csv(path):
-    with open(path) as csvfile:
+    with open(
+        path,
+        encoding="UTF-8",
+    ) as csvfile:
         reader = csv.reader(csvfile)
         for i, _ in enumerate(reader):
             if i:  # found the second row
@@ -58,34 +63,45 @@ def is_empty_csv(path):
     return True
 
 
-def create_comma_seperated_string(list):
-    return ",".join(list)
+def create_comma_seperated_string(content_list):
+    return ",".join(content_list)
 
 
 def read_content_from_file(path):
-    with open(path, "r") as reader:
+    with open(
+        path,
+        "r",
+        encoding="UTF-8",
+    ) as reader:
         return reader.read()
 
 
 def read_csv_and_add_content_to_list():
-    with open(f"{os.path.join(basedir, 'data', 'video_ids.csv')}", "r") as read_obj:
+    with open(
+        f"{os.path.join(basedir, 'data', 'video_ids.csv')}",
+        "r",
+        encoding="UTF-8",
+    ) as read_obj:
         return list(csv.reader(read_obj))
 
 
-def remove_duplicates_from_list(x):
-    return list(dict.fromkeys(x))
+def remove_duplicates_from_list(content_list):
+    return list(dict.fromkeys(content_list))
 
 
-def add_id_to_csv(id):
-    print(f"\nAdding new ID '{id}' to playlist...")
+def add_id_to_csv(video_id):
+    print(f"\nAdding new ID '{video_id}' to playlist...")
     with open(
-        f"{os.path.join(basedir, 'data', 'video_ids.csv')}", "a", newline=""
+        f"{os.path.join(basedir, 'data', 'video_ids.csv')}",
+        "a",
+        newline="",
+        encoding="UTF-8",
     ) as writer:
-        return writer.write(f"{id}\n")
+        return writer.write(f"{video_id}\n")
 
 
-def convert_list_to_table(list):
-    return pd.DataFrame(data=list, columns=["video_ids"])
+def convert_list_to_table(content_list):
+    return pd.DataFrame(data=content_list, columns=["video_ids"])
 
 
 def count_items_in_table(pandas_dataframe):
@@ -98,12 +114,15 @@ def delete_items_from_playlist(list):
         id_to_be_removed = get_input(message)
         list.remove(id_to_be_removed)
         with open(
-            f"{os.path.join(basedir, 'data', 'video_ids.csv')}", "w", newline=""
+            f"{os.path.join(basedir, 'data', 'video_ids.csv')}",
+            "w",
+            newline="",
+            encoding="UTF-8",
         ) as file:
-            for id in list:
-                file.write(id + "\n")
+            for video_id in list:
+                file.write(video_id + "\n")
         print(f"\nItem '{id_to_be_removed}' succesfully deleted from playlist.\n")
-    except Exception:
+    except ValueError:
         print(f"\nThere is no item '{id_to_be_removed}' in the playlist!\n")
 
 
@@ -134,7 +153,7 @@ def has_no_playlist_title(playlist_title):
 
 def has_playlist_title():
     print(
-        f"\nThere is already a title for your YouTube playlist: {config.youtube_playlist_title}"
+        f"\nThere is already a title for your YouTube playlist: {config.YOUTUBE_PLAYLIST_TITLE}"
     )
     print("Do you want to change it?\n")
     if want_playlist_title():
@@ -156,22 +175,24 @@ def get_title_for_playlist():
 
 
 def add_title_to_playlist(playlist_title):
-    if has_no_playlist_title(playlist_title) == True:
-        if want_playlist_title() == False:
-            config.youtube_playlist_title = ""
+    if has_no_playlist_title(playlist_title) is True:
+        if want_playlist_title() is False:
+            config.YOUTUBE_PLAYLIST_TITLE = ""
         else:
-            config.youtube_playlist_title = get_title_for_playlist()
+            config.YOUTUBE_PLAYLIST_TITLE = get_title_for_playlist()
             print(
-                f"\nPlaylist title '{get_human_readable_title(config.youtube_playlist_title)}' successfully added.\n"
+                f"\nPlaylist title '{get_human_readable_title(config.YOUTUBE_PLAYLIST_TITLE)}'",
+                "successfully added.\n",
             )
     else:
         has_playlist_title()
 
 
 def change_title_from_playlist():
-    config.youtube_playlist_title = get_title_for_playlist()
+    config.YOUTUBE_PLAYLIST_TITLE = get_title_for_playlist()
     print(
-        f"\nTitle '{get_human_readable_title(config.youtube_playlist_title)}' successfully changed.\n"
+        f"\nTitle '{get_human_readable_title(config.YOUTUBE_PLAYLIST_TITLE)}'",
+        "successfully changed.\n",
     )
 
 
@@ -179,24 +200,28 @@ def want_playlist_deleted():
     print("\nDo you really want to create a new playlist?")
     print("That deletes all of your videos!\n")
     message = "Press [y] yes or [n] for no: "
-    input = get_input(message)
-    return input == "y"
+    user_input = get_input(message)
+    return user_input == "y"
 
 
 def reset_playlist():
     print("\nRemoving all videos from playlist...")
-    with open(f"{os.path.join(basedir, 'data', 'video_ids.csv')}", "w+") as writer:
+    with open(
+        f"{os.path.join(basedir, 'data', 'video_ids.csv')}",
+        "w+",
+        encoding="UTF-8",
+    ) as writer:
         writer.write("")
     print("\nA new playlist was successfully created.")
     print("\nYou can now add videos to your playlist.\n")
 
 
 def create_playlist_url_with_title(video_ids, playlist_title):
-    return f"{config.youtube_playlist_base_url}{video_ids}&title={playlist_title}"
+    return f"{config.YOUTUBE_PLAYLIST_BASE_URL}{video_ids}&title={playlist_title}"
 
 
 def create_playlist_url_without_title(video_ids):
-    return f"{config.youtube_playlist_base_url}{video_ids}"
+    return f"{config.YOUTUBE_PLAYLIST_BASE_URL}{video_ids}"
 
 
 def open_url_in_webbrowser(url):
@@ -205,12 +230,12 @@ def open_url_in_webbrowser(url):
 
 
 def generate_video_ids_url(comma_seperated_string):
-    if config.youtube_playlist_title != "":
-        config.youtube_generated_video_ids_url = create_playlist_url_with_title(
-            comma_seperated_string, config.youtube_playlist_title
+    if config.YOUTUBE_PLAYLIST_TITLE != "":
+        config.YOUTUBE_GENERATED_VIDEO_IDS_URL = create_playlist_url_with_title(
+            comma_seperated_string, config.YOUTUBE_PLAYLIST_TITLE
         )
     else:
-        config.youtube_generated_video_ids_url = create_playlist_url_without_title(
+        config.YOUTUBE_GENERATED_VIDEO_IDS_URL = create_playlist_url_without_title(
             comma_seperated_string
         )
 
@@ -223,21 +248,22 @@ def generate_playlist_url(video_ids_url):
         playlist_link = response.geturl()
         playlist_link = playlist_link.split("list=")[1]
 
-        config.youtube_generated_playlist_url = (
+        config.YOUTUBE_GENERATED_PLAYLIST_URL = (
             f"https://www.youtube.com/playlist?list={playlist_link}"
             + "&disable_polymer=true"
         )
         return True
-    except Exception as error:
+    except IndexError:
         print(
-            "\nThere was an error with creating the playlist url. Check if all video ids are valid and correct.\n"
+            "\nThere was an error with creating the playlist url.",
+            "Check if all video ids are valid and correct.\n",
         )
         return False
 
 
 def output_generated_playlist_url():
-    print(f"Here's your URL for the playlist: {config.youtube_generated_playlist_url}")
+    print(f"Here's your URL for the playlist: {config.YOUTUBE_GENERATED_PLAYLIST_URL}")
 
 
 def open_playlist_url_in_webbrowser():
-    open_url_in_webbrowser(config.youtube_generated_playlist_url)
+    open_url_in_webbrowser(config.YOUTUBE_GENERATED_PLAYLIST_URL)

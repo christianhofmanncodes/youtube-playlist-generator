@@ -1,4 +1,5 @@
-import sys, os
+import os
+import sys
 import webbrowser
 import ssl
 import json
@@ -29,17 +30,19 @@ class Ui(QMainWindow):
     def __init__(self):
         super(Ui, self).__init__()
         uic.loadUi(f"{os.path.join(basedir, 'forms', 'form.ui')}", self)
-        self.pushButton_add.clicked.connect(self.addButtonPressed)
-        self.pushButton_copy.clicked.connect(self.copyButtonPressed)
-        self.pushButton_import.clicked.connect(self.importButtonPressed)
-        self.pushButton_export.clicked.connect(self.exportButtonPressed)
-        self.pushButton_generate.clicked.connect(self.generateButtonPressed)
-        self.pushButton_delete_item.clicked.connect(self.deleteItemButtonClicked)
-        self.pushButton_clear_playlist.clicked.connect(self.clearPlaylistButtonClicked)
-        self.listWidget_playlist_items.itemDoubleClicked.connect(self.doubleClicked)
-        self.label_credits.linkActivated.connect(self.creditsLabelClicked)
+        self.pushButton_add.clicked.connect(self.add_button_pressed)
+        self.pushButton_copy.clicked.connect(self.copy_button_pressed)
+        self.pushButton_import.clicked.connect(self.import_button_pressed)
+        self.pushButton_export.clicked.connect(self.export_button_pressed)
+        self.pushButton_generate.clicked.connect(self.generate_button_pressed)
+        self.pushButton_delete_item.clicked.connect(self.delete_item_button_clicked)
+        self.pushButton_clear_playlist.clicked.connect(
+            self.clear_playlist_button_clicked
+        )
+        self.listWidget_playlist_items.itemDoubleClicked.connect(self.double_clicked)
+        self.label_credits.linkActivated.connect(self.credits_label_clicked)
 
-    def doubleClicked(self, item):
+    def double_clicked(self, item):
         listwidget = self.listWidget_playlist_items
         for index in range(listwidget.count()):
             item = listwidget.item(index)
@@ -54,14 +57,14 @@ class Ui(QMainWindow):
                 item.setSelected(True)
             self.listWidget_playlist_items.edit(index)
 
-    def addButtonPressed(self):
+    def add_button_pressed(self):
         text = self.textEdit_url_id.toPlainText()
         if text != "":
             if Ui.is_string_valid_url(self, text) and Ui.is_string_valid_youtube_url(
                 self, text
             ):
-                id = Ui.cut_url_to_id(self, text)
-                self.listWidget_playlist_items.addItem(str(id))
+                user_id = Ui.cut_url_to_id(self, text)
+                self.listWidget_playlist_items.addItem(str(user_id))
             else:
                 self.listWidget_playlist_items.addItem(str(text))
             self.textEdit_url_id.clear()
@@ -81,10 +84,9 @@ class Ui(QMainWindow):
     def cut_url_to_id(self, url):
         if "v=" in url:
             get_id = url.split("v=")
-            return get_id[-1]
         elif "be/" in url:
             get_id = url.split("be/")
-            return get_id[-1]
+        return get_id[-1]
 
     def playlist_widget_has_enough_items(self):
         playlist = self.listWidget_playlist_items
@@ -103,7 +105,7 @@ class Ui(QMainWindow):
         self.pushButton_delete_item.setEnabled(False)
         self.pushButton_generate.setEnabled(False)
 
-    def clearPlaylistButtonClicked(self):
+    def clear_playlist_button_clicked(self):
         dlg = AskClearDialog(self)
         if dlg.exec():
             self.listWidget_playlist_items.clear()
@@ -114,11 +116,11 @@ class Ui(QMainWindow):
         else:
             print("No item was deleted!")
 
-    def deleteItemButtonClicked(self):
-        listItems = self.listWidget_playlist_items.selectedItems()
-        if not listItems:
+    def delete_item_button_clicked(self):
+        list_items = self.listWidget_playlist_items.selectedItems()
+        if not list_items:
             return
-        for item in listItems:
+        for item in list_items:
             self.listWidget_playlist_items.takeItem(
                 self.listWidget_playlist_items.row(item)
             )
@@ -131,24 +133,24 @@ class Ui(QMainWindow):
         if self.textEdit_playlist_generated_url.toPlainText() != "":
             return True
 
-    def copyButtonPressed(self):
+    def copy_button_pressed(self):
         text = self.textEdit_playlist_generated_url.toPlainText()
         QApplication.clipboard().setText(text)
 
     def read_json_file(self, filename):
-        with open(filename, "r") as f:
-            data = json.load(f)
+        with open(filename, "r", encoding="UTF-8") as file:
+            data = json.load(file)
         return data
 
-    def import_from_dict(self, dict):
-        playlist_title = dict["playlistTitle"]
-        playlist_ids = dict["playlistIDs"]
+    def import_from_dict(self, ytplaylist_dict):
+        playlist_title = ytplaylist_dict["playlistTitle"]
+        playlist_ids = ytplaylist_dict["playlistIDs"]
 
         self.textEdit_playlist_title.setText(playlist_title)
         print(playlist_ids)
         self.listWidget_playlist_items.addItems(playlist_ids)
 
-    def importButtonPressed(self):
+    def import_button_pressed(self):
         try:
             if filename := QFileDialog.getOpenFileName(
                 self,
@@ -162,12 +164,12 @@ class Ui(QMainWindow):
                 self.pushButton_clear_playlist.setEnabled(True)
                 self.pushButton_delete_item.setEnabled(True)
                 self.pushButton_generate.setEnabled(True)
-        except Exception:
+        except FileNotFoundError:
             print("No file was imported.")
 
     def export_ytplaylist_file(self, filename, ytplaylist_dict):
-        with open(filename, "w") as f:
-            json.dump(ytplaylist_dict, f, indent=4)
+        with open(filename, "w", encoding="UTF-8") as file:
+            json.dump(ytplaylist_dict, file, indent=4)
 
     def generate_dict_from_fields(self, playlist_title, playlist_ids):
         return {"playlistTitle": playlist_title, "playlistIDs": playlist_ids}
@@ -176,7 +178,7 @@ class Ui(QMainWindow):
         playlist = self.listWidget_playlist_items
         return [playlist.item(x).text() for x in range(playlist.count())]
 
-    def exportButtonPressed(self):
+    def export_button_pressed(self):
         try:
             if filename := QFileDialog.getSaveFileName(
                 self,
@@ -191,10 +193,10 @@ class Ui(QMainWindow):
                     Ui.output_list_from_playlist_ids(self),  # NEEDS TO BE CHANGED
                 )
                 Ui.export_ytplaylist_file(self, filename[0], ytplaylist_dict)
-        except Exception:
+        except FileNotFoundError:
             print("No file was exported.")
 
-    def generateButtonPressed(self):
+    def generate_button_pressed(self):
         if self.textEdit_playlist_title.toPlainText() == "":
             dlg = AskEmptyPlaylistTitle(self)
             if dlg.exec():
@@ -214,8 +216,8 @@ class Ui(QMainWindow):
             comma_seperated_string = Ui.create_comma_seperated_string(playlist_items)
             Ui.generate_video_ids_url(self, comma_seperated_string)
 
-    def create_comma_seperated_string(list):
-        return ",".join(list)
+    def create_comma_seperated_string(self, content_list):
+        return ",".join(content_list)
 
     def generate_video_ids_url(self, comma_seperated_string):
         if self.textEdit_playlist_title.toPlainText() == "":
@@ -235,20 +237,20 @@ class Ui(QMainWindow):
         self.textEdit_playlist_generated_url.setText(playlist_url)
         Ui.open_playlist_url_in_webbrowser(playlist_url)
 
-    def has_space_in_title(title):
+    def has_space_in_title(self, title):
         if " " in title:
             return True
 
-    def replace_space_in_title(title_with_space):
+    def replace_space_in_title(self, title_with_space):
         return title_with_space.replace(" ", "%20")
 
-    def create_playlist_url_with_title(video_ids, playlist_title):
+    def create_playlist_url_with_title(self, video_ids, playlist_title):
         return f"https://www.youtube.com/watch_videos?video_ids={video_ids}&title={playlist_title}"
 
-    def create_playlist_url_without_title(video_ids):
+    def create_playlist_url_without_title(self, video_ids):
         return f"https://www.youtube.com/watch_videos?video_ids={video_ids}"
 
-    def generate_playlist_url(video_ids_url):
+    def generate_playlist_url(self, video_ids_url):
         try:
             ssl._create_default_https_context = ssl._create_unverified_context
             response = request.urlopen(video_ids_url)
@@ -256,27 +258,32 @@ class Ui(QMainWindow):
             playlist_link = response.geturl()
             playlist_link = playlist_link.split("list=")[1]
 
-            config.youtube_generated_playlist_url = (
+            youtube_generated_playlist_url = (
                 f"https://www.youtube.com/playlist?list={playlist_link}"
                 + "&disable_polymer=true"
             )
             return True
-        except Exception as error:
+        except IndexError:
             print(
-                "\nThere was an error with creating the playlist url. Check if all video ids are valid and correct.\n"
+                "\nThere was an error with creating the playlist url.",
+                "Check if all video ids are valid and correct.\n",
             )
             return False
 
-    def open_url_in_webbrowser(url):
+    def open_url_in_webbrowser(self, url):
         print(f"\nOpening {url} in new Web browser tab...\n")
         webbrowser.open_new_tab(url)
 
-    def open_playlist_url_in_webbrowser(playlist_url):
+    def open_playlist_url_in_webbrowser(self, playlist_url):
         Ui.open_url_in_webbrowser(playlist_url)
 
     def save_settings_to_conf_file(self, settings_dict):
-        with open(f"{os.path.join(basedir, 'config', 'settings.config')}", "w") as f:
-            json.dump(settings_dict, f, indent=4)
+        with open(
+            f"{os.path.join(basedir, 'config', 'settings.config')}",
+            "w",
+            encoding="UTF-8",
+        ) as file:
+            json.dump(settings_dict, file, indent=4)
 
     def get_settings(self):
         return Ui.read_json_file(
@@ -303,16 +310,16 @@ class Ui(QMainWindow):
         elif program_language == "Deutsch":
             SettingsDialog(self).comboBox_language.setCurrentIndex(1)
 
-        if open_url_automatically == True:
+        if open_url_automatically is True:
             SettingsDialog(self).checkBox_option1.setCheckState(Qt.CheckState.Checked)
 
-        elif open_url_automatically == False:
+        elif open_url_automatically is False:
             SettingsDialog(self).checkBox_option1.setCheckState(Qt.CheckState.Unchecked)
 
-        if copy_url_toclipboard == True:
+        if copy_url_toclipboard is True:
             SettingsDialog(self).checkBox_option2.setCheckState(Qt.CheckState.Checked)
 
-        elif copy_url_toclipboard == False:
+        elif copy_url_toclipboard is False:
             SettingsDialog(self).checkBox_option2.setCheckState(Qt.CheckState.Unchecked)
 
         SettingsDialog(self).keySequenceEdit_option1.setKeySequence(
@@ -366,7 +373,7 @@ class Ui(QMainWindow):
             ],
         }
 
-    def creditsLabelClicked(self):
+    def credits_label_clicked(self):
         settings_dict = Ui.get_settings(self)
         Ui.load_settings(self, settings_dict)
         dlg = SettingsDialog(self)
@@ -418,18 +425,18 @@ class AskClearDialog(QDialog):
         self.setWindowTitle("Are you sure?")
         self.setFixedSize(450, 140)
 
-        QBtn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
+        q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
 
-        self.buttonBox = QDialogButtonBox(QBtn)
-        self.buttonBox.accepted.connect(self.accept)
-        self.buttonBox.rejected.connect(self.reject)
+        self.button_box = QDialogButtonBox(q_btn)
+        self.button_box.accepted.connect(self.accept)
+        self.button_box.rejected.connect(self.reject)
 
         self.layout = QVBoxLayout()
         message = QLabel(
             "Do you really want to clear your playlist? That deletes all of your items!"
         )
         self.layout.addWidget(message)
-        self.layout.addWidget(self.buttonBox)
+        self.layout.addWidget(self.button_box)
         self.setLayout(self.layout)
 
 
@@ -440,16 +447,16 @@ class AskEmptyPlaylistTitle(QDialog):
         self.setWindowTitle("Your playlist title is currently empty")
         self.setFixedSize(450, 140)
 
-        QBtn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
+        q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
 
-        self.buttonBox = QDialogButtonBox(QBtn)
-        self.buttonBox.accepted.connect(self.accept)
-        self.buttonBox.rejected.connect(self.reject)
+        self.button_box = QDialogButtonBox(q_btn)
+        self.button_box.accepted.connect(self.accept)
+        self.button_box.rejected.connect(self.reject)
 
         self.layout = QVBoxLayout()
         message = QLabel("There is no title for playlist yet. Do you want to proceed?")
         self.layout.addWidget(message)
-        self.layout.addWidget(self.buttonBox)
+        self.layout.addWidget(self.button_box)
         self.setLayout(self.layout)
 
 
@@ -463,9 +470,9 @@ class SettingsDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         uic.loadUi(f"{os.path.join(basedir, 'forms', 'settings_dialog.ui')}", self)
-        self.pushButton_info.clicked.connect(self.infoButtonPressed)
+        self.pushButton_info.clicked.connect(self.info_button_pressed)
 
-    def infoButtonPressed(self):
+    def info_button_pressed(self):
         dlg = InfoDialog(self)
         dlg.exec()
 

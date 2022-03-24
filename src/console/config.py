@@ -1,5 +1,5 @@
-youtube_playlist_title = ""
-youtube_playlist_base_url = "https://www.youtube.com/watch_videos?video_ids="
-youtube_generated_video_ids_url = ""
-youtube_generated_playlist_url = ""
-first_start = True
+YOUTUBE_PLAYLIST_TITLE = ""
+YOUTUBE_PLAYLIST_BASE_URL = "https://www.youtube.com/watch_videos?video_ids="
+YOUTUBE_GENERATED_VIDEO_IDS_URL = ""
+YOUTUBE_GENERATED_PLAYLIST_URL = ""
+FIRST_START = True
