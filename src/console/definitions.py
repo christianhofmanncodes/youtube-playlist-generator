@@ -1,9 +1,9 @@
 import csv
 import os
-import pandas as pd
 import ssl
 from urllib import request
 import webbrowser
+import pandas as pd
 import config
 
 
@@ -108,18 +108,18 @@ def count_items_in_table(pandas_dataframe):
     return str(pandas_dataframe.shape[0])
 
 
-def delete_items_from_playlist(list):
+def delete_items_from_playlist(content_list):
     message = "Which item do you want to delete from the playlist?: "
     try:
         id_to_be_removed = get_input(message)
-        list.remove(id_to_be_removed)
+        content_list.remove(id_to_be_removed)
         with open(
             f"{os.path.join(basedir, 'data', 'video_ids.csv')}",
             "w",
             newline="",
             encoding="UTF-8",
         ) as file:
-            for video_id in list:
+            for video_id in content_list:
                 file.write(video_id + "\n")
         print(f"\nItem '{id_to_be_removed}' succesfully deleted from playlist.\n")
     except ValueError:
