@@ -1,3 +1,0 @@
-[DEFAULT]
-extension-pkg-whitelist = PyQt6, PyQt6.QtCore, PyQt6.QtGui, PyQt6.QtWidgets
-ignore = duplicate-code
