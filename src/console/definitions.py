@@ -24,14 +24,12 @@ def get_input(message):
 
 def is_string_valid_url(string):
     """Check if http:// or https:// in string and return bool value."""
-    if "http://" in string or "https://" in string:
-        return True
+    return "http://" in string or "https://" in string
 
 
 def is_string_valid_youtube_url(string):
     """Check if watch? or be/ in string and return bool value."""
-    if "watch?" in string or "be/" in string:
-        return True
+    return "watch?" in string or "be/" in string
 
 
 def cut_url_to_id(url):
@@ -152,8 +150,7 @@ def want_another_video_added():
 
 def has_space_in_title(title):
     """Return True if space in title."""
-    if " " in title:
-        return True
+    return " " in title
 
 
 def replace_space_in_title(title_with_space):
@@ -168,9 +165,10 @@ def get_human_readable_title(title):
 
 def has_no_playlist_title(playlist_title):
     """If no playlist title exists print it out and return bool value."""
-    if playlist_title == "":
-        print("\nThere is no title for your playlist yet. Would you like to add one?\n")
-        return True
+    if playlist_title != "":
+        return False
+    print("\nThere is no title for your playlist yet. Would you like to add one?\n")
+    return True
 
 
 def has_playlist_title():

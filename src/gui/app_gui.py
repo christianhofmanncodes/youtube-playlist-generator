@@ -66,7 +66,10 @@ class Ui(QMainWindow):
             self.listWidget_playlist_items.edit(index)
 
     def add_button_pressed(self):
-        """Get content from textEdit field and convert URL to ID if necessary. Otherwise add new item to playlist."""
+        """
+        Get content from textEdit field and convert URL to ID if necessary.
+        Otherwise add new item to playlist.
+        """
         text = self.textEdit_url_id.toPlainText()
         if text != "":
             if Ui.is_string_valid_url(self, text) and Ui.is_string_valid_youtube_url(
@@ -85,13 +88,11 @@ class Ui(QMainWindow):
 
     def is_string_valid_url(self, string):
         """Check if http:// or https:// in string and return bool value."""
-        if "http://" in string or "https://" in string:
-            return True
+        return "http://" in string or "https://" in string
 
     def is_string_valid_youtube_url(self, string):
         """Check if watch? or be/ in string and return bool value."""
-        if "watch?" in string or "be/" in string:
-            return True
+        return "watch?" in string or "be/" in string
 
     def cut_url_to_id(self, url):
         """Return id from video URL."""
@@ -105,8 +106,7 @@ class Ui(QMainWindow):
         """Return True if two ore more items in playlist."""
         playlist = self.listWidget_playlist_items
         playlist_items = [playlist.item(x) for x in range(playlist.count())]
-        if len(playlist_items) >= 2:
-            return True
+        return len(playlist_items) >= 2
 
     def is_playlist_widget_empty(self):
         """Return True if no items in the playlist."""
@@ -122,7 +122,10 @@ class Ui(QMainWindow):
         self.pushButton_generate.setEnabled(False)
 
     def clear_playlist_button_clicked(self):
-        """If playlist should be deleted remove all items in playlist and disable all buttons and clear playlist title field."""
+        """
+        If playlist should be deleted remove all items in playlist and disable all buttons
+        and clear playlist title field.
+        """
         dlg = AskClearDialog(self)
         if dlg.exec():
             self.listWidget_playlist_items.clear()
@@ -149,8 +152,7 @@ class Ui(QMainWindow):
 
     def has_textedit_playlist_generated_url_content(self):
         """Return True if textEdit_playlist_generated_url is not empty."""
-        if self.textEdit_playlist_generated_url.toPlainText() != "":
-            return True
+        return self.textEdit_playlist_generated_url.toPlainText() != ""
 
     def copy_button_pressed(self):
         """Get content from textEdit_playlist_generated_url and copy it to clipboard."""
@@ -224,7 +226,10 @@ class Ui(QMainWindow):
             print("No file was exported.")
 
     def generate_button_pressed(self):
-        """Check if playlist title empty, ask if it should be added. Otherwise generate playlist URL."""
+        """
+        Check if playlist title empty, ask if it should be added.
+        Otherwise generate playlist URL.
+        """
         if self.textEdit_playlist_title.toPlainText() == "":
             dlg = AskEmptyPlaylistTitle(self)
             if dlg.exec():
@@ -276,8 +281,7 @@ class Ui(QMainWindow):
 
     def has_space_in_title(self, title):
         """Return True if space in title."""
-        if " " in title:
-            return True
+        return " " in title
 
     def replace_space_in_title(self, title_with_space):
         """Add URL encoding to playlist title."""
@@ -492,7 +496,7 @@ class AskClearDialog(QDialog):
 
 class ErrorCreatingURLDialog(QDialog):
     """
-    Class for the dialog if something went wrong with the creation of the playlist URL with all its components.
+    Class for the dialog if something went wrong with the creation of the playlist URL.
     """
 
     def __init__(self, parent=None):
@@ -507,9 +511,12 @@ class ErrorCreatingURLDialog(QDialog):
         self.button_box.accepted.connect(self.accept)
 
         self.layout = QVBoxLayout()
-        message = QLabel(
-            "There was an error with creating the playlist url. \nCheck if all video ids are valid and correct."
+        message_tuple = (
+            "There was an error with creating the playlist url. \n",
+            "Check if all video ids are valid and correct.",
         )
+        message_text = "".join(message_tuple)
+        message = QLabel(message_text)
         self.layout.addWidget(message)
         self.layout.addWidget(self.button_box)
         self.setLayout(self.layout)
