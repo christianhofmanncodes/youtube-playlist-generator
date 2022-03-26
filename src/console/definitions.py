@@ -274,11 +274,8 @@ def generate_video_ids_url(comma_seperated_string):
 def generate_playlist_url(video_ids_url):
     """Generate the playlist URL from the video ids URL."""
     try:
-        default_https_context = ssl._create_default_https_context
-        unverified_context = ssl._create_unverified_context
-        default_https_context = unverified_context
-        # response = request.urlopen(video_ids_url)
-        with request.urlopen(video_ids_url) as response:
+        context = ssl._create_unverified_context()
+        with request.urlopen(video_ids_url, context=context) as response:
             playlist_link = response.geturl()
             playlist_link = playlist_link.split("list=")[1]
 
