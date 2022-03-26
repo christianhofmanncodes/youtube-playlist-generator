@@ -61,6 +61,12 @@
     <property name="sizeAdjustPolicy">
      <enum>QAbstractScrollArea::AdjustToContents</enum>
     </property>
+    <property name="tabChangesFocus">
+     <bool>true</bool>
+    </property>
+    <property name="acceptRichText">
+     <bool>false</bool>
+    </property>
     <property name="placeholderText">
      <string>URL or ID</string>
     </property>
@@ -80,6 +86,9 @@
     <property name="text">
      <string>Add</string>
     </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QTextEdit" name="textEdit_playlist_title">
     <property name="geometry">
@@ -92,6 +101,12 @@
     </property>
     <property name="cursor" stdset="0">
      <cursorShape>IBeamCursor</cursorShape>
+    </property>
+    <property name="tabChangesFocus">
+     <bool>true</bool>
+    </property>
+    <property name="acceptRichText">
+     <bool>false</bool>
     </property>
     <property name="placeholderText">
      <string>Playlist Title</string>
@@ -106,17 +121,29 @@
       <height>192</height>
      </rect>
     </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::DefaultContextMenu</enum>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="tabKeyNavigation">
+     <bool>true</bool>
+    </property>
     <property name="dragEnabled">
      <bool>true</bool>
     </property>
     <property name="dragDropMode">
-     <enum>QAbstractItemView::DragOnly</enum>
+     <enum>QAbstractItemView::InternalMove</enum>
     </property>
     <property name="defaultDropAction">
      <enum>Qt::MoveAction</enum>
     </property>
     <property name="alternatingRowColors">
      <bool>false</bool>
+    </property>
+    <property name="selectionBehavior">
+     <enum>QAbstractItemView::SelectItems</enum>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit_playlist_generated_url">
@@ -133,6 +160,12 @@
     </property>
     <property name="cursor" stdset="0">
      <cursorShape>ForbiddenCursor</cursorShape>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
