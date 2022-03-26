@@ -1,3 +1,4 @@
+"""app module"""
 from os import system, name, path
 import sys
 import config
@@ -30,10 +31,12 @@ basedir = path.dirname(__file__)
 
 
 def clear():
+    """Remove text from console."""
     _ = system("cls") if name == "nt" else system("clear")
 
 
 def welcome_message():
+    """First execute clear() and then print out welcome message."""
     clear()
     print("-" * 62)
     print("Welcome to the YouTube Playlist Generator by Christian Hofmann")
@@ -41,6 +44,7 @@ def welcome_message():
 
 
 def main_menu():
+    """Print out choices and get user input. If choice exists go to the function."""
     print("[0] to view current playlist")
     print("[1] to create a new playlist")
     print("[2] to add videos to the playlist")
@@ -70,6 +74,7 @@ def main_menu():
 
 
 def option_zero():
+    """View current playlist as a table."""
     clear()
     content_tuple = read_csv_and_add_content_to_tuple()
     content_list = join_tuple(content_tuple)
@@ -88,6 +93,7 @@ def option_zero():
 
 
 def option_one():
+    """Create a new playlist (delete all items in playlist) if user accepts it."""
     clear()
     if is_empty_csv(f"{path.join(basedir, 'data', 'video_ids.csv')}"):
         print("\nYour playlist is already empty!\n")
@@ -99,6 +105,7 @@ def option_one():
 
 
 def option_two():
+    """Add new videos to playlist either by their URL or ID."""
     clear()
     user_input = input_url_or_id()
     if is_string_valid_url(user_input) and is_string_valid_youtube_url(
@@ -115,6 +122,7 @@ def option_two():
 
 
 def option_three():
+    """View current items in playlist as a table and delete video id from user input if it exists."""
     clear()
     content_tuple = read_csv_and_add_content_to_tuple()
     content_list = join_tuple(content_tuple)
@@ -129,6 +137,7 @@ def option_three():
 
 
 def option_four():
+    """Generate playlist URL if more than two ids are in the current playlist."""
     clear()
     if not is_empty_csv(f"{path.join(basedir, 'data', 'video_ids.csv')}"):
         content_tuple = read_csv_and_add_content_to_tuple()
@@ -150,10 +159,12 @@ def option_four():
 
 
 def option_five():
+    """Exit application."""
     sys.exit(0)
 
 
 def main():
+    """Check if first start bool is true, output welcome message. Otherwise execute main_menu()."""
     if config.FIRST_START is True:
         welcome_message()
         config.FIRST_START = False

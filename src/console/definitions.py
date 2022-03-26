@@ -12,25 +12,30 @@ basedir = os.path.dirname(__file__)
 
 
 def input_url_or_id():
+    """Output message and return user input as a string."""
     message = "\nPlease enter a new ID or URL of a YouTube video: "
     return get_input(message)
 
 
 def get_input(message):
+    """Return user input as a string."""
     return str(input(message))
 
 
 def is_string_valid_url(string):
+    """Check if http:// or https:// in string and return bool value."""
     if "http://" in string or "https://" in string:
         return True
 
 
 def is_string_valid_youtube_url(string):
+    """Check if watch? or be/ in string and return bool value."""
     if "watch?" in string or "be/" in string:
         return True
 
 
 def cut_url_to_id(url):
+    """Return id from video URL."""
     if "v=" in url:
         get_id = url.split("v=")
     elif "be/" in url:
@@ -39,6 +44,7 @@ def cut_url_to_id(url):
 
 
 def read_csv_and_add_content_to_tuple():
+    """Get content from csv-file and return it as a tuple."""
     with open(
         f"{os.path.join(basedir, 'data', 'video_ids.csv')}",
         "r",
@@ -49,10 +55,12 @@ def read_csv_and_add_content_to_tuple():
 
 
 def join_tuple(content_tuple):
+    """Convert tuple to list."""
     return list(map(" ".join, content_tuple))
 
 
 def is_empty_csv(path):
+    """Check if no second line exists in csv-file and return bool value."""
     with open(
         path,
         encoding="UTF-8",
@@ -65,10 +73,12 @@ def is_empty_csv(path):
 
 
 def create_comma_seperated_string(content_list):
+    """Add commas after each item from list and return it as a string."""
     return ",".join(content_list)
 
 
 def read_content_from_file(path):
+    """Get content from any file and return it."""
     with open(
         path,
         "r",
@@ -78,6 +88,7 @@ def read_content_from_file(path):
 
 
 def read_csv_and_add_content_to_list():
+    """Get content from csv-file and return it as a list."""
     with open(
         f"{os.path.join(basedir, 'data', 'video_ids.csv')}",
         "r",
@@ -87,10 +98,12 @@ def read_csv_and_add_content_to_list():
 
 
 def remove_duplicates_from_list(content_list):
+    """Remove duplicate entries from list."""
     return list(dict.fromkeys(content_list))
 
 
 def add_id_to_csv(video_id):
+    """Write new video id to csv-file."""
     print(f"\nAdding new ID '{video_id}' to playlist...")
     with open(
         f"{os.path.join(basedir, 'data', 'video_ids.csv')}",
@@ -102,14 +115,17 @@ def add_id_to_csv(video_id):
 
 
 def convert_list_to_table(content_list):
+    """Convert list to pandas DataFrame."""
     return pd.DataFrame(data=content_list, columns=["video_ids"])
 
 
 def count_items_in_table(pandas_dataframe):
+    """Return sum of items in table."""
     return str(pandas_dataframe.shape[0])
 
 
 def delete_items_from_playlist(content_list):
+    """Ask for specific item in playlist and delete it if it exists."""
     message = "Which item do you want to delete from the playlist?: "
     try:
         id_to_be_removed = get_input(message)
@@ -128,31 +144,37 @@ def delete_items_from_playlist(content_list):
 
 
 def want_another_video_added():
+    """Check if another video should be added."""
     print("Do you want to add another video to the playlist?\n")
     message = "Press [y] for yes and [n] for no: "
     return get_input(message) == "y"
 
 
 def has_space_in_title(title):
+    """Return True if space in title."""
     if " " in title:
         return True
 
 
 def replace_space_in_title(title_with_space):
+    """Add URL encoding to playlist title."""
     return title_with_space.replace(" ", "%20")
 
 
 def get_human_readable_title(title):
+    """Remove URL encoding from playlist title."""
     return title.replace("%20", " ")
 
 
 def has_no_playlist_title(playlist_title):
+    """If no playlist title exists print it out and return bool value."""
     if playlist_title == "":
         print("\nThere is no title for your playlist yet. Would you like to add one?\n")
         return True
 
 
 def has_playlist_title():
+    """Check if playlist title already exists."""
     print(
         f"\nThere is already a title for your YouTube playlist: {config.YOUTUBE_PLAYLIST_TITLE}"
     )
@@ -162,11 +184,13 @@ def has_playlist_title():
 
 
 def want_playlist_title():
+    """Ask if playlist title should be added."""
     message = "Press [y] for yes and [n] for no: "
     return get_input(message) == "y"
 
 
 def get_title_for_playlist():
+    """Receive user input and set it as a playlist title."""
     message = "\nWhat title do you want to choose for your playlist?\n"
     title = get_input(message)
 
@@ -176,6 +200,7 @@ def get_title_for_playlist():
 
 
 def add_title_to_playlist(playlist_title):
+    """Add a title to the playlist."""
     if has_no_playlist_title(playlist_title) is True:
         if want_playlist_title() is False:
             config.YOUTUBE_PLAYLIST_TITLE = ""
@@ -190,6 +215,7 @@ def add_title_to_playlist(playlist_title):
 
 
 def change_title_from_playlist():
+    """Change title from the playlist."""
     config.YOUTUBE_PLAYLIST_TITLE = get_title_for_playlist()
     print(
         f"\nTitle '{get_human_readable_title(config.YOUTUBE_PLAYLIST_TITLE)}'",
@@ -198,6 +224,7 @@ def change_title_from_playlist():
 
 
 def want_playlist_deleted():
+    """Ask if playlist should be deleted."""
     print("\nDo you really want to create a new playlist?")
     print("That deletes all of your videos!\n")
     message = "Press [y] yes or [n] for no: "
@@ -206,6 +233,7 @@ def want_playlist_deleted():
 
 
 def reset_playlist():
+    """Delete all videos from playlist."""
     print("\nRemoving all videos from playlist...")
     with open(
         f"{os.path.join(basedir, 'data', 'video_ids.csv')}",
@@ -218,19 +246,23 @@ def reset_playlist():
 
 
 def create_playlist_url_with_title(video_ids, playlist_title):
+    """Create playlist URL with a title from video ids and title."""
     return f"{config.YOUTUBE_PLAYLIST_BASE_URL}{video_ids}&title={playlist_title}"
 
 
 def create_playlist_url_without_title(video_ids):
+    """Create playlist URL without a title from video ids."""
     return f"{config.YOUTUBE_PLAYLIST_BASE_URL}{video_ids}"
 
 
 def open_url_in_webbrowser(url):
+    """Open a URL in Webbrowser in a new tab."""
     print(f"\nOpening {url} in new Web browser tab...\n")
     webbrowser.open_new_tab(url)
 
 
 def generate_video_ids_url(comma_seperated_string):
+    """Generate the video ids URL from a comma seperated string."""
     if config.YOUTUBE_PLAYLIST_TITLE != "":
         config.YOUTUBE_GENERATED_VIDEO_IDS_URL = create_playlist_url_with_title(
             comma_seperated_string, config.YOUTUBE_PLAYLIST_TITLE
@@ -242,6 +274,7 @@ def generate_video_ids_url(comma_seperated_string):
 
 
 def generate_playlist_url(video_ids_url):
+    """Generate the playlist URL from the video ids URL."""
     try:
         ssl._create_default_https_context = ssl._create_unverified_context
         response = request.urlopen(video_ids_url)
@@ -263,8 +296,10 @@ def generate_playlist_url(video_ids_url):
 
 
 def output_generated_playlist_url():
+    """Print out the generated playlist URL."""
     print(f"Here's your URL for the playlist: {config.YOUTUBE_GENERATED_PLAYLIST_URL}")
 
 
 def open_playlist_url_in_webbrowser():
+    """Open the generated playlist URL in Webbrowser."""
     open_url_in_webbrowser(config.YOUTUBE_GENERATED_PLAYLIST_URL)
