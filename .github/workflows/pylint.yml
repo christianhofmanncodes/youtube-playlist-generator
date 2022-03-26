@@ -23,4 +23,4 @@ jobs:
         pip install qt_material
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        -m pylint $(git ls-files '*.py')
