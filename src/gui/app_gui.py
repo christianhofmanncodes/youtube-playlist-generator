@@ -224,7 +224,7 @@ class Ui(QMainWindow):
 
     def generate_video_ids_url(self, comma_seperated_string):
         if self.textEdit_playlist_title.toPlainText() == "":
-            playlist_url = Ui.create_playlist_url_without_title(
+            video_ids_url = Ui.create_playlist_url_without_title(
                 self, comma_seperated_string
             )
 
@@ -232,15 +232,17 @@ class Ui(QMainWindow):
             title_no_spaces = Ui.replace_space_in_title(
                 self, self.textEdit_playlist_title.toPlainText()
             )
-            playlist_url = Ui.create_playlist_url_with_title(
+            video_ids_url = Ui.create_playlist_url_with_title(
                 self, comma_seperated_string, title_no_spaces
             )
         else:
-            playlist_url = Ui.create_playlist_url_with_title(
+            video_ids_url = Ui.create_playlist_url_with_title(
                 self, comma_seperated_string, self.textEdit_playlist_title.toPlainText()
             )
-        self.textEdit_playlist_generated_url.setText(playlist_url)
-        Ui.open_playlist_url_in_webbrowser(self, playlist_url)
+        playlist_url = self.generate_playlist_url(video_ids_url)
+        if playlist_url != "":
+            self.textEdit_playlist_generated_url.setText(playlist_url)
+            Ui.open_playlist_url_in_webbrowser(self, playlist_url)
 
     def has_space_in_title(self, title):
         if " " in title:
@@ -263,17 +265,13 @@ class Ui(QMainWindow):
             playlist_link = response.geturl()
             playlist_link = playlist_link.split("list=")[1]
 
-            youtube_generated_playlist_url = (
+            return (
                 f"https://www.youtube.com/playlist?list={playlist_link}"
                 + "&disable_polymer=true"
             )
-            return True
         except IndexError:
-            print(
-                "\nThere was an error with creating the playlist url.",
-                "Check if all video ids are valid and correct.\n",
-            )
-            return False
+            ErrorCreatingURLDialog(self).exec()
+            return ""
 
     def open_url_in_webbrowser(self, url):
         print(f"\nOpening {url} in new Web browser tab...\n")
@@ -439,6 +437,26 @@ class AskClearDialog(QDialog):
         self.layout = QVBoxLayout()
         message = QLabel(
             "Do you really want to clear your playlist? That deletes all of your items!"
+        )
+        self.layout.addWidget(message)
+        self.layout.addWidget(self.button_box)
+        self.setLayout(self.layout)
+
+
+class ErrorCreatingURLDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Error with creating playlist URL.")
+        self.setFixedSize(450, 120)
+
+        q_btn = QDialogButtonBox.StandardButton.Ok
+
+        self.button_box = QDialogButtonBox(q_btn)
+        self.button_box.accepted.connect(self.accept)
+
+        self.layout = QVBoxLayout()
+        message = QLabel(
+            "There was an error with creating the playlist url. \nCheck if all video ids are valid and correct."
         )
         self.layout.addWidget(message)
         self.layout.addWidget(self.button_box)
