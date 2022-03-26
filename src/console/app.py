@@ -82,7 +82,7 @@ def option_zero():
 
     list_with_video_ids = convert_list_to_table(list_without_duplicates)
 
-    if list:
+    if len(list_with_video_ids) != 0:
         print(
             f"\nThese video ids are currently in your playlist: {list_with_video_ids}\n"
         )
@@ -122,17 +122,25 @@ def option_two():
 
 
 def option_three():
-    """View current items in playlist as a table and delete video id from user input if it exists."""
+    """
+    View current items in playlist as a table
+    and delete video id from user input if it exists.
+    """
     clear()
     content_tuple = read_csv_and_add_content_to_tuple()
     content_list = join_tuple(content_tuple)
     list_without_duplicates = remove_duplicates_from_list(content_list)
 
-    print(
-        "\nThese video ids are currently in your playlist:",
-        f"{convert_list_to_table(list_without_duplicates)}\n",
-    )
-    delete_items_from_playlist(list_without_duplicates)
+    list_with_video_ids = convert_list_to_table(list_without_duplicates)
+
+    if len(list_with_video_ids) != 0:
+        print(
+            "\nThese video ids are currently in your playlist:",
+            f"{convert_list_to_table(list_without_duplicates)}\n",
+        )
+        delete_items_from_playlist(list_without_duplicates)
+    else:
+        print("There are no videos in your playlist yet.\n")
     main_menu()
 
 
