@@ -15,9 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- output correct playlist url not video ids url
+- Output correct playlist url not video ids url
+- Replace AppleSystemUIFont with Roboto
 
 ### Removed
+
+- Wrong link in InfoDialog
 
 ## 0.0.1 - 2022-03-20
 
