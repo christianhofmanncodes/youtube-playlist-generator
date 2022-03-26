@@ -67,6 +67,7 @@ class Ui(QMainWindow):
                 self.listWidget_playlist_items.addItem(str(user_id))
             else:
                 self.listWidget_playlist_items.addItem(str(text))
+                # self.listWidget_playlist_items.scrollToItem(item)
             self.textEdit_url_id.clear()
             self.pushButton_clear_playlist.setEnabled(True)
             self.pushButton_delete_item.setEnabled(True)
@@ -213,7 +214,9 @@ class Ui(QMainWindow):
             playlist_items = [playlist.item(x).text() for x in range(playlist.count())]
             print(playlist_items)
 
-            comma_seperated_string = Ui.create_comma_seperated_string(playlist_items)
+            comma_seperated_string = Ui.create_comma_seperated_string(
+                self, playlist_items
+            )
             Ui.generate_video_ids_url(self, comma_seperated_string)
 
     def create_comma_seperated_string(self, content_list):
@@ -221,21 +224,23 @@ class Ui(QMainWindow):
 
     def generate_video_ids_url(self, comma_seperated_string):
         if self.textEdit_playlist_title.toPlainText() == "":
-            playlist_url = Ui.create_playlist_url_without_title(comma_seperated_string)
+            playlist_url = Ui.create_playlist_url_without_title(
+                self, comma_seperated_string
+            )
 
-        elif Ui.has_space_in_title(self.textEdit_playlist_title.toPlainText()):
+        elif Ui.has_space_in_title(self, self.textEdit_playlist_title.toPlainText()):
             title_no_spaces = Ui.replace_space_in_title(
-                self.textEdit_playlist_title.toPlainText()
+                self, self.textEdit_playlist_title.toPlainText()
             )
             playlist_url = Ui.create_playlist_url_with_title(
-                comma_seperated_string, title_no_spaces
+                self, comma_seperated_string, title_no_spaces
             )
         else:
             playlist_url = Ui.create_playlist_url_with_title(
-                comma_seperated_string, self.textEdit_playlist_title.toPlainText()
+                self, comma_seperated_string, self.textEdit_playlist_title.toPlainText()
             )
         self.textEdit_playlist_generated_url.setText(playlist_url)
-        Ui.open_playlist_url_in_webbrowser(playlist_url)
+        Ui.open_playlist_url_in_webbrowser(self, playlist_url)
 
     def has_space_in_title(self, title):
         if " " in title:
@@ -275,7 +280,7 @@ class Ui(QMainWindow):
         webbrowser.open_new_tab(url)
 
     def open_playlist_url_in_webbrowser(self, playlist_url):
-        Ui.open_url_in_webbrowser(playlist_url)
+        Ui.open_url_in_webbrowser(self, playlist_url)
 
     def save_settings_to_conf_file(self, settings_dict):
         with open(
