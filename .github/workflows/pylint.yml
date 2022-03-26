@@ -23,4 +23,4 @@ jobs:
         pip install qt_material
     - name: Analysing the code with pylint
       run: |
-        pylint --ignore-imports --extension-pkg-whitelist PyQt6 $(git ls-files '*.py')
+        pylint --ignore-imports true --extension-pkg-whitelist PyQt6 $(git ls-files '*.py')
