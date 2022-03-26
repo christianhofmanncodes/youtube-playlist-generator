@@ -112,8 +112,7 @@ class Ui(QMainWindow):
         """Return True if no items in the playlist."""
         playlist = self.listWidget_playlist_items
         playlist_items = [playlist.item(x) for x in range(playlist.count())]
-        if not playlist_items:
-            return True
+        return not playlist_items
 
     def disable_delete_clear_generate_buttons(self):
         """Disable delete, clear and generate buttons."""
@@ -298,11 +297,10 @@ class Ui(QMainWindow):
     def generate_playlist_url(self, video_ids_url):
         """Generate the playlist URL from the video ids URL."""
         try:
-            ssl._create_default_https_context = ssl._create_unverified_context
-            response = request.urlopen(video_ids_url)
-
-            playlist_link = response.geturl()
-            playlist_link = playlist_link.split("list=")[1]
+            context = ssl._create_unverified_context()
+            with request.urlopen(video_ids_url, context=context) as response:
+                playlist_link = response.geturl()
+                playlist_link = playlist_link.split("list=")[1]
 
             return (
                 f"https://www.youtube.com/playlist?list={playlist_link}"
