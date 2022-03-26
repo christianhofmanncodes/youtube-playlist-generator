@@ -133,4 +133,4 @@ This code is free software licensed under the [GPL v3.0](https://choosealicense.
 
 ## Feedback
 
-If you have any feedback, please reach out to me at: christianhofmann@mail.de
+If you have any feedback, please reach out to me at: contact@youtube-playlist-generator.com
