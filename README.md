@@ -20,6 +20,8 @@ Choose the version that you prefer.
 - Add URL or ID
 - Specify playlist title
 - Clear playlist (deletes all items in the playlist)
+- Rename specific items
+- Change order of playlist items
 - Delete specific items
 - Generate playlist URL
 - Automatically open generated URL in default web browser
@@ -81,7 +83,7 @@ Run the app (console version)
 Run the app (GUI version)
 
 ```bash
-  python src/gui/app-gui.py
+  python src/gui/app_gui.py
 ```
 
 Note: On Linux and macOS you have to use `pip3` and `python3`.  
