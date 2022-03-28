@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>460</width>
-    <height>540</height>
+    <height>550</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,19 +19,17 @@
   <property name="minimumSize">
    <size>
     <width>460</width>
-    <height>540</height>
+    <height>550</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>460</width>
-    <height>540</height>
+    <height>550</height>
    </size>
   </property>
   <property name="font">
-   <font>
-    <family>Roboto</family>
-   </font>
+   <font/>
   </property>
   <property name="windowTitle">
    <string>YouTube Playlist Generator</string>
@@ -39,68 +37,15 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
+  <property name="locale">
+   <locale language="English" country="Germany"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTextEdit" name="textEdit_url_id">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>321</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Roboto</family>
-      <pointsize>13</pointsize>
-     </font>
-    </property>
-    <property name="cursor" stdset="0">
-     <cursorShape>IBeamCursor</cursorShape>
-    </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="sizeAdjustPolicy">
-     <enum>QAbstractScrollArea::AdjustToContents</enum>
-    </property>
-    <property name="tabChangesFocus">
-     <bool>true</bool>
-    </property>
-    <property name="acceptRichText">
-     <bool>false</bool>
-    </property>
-    <property name="placeholderText">
-     <string>URL or ID</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_add">
-    <property name="geometry">
-     <rect>
-      <x>339</x>
-      <y>20</y>
-      <width>111</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="text">
-     <string>Add</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-   </widget>
    <widget class="QTextEdit" name="textEdit_playlist_title">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>90</y>
+      <y>100</y>
       <width>441</width>
       <height>44</height>
      </rect>
@@ -122,7 +67,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>140</y>
+      <y>150</y>
       <width>441</width>
       <height>192</height>
      </rect>
@@ -159,8 +104,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>430</y>
-      <width>351</width>
+      <y>480</y>
+      <width>361</width>
       <height>44</height>
      </rect>
     </property>
@@ -187,7 +132,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'.AppleSystemUIFont';&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="placeholderText">
-     <string>Generated playlist URL will show up here...</string>
+     <string>Playlist URL will show up here...</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_generate">
@@ -196,59 +141,28 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>350</y>
-      <width>141</width>
+      <x>10</x>
+      <y>400</y>
+      <width>441</width>
       <height>61</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Roboto</family>
+     </font>
     </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(227, 6, 19);</string>
+     <string notr="true">QPushButton:enabled {
+	color: rgb(255, 255, 255);
+	background-color: rgb(255, 23, 68);
+}</string>
     </property>
     <property name="text">
      <string>Generate</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_export">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>490</y>
-      <width>101</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="text">
-     <string>Export</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_import">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>490</y>
-      <width>101</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="autoFillBackground">
-     <bool>true</bool>
-    </property>
-    <property name="text">
-     <string>Import</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_copy">
@@ -257,9 +171,9 @@ background-color: rgb(227, 6, 19);</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>430</y>
-      <width>80</width>
+      <x>379</x>
+      <y>480</y>
+      <width>71</width>
       <height>44</height>
      </rect>
     </property>
@@ -268,39 +182,6 @@ background-color: rgb(227, 6, 19);</string>
     </property>
     <property name="text">
      <string>Copy</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_credits">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>490</y>
-      <width>201</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <italic>false</italic>
-     </font>
-    </property>
-    <property name="cursor">
-     <cursorShape>ArrowCursor</cursorShape>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(126, 126, 126);</string>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;YouTube Playlist Generator by Christian Hofmann | &lt;a href=&quot;settings&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Settings&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="wordWrap">
-     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_delete_item">
@@ -312,7 +193,7 @@ background-color: rgb(227, 6, 19);</string>
       <x>160</x>
       <y>350</y>
       <width>141</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="cursor">
@@ -325,7 +206,7 @@ background-color: rgb(227, 6, 19);</string>
      <string>Delete Item</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_clear_playlist">
+   <widget class="QPushButton" name="pushButton_reset_playlist">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -334,7 +215,7 @@ background-color: rgb(227, 6, 19);</string>
       <x>10</x>
       <y>350</y>
       <width>141</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="cursor">
@@ -344,11 +225,475 @@ background-color: rgb(227, 6, 19);</string>
      <string notr="true"/>
     </property>
     <property name="text">
-     <string>Clear Playlist</string>
+     <string>Reset Playlist</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_shuffle_playlist">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>350</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Shuffle</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_add">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>20</y>
+      <width>141</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string>Add</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_url_id">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>291</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="cursor" stdset="0">
+     <cursorShape>IBeamCursor</cursorShape>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustToContents</enum>
+    </property>
+    <property name="tabChangesFocus">
+     <bool>true</bool>
+    </property>
+    <property name="acceptRichText">
+     <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>URL or ID</string>
     </property>
    </widget>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>460</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="font">
+     <font>
+      <family>Roboto</family>
+     </font>
+    </property>
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionImport"/>
+    <addaction name="separator"/>
+    <addaction name="actionExport"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout"/>
+    <addaction name="actionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="font">
+     <font>
+      <family>Roboto</family>
+     </font>
+    </property>
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionCut"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
+    <addaction name="separator"/>
+    <addaction name="actionSelect_All"/>
+   </widget>
+   <widget class="QMenu" name="menuPlaylist">
+    <property name="font">
+     <font>
+      <family>Roboto</family>
+     </font>
+    </property>
+    <property name="title">
+     <string>Playlist</string>
+    </property>
+    <addaction name="actionAdd_item"/>
+    <addaction name="actionDelete_Item"/>
+    <addaction name="actionRename_item"/>
+    <addaction name="separator"/>
+    <addaction name="actionShuffle"/>
+    <addaction name="separator"/>
+    <addaction name="actionGenerate_Playlist"/>
+    <addaction name="separator"/>
+    <addaction name="actionReset_Playlist"/>
+    <addaction name="separator"/>
+    <addaction name="actionCopy_URL"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="font">
+     <font>
+      <family>Roboto</family>
+     </font>
+    </property>
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionGithub"/>
+    <addaction name="separator"/>
+    <addaction name="actionReport_a_bug"/>
+    <addaction name="actionContact"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuPlaylist"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import Playlist</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Export Playlist</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Alt+,</string>
+   </property>
+  </action>
+  <action name="actionShare">
+   <property name="text">
+    <string>Share</string>
+   </property>
+  </action>
+  <action name="actionReset_Playlist">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Reset Playlist</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Alt+R</string>
+   </property>
+  </action>
+  <action name="actionGithub">
+   <property name="text">
+    <string>Github</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="text">
+    <string>Cut</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionGenerate_Playlist">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Generate Playlist</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="actionShuffle">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Shuffle</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Alt+S</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="actionSelect_All">
+   <property name="text">
+    <string>Select All</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionReport_a_bug">
+   <property name="text">
+    <string>Report a bug</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionContact">
+   <property name="text">
+    <string>Contact</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+  </action>
+  <action name="actionDelete_Item">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Delete item</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="actionAdd_item">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Add item</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Return</string>
+   </property>
+  </action>
+  <action name="actionCopy_URL">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Copy URL</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
+  </action>
+  <action name="actionRename_item">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rename item</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Roboto</family>
+    </font>
+   </property>
+  </action>
  </widget>
+ <tabstops>
+  <tabstop>textEdit_url_id</tabstop>
+  <tabstop>pushButton_add</tabstop>
+  <tabstop>textEdit_playlist_title</tabstop>
+  <tabstop>listWidget_playlist_items</tabstop>
+  <tabstop>pushButton_reset_playlist</tabstop>
+  <tabstop>pushButton_delete_item</tabstop>
+  <tabstop>pushButton_shuffle_playlist</tabstop>
+  <tabstop>pushButton_generate</tabstop>
+  <tabstop>textEdit_playlist_generated_url</tabstop>
+  <tabstop>pushButton_copy</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

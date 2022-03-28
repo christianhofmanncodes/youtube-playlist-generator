@@ -1,5 +1,6 @@
 """app_gui module"""
 import os
+import random
 import sys
 import webbrowser
 import ssl
@@ -7,7 +8,7 @@ import json
 from urllib import request
 from PyQt6 import uic
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QClipboard
+from PyQt6.QtGui import QClipboard, QFont
 from PyQt6.QtWidgets import (
     QMainWindow,
     QFileDialog,
@@ -36,17 +37,78 @@ class Ui(QMainWindow):
         """Connect UI components with specific functions."""
         super(Ui, self).__init__()
         uic.loadUi(f"{os.path.join(basedir, 'forms', 'form.ui')}", self)
+        self.setFont(QFont("Roboto"))
         self.pushButton_add.clicked.connect(self.add_button_pressed)
+        self.actionAdd_item.triggered.connect(self.add_button_pressed)
         self.pushButton_copy.clicked.connect(self.copy_button_pressed)
-        self.pushButton_import.clicked.connect(self.import_button_pressed)
-        self.pushButton_export.clicked.connect(self.export_button_pressed)
+        self.actionCopy_URL.triggered.connect(self.copy_button_pressed)
+        self.actionImport.triggered.connect(self.import_button_pressed)
+        self.actionExport.triggered.connect(self.export_button_pressed)
         self.pushButton_generate.clicked.connect(self.generate_button_pressed)
+        self.actionGenerate_Playlist.triggered.connect(self.generate_button_pressed)
         self.pushButton_delete_item.clicked.connect(self.delete_item_button_clicked)
-        self.pushButton_clear_playlist.clicked.connect(
-            self.clear_playlist_button_clicked
+        self.actionDelete_Item.triggered.connect(self.delete_item_button_clicked)
+        self.pushButton_reset_playlist.clicked.connect(
+            self.reset_playlist_button_clicked
         )
+        self.pushButton_shuffle_playlist.clicked.connect(self.shuffle_clicked)
+        self.actionReset_Playlist.triggered.connect(self.reset_playlist_button_clicked)
         self.listWidget_playlist_items.itemDoubleClicked.connect(self.double_clicked)
-        self.label_credits.linkActivated.connect(self.credits_label_clicked)
+        self.actionRename_item.triggered.connect(self.double_clicked)
+        self.actionSettings.triggered.connect(self.settings_clicked)
+        self.actionGithub.triggered.connect(self.github_clicked)
+        self.actionReport_a_bug.triggered.connect(self.report_a_bug)
+        self.actionContact.triggered.connect(self.contact)
+        self.actionAbout.triggered.connect(self.info_button_pressed)
+        self.actionShuffle.triggered.connect(self.shuffle_clicked)
+        self.textEdit_url_id.textChanged.connect(self.url_id_text_changed)
+        self.textEdit_url_id.setFocus()
+
+    def url_id_text_changed(self):
+        if self.textEdit_url_id.toPlainText() != "":
+            self.pushButton_add.setEnabled(True)
+            self.actionAdd_item.setEnabled(True)
+        else:
+            self.pushButton_add.setEnabled(False)
+            self.actionAdd_item.setEnabled(False)
+
+    def shuffle_clicked(self):
+        """Shuffle playlist with random.shuffle()."""
+        print("Shuffle playlist...")
+        playlist = Ui.output_list_from_playlist_ids(self)
+        random.shuffle(playlist)
+        print(playlist)
+
+        ytplaylist_dict = Ui.generate_dict_from_fields(
+            self,
+            self.textEdit_playlist_title.toPlainText(),
+            playlist,  # NEEDS TO BE CHANGED
+        )
+
+        print(ytplaylist_dict)
+        self.listWidget_playlist_items.clear()
+        Ui.import_from_dict(self, ytplaylist_dict)
+
+    def info_button_pressed(self):
+        """Execute InfoDialog."""
+        dlg = InfoDialog(self)
+        dlg.exec()
+
+    def contact(self):
+        """Open default mail software with contact email address."""
+        self.open_url_in_webbrowser("mailto:contact@youtube-playlist-generator.com")
+
+    def report_a_bug(self):
+        """Open Github issue page from project."""
+        self.open_url_in_webbrowser(
+            "https://github.com/christianhofmanncodes/youtube-playlist-generator/issues"
+        )
+
+    def github_clicked(self):
+        """Open Github page from project."""
+        self.open_url_in_webbrowser(
+            "https://github.com/christianhofmanncodes/youtube-playlist-generator"
+        )
 
     def double_clicked(self, item):
         """Add flag ItemIsEditable to double clicked item in playlist."""
@@ -81,10 +143,17 @@ class Ui(QMainWindow):
                 self.listWidget_playlist_items.addItem(str(text))
                 # self.listWidget_playlist_items.scrollToItem(item)
             self.textEdit_url_id.clear()
-            self.pushButton_clear_playlist.setEnabled(True)
+            self.pushButton_reset_playlist.setEnabled(True)
             self.pushButton_delete_item.setEnabled(True)
+            self.actionDelete_Item.setEnabled(True)
+            self.actionRename_item.setEnabled(True)
+            self.actionReset_Playlist.setEnabled(True)
             if Ui.playlist_widget_has_enough_items(self):
                 self.pushButton_generate.setEnabled(True)
+                self.actionGenerate_Playlist.setEnabled(True)
+                self.actionShuffle.setEnabled(True)
+                self.pushButton_shuffle_playlist.setEnabled(True)
+                self.actionExport.setEnabled(True)
 
     def is_string_valid_url(self, string):
         """Check if http:// or https:// in string and return bool value."""
@@ -114,24 +183,33 @@ class Ui(QMainWindow):
         playlist_items = [playlist.item(x) for x in range(playlist.count())]
         return not playlist_items
 
-    def disable_delete_clear_generate_buttons(self):
-        """Disable delete, clear and generate buttons."""
-        self.pushButton_clear_playlist.setEnabled(False)
+    def disable_components(self):
+        """Disable specific components."""
+        self.pushButton_reset_playlist.setEnabled(False)
         self.pushButton_delete_item.setEnabled(False)
         self.pushButton_generate.setEnabled(False)
+        self.pushButton_shuffle_playlist.setEnabled(False)
+        self.actionReset_Playlist.setEnabled(False)
+        self.actionDelete_Item.setEnabled(False)
+        self.actionGenerate_Playlist.setEnabled(False)
+        self.actionShuffle.setEnabled(False)
+        self.actionRename_item.setEnabled(False)
+        self.actionExport.setEnabled(False)
 
-    def clear_playlist_button_clicked(self):
+    def reset_playlist_button_clicked(self):
         """
         If playlist should be deleted remove all items in playlist and disable all buttons
         and clear playlist title field.
         """
-        dlg = AskClearDialog(self)
+        dlg = AskPlaylistResetDialog(self)
         if dlg.exec():
             self.listWidget_playlist_items.clear()
             if Ui.is_playlist_widget_empty(self):
-                Ui.disable_delete_clear_generate_buttons(self)
+                Ui.disable_components(self)
                 self.pushButton_copy.setEnabled(False)
+                self.actionCopy_URL.setEnabled(False)
                 self.textEdit_playlist_title.clear()
+                self.textEdit_url_id.setFocus()
         else:
             print("No item was deleted!")
 
@@ -145,9 +223,13 @@ class Ui(QMainWindow):
                 self.listWidget_playlist_items.row(item)
             )
         if Ui.is_playlist_widget_empty(self):
-            Ui.disable_delete_clear_generate_buttons(self)
+            Ui.disable_components(self)
         elif not Ui.playlist_widget_has_enough_items(self):
             self.pushButton_generate.setEnabled(False)
+            self.actionGenerate_Playlist.setEnabled(False)
+            self.actionShuffle.setEnabled(False)
+            self.pushButton_shuffle_playlist.setEnabled(False)
+            self.actionExport.setEnabled(False)
 
     def has_textedit_playlist_generated_url_content(self):
         """Return True if textEdit_playlist_generated_url is not empty."""
@@ -185,9 +267,16 @@ class Ui(QMainWindow):
                 ytplaylist_dict = Ui.read_json_file(self, filename[0])
                 print(ytplaylist_dict)
                 Ui.import_from_dict(self, ytplaylist_dict)
-                self.pushButton_clear_playlist.setEnabled(True)
+                self.pushButton_reset_playlist.setEnabled(True)
                 self.pushButton_delete_item.setEnabled(True)
                 self.pushButton_generate.setEnabled(True)
+                self.pushButton_shuffle_playlist.setEnabled(True)
+                self.actionReset_Playlist.setEnabled(True)
+                self.actionDelete_Item.setEnabled(True)
+                self.actionGenerate_Playlist.setEnabled(True)
+                self.actionShuffle.setEnabled(True)
+                self.actionRename_item.setEnabled(True)
+                self.actionExport.setEnabled(True)
         except FileNotFoundError:
             print("No file was imported.")
 
@@ -242,6 +331,7 @@ class Ui(QMainWindow):
 
         if Ui.has_textedit_playlist_generated_url_content(self):
             self.pushButton_copy.setEnabled(True)
+            self.actionCopy_URL.setEnabled(True)
             playlist = self.listWidget_playlist_items
             playlist_items = [playlist.item(x).text() for x in range(playlist.count())]
             print(playlist_items)
@@ -346,7 +436,7 @@ class Ui(QMainWindow):
         shortcut_export_playlist = settings_dict["keyboardShortcuts"][0][
             "exportPlaylist"
         ]
-        shortcut_clear_playlist = settings_dict["keyboardShortcuts"][0]["clearPlaylist"]
+        shortcut_reset_playlist = settings_dict["keyboardShortcuts"][0]["clearPlaylist"]
         shortcut_generate_playlist = settings_dict["keyboardShortcuts"][0][
             "generatePlaylist"
         ]
@@ -376,7 +466,7 @@ class Ui(QMainWindow):
         )
 
         SettingsDialog(self).keySequenceEdit_option3.setKeySequence(
-            shortcut_clear_playlist
+            shortcut_reset_playlist
         )
 
         SettingsDialog(self).keySequenceEdit_option4.setKeySequence(
@@ -419,7 +509,7 @@ class Ui(QMainWindow):
             ],
         }
 
-    def credits_label_clicked(self):
+    def settings_clicked(self):
         """Open settings dialog."""
         settings_dict = Ui.get_settings(self)
         Ui.load_settings(self, settings_dict)
@@ -465,7 +555,7 @@ class Ui(QMainWindow):
             Ui.save_settings_to_conf_file(self, settings_dict)
 
 
-class AskClearDialog(QDialog):
+class AskPlaylistResetDialog(QDialog):
     """
     Class for the dialog to ask if the playlist should be deleted with all its components.
     """
@@ -476,6 +566,7 @@ class AskClearDialog(QDialog):
 
         self.setWindowTitle("Are you sure?")
         self.setFixedSize(450, 140)
+        self.setFont(QFont("Roboto"))
 
         q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
 
@@ -485,7 +576,7 @@ class AskClearDialog(QDialog):
 
         self.layout = QVBoxLayout()
         message = QLabel(
-            "Do you really want to clear your playlist? That deletes all of your items!"
+            "Do you really want to reset your playlist? That deletes all of your items!"
         )
         self.layout.addWidget(message)
         self.layout.addWidget(self.button_box)
@@ -502,6 +593,7 @@ class ErrorCreatingURLDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle("Error with creating playlist URL.")
         self.setFixedSize(450, 120)
+        self.setFont(QFont("Roboto"))
 
         q_btn = QDialogButtonBox.StandardButton.Ok
 
@@ -531,6 +623,7 @@ class AskEmptyPlaylistTitle(QDialog):
 
         self.setWindowTitle("Your playlist title is currently empty")
         self.setFixedSize(450, 140)
+        self.setFont(QFont("Roboto"))
 
         q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
 
@@ -554,6 +647,7 @@ class InfoDialog(QDialog):
         """Load info_dialog.ui file."""
         super().__init__(parent)
         uic.loadUi(f"{os.path.join(basedir, 'forms', 'info_dialog.ui')}", self)
+        self.setFont(QFont("Roboto"))
 
 
 class SettingsDialog(QDialog):
@@ -565,12 +659,7 @@ class SettingsDialog(QDialog):
         """Load settings_dialog.ui file and connect components to their functions."""
         super().__init__(parent)
         uic.loadUi(f"{os.path.join(basedir, 'forms', 'settings_dialog.ui')}", self)
-        self.pushButton_info.clicked.connect(self.info_button_pressed)
-
-    def info_button_pressed(self):
-        """Execute InfoDialog."""
-        dlg = InfoDialog(self)
-        dlg.exec()
+        self.setFont(QFont("Roboto"))
 
 
 def main():
