@@ -19,10 +19,11 @@ Choose the version that you prefer.
 
 - Add URL or ID
 - Specify playlist title
-- Clear playlist (deletes all items in the playlist)
+- Reset playlist (deletes all items in the playlist)
 - Rename specific items
 - Change order of playlist items
 - Delete specific items
+- Shuffle-mode
 - Generate playlist URL
 - Automatically open generated URL in default web browser
 - Copy URL to clipboard
