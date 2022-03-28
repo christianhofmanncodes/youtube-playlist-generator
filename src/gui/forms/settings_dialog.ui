@@ -23,12 +23,13 @@
    </size>
   </property>
   <property name="font">
-   <font>
-    <family>Roboto</family>
-   </font>
+   <font/>
   </property>
   <property name="windowTitle">
    <string>Settings</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="Germany"/>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
@@ -162,7 +163,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Clear playlist</string>
+     <string>Reset playlist</string>
     </property>
    </widget>
    <widget class="QKeySequenceEdit" name="keySequenceEdit_option3">
@@ -231,19 +232,6 @@
      </property>
     </item>
    </widget>
-  </widget>
-  <widget class="QPushButton" name="pushButton_info">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>360</y>
-     <width>80</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Info</string>
-   </property>
   </widget>
  </widget>
  <resources/>
