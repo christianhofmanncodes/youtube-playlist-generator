@@ -65,6 +65,7 @@ class Ui(QMainWindow):
         self.textEdit_url_id.setFocus()
 
     def url_id_text_changed(self):
+        """Enable Add button only if textEdit_url_id is not empty."""
         if self.textEdit_url_id.toPlainText() != "":
             self.pushButton_add.setEnabled(True)
             self.actionAdd_item.setEnabled(True)
