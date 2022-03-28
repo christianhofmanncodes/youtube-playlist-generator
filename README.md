@@ -91,8 +91,6 @@ Pandas only needs to be installed if you want to use the console version.
 
 ## Roadmap
 
-- Add keyboard shortcuts
-
 - Change program language in settings (English/Deutsch)
 
 ## FAQ
