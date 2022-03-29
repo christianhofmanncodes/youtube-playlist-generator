@@ -1,14 +1,16 @@
 """app_gui module"""
+
+import contextlib
 import os
 import random
 import sys
 import webbrowser
 import ssl
 import json
-from urllib import request
+from urllib import request, error
 from PyQt6 import uic
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QClipboard, QFont
+from PyQt6.QtGui import QClipboard, QFont, QIcon
 from PyQt6.QtWidgets import (
     QMainWindow,
     QFileDialog,
@@ -26,6 +28,12 @@ from PyQt6.QtWidgets import (
 from qt_material import apply_stylesheet
 
 basedir = os.path.dirname(__file__)
+
+with contextlib.suppress(ImportError):
+    from ctypes import windll  # Only exists on Windows.
+
+    myappid = "christianhofmann.youtube-playlist-generator.gui.0.0.4"
+    windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 
 class Ui(QMainWindow):
@@ -62,7 +70,12 @@ class Ui(QMainWindow):
         self.actionAbout.triggered.connect(self.info_button_pressed)
         self.actionShuffle.triggered.connect(self.shuffle_clicked)
         self.textEdit_url_id.textChanged.connect(self.url_id_text_changed)
+        self.actionQuit.triggered.connect(self.quit)
         self.textEdit_url_id.setFocus()
+
+    def quit(self):
+        """Quits the application."""
+        sys.exit()
 
     def url_id_text_changed(self):
         """Enable Add button only if textEdit_url_id is not empty."""
@@ -400,6 +413,10 @@ class Ui(QMainWindow):
         except IndexError:
             ErrorCreatingURLDialog(self).exec()
             return ""
+        except error.URLError as e:
+            ErrorCreatingURLDialog(self).exec()
+            print(e)
+            return ""
 
     def open_url_in_webbrowser(self, url):
         """Open a URL in Webbrowser in a new tab."""
@@ -567,6 +584,7 @@ class AskPlaylistResetDialog(QDialog):
 
         self.setWindowTitle("Are you sure?")
         self.setFixedSize(450, 140)
+        self.setWindowIcon(QIcon(os.path.join(basedir, "icon", "youtube-play.icns")))
         self.setFont(QFont("Roboto"))
 
         q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
@@ -594,6 +612,7 @@ class ErrorCreatingURLDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle("Error with creating playlist URL.")
         self.setFixedSize(450, 120)
+        self.setWindowIcon(QIcon(os.path.join(basedir, "icon", "youtube-play.icns")))
         self.setFont(QFont("Roboto"))
 
         q_btn = QDialogButtonBox.StandardButton.Ok
@@ -624,6 +643,7 @@ class AskEmptyPlaylistTitle(QDialog):
 
         self.setWindowTitle("Your playlist title is currently empty")
         self.setFixedSize(450, 140)
+        self.setWindowIcon(QIcon(os.path.join(basedir, "icon", "youtube-play.icns")))
         self.setFont(QFont("Roboto"))
 
         q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
@@ -648,6 +668,7 @@ class InfoDialog(QDialog):
         """Load info_dialog.ui file."""
         super().__init__(parent)
         uic.loadUi(f"{os.path.join(basedir, 'forms', 'info_dialog.ui')}", self)
+        self.setWindowIcon(QIcon(os.path.join(basedir, "icon", "youtube-play.icns")))
         self.setFont(QFont("Roboto"))
 
 
@@ -660,12 +681,14 @@ class SettingsDialog(QDialog):
         """Load settings_dialog.ui file and connect components to their functions."""
         super().__init__(parent)
         uic.loadUi(f"{os.path.join(basedir, 'forms', 'settings_dialog.ui')}", self)
+        self.setWindowIcon(QIcon(os.path.join(basedir, "icon", "youtube-play.icns")))
         self.setFont(QFont("Roboto"))
 
 
 def main():
     """Execute application and apply stylesheet."""
     app = QApplication(sys.argv)
+    app.setWindowIcon(QIcon(os.path.join(basedir, "icon", "youtube-play.icns")))
     apply_stylesheet(app, theme="dark_red.xml")
     window = Ui()
     window.show()
