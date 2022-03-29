@@ -32,8 +32,8 @@ basedir = os.path.dirname(__file__)
 with contextlib.suppress(ImportError):
     from ctypes import windll  # Only exists on Windows.
 
-    myappid = "christianhofmann.youtube-playlist-generator.gui.0.0.4"
-    windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+    app_id = "christianhofmann.youtube-playlist-generator.gui.0.0.4"
+    windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
 
 
 class Ui(QMainWindow):
@@ -413,9 +413,9 @@ class Ui(QMainWindow):
         except IndexError:
             ErrorCreatingURLDialog(self).exec()
             return ""
-        except error.URLError as e:
+        except error.URLError as url_error:
             ErrorCreatingURLDialog(self).exec()
-            print(e)
+            print(url_error)
             return ""
 
     def open_url_in_webbrowser(self, url):
