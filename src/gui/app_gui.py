@@ -32,8 +32,8 @@ basedir = os.path.dirname(__file__)
 with contextlib.suppress(ImportError):
     from ctypes import windll  # Only exists on Windows.
 
-    app_id = "christianhofmann.youtube-playlist-generator.gui.0.0.4"
-    windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
+    APP_ID = "christianhofmann.youtube-playlist-generator.gui.0.0.4"
+    windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
 
 
 class Ui(QMainWindow):
