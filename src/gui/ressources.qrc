@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icon/youtube-play.icns</file>
+        <file>icon/youtube-play.ico</file>
+        <file>icon/youtube-play.png</file>
+    </qresource>
+</RCC>
