@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - First Windows release!
+- First Linux release!
 - Icon for Windows
 - Quit function for macOS and Windows
 
