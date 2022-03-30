@@ -100,6 +100,40 @@ Run the app (GUI version)
 Note: On Linux and macOS you have to use `pip3` and `python3`.  
 Pandas only needs to be installed if you want to use the console version.
 
+## Known issues & possible fixes
+
+If you have any issues with running the program please first check your python version.
+Minimal version required is `Python 3.9.5`.
+
+### Cannot build because libpython3.9 is missing:
+
+`sudo apt-get install libpython3.9-dev`
+
+### /lib/x86_64-linux-gnu/libc.so.6: version \`GLIBC_2.33' not found” Code Answer“/lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.33' not found
+
+```bash
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get update
+sudo apt-get install gcc-4.9
+sudo apt-get upgrade libstdc++6
+```
+
+### PyQt6 cannot be installed via pip
+
+```bash
+pip3 install --upgrade pip
+pip3 install PyQt6
+```
+
+### Failed to extract PyQt6/Qt6/plugins/egldeviceintegrations/libqeglfs-emu-integration.so: failed to open target file! fopen: No such file or directory
+
+`export QT_QPA_EGLFS_FB=/dev/fbX`
+
+### INTERNAL ERROR: cannot create temporary directory!
+
+You don’t have enough space on your system.
+Simply free up some space.
+
 ## Roadmap
 
 - Change program language in settings (English/Deutsch)
