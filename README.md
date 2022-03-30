@@ -34,11 +34,21 @@ Choose the version that you prefer.
 
 ### First start
 
-![App Screenshot](src/screenshot/screenshot-first-start.png)
+| Windows                                                       | Linux                                                     | macOS                                                   |
+| ------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------- |
+| ![windows](src/screenshot/windows/screenshot-first-start.png) | ![linux](src/screenshot/linux/screenshot-first-start.png) | ![macos](src/screenshot/mac/screenshot-first-start.png) |
+
+### With items added
+
+| Windows                                                            | Linux                                                          | macOS                                                        |
+| ------------------------------------------------------------------ | -------------------------------------------------------------- | ------------------------------------------------------------ |
+| ![windows](src/screenshot/windows/screenshot-with-items-added.png) | ![linux](src/screenshot/linux/screenshot-with-items-added.png) | ![macos](src/screenshot/mac/screenshot-with-items-added.png) |
 
 ### After YouTube Playlist generation
 
-![App Screenshot](src/screenshot/screenshot-after-playlist-generation.png)
+| Windows                                                                     | Linux                                                                   | macOS                                                                 |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| ![windows](src/screenshot/windows/screenshot-after-playlist-generation.png) | ![linux](src/screenshot/linux/screenshot-after-playlist-generation.png) | ![macos](src/screenshot/mac/screenshot-after-playlist-generation.png) |
 
 ## Installation
 
