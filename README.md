@@ -1,6 +1,4 @@
-<a href="https://github.com/christianhofmanncodes/youtube-playlist-generator">
-    <img src="src/icon/youtube-play.png" alt="YouTube Playlist Generator Logo" title="YouTube Playlist Generator" align="right" height="90" />
-</a>
+![header](src/header/header.png)
 
 # YouTube Playlist Generator
 
@@ -109,7 +107,7 @@ Minimal version required is `Python 3.9.5`.
 
 `sudo apt-get install libpython3.9-dev`
 
-### /lib/x86_64-linux-gnu/libc.so.6: version \`GLIBC_2.33' not found” Code Answer“/lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.33' not found
+### /lib/x86_64-linux-gnu/libc.so.6: version \`GLIBC_2.33' not found”
 
 ```bash
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test
