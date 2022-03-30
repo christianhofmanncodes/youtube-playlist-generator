@@ -1,4 +1,5 @@
-![header](src/header/header.png)
+![header](src/header/header-light.png#gh-light-mode-only)
+![header](src/header/header-dark.png#gh-dark-mode-only)
 
 # YouTube Playlist Generator
 
