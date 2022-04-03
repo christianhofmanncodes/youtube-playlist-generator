@@ -164,7 +164,7 @@ https://invidious.namazso.eu/watch?v=
 
 Contributions are always welcome!
 
-See `contributing.md` for ways to get started.
+See `CONTRIBUTING.md` for ways to get started.
 
 You can report any issues and are welcome to create pull requests.
 Please use the labels accordingly: `bug` for bugs, `documentation` for improvements to the documentation and `enhancement` for feature requests.
