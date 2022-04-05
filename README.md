@@ -104,7 +104,7 @@ Pandas only needs to be installed if you want to use the console version.
 If you have any issues with running the program please first check your python version.
 Minimal version required is `Python 3.9.5`.
 
-### Cannot build because libpython3.9 is missing:
+### Cannot build because libpython3.9 is missing
 
 `sudo apt-get install libpython3.9-dev`
 
@@ -128,7 +128,7 @@ pip3 install PyQt6
 
 `export QT_QPA_EGLFS_FB=/dev/fbX`
 
-### INTERNAL ERROR: cannot create temporary directory!
+### INTERNAL ERROR: cannot create temporary directory
 
 You don’t have enough space on your system.
 Simply free up some space.
@@ -139,15 +139,15 @@ Simply free up some space.
 
 ## FAQ
 
-#### How did you come up with this project?
+### How did you come up with this project?
 
 A friend of mine wanted to build a YouTube playlist with me. But I had no idea how to do it because I don't have a Google account and I didn't want to create one either. So I came up with the idea to develop a neat little program that could do that.
 
-#### What types of links are supported?
+### What types of links are supported?
 
 The program supports both YouTube and Invidious links of any type.
 
-```
+```bash
 https://www.youtube.com/watch?v=
 https://www.youtu.be/
 https://invidious.namazso.eu/watch?v=
