@@ -1,33 +1,34 @@
 """app module"""
-from os import system, name, path
 import sys
-import config
-from definitions import (
-    read_csv_and_add_content_to_tuple,
-    join_tuple,
-    remove_duplicates_from_list,
-    convert_list_to_table,
-    is_empty_csv,
-    input_url_or_id,
-    is_string_valid_url,
+from os import name, path, system
+
+import config.config
+from definitions.definitions import (
     add_id_to_csv,
-    want_another_video_added,
+    add_title_to_playlist,
+    convert_list_to_table,
     count_items_in_table,
-    want_playlist_deleted,
-    reset_playlist,
-    is_string_valid_youtube_url,
+    create_comma_seperated_string,
     cut_url_to_id,
     delete_items_from_playlist,
-    create_comma_seperated_string,
-    add_title_to_playlist,
-    generate_video_ids_url,
     generate_playlist_url,
-    output_generated_playlist_url,
+    generate_video_ids_url,
+    input_url_or_id,
+    is_empty_csv,
+    is_string_valid_url,
+    is_string_valid_youtube_url,
+    join_tuple,
     open_playlist_url_in_webbrowser,
+    output_generated_playlist_url,
+    read_csv_and_add_content_to_tuple,
+    remove_duplicates_from_list,
+    reset_playlist,
+    want_another_video_added,
+    want_playlist_deleted,
 )
 
 
-basedir = path.dirname(__file__)
+BASE_DIR = path.dirname(__file__)
 
 
 def clear():
@@ -95,7 +96,7 @@ def option_zero():
 def option_one():
     """Create a new playlist (delete all items in playlist) if user accepts it."""
     clear()
-    if is_empty_csv(f"{path.join(basedir, 'data', 'video_ids.csv')}"):
+    if is_empty_csv(f"{path.join(BASE_DIR, 'data', 'video_ids.csv')}"):
         print("\nYour playlist is already empty!\n")
     elif want_playlist_deleted():
         reset_playlist()
@@ -147,15 +148,15 @@ def option_three():
 def option_four():
     """Generate playlist URL if more than two ids are in the current playlist."""
     clear()
-    if not is_empty_csv(f"{path.join(basedir, 'data', 'video_ids.csv')}"):
+    if not is_empty_csv(f"{path.join(BASE_DIR, 'data', 'video_ids.csv')}"):
         content_tuple = read_csv_and_add_content_to_tuple()
         content_list = join_tuple(content_tuple)
         comma_seperated_string = create_comma_seperated_string(content_list)
-        playlist_title = config.YOUTUBE_PLAYLIST_TITLE
+        playlist_title = config.config.YOUTUBE_PLAYLIST_TITLE
         add_title_to_playlist(playlist_title)
 
         generate_video_ids_url(comma_seperated_string)
-        if generate_playlist_url(config.YOUTUBE_GENERATED_VIDEO_IDS_URL):
+        if generate_playlist_url(config.config.YOUTUBE_GENERATED_VIDEO_IDS_URL):
             output_generated_playlist_url()
             open_playlist_url_in_webbrowser()
     else:
@@ -171,13 +172,9 @@ def option_five():
     sys.exit(0)
 
 
-def main():
+def run():
     """Check if first start bool is true, output welcome message. Otherwise execute main_menu()."""
-    if config.FIRST_START is True:
+    if config.config.FIRST_START is True:
         welcome_message()
-        config.FIRST_START = False
+        config.config.FIRST_START = False
     main_menu()
-
-
-if __name__ == "__main__":
-    main()
