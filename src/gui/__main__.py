@@ -1,3 +1,5 @@
+"""__main__ module"""
+
 import app
 
 
