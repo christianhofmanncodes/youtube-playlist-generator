@@ -1,5 +1,5 @@
-![header](src/header/header-light.png#gh-light-mode-only)
-![header](src/header/header-dark.png#gh-dark-mode-only)
+![header](res/header/header-light.png#gh-light-mode-only)
+![header](res/header/header-dark.png#gh-dark-mode-only)
 
 # YouTube Playlist Generator
 
@@ -35,19 +35,19 @@ Choose the version that you prefer.
 
 | Windows                                                       | Linux                                                     | macOS                                                   |
 | ------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------- |
-| ![windows](src/screenshot/windows/screenshot-first-start.png) | ![linux](src/screenshot/linux/screenshot-first-start.png) | ![macos](src/screenshot/mac/screenshot-first-start.png) |
+| ![windows](res/screenshot/windows/screenshot-first-start.png) | ![linux](res/screenshot/linux/screenshot-first-start.png) | ![macos](res/screenshot/mac/screenshot-first-start.png) |
 
 ### With items added
 
 | Windows                                                            | Linux                                                          | macOS                                                        |
 | ------------------------------------------------------------------ | -------------------------------------------------------------- | ------------------------------------------------------------ |
-| ![windows](src/screenshot/windows/screenshot-with-items-added.png) | ![linux](src/screenshot/linux/screenshot-with-items-added.png) | ![macos](src/screenshot/mac/screenshot-with-items-added.png) |
+| ![windows](res/screenshot/windows/screenshot-with-items-added.png) | ![linux](res/screenshot/linux/screenshot-with-items-added.png) | ![macos](res/screenshot/mac/screenshot-with-items-added.png) |
 
 ### After YouTube Playlist generation
 
 | Windows                                                                     | Linux                                                                   | macOS                                                                 |
 | --------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| ![windows](src/screenshot/windows/screenshot-after-playlist-generation.png) | ![linux](src/screenshot/linux/screenshot-after-playlist-generation.png) | ![macos](src/screenshot/mac/screenshot-after-playlist-generation.png) |
+| ![windows](res/screenshot/windows/screenshot-after-playlist-generation.png) | ![linux](res/screenshot/linux/screenshot-after-playlist-generation.png) | ![macos](res/screenshot/mac/screenshot-after-playlist-generation.png) |
 
 ## Installation
 
@@ -79,21 +79,19 @@ Install Python
 Install dependencies
 
 ```bash
-  pip install pandas
-  pip install PyQt6
-  pip install qt_material
+  pip install -r requirements.txt
 ```
 
 Run the app (console version)
 
 ```bash
-  python src/console/app.py
+  python src/console/
 ```
 
 Run the app (GUI version)
 
 ```bash
-  python src/gui/app_gui.py
+  python src/gui/
 ```
 
 Note: On Linux and macOS you have to use `pip3` and `python3`.  
