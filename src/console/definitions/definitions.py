@@ -175,7 +175,8 @@ def has_no_playlist_title(playlist_title):
 def has_playlist_title():
     """Check if playlist title already exists."""
     print(
-        f"\nThere is already a title for your YouTube playlist: {config.config.YOUTUBE_PLAYLIST_TITLE}"
+        f"\nThere is already a title for your YouTube playlist: "
+        f"{config.config.YOUTUBE_PLAYLIST_TITLE}"
     )
     print("Do you want to change it?\n")
     if want_playlist_title():
@@ -206,7 +207,8 @@ def add_title_to_playlist(playlist_title):
         else:
             config.config.YOUTUBE_PLAYLIST_TITLE = get_title_for_playlist()
             print(
-                f"\nPlaylist title '{get_human_readable_title(config.config.YOUTUBE_PLAYLIST_TITLE)}'",
+                "\nPlaylist title "
+                f"'{get_human_readable_title(config.config.YOUTUBE_PLAYLIST_TITLE)}'",
                 "successfully added.\n",
             )
     else:
