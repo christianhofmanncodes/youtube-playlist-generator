@@ -1,33 +1,32 @@
-"""app_gui module"""
+"""app module"""
 
 import contextlib
+import json
 import os
 import random
+import ssl
 import sys
 import webbrowser
-import ssl
-import json
-from urllib import request, error
+from urllib import error, request
+
 from PyQt6 import uic
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QClipboard, QFont, QIcon
+from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import (
-    QMainWindow,
-    QFileDialog,
     QApplication,
-    QWidget,
-    QListWidget,
-    QPushButton,
-    QVBoxLayout,
     QDialog,
     QDialogButtonBox,
+    QFileDialog,
     QLabel,
-    QMessageBox,
-    QRadioButton,
+    QMainWindow,
+    QVBoxLayout,
 )
 from qt_material import apply_stylesheet
 
-basedir = os.path.dirname(__file__)
+
+BASE_DIR = os.path.dirname(__file__)
+PARENT_DIR = os.path.join(os.path.dirname(__file__), "..")
+ROOT_DIR = os.path.extsep
 
 with contextlib.suppress(ImportError):
     from ctypes import windll  # Only exists on Windows.
@@ -44,7 +43,7 @@ class Ui(QMainWindow):
     def __init__(self):
         """Connect UI components with specific functions."""
         super(Ui, self).__init__()
-        uic.loadUi(f"{os.path.join(basedir, 'forms', 'form.ui')}", self)
+        uic.loadUi(f"{os.path.join(BASE_DIR, 'forms', 'form.ui')}", self)
         self.setFont(QFont("Roboto"))
         self.pushButton_add.clicked.connect(self.add_button_pressed)
         self.actionAdd_item.triggered.connect(self.add_button_pressed)
@@ -96,7 +95,7 @@ class Ui(QMainWindow):
         ytplaylist_dict = Ui.generate_dict_from_fields(
             self,
             self.textEdit_playlist_title.toPlainText(),
-            playlist,  # NEEDS TO BE CHANGED
+            playlist,
         )
 
         print(ytplaylist_dict)
@@ -430,7 +429,7 @@ class Ui(QMainWindow):
     def save_settings_to_conf_file(self, settings_dict):
         """Write content from dict to settings.config."""
         with open(
-            f"{os.path.join(basedir, 'config', 'settings.config')}",
+            f"{os.path.join(BASE_DIR, 'config', 'settings.config')}",
             "w",
             encoding="UTF-8",
         ) as file:
@@ -439,14 +438,14 @@ class Ui(QMainWindow):
     def get_settings(self):
         """Return content from settings.config."""
         return Ui.read_json_file(
-            self, f"{os.path.join(basedir, 'config', 'settings.config')}"
+            self, f"{os.path.join(BASE_DIR, 'config', 'settings.config')}"
         )
 
     def load_settings(self, settings_dict):
         """Display settings in dialog from dict."""
         program_language = settings_dict["programLanguage"]
         open_url_automatically = settings_dict["openURLautomatically"]
-        copy_url_toclipboard = settings_dict["copyURLtoclipboard"]
+        copy_url_to_clipboard = settings_dict["copyURLtoClipboard"]
 
         shortcut_import_new_playlist = settings_dict["keyboardShortcuts"][0][
             "importNewPlaylist"
@@ -469,10 +468,10 @@ class Ui(QMainWindow):
         elif open_url_automatically is False:
             SettingsDialog(self).checkBox_option1.setCheckState(Qt.CheckState.Unchecked)
 
-        if copy_url_toclipboard is True:
+        if copy_url_to_clipboard is True:
             SettingsDialog(self).checkBox_option2.setCheckState(Qt.CheckState.Checked)
 
-        elif copy_url_toclipboard is False:
+        elif copy_url_to_clipboard is False:
             SettingsDialog(self).checkBox_option2.setCheckState(Qt.CheckState.Unchecked)
 
         SettingsDialog(self).keySequenceEdit_option1.setKeySequence(
@@ -516,7 +515,7 @@ class Ui(QMainWindow):
         return {
             "programLanguage": combo_box_program_language_text,
             "openURLautomatically": checkbox_option1_state,
-            "copyURLtoclipboard": checkbox_option2_state,
+            "copyURLtoClipboard": checkbox_option2_state,
             "keyboardShortcuts": [
                 {
                     "importNewPlaylist": key_sequence_option1_content,
@@ -584,7 +583,9 @@ class AskPlaylistResetDialog(QDialog):
 
         self.setWindowTitle("Are you sure?")
         self.setFixedSize(450, 140)
-        self.setWindowIcon(QIcon(os.path.join(basedir, "icon", "youtube-play.icns")))
+        self.setWindowIcon(
+            QIcon(os.path.join(ROOT_DIR, "res/icon", "youtube-play.icns"))
+        )
         self.setFont(QFont("Roboto"))
 
         q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
@@ -612,7 +613,9 @@ class ErrorCreatingURLDialog(QDialog):
         super().__init__(parent)
         self.setWindowTitle("Error with creating playlist URL.")
         self.setFixedSize(450, 120)
-        self.setWindowIcon(QIcon(os.path.join(basedir, "icon", "youtube-play.icns")))
+        self.setWindowIcon(
+            QIcon(os.path.join(ROOT_DIR, "res/icon", "youtube-play.icns"))
+        )
         self.setFont(QFont("Roboto"))
 
         q_btn = QDialogButtonBox.StandardButton.Ok
@@ -643,7 +646,9 @@ class AskEmptyPlaylistTitle(QDialog):
 
         self.setWindowTitle("Your playlist title is currently empty")
         self.setFixedSize(450, 140)
-        self.setWindowIcon(QIcon(os.path.join(basedir, "icon", "youtube-play.icns")))
+        self.setWindowIcon(
+            QIcon(os.path.join(ROOT_DIR, "res/icon", "youtube-play.icns"))
+        )
         self.setFont(QFont("Roboto"))
 
         q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
@@ -667,8 +672,10 @@ class InfoDialog(QDialog):
     def __init__(self, parent=None):
         """Load info_dialog.ui file."""
         super().__init__(parent)
-        uic.loadUi(f"{os.path.join(basedir, 'forms', 'info_dialog.ui')}", self)
-        self.setWindowIcon(QIcon(os.path.join(basedir, "icon", "youtube-play.icns")))
+        uic.loadUi(f"{os.path.join(BASE_DIR, 'forms', 'info_dialog.ui')}", self)
+        self.setWindowIcon(
+            QIcon(os.path.join(ROOT_DIR, "res/icon", "youtube-play.icns"))
+        )
         self.setFont(QFont("Roboto"))
 
 
@@ -680,20 +687,18 @@ class SettingsDialog(QDialog):
     def __init__(self, parent=None):
         """Load settings_dialog.ui file and connect components to their functions."""
         super().__init__(parent)
-        uic.loadUi(f"{os.path.join(basedir, 'forms', 'settings_dialog.ui')}", self)
-        self.setWindowIcon(QIcon(os.path.join(basedir, "icon", "youtube-play.icns")))
+        uic.loadUi(f"{os.path.join(BASE_DIR, 'forms', 'settings_dialog.ui')}", self)
+        self.setWindowIcon(
+            QIcon(os.path.join(ROOT_DIR, "res/icon", "youtube-play.icns"))
+        )
         self.setFont(QFont("Roboto"))
 
 
-def main():
+def run():
     """Execute application and apply stylesheet."""
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon(os.path.join(basedir, "icon", "youtube-play.icns")))
+    app.setWindowIcon(QIcon(os.path.join(ROOT_DIR, "res/icon", "youtube-play.icns")))
     apply_stylesheet(app, theme="dark_red.xml")
     window = Ui()
     window.show()
     sys.exit(app.exec())
-
-
-if __name__ == "__main__":
-    main()
