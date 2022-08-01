@@ -394,8 +394,7 @@ class Ui(QMainWindow):
         """Returns True if more than one item in playlist."""
         number_of_items = self.listWidget_playlist_items.count()
         logging.debug(f"Playlist items count: {number_of_items}")
-        if number_of_items >= 1:
-            return True
+        return number_of_items >= 1
 
     def return_number_of_items_in_playlist(self):  # deprecated
         """Returns number of items in playlist."""
