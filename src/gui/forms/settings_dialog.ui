@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>659</width>
-    <height>398</height>
+    <height>519</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>659</width>
-    <height>398</height>
+    <height>519</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>659</width>
-    <height>398</height>
+    <height>519</height>
    </size>
   </property>
   <property name="font">
@@ -35,7 +35,7 @@
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>360</y>
+     <y>480</y>
      <width>341</width>
      <height>32</height>
     </rect>
@@ -95,13 +95,13 @@
     </property>
    </widget>
   </widget>
-  <widget class="QGroupBox" name="groupBox_2">
+  <widget class="QGroupBox" name="groupBox_keyboard_shortcuts">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>140</y>
      <width>641</width>
-     <height>121</height>
+     <height>241</height>
     </rect>
    </property>
    <property name="title">
@@ -110,18 +110,18 @@
    <widget class="QKeySequenceEdit" name="keySequenceEdit_option1">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>40</y>
-      <width>131</width>
+      <x>310</x>
+      <y>42</y>
+      <width>191</width>
       <height>24</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option1">
+   <widget class="QLabel" name="label_keyboard_shortcuts_option1_text">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>40</y>
+      <x>30</x>
+      <y>42</y>
       <width>121</width>
       <height>20</height>
      </rect>
@@ -130,11 +130,11 @@
      <string>Import new playlist</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option2">
+   <widget class="QLabel" name="label_keyboard_shortcuts_option2_text">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>80</y>
+      <x>30</x>
+      <y>82</y>
       <width>121</width>
       <height>20</height>
      </rect>
@@ -146,65 +146,258 @@
    <widget class="QKeySequenceEdit" name="keySequenceEdit_option2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>80</y>
-      <width>131</width>
+      <x>310</x>
+      <y>82</y>
+      <width>191</width>
       <height>24</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option3">
+   <widget class="QLabel" name="label_keyboard_shortcuts_option3_text">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>40</y>
+      <x>30</x>
+      <y>122</y>
       <width>121</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Reset playlist</string>
+     <string>Reset</string>
     </property>
    </widget>
    <widget class="QKeySequenceEdit" name="keySequenceEdit_option3">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>40</y>
-      <width>131</width>
+      <x>310</x>
+      <y>122</y>
+      <width>191</width>
       <height>24</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option4">
+   <widget class="QLabel" name="label_keyboard_shortcuts_option4_text">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>80</y>
+      <x>30</x>
+      <y>162</y>
       <width>121</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Generate playlist</string>
+     <string>Generate</string>
     </property>
    </widget>
    <widget class="QKeySequenceEdit" name="keySequenceEdit_option4">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>80</y>
-      <width>131</width>
+      <x>310</x>
+      <y>162</y>
+      <width>191</width>
       <height>24</height>
      </rect>
     </property>
    </widget>
+   <widget class="QLabel" name="label_keyboard_shortcuts_option1">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>42</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Cmd+I</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_keyboard_shortcuts_option2">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>82</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Cmd+E</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_keyboard_shortcuts_option3">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>122</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Alt+R</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_keyboard_shortcuts_option4">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>162</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Cmd+G</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_change_option1">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>40</y>
+      <width>100</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Change</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_change_option2">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>80</y>
+      <width>100</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Change</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_change_option3">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>120</y>
+      <width>100</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Change</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_change_option4">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>160</y>
+      <width>100</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Change</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_keyboard_shortcuts_option5">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>202</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="text">
+     <string>Alt+S</string>
+    </property>
+   </widget>
+   <widget class="QKeySequenceEdit" name="keySequenceEdit_option5">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>202</y>
+      <width>191</width>
+      <height>24</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_keyboard_shortcuts_option5_text">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>202</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Shuffle</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_change_option5">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>200</y>
+      <width>100</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Change</string>
+    </property>
+   </widget>
   </widget>
-  <widget class="QGroupBox" name="groupBox">
+  <widget class="QGroupBox" name="groupBox_language">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>270</y>
+     <y>390</y>
      <width>641</width>
      <height>81</height>
     </rect>

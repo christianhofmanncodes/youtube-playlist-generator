@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -34,42 +37,31 @@
   <property name="windowTitle">
    <string>YouTube Playlist Generator</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <activeon>../../../res/icon/youtube-play.icns</activeon>
+   </iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>0.989999000000000</double>
+  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
   <property name="locale">
    <locale language="English" country="Germany"/>
   </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTextEdit" name="textEdit_playlist_title">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>100</y>
-      <width>441</width>
-      <height>44</height>
-     </rect>
-    </property>
-    <property name="cursor" stdset="0">
-     <cursorShape>IBeamCursor</cursorShape>
-    </property>
-    <property name="tabChangesFocus">
-     <bool>true</bool>
-    </property>
-    <property name="acceptRichText">
-     <bool>false</bool>
-    </property>
-    <property name="placeholderText">
-     <string>Playlist Title</string>
-    </property>
-   </widget>
    <widget class="QListWidget" name="listWidget_playlist_items">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>150</y>
+      <y>125</y>
       <width>441</width>
-      <height>192</height>
+      <height>211</height>
      </rect>
     </property>
     <property name="contextMenuPolicy">
@@ -96,6 +88,9 @@
     <property name="selectionBehavior">
      <enum>QAbstractItemView::SelectItems</enum>
     </property>
+    <property name="modelColumn">
+     <number>0</number>
+    </property>
    </widget>
    <widget class="QTextEdit" name="textEdit_playlist_generated_url">
     <property name="enabled">
@@ -104,13 +99,13 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>480</y>
-      <width>361</width>
+      <y>481</y>
+      <width>391</width>
       <height>44</height>
      </rect>
     </property>
     <property name="cursor" stdset="0">
-     <cursorShape>ForbiddenCursor</cursorShape>
+     <cursorShape>ArrowCursor</cursorShape>
     </property>
     <property name="contextMenuPolicy">
      <enum>Qt::NoContextMenu</enum>
@@ -118,11 +113,17 @@
     <property name="acceptDrops">
      <bool>false</bool>
     </property>
+    <property name="toolTip">
+     <string>Playlist URL</string>
+    </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -130,6 +131,12 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="acceptRichText">
+     <bool>false</bool>
+    </property>
+    <property name="textInteractionFlags">
+     <set>Qt::NoTextInteraction</set>
     </property>
     <property name="placeholderText">
      <string>Playlist URL will show up here...</string>
@@ -144,7 +151,7 @@ p, li { white-space: pre-wrap; }
       <x>10</x>
       <y>400</y>
       <width>441</width>
-      <height>61</height>
+      <height>70</height>
      </rect>
     </property>
     <property name="font">
@@ -154,6 +161,9 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Generate Playlist URL</string>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton:enabled {
@@ -171,83 +181,37 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="geometry">
      <rect>
-      <x>379</x>
-      <y>480</y>
-      <width>71</width>
+      <x>409</x>
+      <y>481</y>
+      <width>41</width>
       <height>44</height>
      </rect>
     </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
-    <property name="text">
-     <string>Copy</string>
+    <property name="toolTip">
+     <string>Copy generated URL</string>
     </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_delete_item">
-    <property name="enabled">
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normalon>../../../res/icon/button_icon_copy.svg</normalon>
+     </iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <property name="checkable">
      <bool>false</bool>
     </property>
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>350</y>
-      <width>141</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>Delete Item</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_reset_playlist">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>350</y>
-      <width>141</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>Reset Playlist</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_shuffle_playlist">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>350</y>
-      <width>141</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>Shuffle</string>
+    <property name="flat">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_add">
@@ -256,57 +220,193 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>20</y>
-      <width>141</width>
-      <height>61</height>
+      <x>404</x>
+      <y>70</y>
+      <width>44</width>
+      <height>44</height>
      </rect>
     </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
+    <property name="toolTip">
+     <string>Add new item</string>
+    </property>
     <property name="text">
-     <string>Add</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normalon>../../../res/icon/button_icon_add.svg</normalon>
+     </iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>38</width>
+      <height>38</height>
+     </size>
     </property>
     <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_playlist_title">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>-1</y>
+      <width>461</width>
+      <height>44</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Add a playlist title here</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="frame">
+     <bool>true</bool>
+    </property>
+    <property name="placeholderText">
+     <string>Playlist title</string>
+    </property>
+    <property name="clearButtonEnabled">
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit_url_id">
+   <widget class="QLineEdit" name="lineEdit_url_id">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
-      <width>291</width>
-      <height>61</height>
+      <y>70</y>
+      <width>381</width>
+      <height>44</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <pointsize>13</pointsize>
-     </font>
+    <property name="toolTip">
+     <string>Enter URL or ID</string>
     </property>
-    <property name="cursor" stdset="0">
-     <cursorShape>IBeamCursor</cursorShape>
-    </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="sizeAdjustPolicy">
-     <enum>QAbstractScrollArea::AdjustToContents</enum>
-    </property>
-    <property name="tabChangesFocus">
-     <bool>true</bool>
-    </property>
-    <property name="acceptRichText">
-     <bool>false</bool>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="placeholderText">
      <string>URL or ID</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>345</y>
+      <width>441</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>-1</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="pushButton_reset_playlist">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="toolTip">
+        <string>Reset playlist</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Reset</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normalon>../../../res/icon/button_icon_reset.svg</normalon>
+        </iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_delete_item">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="toolTip">
+        <string>Delete selected item</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Delete Item</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normalon>../../../res/icon/button_icon_delete.svg</normalon>
+        </iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_shuffle_playlist">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="toolTip">
+        <string>Apply Shuffle</string>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Shuffle</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normalon>../../../res/icon/button_icon_shuffle.svg</normalon>
+        </iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -317,6 +417,12 @@ p, li { white-space: pre-wrap; }
      <width>460</width>
      <height>24</height>
     </rect>
+   </property>
+   <property name="defaultUp">
+    <bool>false</bool>
+   </property>
+   <property name="nativeMenuBar">
+    <bool>true</bool>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="font">
@@ -342,6 +448,9 @@ p, li { white-space: pre-wrap; }
       <family>Roboto</family>
      </font>
     </property>
+    <property name="tearOffEnabled">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>Edit</string>
     </property>
@@ -363,6 +472,30 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Playlist</string>
     </property>
+    <widget class="QMenu" name="menuSort_items">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Sort items</string>
+     </property>
+     <property name="separatorsCollapsible">
+      <bool>false</bool>
+     </property>
+     <addaction name="actionAscending"/>
+     <addaction name="actionDescending"/>
+    </widget>
+    <widget class="QMenu" name="menuTools">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="title">
+      <string>Tools</string>
+     </property>
+     <addaction name="actionCount_items"/>
+     <addaction name="actionClear_all_items"/>
+     <addaction name="actionRemove_duplicates"/>
+    </widget>
     <addaction name="actionAdd_item"/>
     <addaction name="actionDelete_Item"/>
     <addaction name="actionRename_item"/>
@@ -370,6 +503,9 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionShuffle"/>
     <addaction name="separator"/>
     <addaction name="actionGenerate_Playlist"/>
+    <addaction name="separator"/>
+    <addaction name="menuSort_items"/>
+    <addaction name="menuTools"/>
     <addaction name="separator"/>
     <addaction name="actionReset_Playlist"/>
     <addaction name="separator"/>
@@ -459,7 +595,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Reset Playlist</string>
+    <string>Reset</string>
    </property>
    <property name="font">
     <font>
@@ -524,7 +660,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Generate Playlist</string>
+    <string>Generate</string>
    </property>
    <property name="font">
     <font>
@@ -681,11 +817,55 @@ p, li { white-space: pre-wrap; }
     </font>
    </property>
   </action>
+  <action name="actionRemove_duplicates">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Remove duplicates</string>
+   </property>
+  </action>
+  <action name="actionMinimize">
+   <property name="text">
+    <string>Minimize</string>
+   </property>
+  </action>
+  <action name="actionAscending">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Ascending</string>
+   </property>
+  </action>
+  <action name="actionDescending">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Descending</string>
+   </property>
+  </action>
+  <action name="actionCount_items">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Count items</string>
+   </property>
+  </action>
+  <action name="actionClear_all_items">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Clear all items</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
-  <tabstop>textEdit_url_id</tabstop>
+  <tabstop>lineEdit_url_id</tabstop>
   <tabstop>pushButton_add</tabstop>
-  <tabstop>textEdit_playlist_title</tabstop>
   <tabstop>listWidget_playlist_items</tabstop>
   <tabstop>pushButton_reset_playlist</tabstop>
   <tabstop>pushButton_delete_item</tabstop>
@@ -693,6 +873,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>pushButton_generate</tabstop>
   <tabstop>textEdit_playlist_generated_url</tabstop>
   <tabstop>pushButton_copy</tabstop>
+  <tabstop>lineEdit_playlist_title</tabstop>
  </tabstops>
  <resources/>
  <connections/>
