@@ -19,6 +19,8 @@ Choose the version that you prefer.
 - Add URL or ID
 - Specify playlist title
 - Reset playlist (deletes all items in the playlist)
+- Playlist Tools (Count items, Clear all items, Remove duplicates)
+- Sort items (Ascending & Descending)
 - Rename specific items
 - Change order of playlist items
 - Delete specific items
@@ -134,6 +136,7 @@ Simply free up some space.
 ## Roadmap
 
 - Change program language in settings (English/Deutsch)
+- Darkmode & Whitemode (switchable in settings)
 
 ## FAQ
 

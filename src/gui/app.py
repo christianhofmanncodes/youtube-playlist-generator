@@ -100,7 +100,7 @@ class Ui(QMainWindow):
         self.listWidget_playlist_items.clear()
         logging.debug("All items in playlist deleted successfully.")
         if Ui.is_playlist_widget_empty(self):
-            Ui.disable_components(self)  # TODO: Check if function can be extended
+            Ui.disable_components(self)
             self.pushButton_copy.setEnabled(False)
             self.actionCopy_URL.setEnabled(False)
             self.lineEdit_url_id.setFocus()
@@ -283,6 +283,7 @@ class Ui(QMainWindow):
         self.textEdit_playlist_generated_url.setEnabled(False)
 
     def remove_duplicates_clicked(self):
+        """Check if two or more items in playlist. Remove duplicates."""
         if Ui.playlist_widget_has_two_or_more_items(self):
             Ui.remove_duplicates_from_playlist(self)
 
@@ -325,7 +326,7 @@ class Ui(QMainWindow):
             self.listWidget_playlist_items.clear()
             logging.debug("Playlist was reset successfully.")
             if Ui.is_playlist_widget_empty(self):
-                Ui.disable_components(self)  # TODO: Check if function can be extended
+                Ui.disable_components(self)
                 self.pushButton_copy.setEnabled(False)
                 self.actionCopy_URL.setEnabled(False)
                 self.lineEdit_playlist_title.clear()
@@ -421,9 +422,7 @@ class Ui(QMainWindow):
                     if dlg.exec():
                         Ui.import_from_dict(self, ytplaylist_dict)
                     else:
-                        Ui.reset_playlist_button_clicked(
-                            self
-                        )  # TODO: add if yes or no was clicked
+                        Ui.reset_playlist_button_clicked(self)
                         Ui.import_from_dict(self, ytplaylist_dict)
                         self.lineEdit_url_id.setFocus()
                 else:
@@ -476,7 +475,7 @@ class Ui(QMainWindow):
                 ytplaylist_dict = Ui.generate_dict_from_fields(
                     self,
                     self.lineEdit_playlist_title.text(),
-                    Ui.output_list_from_playlist_ids(self),  # TODO: NEEDS TO BE CHANGED
+                    Ui.output_list_from_playlist_ids(self),
                 )
                 Ui.export_ytplaylist_file(self, filename[0], ytplaylist_dict)
         except FileNotFoundError:
@@ -607,12 +606,6 @@ class Ui(QMainWindow):
         ]
 
         SettingsDialog(self).comboBox_language.setCurrentText(program_language)
-
-        """ if program_language == "English":
-            SettingsDialog(self).comboBox_language.setCurrentIndex(0)
-        elif program_language == "Deutsch":
-            SettingsDialog(self).comboBox_language.setCurrentIndex(1)
-        """
 
         if open_url_automatically is True:
             SettingsDialog(self).checkBox_option1.setCheckState(Qt.CheckState.Checked)
@@ -931,30 +924,35 @@ class SettingsDialog(QDialog):
         )
 
     def change_button_option1_clicked(self):
+        """Get text from keySequenceEdit1 field and display in label."""
         if self.keySequenceEdit_option1.keySequence().toString() != "":
             self.label_keyboard_shortcuts_option1.setText(
                 self.keySequenceEdit_option1.keySequence().toString()
             )
 
     def change_button_option2_clicked(self):
+        """Get text from keySequenceEdit2 field and display in label."""
         if self.keySequenceEdit_option2.keySequence().toString() != "":
             self.label_keyboard_shortcuts_option2.setText(
                 self.keySequenceEdit_option2.keySequence().toString()
             )
 
     def change_button_option3_clicked(self):
+        """Get text from keySequenceEdit3 field and display in label."""
         if self.keySequenceEdit_option3.keySequence().toString() != "":
             self.label_keyboard_shortcuts_option3.setText(
                 self.keySequenceEdit_option3.keySequence().toString()
             )
 
     def change_button_option4_clicked(self):
+        """Get text from keySequenceEdit4 field and display in label."""
         if self.keySequenceEdit_option4.keySequence().toString() != "":
             self.label_keyboard_shortcuts_option4.setText(
                 self.keySequenceEdit_option4.keySequence().toString()
             )
 
     def change_button_option5_clicked(self):
+        """Get text from keySequenceEdit5 field and display in label."""
         if self.keySequenceEdit_option5.keySequence().toString() != "":
             self.label_keyboard_shortcuts_option5.setText(
                 self.keySequenceEdit_option5.keySequence().toString()
