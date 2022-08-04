@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 0.0.5 - 2022-08-02
+## 0.0.5 - 2022-08-05
 
 ### Added
 
@@ -23,12 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - UI: "Copy" button replaced with icon button
 - UI: Switch input widgets (QTextEdit to QLineEdit)
 - UI: Add opacity
+- UI: Switch to own theme "yt-dark-red"
 - Fix minor spelling mistakes in Code and UI
 - Shuffle mode can now be activated only when there are at least three items in the playlist (no longer two items)
 - Generated playlist URL now shows probably
 - If a playlist already contains items, you will get asked if you want to create a new playlist or if you want to add the imported playlist to the existing playlist.
 - If playlist can not be generated "Copy" button stays inactive
 - Generated playlist URL will be deleted after reset
+- Updated dependencies (requirements.txt)
 
 ### Removed
 
