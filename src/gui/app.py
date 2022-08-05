@@ -99,6 +99,9 @@ class Ui(QMainWindow):
         """
         self.listWidget_playlist_items.clear()
         logging.debug("All items in playlist deleted successfully.")
+        Ui.show_info_dialog(
+            self, "Success!", "All items in playlist deleted successfully."
+        )
         if Ui.is_playlist_widget_empty(self):
             Ui.disable_components(self)
             self.pushButton_copy.setEnabled(False)
@@ -290,6 +293,7 @@ class Ui(QMainWindow):
     def remove_duplicates_from_playlist(self):
         """If playlist contains duplicated items remove them from the list."""
         logging.debug("Remove duplicates from playlist:")
+        Ui.show_info_dialog(self, "Success!", "Any duplicates have been deleted.")
         playlist = Ui.output_list_from_playlist_ids(self)
         logging.debug(playlist)
 
