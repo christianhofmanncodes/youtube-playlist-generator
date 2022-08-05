@@ -480,14 +480,33 @@ class Ui(QMainWindow):
         except FileNotFoundError:
             logging.error("Error during export process! No file was exported.")
 
+    def show_question_dialog(self, title, text):
+        return QMessageBox.question(self, title, text)
+
+    def show_info_dialog(self, title, text):
+        return QMessageBox.information(self, title, text)
+
+    def show_error_dialog(self, title, text):
+        return QMessageBox.critical(self, title, text)
+
+    def show_warning_dialog(self, title, text):
+        return QMessageBox.warning(self, title, text)
+
     def generate_button_pressed(self):
         """
         Check if playlist title empty, ask if it should be added.
         Otherwise generate playlist URL.
         """
+
         if self.lineEdit_playlist_title.text() == "":
-            dlg = AskEmptyPlaylistTitle(self)
-            if dlg.exec():
+            if (
+                Ui.show_question_dialog(
+                    self,
+                    "Your playlist title is currently empty",
+                    "There is no title for playlist yet. Do you want to proceed?",
+                )
+                == QMessageBox.StandardButton.Yes
+            ):
                 Ui.generate_playlist(self)
         else:
             Ui.generate_playlist(self)
@@ -551,6 +570,12 @@ class Ui(QMainWindow):
 
     def generate_playlist_url(self, video_ids_url):
         """Generate the playlist URL from the video ids URL."""
+        error_creating_url_dialog = Ui.show_error_dialog(
+            self,
+            "Error with creating playlist URL",
+            "There was an error with creating the playlist url. \n Check if all video ids are valid and correct.",
+        )
+
         try:
             context = ssl._create_unverified_context()
             with request.urlopen(video_ids_url, context=context) as response:
@@ -561,11 +586,11 @@ class Ui(QMainWindow):
                 f"https://www.youtube.com/playlist?list={playlist_link}"
                 + "&disable_polymer=true"
             )
-        except IndexError:
-            ErrorCreatingURLDialog(self).exec()
+        except (IndexError, UnicodeEncodeError):
+            error_creating_url_dialog
             return ""
         except error.URLError as url_error:
-            ErrorCreatingURLDialog(self).exec()
+            error_creating_url_dialog
             logging.error(url_error)
             return ""
 
@@ -813,67 +838,6 @@ class AskPlaylistImport(QDialog):
         self.layout.addWidget(message1)
         self.layout.addWidget(message2)
         self.layout.addWidget(message3)
-        self.layout.addWidget(self.button_box)
-        self.setLayout(self.layout)
-
-
-class ErrorCreatingURLDialog(QDialog):
-    """
-    Class for the dialog if something went wrong with the creation of the playlist URL.
-    """
-
-    def __init__(self, parent=None):
-        """Build the dialog with its components."""
-        super().__init__(parent)
-        self.setWindowTitle("Error with creating playlist URL.")
-        self.setFixedSize(450, 120)
-        self.setWindowIcon(
-            QIcon(os.path.join(ROOT_DIR, "res/icon", "youtube-play.icns"))
-        )
-        self.setFont(QFont("Roboto"))
-
-        q_btn = QDialogButtonBox.StandardButton.Ok
-
-        self.button_box = QDialogButtonBox(q_btn)
-        self.button_box.accepted.connect(self.accept)
-
-        self.layout = QVBoxLayout()
-        message_tuple = (
-            "There was an error with creating the playlist url. \n",
-            "Check if all video ids are valid and correct.",
-        )
-        message_text = "".join(message_tuple)
-        message = QLabel(message_text)
-        self.layout.addWidget(message)
-        self.layout.addWidget(self.button_box)
-        self.setLayout(self.layout)
-
-
-class AskEmptyPlaylistTitle(QDialog):
-    """
-    Class for the dialog to ask if a playlist title should be added with all its components.
-    """
-
-    def __init__(self, parent=None):
-        """Build the dialog with its components."""
-        super().__init__(parent)
-
-        self.setWindowTitle("Your playlist title is currently empty")
-        self.setFixedSize(450, 140)
-        self.setWindowIcon(
-            QIcon(os.path.join(ROOT_DIR, "res/icon", "youtube-play.icns"))
-        )
-        self.setFont(QFont("Roboto"))
-
-        q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
-
-        self.button_box = QDialogButtonBox(q_btn)
-        self.button_box.accepted.connect(self.accept)
-        self.button_box.rejected.connect(self.reject)
-
-        self.layout = QVBoxLayout()
-        message = QLabel("There is no title for playlist yet. Do you want to proceed?")
-        self.layout.addWidget(message)
         self.layout.addWidget(self.button_box)
         self.setLayout(self.layout)
 
