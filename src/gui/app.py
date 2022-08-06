@@ -485,15 +485,19 @@ class Ui(QMainWindow):
             logging.error("Error during export process! No file was exported.")
 
     def show_question_dialog(self, title, text):
+        """Shows a predefined question dialog."""
         return QMessageBox.question(self, title, text)
 
     def show_info_dialog(self, title, text):
+        """Shows a predefined info dialog."""
         return QMessageBox.information(self, title, text)
 
     def show_error_dialog(self, title, text):
+        """Shows a predefined error dialog."""
         return QMessageBox.critical(self, title, text)
 
     def show_warning_dialog(self, title, text):
+        """Shows a predefined warning dialog."""
         return QMessageBox.warning(self, title, text)
 
     def generate_button_pressed(self):
@@ -577,7 +581,8 @@ class Ui(QMainWindow):
         error_creating_url_dialog = Ui.show_error_dialog(
             self,
             "Error with creating playlist URL",
-            "There was an error with creating the playlist url. \n Check if all video ids are valid and correct.",
+            "There was an error with creating the playlist url."
+            + "\n Check if all video ids are valid and correct.",
         )
 
         try:
