@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sort items (Ascending & Descending)
 - List scrolls now to newly added item
 - Tooltips
+- New shortcuts for: "Count items", "Remove duplicates" and "Rename item"
 
 ### Changed
 
@@ -30,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - If a playlist already contains items, you will get asked if you want to create a new playlist or if you want to add the imported playlist to the existing playlist.
 - If playlist can not be generated "Copy" button stays inactive
 - Generated playlist URL will be deleted after reset
+- To add an item to the playlist simply press Enter (instead of Alt+Enter or Option+Enter)
 - Updated dependencies (requirements.txt)
 
 ### Removed

@@ -785,7 +785,7 @@ p, li { white-space: pre-wrap; }
     </font>
    </property>
    <property name="shortcut">
-    <string>Alt+Return</string>
+    <string>Return</string>
    </property>
   </action>
   <action name="actionCopy_URL">
@@ -816,6 +816,9 @@ p, li { white-space: pre-wrap; }
      <family>Roboto</family>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Meta+Alt+R</string>
+   </property>
   </action>
   <action name="actionRemove_duplicates">
    <property name="enabled">
@@ -823,6 +826,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Remove duplicates</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+D</string>
    </property>
   </action>
   <action name="actionMinimize">
@@ -852,6 +858,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Count items</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+C</string>
    </property>
   </action>
   <action name="actionClear_all_items">
