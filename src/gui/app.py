@@ -32,7 +32,7 @@ ROOT_DIR = os.path.extsep
 with contextlib.suppress(ImportError):
     from ctypes import windll  # Only exists on Windows
 
-    APP_ID = "christianhofmann.youtube-playlist-generator.gui.0.0.4"
+    APP_ID = "christianhofmann.youtube-playlist-generator.gui.0.0.5"
     windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
 
 
