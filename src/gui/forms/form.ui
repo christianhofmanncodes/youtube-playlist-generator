@@ -39,11 +39,10 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <activeon>../../../res/icon/youtube-play.icns</activeon>
-   </iconset>
+    <normaloff>../../../res/icon/youtube-play.icns</normaloff>../../../res/icon/youtube-play.icns</iconset>
   </property>
   <property name="windowOpacity">
-   <double>0.989999000000000</double>
+   <double>1.000000000000000</double>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
