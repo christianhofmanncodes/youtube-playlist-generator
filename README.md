@@ -1,5 +1,5 @@
-![header](res/header/header-light.png#gh-light-mode-only)
-![header](res/header/header-dark.png#gh-dark-mode-only)
+![header](src/main/resources/base/header/header-light.png#gh-light-mode-only)
+![header](src/main/resources/base/header/header-dark.png#gh-dark-mode-only)
 
 # YouTube Playlist Generator
 
@@ -11,8 +11,7 @@ A fun program based on Python to generate YouTube playlists without an account.
 
 ## Please note
 
-This project contains both a console and a GUI version.
-Choose the version that you prefer.
+This project originally contained both a console and a GUI version.
 As of version 0.0.5, the console version will no longer be developed.
 
 ## Features
@@ -38,19 +37,19 @@ As of version 0.0.5, the console version will no longer be developed.
 
 | Windows                                                       | Linux                                                     | macOS                                                   |
 | ------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------- |
-| ![windows](res/screenshot/windows/screenshot-first-start.png) | ![linux](res/screenshot/linux/screenshot-first-start.png) | ![macos](res/screenshot/mac/screenshot-first-start.png) |
+| ![windows](src/main/resources/base/screenshot/windows/screenshot-first-start.png) | ![linux](src/main/resources/base/screenshot/linux/screenshot-first-start.png) | ![macos](src/main/resources/base/screenshot/mac/screenshot-first-start.png) |
 
 ### With items added
 
 | Windows                                                            | Linux                                                          | macOS                                                        |
 | ------------------------------------------------------------------ | -------------------------------------------------------------- | ------------------------------------------------------------ |
-| ![windows](res/screenshot/windows/screenshot-with-items-added.png) | ![linux](res/screenshot/linux/screenshot-with-items-added.png) | ![macos](res/screenshot/mac/screenshot-with-items-added.png) |
+| ![windows](src/main/resources/base/screenshot/windows/screenshot-with-items-added.png) | ![linux](src/main/resources/base/screenshot/linux/screenshot-with-items-added.png) | ![macos](src/main/resources/base/screenshot/mac/screenshot-with-items-added.png) |
 
 ### After YouTube Playlist generation
 
 | Windows                                                                     | Linux                                                                   | macOS                                                                 |
 | --------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| ![windows](res/screenshot/windows/screenshot-after-playlist-generation.png) | ![linux](res/screenshot/linux/screenshot-after-playlist-generation.png) | ![macos](res/screenshot/mac/screenshot-after-playlist-generation.png) |
+| ![windows](src/main/resources/base/screenshot/windows/screenshot-after-playlist-generation.png) | ![linux](src/main/resources/base/screenshot/linux/screenshot-after-playlist-generation.png) | ![macos](src/main/resources/base/screenshot/mac/screenshot-after-playlist-generation.png) |
 
 ## Installation
 
@@ -82,19 +81,13 @@ Install Python
 Install dependencies
 
 ```bash
-  pip install -r requirements.txt
+  pip install -r requirements/base.txt
 ```
 
-Run the app (console version)
+Run the app
 
 ```bash
-  python src/console/
-```
-
-Run the app (GUI version)
-
-```bash
-  python src/gui/
+  fbs run
 ```
 
 Note: On Linux and macOS you have to use `pip3` and `python3`.  
@@ -131,7 +124,7 @@ pip3 install PyQt6
 
 ### INTERNAL ERROR: cannot create temporary directory
 
-You don’t have enough space on your system.
+You do not have enough space on your system.
 Simply free up some space.
 
 ## Roadmap
@@ -161,6 +154,7 @@ https://invidious.namazso.eu/watch?v=
 - [Qt6](https://doc.qt.io/qtforpython-6/index.html)
 - [PyQt6](https://www.riverbankcomputing.com/software/pyqt/)
 - [Qt-Material](https://github.com/UN-GCPDS/qt-material)
+- [fbs](https://build-system.fman.io/)
 
 ## Contributing
 

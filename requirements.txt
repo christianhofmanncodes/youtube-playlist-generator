@@ -1,8 +1,0 @@
-black==22.6.0
-flake8==5.0.4
-numpy==1.23.1
-pandas==1.4.3
-PyQt6==6.3.1
-PyQt6-Qt6==6.3.1
-PyQt6-sip==13.4.0
-qt-material==2.12

@@ -294,20 +294,8 @@ compile_commands.json
 .ionide
 
 # local files
-
-packenv
-win_venv
-linux_venv
 RELEASES
-src/gui/youtube-playlist-generator.pyproject
-src/gui/youtube-playlist-generator.pyproject.user
-builddmg.sh
-installer.ifp
-kpop-playlist.ytplaylist
 Thumbs.db:encryptable
-pyvenv.cfg
 Thumbs.db
-linux.spec
 header-youtube-playlist-generator-light.pages
 header-youtube-playlist-generator-dark.pages
-playlists
