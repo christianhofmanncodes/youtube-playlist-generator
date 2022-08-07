@@ -4,15 +4,16 @@
 # YouTube Playlist Generator
 
 ![GitHub top language](https://img.shields.io/badge/language-python-orange)
-![Python Version](https://img.shields.io/badge/python-3.10.2-yellow)
+![Python Version](https://img.shields.io/badge/python-3.10.6-yellow)
 ![License](https://img.shields.io/badge/license-GNU%20v3.0-blue)
 
-A fun program based on Python to generate YouTube playlists without an account.
+A fun program based on Python to generate YouTube playlists without an account.  
 
 ## Please note
 
 This project contains both a console and a GUI version.
 Choose the version that you prefer.
+As of version 0.0.5, the console version will no longer be developed.
 
 ## Features
 
