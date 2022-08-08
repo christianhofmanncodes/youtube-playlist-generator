@@ -301,3 +301,10 @@ Thumbs.db:encryptable
 Thumbs.db
 header-youtube-playlist-generator-light.pages
 header-youtube-playlist-generator-dark.pages
+windows_venv/pyvenv.cfg
+windows_venv/Scripts/pythonw.exe
+windows_venv/Scripts/python.exe
+windows_venv/Scripts/deactivate.bat
+windows_venv/Scripts/Activate.ps1
+windows_venv/Scripts/activate.bat
+windows_venv/Scripts/activate
