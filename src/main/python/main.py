@@ -572,6 +572,7 @@ class Ui(QMainWindow):
         return f"https://www.youtube.com/watch_videos?video_ids={video_ids}"
 
     def show_error_creating_url_dialog(self):
+        """Show error creating URL dialog using show_error_dialog."""
         return Ui.show_error_dialog(
             self,
             "Error with creating playlist URL",
