@@ -32,7 +32,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../resources/base/icon/youtube-play.icns</normaloff>../../../resources/base/icon/youtube-play.icns</iconset>
+    <normaloff>../icon/youtube-play.icns</normaloff>../icon/youtube-play.icns</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="Germany"/>
@@ -419,7 +419,7 @@ p, li { white-space: pre-wrap; }
     <enum>Qt::PlainText</enum>
    </property>
    <property name="pixmap">
-    <pixmap>../../../resources/base/icon/youtube-play.icns</pixmap>
+    <pixmap>../icon/youtube-play.icns</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>

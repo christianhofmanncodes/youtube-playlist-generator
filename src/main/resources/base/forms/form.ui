@@ -39,7 +39,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../resources/base/icon/youtube-play.icns</normaloff>../../../resources/base/icon/youtube-play.icns</iconset>
+    <normaloff>../icon/youtube-play.icns</normaloff>../icon/youtube-play.icns</iconset>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
@@ -197,8 +197,7 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="icon">
      <iconset>
-      <normalon>../../../resources/base/icon/button_icon_copy.svg</normalon>
-     </iconset>
+      <normaloff>../icon/button_icon_copy.svg</normaloff>../icon/button_icon_copy.svg</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -236,8 +235,7 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="icon">
      <iconset>
-      <normalon>../../../resources/base/icon/button_icon_add.svg</normalon>
-     </iconset>
+      <normaloff>../icon/button_icon_add.svg</normaloff>../icon/button_icon_add.svg</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -328,8 +326,7 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="icon">
         <iconset>
-         <normalon>../../../resources/base/icon/button_icon_reset.svg</normalon>
-        </iconset>
+         <normaloff>../icon/button_icon_reset.svg</normaloff>../icon/button_icon_reset.svg</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -358,8 +355,7 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="icon">
         <iconset>
-         <normalon>../../../resources/base/icon/button_icon_delete.svg</normalon>
-        </iconset>
+         <normaloff>../icon/button_icon_delete.svg</normaloff>../icon/button_icon_delete.svg</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -394,8 +390,7 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="icon">
         <iconset>
-         <normalon>../../../resources/base/icon/button_icon_shuffle.svg</normalon>
-        </iconset>
+         <normaloff>../icon/button_icon_shuffle.svg</normaloff>../icon/button_icon_shuffle.svg</iconset>
        </property>
        <property name="iconSize">
         <size>
