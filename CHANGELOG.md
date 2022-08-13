@@ -5,11 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 0.0.5 - 2022-08-07
+## [Compare changes to last version]
+
+## [0.0.5-alpha] - 2022-08-07
 
 ### Added
 
-- Button with icons
 - Playlist Tools (Count items, Clear all items, Remove duplicates)
 - Sort items (Ascending & Descending)
 - List scrolls now to newly added item
@@ -18,46 +19,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Buttons have now icons
 - UI: Playlist title is now displayed at the top
 - UI: "Reset playlist" is now simply "Reset"
 - UI: "Generate playlist" is now simply "Generate"
 - UI: "Copy" button replaced with icon button
 - UI: Switch input widgets (QTextEdit to QLineEdit)
-- UI: Add opacity
-- UI: Switch to own theme "yt-dark-red"
-- Fix minor spelling mistakes in Code and UI
+- UI: Switch to own theme "yt-dark-red.xml"
 - Shuffle mode can now be activated only when there are at least three items in the playlist (no longer two items)
-- Generated playlist URL now shows probably
 - If a playlist already contains items, you will get asked if you want to create a new playlist or if you want to add the imported playlist to the existing playlist.
+- To add an item to the playlist simply press Enter (instead of Alt+Enter or Option+Enter)
+- Updated dependencies (requirements/base.txt)
+- Change folder structure entirely to work with fbs
+
+### Fixed
+
+- Fix minor spelling mistakes in Code and UI
+- Generated playlist URL now shows probably
 - If playlist can not be generated "Copy" button stays inactive
 - Generated playlist URL will be deleted after reset
-- To add an item to the playlist simply press Enter (instead of Alt+Enter or Option+Enter)
-- Updated dependencies (requirements.txt)
-- Change folder structure entirely to work with fbs
 
 ### Removed
 
 - "Playlist is being generated..." message in URL field
 - print statements in code (replace with proper logging module)
 
-## 0.0.4 - 2022-03-29
+## [0.0.4-alpha] - 2022-03-29
 
 ### Added
 
 - First Windows release!
 - First Linux release!
 - Icon for Windows
-- Quit function for macOS and Windows
 
-### Changed
+### Fixed
 
 - Fix crash after playlist generation if no internet connection exists
+- Quit function for macOS and Windows
 
 ### Removed
 
 - Icons from .ui files
 
-## 0.0.3 - 2022-03-28
+## [0.0.3-alpha] - 2022-03-28
 
 ### Added
 
@@ -79,7 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - About text and Settings link (now lives in menu)
 - Info button from Settings Dialog (now lives in menu)
 
-## 0.0.2 - 2022-03-26
+## [0.0.2-alpha] - 2022-03-26
 
 ### Added
 
@@ -89,13 +93,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Output correct playlist url not video ids url
 - Replace AppleSystemUIFont with Roboto
+
+### Fixed
+
+- Output correct playlist URL not video ids URL
 
 ### Removed
 
 - Wrong link in InfoDialog
 
-## 0.0.1 - 2022-03-20
+## [0.0.1-alpha] - 2022-03-20
 
-- Initial release.
+- This is the initial release of YouTube Playlist Generator
+
+[Compare changes to last version]: https://github.com/christianhofmanncodes/youtube-playlist-generator/compare/v0.0.4-alpha...v0.0.5-alpha
+[0.0.5-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.5-alpha
+[0.0.4-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.4-alpha
+[0.0.3-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.3-alpha
+[0.0.2-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.2-alpha
+[0.0.1-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.1-alpha
