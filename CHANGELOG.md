@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Compare changes to last version]
 
+## [0.1.0] -2022-08-30
+
+### Added
+
+- Darkmode & Whitemode (switchable in settings)
+- Search for items in playlist (QInputDialog)
+- Recent files in File menu
+- Drag & Drop a .yt-playlist file into the playlist items section
+- Display messages in the new status bar
+- "New playlist" option
+
+### Changed
+
+- Refactor code
+- Redesign the settings dialog
+- "Import Playlist" is now simply "Open"
+- "Export Playlist" is now simply "Save"
+
+### Fixed
+
+- Change program language in settings (English/Deutsch)
+- Edit menu functions now work probably
+- Settings are now loaded automatically
+- Keyboard shortcuts can now be changed
+
+### Deleted
+
+- "Reset playlist" option (replaced by "New Playlist")
+
 ## [0.0.5-alpha] - 2022-08-07
 
 ### Added
