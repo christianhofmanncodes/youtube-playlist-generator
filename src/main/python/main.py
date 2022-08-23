@@ -17,17 +17,19 @@ from PyQt6.QtWidgets import (
     QDialog,
     QDialogButtonBox,
     QFileDialog,
+    QInputDialog,
     QLabel,
+    QListWidget,
     QMainWindow,
     QMessageBox,
     QVBoxLayout,
 )
-from qt_material import apply_stylesheet
+from qt_material import apply_stylesheet, QtStyleTools
 
 with contextlib.suppress(ImportError):
     from ctypes import windll  # Only exists on Windows
 
-    APP_ID = "christianhofmann.youtube-playlist-generator.gui.0.0.5"
+    APP_ID = "christianhofmann.youtube-playlist-generator.gui.0.1.0"
     windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
 
 
@@ -39,47 +41,147 @@ class Ui(QMainWindow):
     def __init__(self):
         """Connect UI components with specific functions."""
         super(Ui, self).__init__()
+        self.initializeUI()
+        self.createActions()
+        self.createTrigger()
+
+    def initializeUI(self):
+        """Set up the application's GUI."""
         uic.loadUi(app_context.get_resource("forms/form.ui"), self)
         self.setFont(QFont("Roboto"))
-        self.pushButton_add.clicked.connect(self.add_button_pressed)
-        self.actionAdd_item.triggered.connect(self.add_button_pressed)
-        self.pushButton_copy.clicked.connect(self.copy_button_pressed)
-        self.actionCopy_URL.triggered.connect(self.copy_button_pressed)
-        self.actionImport.triggered.connect(self.import_button_pressed)
-        self.actionExport.triggered.connect(self.export_button_pressed)
-        self.pushButton_generate.clicked.connect(self.generate_button_pressed)
-        self.actionGenerate_Playlist.triggered.connect(self.generate_button_pressed)
-        self.pushButton_delete_item.clicked.connect(self.delete_item_button_clicked)
-        self.actionDelete_Item.triggered.connect(self.delete_item_button_clicked)
-        self.pushButton_reset_playlist.clicked.connect(
-            self.reset_playlist_button_clicked
-        )
-        self.pushButton_shuffle_playlist.clicked.connect(self.shuffle_clicked)
-        self.actionReset_Playlist.triggered.connect(self.reset_playlist_button_clicked)
-        self.listWidget_playlist_items.itemDoubleClicked.connect(
-            self.item_double_clicked
-        )
-        self.actionRename_item.triggered.connect(self.item_double_clicked)
-        self.actionSettings.triggered.connect(self.settings_clicked)
-        self.actionGithub.triggered.connect(self.github_clicked)
-        self.actionReport_a_bug.triggered.connect(self.report_a_bug)
-        self.actionContact.triggered.connect(self.contact)
-        self.actionAbout.triggered.connect(self.info_button_pressed)
-        self.actionShuffle.triggered.connect(self.shuffle_clicked)
-        self.lineEdit_url_id.textChanged.connect(self.url_id_text_changed)
-        self.actionRemove_duplicates.triggered.connect(self.remove_duplicates_clicked)
-        self.actionAscending.triggered.connect(self.sort_items_ascending)
-        self.actionDescending.triggered.connect(self.sort_items_descending)
-        self.actionClear_all_items.triggered.connect(self.clear_items)
-        self.actionCount_items.triggered.connect(self.count_items_dialog)
-        self.actionQuit.triggered.connect(self.quit)
-        self.lineEdit_playlist_title.setFocus()
 
-    def quit(self):
+    def createActions(self):
+        """Create the applications menu actions."""
+        self.actionNew.triggered.connect(self.act_new)
+        self.actionOpen.triggered.connect(self.act_open)
+        self.actionSave.triggered.connect(self.act_save)
+        self.actionAbout.triggered.connect(self.act_about)
+        self.actionSettings.triggered.connect(self.act_settings)
+        self.actionQuit.triggered.connect(self.act_quit)
+
+        self.actionUndo.triggered.connect(self.act_undo)
+        self.actionRedo.triggered.connect(self.act_redo)
+        self.actionCut.triggered.connect(self.act_cut)
+        self.actionCopy.triggered.connect(self.act_copy)
+        self.actionPaste.triggered.connect(self.act_paste)
+        self.actionSelect_all.triggered.connect(self.act_select_all)
+        self.actionFind.triggered.connect(self.act_find)
+
+        self.actionAdd_item.triggered.connect(self.act_add_item)
+        self.actionDelete_Item.triggered.connect(self.act_delete_item)
+        self.actionRename_item.triggered.connect(self.act_rename_item)
+        self.actionShuffle.triggered.connect(self.act_shuffle)
+        self.actionGenerate_Playlist.triggered.connect(self.act_generate)
+        self.actionAscending.triggered.connect(self.act_sort_items_ascending)
+        self.actionDescending.triggered.connect(self.act_sort_items_descending)
+        self.actionCount_items.triggered.connect(self.act_count_items)
+        self.actionClear_all_items.triggered.connect(self.act_clear_items)
+        self.actionRemove_duplicates.triggered.connect(self.act_remove_duplicates)
+        self.actionCopy_URL.triggered.connect(self.act_copy_url)
+
+        self.actionGithub.triggered.connect(self.act_github)
+        self.actionReport_a_bug.triggered.connect(self.act_report_a_bug)
+        self.actionContact.triggered.connect(self.act_contact)
+
+    def createTrigger(self):
+        """Create the trigger for several UI components."""
+        self.lineEdit_playlist_title.setFocus()
+        self.lineEdit_url_id.textChanged.connect(self.act_url_id_text_change)
+        self.pushButton_add.clicked.connect(self.act_add_item)
+        self.listWidget_playlist_items.itemDoubleClicked.connect(self.act_rename_item)
+        self.pushButton_new.clicked.connect(self.act_new)
+        self.pushButton_delete_item.clicked.connect(self.act_delete_item)
+        self.pushButton_shuffle_playlist.clicked.connect(self.act_shuffle)
+        self.pushButton_generate.clicked.connect(self.act_generate)
+        self.pushButton_copy.clicked.connect(self.act_copy_url)
+        self.listWidget_playlist_items.itemSelectionChanged.connect(
+            self.display_number_of_item_in_statusbar
+        )
+
+    def display_number_of_item_in_statusbar(self):
+        """Display the number of selected item in playlist in statusbar."""
+        self.statusBar.showMessage(
+            f"Selected playlist item: {str(self.listWidget_playlist_items.currentRow() + 1)}"
+        )
+
+    def act_drag_drop(self):
+        print("Wow!")
+
+    def act_new(self):
+        """
+        Creates a blank state to start a new playlist.
+        If the playlist already contains items and should be deleted
+        remove all items in playlist and disable all buttons
+        and clear playlist title field.
+        """
+        if Ui.playlist_widget_has_one_or_more_items(self):
+            dlg = AskPlaylistResetDialog(self)
+            if dlg.exec():
+                self.listWidget_playlist_items.clear()
+                logging.debug("Playlist was reset successfully.")
+                if Ui.is_playlist_widget_empty(self):
+                    Ui.disable_components(self)
+                    self.pushButton_copy.setEnabled(False)
+                    self.actionCopy_URL.setEnabled(False)
+                    self.lineEdit_playlist_title.clear()
+                    self.textEdit_playlist_generated_url.clear()
+                    self.lineEdit_playlist_title.setFocus()
+            else:
+                logging.debug("Playlist reset cancelled.")
+                logging.debug("No item was deleted!")
+        else:
+            self.listWidget_playlist_items.clear()
+            logging.debug("Playlist was reset successfully.")
+            if Ui.is_playlist_widget_empty(self):
+                Ui.disable_components(self)
+                self.pushButton_copy.setEnabled(False)
+                self.actionCopy_URL.setEnabled(False)
+                self.lineEdit_playlist_title.clear()
+                self.textEdit_playlist_generated_url.clear()
+                self.lineEdit_playlist_title.setFocus()
+
+    def act_undo(self):
+        """Undo last change."""
+        pass
+
+    def act_redo(self):
+        """Redo last change."""
+        pass
+
+    def act_cut(self):
+        """Cut text from selected text field."""
+        pass
+
+    def act_copy(self):
+        """Copy text from selected text field."""
+        pass
+
+    def act_paste(self):
+        """Paste text to selected text field."""
+        pass
+
+    def act_select_all(self):
+        """Select all tex from selected text field."""
+        pass
+
+    def act_find(self):
+        find_text, ok = QInputDialog.getText(self, "Find", "Playlist item:")
+
+        if ok and find_text != "":
+            try:
+                item = self.listWidget_playlist_items.findItems(
+                    find_text, Qt.MatchFlag.MatchRegularExpression
+                )[0]
+                item.setSelected(True)
+                self.listWidget_playlist_items.scrollToItem(item)
+            except IndexError:
+                QMessageBox.warning(self, "Error!", f"No item '{find_text}' found!")
+
+    def act_quit(self):
         """Quits the application."""
         app.quit()
 
-    def count_items_dialog(self):
+    def act_count_items(self):
         """Opens CountItemsDialog and displays count of items in playlist."""
         QMessageBox.information(
             self,
@@ -87,7 +189,7 @@ class Ui(QMainWindow):
             f"Number of items in playlist: {self.listWidget_playlist_items.count()}",
         )
 
-    def clear_items(self):
+    def act_clear_items(self):
         """
         Deletes all items in playlist.
         This is not the reset function!
@@ -106,19 +208,19 @@ class Ui(QMainWindow):
         if not Ui.playlist_widget_has_one_or_more_items(self):
             self.actionClear_all_items.setEnabled(False)
 
-    def sort_items_ascending(self):
+    def act_sort_items_ascending(self):
         """Sort items in playlist ascending."""
         self.listWidget_playlist_items.setSortingEnabled(True)
         self.listWidget_playlist_items.sortItems(Qt.SortOrder.AscendingOrder)
         self.listWidget_playlist_items.setSortingEnabled(False)
 
-    def sort_items_descending(self):
+    def act_sort_items_descending(self):
         """Sort items in playlist descending."""
         self.listWidget_playlist_items.setSortingEnabled(True)
         self.listWidget_playlist_items.sortItems(Qt.SortOrder.DescendingOrder)
         self.listWidget_playlist_items.setSortingEnabled(False)
 
-    def url_id_text_changed(self):
+    def act_url_id_text_change(self):
         """Enable Add button only if lineEdit_url_id is not empty."""
         if self.lineEdit_url_id.text() != "":
             self.pushButton_add.setEnabled(True)
@@ -127,7 +229,7 @@ class Ui(QMainWindow):
             self.pushButton_add.setEnabled(False)
             self.actionAdd_item.setEnabled(False)
 
-    def shuffle_clicked(self):
+    def act_shuffle(self):
         """Shuffle playlist with random.shuffle()."""
         logging.debug("Shuffle playlist...")
         playlist = Ui.output_list_from_playlist_ids(self)
@@ -142,28 +244,28 @@ class Ui(QMainWindow):
         self.listWidget_playlist_items.clear()
         Ui.import_from_dict(self, ytplaylist_dict)
 
-    def info_button_pressed(self):
+    def act_about(self):
         """Execute InfoDialog."""
         dlg = InfoDialog(self)
         dlg.exec()
 
-    def contact(self):
+    def act_contact(self):
         """Open default mail software with contact email address."""
         self.open_url_in_webbrowser("mailto:contact@youtube-playlist-generator.com")
 
-    def report_a_bug(self):
+    def act_report_a_bug(self):
         """Open Github issue page from project."""
         self.open_url_in_webbrowser(
             "https://github.com/christianhofmanncodes/youtube-playlist-generator/issues"
         )
 
-    def github_clicked(self):
+    def act_github(self):
         """Open Github page from project."""
         self.open_url_in_webbrowser(
             "https://github.com/christianhofmanncodes/youtube-playlist-generator"
         )
 
-    def item_double_clicked(self, item):
+    def act_rename_item(self, item):
         """Add flag ItemIsEditable to double clicked item in playlist."""
         list_widget = self.listWidget_playlist_items
         for index in range(list_widget.count()):
@@ -180,7 +282,7 @@ class Ui(QMainWindow):
                 item.setSelected(True)
             self.listWidget_playlist_items.edit(index)
 
-    def add_button_pressed(self):
+    def act_add_item(self):
         """
         Get content from textEdit field and convert URL to ID if necessary.
         Otherwise add new item to playlist.
@@ -206,7 +308,7 @@ class Ui(QMainWindow):
             self.listWidget_playlist_items.scrollToItem(item)
 
             self.lineEdit_url_id.clear()
-            self.pushButton_reset_playlist.setEnabled(True)
+            self.pushButton_new.setEnabled(True)
             self.pushButton_delete_item.setEnabled(True)
             self.actionDelete_Item.setEnabled(True)
             self.actionRename_item.setEnabled(True)
@@ -218,7 +320,7 @@ class Ui(QMainWindow):
             if Ui.playlist_widget_has_two_or_more_items(self):
                 self.pushButton_generate.setEnabled(True)
                 self.actionGenerate_Playlist.setEnabled(True)
-                self.actionExport.setEnabled(True)
+                self.actionSave.setEnabled(True)
                 self.actionRemove_duplicates.setEnabled(True)
                 self.menuSort_items.setEnabled(True)
                 self.actionAscending.setEnabled(True)
@@ -267,7 +369,7 @@ class Ui(QMainWindow):
 
     def disable_components(self):
         """Disable specific components."""
-        self.pushButton_reset_playlist.setEnabled(False)
+        self.pushButton_new.setEnabled(False)
         self.pushButton_delete_item.setEnabled(False)
         self.pushButton_generate.setEnabled(False)
         self.pushButton_shuffle_playlist.setEnabled(False)
@@ -276,11 +378,11 @@ class Ui(QMainWindow):
         self.actionGenerate_Playlist.setEnabled(False)
         self.actionShuffle.setEnabled(False)
         self.actionRename_item.setEnabled(False)
-        self.actionExport.setEnabled(False)
+        self.actionSave.setEnabled(False)
         self.actionRemove_duplicates.setEnabled(False)
         self.textEdit_playlist_generated_url.setEnabled(False)
 
-    def remove_duplicates_clicked(self):
+    def act_remove_duplicates(self):
         """Check if two or more items in playlist. Remove duplicates."""
         if Ui.playlist_widget_has_two_or_more_items(self):
             Ui.remove_duplicates_from_playlist(self)
@@ -315,27 +417,7 @@ class Ui(QMainWindow):
         if not Ui.playlist_widget_has_three_or_more_items(self):
             self.pushButton_shuffle_playlist.setEnabled(False)
 
-    def reset_playlist_button_clicked(self):
-        """
-        If playlist should be deleted remove all items in playlist and disable all buttons
-        and clear playlist title field.
-        """
-        dlg = AskPlaylistResetDialog(self)
-        if dlg.exec():
-            self.listWidget_playlist_items.clear()
-            logging.debug("Playlist was reset successfully.")
-            if Ui.is_playlist_widget_empty(self):
-                Ui.disable_components(self)
-                self.pushButton_copy.setEnabled(False)
-                self.actionCopy_URL.setEnabled(False)
-                self.lineEdit_playlist_title.clear()
-                self.textEdit_playlist_generated_url.clear()
-                self.lineEdit_playlist_title.setFocus()
-        else:
-            logging.debug("Playlist reset cancelled.")
-            logging.debug("No item was deleted!")
-
-    def delete_item_button_clicked(self):
+    def act_delete_item(self):
         """If item selected delete it from the playlist."""
         list_items = self.listWidget_playlist_items.selectedItems()
         if not list_items:
@@ -354,7 +436,7 @@ class Ui(QMainWindow):
             self.pushButton_generate.setEnabled(False)
             self.actionGenerate_Playlist.setEnabled(False)
             self.pushButton_shuffle_playlist.setEnabled(False)
-            self.actionExport.setEnabled(False)
+            self.actionSave.setEnabled(False)
             self.actionRemove_duplicates.setEnabled(False)
             self.menuSort_items.setEnabled(False)
             self.actionAscending.setEnabled(False)
@@ -369,7 +451,7 @@ class Ui(QMainWindow):
         """Return True if textEdit_playlist_generated_url is not empty."""
         return self.textEdit_playlist_generated_url.toPlainText() != ""
 
-    def copy_button_pressed(self):
+    def act_copy_url(self):
         """Get content from textEdit_playlist_generated_url and copy it to clipboard."""
         text = self.textEdit_playlist_generated_url.toPlainText()
         QApplication.clipboard().setText(text)
@@ -401,7 +483,7 @@ class Ui(QMainWindow):
         logging.debug(f"Playlist items count: {number_of_items}")
         return number_of_items
 
-    def import_button_pressed(self):
+    def act_open(self):
         """Get path of .ytplaylist-file and import it via import_from_dict()."""
         try:
             if filename := QFileDialog.getOpenFileName(
@@ -420,14 +502,14 @@ class Ui(QMainWindow):
                     if dlg.exec():
                         Ui.import_from_dict(self, ytplaylist_dict)
                     else:
-                        Ui.reset_playlist_button_clicked(self)
+                        Ui.act_new(self)
                         Ui.import_from_dict(self, ytplaylist_dict)
                         self.lineEdit_url_id.setFocus()
                 else:
                     Ui.import_from_dict(self, ytplaylist_dict)
                     self.lineEdit_url_id.setFocus()
 
-                self.pushButton_reset_playlist.setEnabled(True)
+                self.pushButton_new.setEnabled(True)
                 self.pushButton_delete_item.setEnabled(True)
                 self.pushButton_generate.setEnabled(True)
                 self.pushButton_shuffle_playlist.setEnabled(True)
@@ -436,7 +518,7 @@ class Ui(QMainWindow):
                 self.actionGenerate_Playlist.setEnabled(True)
                 self.actionShuffle.setEnabled(True)
                 self.actionRename_item.setEnabled(True)
-                self.actionExport.setEnabled(True)
+                self.actionSave.setEnabled(True)
                 self.actionRemove_duplicates.setEnabled(True)
                 self.menuSort_items.setEnabled(True)
                 self.actionAscending.setEnabled(True)
@@ -459,7 +541,7 @@ class Ui(QMainWindow):
         playlist = self.listWidget_playlist_items
         return [playlist.item(x).text() for x in range(playlist.count())]
 
-    def export_button_pressed(self):
+    def act_save(self):
         """Get path to save .ytplaylist-file and generate file."""
         try:
             if filename := QFileDialog.getSaveFileName(
@@ -495,7 +577,7 @@ class Ui(QMainWindow):
         """Shows a predefined warning dialog."""
         return QMessageBox.warning(self, title, text)
 
-    def generate_button_pressed(self):
+    def act_generate(self):
         """
         Check if playlist title empty, ask if it should be added.
         Otherwise generate playlist URL.
@@ -716,7 +798,7 @@ class Ui(QMainWindow):
             ],
         }
 
-    def settings_clicked(self):
+    def act_settings(self):
         """Open settings dialog."""
         settings_dict = Ui.get_settings(self)
         dlg = SettingsDialog(self)
@@ -775,6 +857,44 @@ class Ui(QMainWindow):
                 combo_box_program_language_text,
             )
             Ui.save_settings_to_conf_file(self, settings_dict)
+
+
+class ListBoxWidget(Ui):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        Ui.listWidget_playlist_items.setAcceptDrops(True)
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.accept()
+        else:
+            event.ignore()
+
+    def dragMoveEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.setDropAction(Qt.DropAction.CopyAction)
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.setDropAction(Qt.DropAction.CopyAction)
+            event.accept()
+
+            print(event.mimeData().urls())
+
+            links = []
+
+            for url in event.mimeData().urls():
+                if url.isLocalFile():
+                    links.append(str(url.toLocalFile()))
+
+                ytplaylist_dict = Ui.read_json_file(self, url.path())
+                Ui.import_from_dict(self, ytplaylist_dict)
+            # self.addItems(links)
+        else:
+            event.ignore()
 
 
 class AskPlaylistResetDialog(QDialog):
