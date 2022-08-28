@@ -20,6 +20,7 @@ jobs:
         pip install pylint
         pip install pytest
         pip install pytest-cov
+        pip install fbs
         pip install pandas
         pip install PyQt6
         pip install qt_material
