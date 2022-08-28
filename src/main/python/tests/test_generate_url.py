@@ -1,7 +1,9 @@
+"""tests.test_generate_url module"""
 from main import Ui
 
 
 def test_create_playlist_url_without_title() -> None:
+    """Test Ui.create_playlist_url_without_title()"""
     video_ids = "gQlMMD8auMs,dYRITmpFbJ4"
     assert (
         Ui.create_playlist_url_without_title(Ui, video_ids)
@@ -10,6 +12,7 @@ def test_create_playlist_url_without_title() -> None:
 
 
 def test_create_playlist_url_with_title() -> None:
+    """Test Ui.create_playlist_url_with_title()"""
     video_ids = "gQlMMD8auMs,dYRITmpFbJ4"
     playlist_title = "K-Pop"
     assert (
