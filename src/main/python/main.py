@@ -19,12 +19,11 @@ from PyQt6.QtWidgets import (
     QFileDialog,
     QInputDialog,
     QLabel,
-    QListWidget,
     QMainWindow,
     QMessageBox,
     QVBoxLayout,
 )
-from qt_material import apply_stylesheet, QtStyleTools
+from qt_material import apply_stylesheet
 
 with contextlib.suppress(ImportError):
     from ctypes import windll  # Only exists on Windows
@@ -40,17 +39,17 @@ class Ui(QMainWindow):
 
     def __init__(self):
         """Connect UI components with specific functions."""
-        super(Ui, self).__init__()
-        self.initializeUI()
-        self.createActions()
-        self.createTrigger()
+        super().__init__()
+        self.initialize_ui()
+        self.create_actions()
+        self.create_trigger()
 
-    def initializeUI(self):
+    def initialize_ui(self):
         """Set up the application's GUI."""
         uic.loadUi(app_context.get_resource("forms/form.ui"), self)
         self.setFont(QFont("Roboto"))
 
-    def createActions(self):
+    def create_actions(self):
         """Create the applications menu actions."""
         self.actionNew.triggered.connect(self.act_new)
         self.actionOpen.triggered.connect(self.act_open)
@@ -83,7 +82,7 @@ class Ui(QMainWindow):
         self.actionReport_a_bug.triggered.connect(self.act_report_a_bug)
         self.actionContact.triggered.connect(self.act_contact)
 
-    def createTrigger(self):
+    def create_trigger(self):
         """Create the trigger for several UI components."""
         self.lineEdit_playlist_title.setFocus()
         self.lineEdit_url_id.textChanged.connect(self.act_url_id_text_change)
@@ -94,18 +93,6 @@ class Ui(QMainWindow):
         self.pushButton_shuffle_playlist.clicked.connect(self.act_shuffle)
         self.pushButton_generate.clicked.connect(self.act_generate)
         self.pushButton_copy.clicked.connect(self.act_copy_url)
-        self.listWidget_playlist_items.itemSelectionChanged.connect(
-            self.display_number_of_item_in_statusbar
-        )
-
-    def display_number_of_item_in_statusbar(self):
-        """Display the number of selected item in playlist in statusbar."""
-        self.statusBar.showMessage(
-            f"Selected playlist item: {str(self.listWidget_playlist_items.currentRow() + 1)}"
-        )
-
-    def act_drag_drop(self):
-        print("Wow!")
 
     def act_new(self):
         """
@@ -142,32 +129,33 @@ class Ui(QMainWindow):
 
     def act_undo(self):
         """Undo last change."""
-        pass
+        print("Undo...")
 
     def act_redo(self):
         """Redo last change."""
-        pass
+        print("Redo...")
 
     def act_cut(self):
         """Cut text from selected text field."""
-        pass
+        print("Cut...")
 
     def act_copy(self):
         """Copy text from selected text field."""
-        pass
+        print("Copy...")
 
     def act_paste(self):
         """Paste text to selected text field."""
-        pass
+        print("Paste...")
 
     def act_select_all(self):
         """Select all tex from selected text field."""
-        pass
+        print("Select all...")
 
     def act_find(self):
-        find_text, ok = QInputDialog.getText(self, "Find", "Playlist item:")
+        """Find text in playlist."""
+        find_text, button_ok = QInputDialog.getText(self, "Find", "Playlist item:")
 
-        if ok and find_text != "":
+        if button_ok and find_text != "":
             try:
                 item = self.listWidget_playlist_items.findItems(
                     find_text, Qt.MatchFlag.MatchRegularExpression
@@ -474,13 +462,13 @@ class Ui(QMainWindow):
     def check_if_items_in_playlist(self):
         """Returns True if more than one item in playlist."""
         number_of_items = self.listWidget_playlist_items.count()
-        logging.debug(f"Playlist items count: {number_of_items}")
+        logging.debug("Playlist items count: %s", number_of_items)
         return number_of_items >= 1
 
     def return_number_of_items_in_playlist(self):  # deprecated
         """Returns number of items in playlist."""
         number_of_items = self.listWidget_playlist_items.count()
-        logging.debug(f"Playlist items count: {number_of_items}")
+        logging.debug("Playlist items count: %s", number_of_items)
         return number_of_items
 
     def act_open(self):
@@ -666,6 +654,7 @@ class Ui(QMainWindow):
         """Generate the playlist URL from the video ids URL."""
         try:
             context = ssl._create_unverified_context()
+
             with request.urlopen(video_ids_url, context=context) as response:
                 playlist_link = response.geturl()
                 playlist_link = playlist_link.split("list=")[1]
@@ -681,7 +670,7 @@ class Ui(QMainWindow):
 
     def open_url_in_webbrowser(self, url):
         """Open a URL in Webbrowser in a new tab."""
-        logging.debug(f"\nOpening {url} in new Web browser tab...\n")
+        logging.debug("Opening %s in new Web browser tab...", url)
         webbrowser.open_new_tab(url)
 
     def open_playlist_url_in_webbrowser(self, playlist_url):
@@ -699,18 +688,20 @@ class Ui(QMainWindow):
 
     def load_settings(self, settings_dict):
         """Display settings in dialog from dict."""
-        program_language = settings_dict["programLanguage"]
-        open_url_automatically = settings_dict["openURLautomatically"]
-        copy_url_to_clipboard = settings_dict["copyURLtoClipboard"]
+        program_language = settings_dict["general"][0]["programLanguage"]
+        open_url_automatically = settings_dict["general"][0]["openURLautomatically"]
+        copy_url_to_clipboard = settings_dict["general"][0]["copyURLtoClipboard"]
 
-        shortcut_import_new_playlist = settings_dict["keyboardShortcuts"][0][
+        shortcut_import_new_playlist = settings_dict["keyboard_shortcuts"][0][
             "importNewPlaylist"
         ]
-        shortcut_export_playlist = settings_dict["keyboardShortcuts"][0][
+        shortcut_export_playlist = settings_dict["keyboard_shortcuts"][0][
             "exportPlaylist"
         ]
-        shortcut_reset_playlist = settings_dict["keyboardShortcuts"][0]["clearPlaylist"]
-        shortcut_generate_playlist = settings_dict["keyboardShortcuts"][0][
+        shortcut_reset_playlist = settings_dict["keyboard_shortcuts"][0][
+            "clearPlaylist"
+        ]
+        shortcut_generate_playlist = settings_dict["keyboard_shortcuts"][0][
             "generatePlaylist"
         ]
 
@@ -762,38 +753,24 @@ class Ui(QMainWindow):
 
     def output_settings_as_dict(
         self,
-        checkbox_option1_state,
-        checkbox_option2_state,
-        label_keyboard_shortcuts_option1_content,
-        label_keyboard_shortcuts_option2_content,
-        label_keyboard_shortcuts_option3_content,
-        label_keyboard_shortcuts_option4_content,
-        label_keyboard_shortcuts_option5_content,
-        combo_box_program_language_text,
+        components_dict,
     ):
         """Generate from settings inside settings dialog dict."""
-
-        if checkbox_option1_state is True:
-            checkbox_option1_state == "true"
-        elif checkbox_option1_state is False:
-            checkbox_option1_state == "false"
-
-        if checkbox_option2_state is True:
-            checkbox_option2_state == "true"
-        elif checkbox_option2_state is False:
-            checkbox_option2_state == "false"
-
         return {
-            "programLanguage": combo_box_program_language_text,
-            "openURLautomatically": checkbox_option1_state,
-            "copyURLtoClipboard": checkbox_option2_state,
-            "keyboardShortcuts": [
+            "general": [
                 {
-                    "importNewPlaylist": label_keyboard_shortcuts_option1_content,
-                    "exportPlaylist": label_keyboard_shortcuts_option2_content,
-                    "clearPlaylist": label_keyboard_shortcuts_option3_content,
-                    "generatePlaylist": label_keyboard_shortcuts_option4_content,
-                    "shufflePlaylist": label_keyboard_shortcuts_option5_content,
+                    "programLanguage": components_dict["language"],
+                    "openURLautomatically": components_dict["option_1"],
+                    "copyURLtoClipboard": components_dict["option_2"],
+                },
+            ],
+            "keyboard_shortcuts": [
+                {
+                    "importNewPlaylist": components_dict["shortcut_1"],
+                    "exportPlaylist": components_dict["shortcut_2"],
+                    "clearPlaylist": components_dict["shortcut_3"],
+                    "generatePlaylist": components_dict["shortcut_4"],
+                    "shufflePlaylist": components_dict["shortcut_5"],
                 }
             ],
         }
@@ -805,79 +782,61 @@ class Ui(QMainWindow):
         Ui.load_settings(self, settings_dict)
 
         if dlg.exec():
-            checkbox_option1_state = dlg.checkBox_option1.isChecked()
-            checkbox_option2_state = dlg.checkBox_option2.isChecked()
+            radio_button_os_state = dlg.radioButton_OS.isChecked()
+            radio_button_white_state = dlg.radioButton_white.isChecked()
+            radio_button_dark_state = dlg.radioButton_dark.isChecked()
 
-            label_keyboard_shortcuts_option1_content = (
-                dlg.label_keyboard_shortcuts_option1.text()
-            )
-            label_keyboard_shortcuts_option2_content = (
-                dlg.label_keyboard_shortcuts_option2.text()
-            )
-            label_keyboard_shortcuts_option3_content = (
-                dlg.label_keyboard_shortcuts_option3.text()
-            )
-            label_keyboard_shortcuts_option4_content = (
-                dlg.label_keyboard_shortcuts_option4.text()
-            )
-            label_keyboard_shortcuts_option5_content = (
-                dlg.label_keyboard_shortcuts_option5.text()
-            )
+            if radio_button_os_state:
+                radio_button_theme = "os"
+            elif radio_button_white_state:
+                radio_button_theme = "white"
+            elif radio_button_dark_state:
+                radio_button_theme = "dark"
 
-            combo_box_program_language_text = dlg.comboBox_language.currentText()
+            components_dict = {
+                "option_1": dlg.checkBox_option1.isChecked(),
+                "option_2": dlg.checkBox_option2.isChecked(),
+                "language": dlg.comboBox_language.currentText(),
+                "theme": radio_button_theme,
+                "shortcut_1": dlg.label_keyboard_shortcuts_option1.text(),
+                "shortcut_2": dlg.label_keyboard_shortcuts_option2.text(),
+                "shortcut_3": dlg.label_keyboard_shortcuts_option3.text(),
+                "shortcut_4": dlg.label_keyboard_shortcuts_option4.text(),
+                "shortcut_5": dlg.label_keyboard_shortcuts_option5.text(),
+            }
 
-            logging.debug(f"Option 1: {checkbox_option1_state}")
-            logging.debug(f"Option 2: {checkbox_option2_state}")
-            logging.debug(
-                f"Keyboard Shortcut 1: {label_keyboard_shortcuts_option1_content}"
-            )
-            logging.debug(
-                f"Keyboard Shortcut 2: {label_keyboard_shortcuts_option2_content}"
-            )
-            logging.debug(
-                f"Keyboard Shortcut 3: {label_keyboard_shortcuts_option3_content}"
-            )
-            logging.debug(
-                f"Keyboard Shortcut 4: {label_keyboard_shortcuts_option4_content}"
-            )
-            logging.debug(
-                f"Keyboard Shortcut 5: {label_keyboard_shortcuts_option5_content}"
-            )
-            logging.debug(f"Program language: {combo_box_program_language_text}")
-
-            settings_dict = Ui.output_settings_as_dict(
-                self,
-                checkbox_option1_state,
-                checkbox_option2_state,
-                label_keyboard_shortcuts_option1_content,
-                label_keyboard_shortcuts_option2_content,
-                label_keyboard_shortcuts_option3_content,
-                label_keyboard_shortcuts_option4_content,
-                label_keyboard_shortcuts_option5_content,
-                combo_box_program_language_text,
-            )
+            logging.debug(components_dict)
+            settings_dict = Ui.output_settings_as_dict(self, components_dict)
             Ui.save_settings_to_conf_file(self, settings_dict)
 
 
 class ListBoxWidget(Ui):
-    def __init__(self, parent=None):
-        super().__init__(parent)
+    """
+    Class for the ListBoxWidget with drag and drop function.
+    """
+
+    def __init__(self):
+        """Connect UI components with specific functions."""
+        super().__init__()
         Ui.listWidget_playlist_items.setAcceptDrops(True)
 
-    def dragEnterEvent(self, event):
+    def drag_enter_event(self, event):
+        """Handle drag event from user."""
         if event.mimeData().hasUrls():
             event.accept()
         else:
             event.ignore()
 
-    def dragMoveEvent(self, event):
+    def drag_move_event(self, event):
+        """Handle drag move event from user."""
         if event.mimeData().hasUrls():
             event.setDropAction(Qt.DropAction.CopyAction)
             event.accept()
         else:
             event.ignore()
 
-    def dropEvent(self, event):
+    def drop_event(self, event):
+        """Handle drop event from user."""
         if event.mimeData().hasUrls():
             event.setDropAction(Qt.DropAction.CopyAction)
             event.accept()
