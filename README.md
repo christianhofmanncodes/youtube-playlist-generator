@@ -28,8 +28,8 @@ As of version 0.0.5, the console version will no longer be developed.
 - Generate playlist URL
 - Automatically open generated URL in default web browser
 - Copy URL to clipboard
-- Import .ytplaylist file
-- Export to .ytplaylist file
+- Open .ytplaylist file
+- Save .ytplaylist file
 
 ## Screenshots
 
@@ -56,7 +56,7 @@ As of version 0.0.5, the console version will no longer be developed.
 Just download and run the newest version from the Releases.
 Choose your file according to the operating system (Windows, Linux or macOS) you are using.
 
-Launch the program. Now you can either create a new playlist by adding an URL or ID to the playlist one by one, or you can import a `.ytplaylist` file. If you want to save your playlist, you can export the playlist to a `.ytplaylist` file with all its items and the playlist title. Share it with a friend if you want.
+Launch the program. Now you can either create a new playlist by adding an URL or ID to the playlist one by one, or you can open a `.ytplaylist` file. If you want to save your playlist, you can save the playlist to a `.ytplaylist` file with all its items and the playlist title. Share it with a friend if you want.
 
 ## Run Locally
 
