@@ -8,6 +8,7 @@ import sys
 import webbrowser
 from urllib import error, request
 
+import darkdetect
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from PyQt6 import uic
 from PyQt6.QtCore import Qt
@@ -24,7 +25,7 @@ from PyQt6.QtWidgets import (
     QTextEdit,
     QVBoxLayout,
 )
-from qt_material import apply_stylesheet
+from qt_material import QtStyleTools, apply_stylesheet
 
 APP_VERSION = "0.1.0"
 RELEASE_DATE = "Aug 30 2022"
@@ -36,7 +37,7 @@ with contextlib.suppress(ImportError):
     windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
 
 
-class Ui(QMainWindow):
+class Ui(QMainWindow, QtStyleTools):
     """
     Class for the main window with all its components and functions.
     """
@@ -54,6 +55,17 @@ class Ui(QMainWindow):
         self.license_text_object = QTextEdit(self.license_dialog)
         uic.loadUi(app_context.get_resource("forms/form.ui"), self)
         self.setFont(QFont("Roboto"))
+
+        if darkdetect.isDark():
+            apply_stylesheet(
+                app, theme=app_context.get_resource("theme/yt-dark-red.xml")
+            )
+        elif darkdetect.isLight():
+            apply_stylesheet(
+                app,
+                theme=app_context.get_resource("theme/yt-white-red.xml"),
+                invert_secondary=True,
+            )
 
     def create_actions(self) -> None:
         """Create the applications menu actions."""
@@ -246,7 +258,7 @@ class Ui(QMainWindow):
             self,
             "About YouTube Playlist Generator",
             f"""YouTube Playlist Generator by Christian Hofmann\n
-            \nVersion {APP_VERSION} ({RELEASE_DATE})\n
+            Version {APP_VERSION} ({RELEASE_DATE})\n
             made with PyQt6 based on the Qt-Framework with StyleSheet from Qt-Material""",
         )
 
@@ -727,9 +739,10 @@ class Ui(QMainWindow):
 
     def load_settings(self, settings_dict: dict) -> None:  # doesn't work yet
         """Display settings in dialog from dict."""
-        program_language = settings_dict["general"][0]["programLanguage"]
         open_url_automatically = settings_dict["general"][0]["openURLautomatically"]
         copy_url_to_clipboard = settings_dict["general"][0]["copyURLtoClipboard"]
+        program_language = settings_dict["general"][0]["programLanguage"]
+        app_theme = settings_dict["general"][0]["appTheme"]
 
         shortcut_import_new_playlist = settings_dict["keyboard_shortcuts"][0][
             "importNewPlaylist"
@@ -798,9 +811,10 @@ class Ui(QMainWindow):
         return {
             "general": [
                 {
-                    "programLanguage": components_dict["language"],
                     "openURLautomatically": components_dict["option_1"],
                     "copyURLtoClipboard": components_dict["option_2"],
+                    "programLanguage": components_dict["language"],
+                    "appTheme": components_dict["theme"],
                 },
             ],
             "keyboard_shortcuts": [
@@ -974,6 +988,9 @@ class SettingsDialog(QDialog):
         )
         self.setWindowIcon(QIcon(app_context.get_resource("icon/youtube-play.icns")))
         self.setFont(QFont("Roboto"))
+        self.radioButton_OS.clicked.connect(self.change_theme)
+        self.radioButton_white.clicked.connect(self.change_theme)
+        self.radioButton_dark.clicked.connect(self.change_theme)
         self.pushButton_change_option1.clicked.connect(
             self.change_button_option1_clicked
         )
@@ -989,6 +1006,38 @@ class SettingsDialog(QDialog):
         self.pushButton_change_option5.clicked.connect(
             self.change_button_option5_clicked
         )
+
+    def change_theme(self) -> None:
+        """Change theme in runtime."""
+        if self.radioButton_OS.isChecked():
+            if darkdetect.isDark():
+                apply_stylesheet(
+                    app, theme=app_context.get_resource("theme/yt-dark-red.xml")
+                )
+                logging.debug("Theme regarding to OS theme set: %s", darkdetect.theme())
+            elif darkdetect.isLight():
+                apply_stylesheet(
+                    app,
+                    theme=app_context.get_resource("theme/yt-white-red.xml"),
+                    invert_secondary=True,
+                )
+                logging.debug("Theme regarding to OS theme set: %s", darkdetect.theme())
+        elif self.radioButton_white.isChecked():
+            apply_stylesheet(
+                app,
+                theme=app_context.get_resource("theme/yt-white-red.xml"),
+                invert_secondary=True,
+            )
+            logging.debug("White theme set!")
+        elif self.radioButton_dark.isChecked():
+            apply_stylesheet(
+                app, theme=app_context.get_resource("theme/yt-dark-red.xml")
+            )
+            logging.debug("Dark theme set!")
+
+    def change_language(self) -> None:
+        """Change language in runtime."""
+        pass
 
     def change_button_option1_clicked(self) -> None:
         """Get text from keySequenceEdit1 field and display in label."""
