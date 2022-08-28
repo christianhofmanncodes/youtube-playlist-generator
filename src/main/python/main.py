@@ -21,14 +21,18 @@ from PyQt6.QtWidgets import (
     QLabel,
     QMainWindow,
     QMessageBox,
+    QTextEdit,
     QVBoxLayout,
 )
 from qt_material import apply_stylesheet
 
+APP_VERSION = "0.1.0"
+RELEASE_DATE = "Aug 30 2022"
+
 with contextlib.suppress(ImportError):
     from ctypes import windll  # Only exists on Windows
 
-    APP_ID = "christianhofmann.youtube-playlist-generator.gui.0.1.0"
+    APP_ID = f"christianhofmann.youtube-playlist-generator.gui.{APP_VERSION}"
     windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
 
 
@@ -81,6 +85,8 @@ class Ui(QMainWindow):
         self.actionGithub.triggered.connect(self.act_github)
         self.actionReport_a_bug.triggered.connect(self.act_report_a_bug)
         self.actionContact.triggered.connect(self.act_contact)
+        self.actionAbout_Qt.triggered.connect(self.act_about_qt)
+        self.actionLicense.triggered.connect(self.act_license)
 
     def create_trigger(self) -> None:
         """Create the trigger for several UI components."""
@@ -232,10 +238,40 @@ class Ui(QMainWindow):
         self.listWidget_playlist_items.clear()
         Ui.import_from_dict(self, ytplaylist_dict)
 
-    def act_about(self) -> None:
-        """Execute InfoDialog."""
-        dlg = InfoDialog(self)
-        dlg.exec()
+    def act_about(self) -> QMessageBox:
+        """Execute About QMessageBox."""
+        return QMessageBox.about(
+            self,
+            "About YouTube Playlist Generator",
+            f"""YouTube Playlist Generator by Christian Hofmann\n\nVersion {APP_VERSION} ({RELEASE_DATE})\n
+            made with PyQt6 based on the Qt-Framework with StyleSheet from Qt-Material""",
+        )
+
+    def act_about_qt(self) -> QMessageBox:
+        """Execute About QMessageBox."""
+        return QMessageBox.aboutQt(self)
+
+    def act_license(self) -> QMessageBox:
+        """Execute License Information as QMessageBox."""
+        self.license_dialog = QDialog(self)
+        self.license_dialog.setMinimumSize(602, 400)
+        self.license_dialog.setMaximumSize(602, 400)
+        self.license_dialog.resize(602, 400)
+        self.license_dialog.setWindowTitle("License information")
+        self.license_dialog.setWindowIcon(
+            QIcon(app_context.get_resource("icon/youtube-play.icns"))
+        )
+
+        self.license_text_object = QTextEdit(self.license_dialog)
+        self.license_text_object.setReadOnly(True)
+        self.license_text_object.resize(602, 400)
+
+        self.license_text = Ui.read_file(
+            self, app_context.get_resource("forms/LICENSE.html")
+        )
+
+        self.license_text_object.setHtml(self.license_text)
+        return self.license_dialog.exec()
 
     def act_contact(self) -> None:
         """Open default mail software with contact email address."""
@@ -441,6 +477,12 @@ class Ui(QMainWindow):
         with open(filename, "r", encoding="UTF-8") as file:
             data = json.load(file)
         return data
+
+    def read_file(self, filename: str) -> str:
+        """Return content from file."""
+        with open(filename, "r", encoding="UTF-8") as file:
+            file_str = file.read()
+        return file_str
 
     def import_from_dict(self, ytplaylist_dict: dict) -> None:
         """Get content from dict and load it into the fields in the application."""
@@ -915,19 +957,6 @@ class AskPlaylistImport(QDialog):
         self.layout.addWidget(message3)
         self.layout.addWidget(self.button_box)
         self.setLayout(self.layout)
-
-
-class InfoDialog(QDialog):
-    """
-    Class for the info dialog.
-    """
-
-    def __init__(self, parent=None) -> None:
-        """Load info_dialog.ui file."""
-        super().__init__(parent)
-        uic.loadUi((app_context.get_resource("forms/info_dialog.ui")), self)
-        self.setWindowIcon(QIcon(app_context.get_resource("icon/youtube-play.icns")))
-        self.setFont(QFont("Roboto"))
 
 
 class SettingsDialog(QDialog):
