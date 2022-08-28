@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Recent files in File menu
 - Drag & Drop a .yt-playlist file into the playlist items section
 - "New playlist" option
+- New license dialog
+- Native About_Qt dialog
 
 ### Changed
 
@@ -34,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deleted
 
 - "Reset playlist" option (replaced by "New Playlist")
+- InfoDialog (replaced by native About_Qt and new license dialog)
 
 ## [0.0.5-alpha] - 2022-08-07
 
