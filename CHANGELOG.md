@@ -15,7 +15,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Search for items in playlist (QInputDialog)
 - Recent files in File menu
 - Drag & Drop a .yt-playlist file into the playlist items section
-- Display messages in the new status bar
 - "New playlist" option
 
 ### Changed
