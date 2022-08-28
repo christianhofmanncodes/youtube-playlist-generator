@@ -50,6 +50,8 @@ class Ui(QMainWindow):
 
     def initialize_ui(self) -> None:
         """Set up the application's GUI."""
+        self.license_dialog = QDialog(self)
+        self.license_text_object = QTextEdit(self.license_dialog)
         uic.loadUi(app_context.get_resource("forms/form.ui"), self)
         self.setFont(QFont("Roboto"))
 
@@ -243,7 +245,8 @@ class Ui(QMainWindow):
         return QMessageBox.about(
             self,
             "About YouTube Playlist Generator",
-            f"""YouTube Playlist Generator by Christian Hofmann\n\nVersion {APP_VERSION} ({RELEASE_DATE})\n
+            f"""YouTube Playlist Generator by Christian Hofmann\n
+            \nVersion {APP_VERSION} ({RELEASE_DATE})\n
             made with PyQt6 based on the Qt-Framework with StyleSheet from Qt-Material""",
         )
 
@@ -253,7 +256,6 @@ class Ui(QMainWindow):
 
     def act_license(self) -> QMessageBox:
         """Execute License Information as QMessageBox."""
-        self.license_dialog = QDialog(self)
         self.license_dialog.setMinimumSize(602, 400)
         self.license_dialog.setMaximumSize(602, 400)
         self.license_dialog.resize(602, 400)
@@ -262,15 +264,14 @@ class Ui(QMainWindow):
             QIcon(app_context.get_resource("icon/youtube-play.icns"))
         )
 
-        self.license_text_object = QTextEdit(self.license_dialog)
         self.license_text_object.setReadOnly(True)
         self.license_text_object.resize(602, 400)
 
-        self.license_text = Ui.read_file(
+        license_text = Ui.read_file(
             self, app_context.get_resource("forms/LICENSE.html")
         )
 
-        self.license_text_object.setHtml(self.license_text)
+        self.license_text_object.setHtml(license_text)
         return self.license_dialog.exec()
 
     def act_contact(self) -> None:
