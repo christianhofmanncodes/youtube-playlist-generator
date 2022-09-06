@@ -97,14 +97,13 @@ class SettingsDialog(QDialog):
                 apply_stylesheet(
                     app, theme=app_context.get_resource("theme/yt-dark-red.xml")
                 )
-                logging.debug("Theme regarding to OS theme set: %s", darkdetect.theme())
             elif darkdetect.isLight():
                 apply_stylesheet(
                     app,
                     theme=app_context.get_resource("theme/yt-white-red.xml"),
                     invert_secondary=True,
                 )
-                logging.debug("Theme regarding to OS theme set: %s", darkdetect.theme())
+            logging.debug("Theme regarding to OS theme set: %s", darkdetect.theme())
         elif self.radioButton_white.isChecked():
             apply_stylesheet(
                 app,
