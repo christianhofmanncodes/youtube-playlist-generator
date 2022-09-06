@@ -150,6 +150,9 @@
         <height>24</height>
        </rect>
       </property>
+      <property name="currentText">
+       <string>English</string>
+      </property>
       <item>
        <property name="text">
         <string>English</string>

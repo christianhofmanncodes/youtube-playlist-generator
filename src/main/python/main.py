@@ -11,21 +11,28 @@ from urllib import error, request
 import darkdetect
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from PyQt6 import uic
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QFont, QIcon, QKeySequence
+from PyQt6.QtCore import Qt, QTranslator
+from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import (
     QApplication,
     QDialog,
-    QDialogButtonBox,
     QFileDialog,
     QInputDialog,
-    QLabel,
     QMainWindow,
     QMessageBox,
     QTextEdit,
-    QVBoxLayout,
 )
 from qt_material import QtStyleTools, apply_stylesheet
+
+from dialogs import import_playlist, reset_playlist
+from dialogs.dialogs import show_info_dialog, show_error_dialog, show_question_dialog
+from file.file import read_file, read_json_file, write_json_file
+from dialogs.settings_dialog import SettingsDialog
+from settings.operations import (
+    get_settings,
+    save_settings_to_conf_file,
+    output_settings_as_dict,
+)
 
 APP_VERSION = "0.1.0"
 RELEASE_DATE = "Aug 30 2022"
@@ -51,6 +58,15 @@ class Ui(QMainWindow, QtStyleTools):
 
     def initialize_ui(self) -> None:
         """Set up the application's GUI."""
+
+        self.translator = QTranslator()
+        self.translator.load(
+            app_context.get_resource(
+                "forms/translations/youtube-playlist-generator_eng.qm"
+            )
+        )
+        app.installTranslator(self.translator)
+
         self.license_dialog = QDialog(self)
         self.license_text_object = QTextEdit(self.license_dialog)
         uic.loadUi(app_context.get_resource("forms/form.ui"), self)
@@ -122,7 +138,7 @@ class Ui(QMainWindow, QtStyleTools):
         and clear playlist title field.
         """
         if Ui.playlist_widget_has_x_or_more_items(self, 1):
-            dlg = AskPlaylistResetDialog(self)
+            dlg = reset_playlist.PlaylistResetDialog()
             if dlg.exec():
                 self.listWidget_playlist_items.clear()
                 logging.debug("Playlist was reset successfully.")
@@ -204,7 +220,7 @@ class Ui(QMainWindow, QtStyleTools):
         """
         self.listWidget_playlist_items.clear()
         logging.debug("All items in playlist deleted successfully.")
-        Ui.show_info_dialog(
+        show_info_dialog(
             self, "Success!", "All items in playlist deleted successfully."
         )
         if Ui.is_playlist_widget_empty(self):
@@ -279,9 +295,7 @@ class Ui(QMainWindow, QtStyleTools):
         self.license_text_object.setReadOnly(True)
         self.license_text_object.resize(602, 400)
 
-        license_text = Ui.read_file(
-            self, app_context.get_resource("forms/LICENSE.html")
-        )
+        license_text = read_file(app_context.get_resource("forms/LICENSE.html"))
 
         self.license_text_object.setHtml(license_text)
         return self.license_dialog.exec()
@@ -419,7 +433,7 @@ class Ui(QMainWindow, QtStyleTools):
     def remove_duplicates_from_playlist(self) -> None:
         """If playlist contains duplicated items remove them from the list."""
         logging.debug("Remove duplicates from playlist:")
-        Ui.show_info_dialog(self, "Success!", "Any duplicates have been deleted.")
+        show_info_dialog(self, "Success!", "Any duplicates have been deleted.")
         playlist = Ui.output_list_from_playlist_ids(self)
         logging.debug(playlist)
 
@@ -476,26 +490,10 @@ class Ui(QMainWindow, QtStyleTools):
             self.pushButton_shuffle_playlist.setEnabled(False)
             self.actionShuffle.setEnabled(False)
 
-    def has_text_edit_playlist_generated_url_content(self) -> bool:  # deprecated
-        """Return True if textEdit_playlist_generated_url is not empty."""
-        return self.textEdit_playlist_generated_url.toPlainText() != ""
-
     def act_copy_url(self) -> None:
         """Get content from textEdit_playlist_generated_url and copy it to clipboard."""
         text = self.textEdit_playlist_generated_url.toPlainText()
         QApplication.clipboard().setText(text)
-
-    def read_json_file(self, filename: str) -> dict:
-        """Return content from json-file."""
-        with open(filename, "r", encoding="UTF-8") as file:
-            data = json.load(file)
-        return data
-
-    def read_file(self, filename: str) -> str:
-        """Return content from file."""
-        with open(filename, "r", encoding="UTF-8") as file:
-            file_str = file.read()
-        return file_str
 
     def import_from_dict(self, ytplaylist_dict: dict) -> None:
         """Get content from dict and load it into the fields in the application."""
@@ -512,12 +510,6 @@ class Ui(QMainWindow, QtStyleTools):
         logging.debug("Playlist items count: %s", number_of_items)
         return number_of_items >= 1
 
-    def return_number_of_items_in_playlist(self) -> int:  # deprecated
-        """Returns number of items in playlist."""
-        number_of_items = self.listWidget_playlist_items.count()
-        logging.debug("Playlist items count: %s", number_of_items)
-        return number_of_items
-
     def act_open(self) -> None:
         """Get path of .ytplaylist-file and import it via import_from_dict()."""
         try:
@@ -527,12 +519,12 @@ class Ui(QMainWindow, QtStyleTools):
                 "",
                 "YouTube Playlist file (*.ytplaylist)",
             ):
-                ytplaylist_dict = Ui.read_json_file(self, filename[0])
+                ytplaylist_dict = read_json_file(filename[0])
                 logging.debug("Playlist to be imported:")
                 logging.debug(ytplaylist_dict)
                 if self.check_if_items_in_playlist():
                     logging.debug("There are already items in playlist!")
-                    dlg = AskPlaylistImport(self)
+                    dlg = import_playlist.PlaylistImportDialog()
 
                     if dlg.exec():
                         Ui.import_from_dict(self, ytplaylist_dict)
@@ -564,8 +556,7 @@ class Ui(QMainWindow, QtStyleTools):
 
     def export_ytplaylist_file(self, filename: str, ytplaylist_dict: dict) -> None:
         """Write playlist title and playlist items from dict to given filename.ytplaylist file."""
-        with open(filename, "w", encoding="UTF-8") as file:
-            json.dump(ytplaylist_dict, file, indent=4)
+        write_json_file(filename=filename, content=ytplaylist_dict)
 
     def generate_dict_from_fields(
         self, playlist_title: str, playlist_ids: list
@@ -598,22 +589,6 @@ class Ui(QMainWindow, QtStyleTools):
         except FileNotFoundError:
             logging.error("Error during export process! No file was exported.")
 
-    def show_question_dialog(self, title: str, text: str) -> QMessageBox:
-        """Shows a predefined question dialog."""
-        return QMessageBox.question(self, title, text)
-
-    def show_info_dialog(self, title: str, text: str) -> QMessageBox:
-        """Shows a predefined info dialog."""
-        return QMessageBox.information(self, title, text)
-
-    def show_error_dialog(self, title: str, text: str) -> QMessageBox:
-        """Shows a predefined error dialog."""
-        return QMessageBox.critical(self, title, text)
-
-    def show_warning_dialog(self, title: str, text: str) -> QMessageBox:
-        """Shows a predefined warning dialog."""
-        return QMessageBox.warning(self, title, text)
-
     def act_generate(self) -> None:
         """
         Check if playlist title empty, ask if it should be added.
@@ -622,7 +597,7 @@ class Ui(QMainWindow, QtStyleTools):
 
         if self.lineEdit_playlist_title.text() == "":
             if (
-                Ui.show_question_dialog(
+                show_question_dialog(
                     self,
                     "Your playlist title is currently empty",
                     "There is no title for playlist yet. Do you want to proceed?",
@@ -694,7 +669,7 @@ class Ui(QMainWindow, QtStyleTools):
 
     def show_error_creating_url_dialog(self) -> QMessageBox:
         """Show error creating URL dialog using show_error_dialog."""
-        return Ui.show_error_dialog(
+        return show_error_dialog(
             self,
             "Error with creating playlist URL",
             "There was an error with creating the playlist URL."
@@ -728,111 +703,11 @@ class Ui(QMainWindow, QtStyleTools):
         """Open the generated playlist URL in Webbrowser."""
         Ui.open_url_in_webbrowser(self, playlist_url)
 
-    def save_settings_to_conf_file(self, settings_dict: dict) -> None:
-        """Write content from dict to settings.config."""
-        with open(
-            app_context.get_resource("config/settings.config"),
-            "w",
-            encoding="UTF-8",
-        ) as file:
-            json.dump(settings_dict, file, indent=4)
-
-    def load_settings(self, settings_dict: dict) -> None:  # doesn't work yet
-        """Display settings in dialog from dict."""
-        open_url_automatically = settings_dict["general"][0]["openURLautomatically"]
-        copy_url_to_clipboard = settings_dict["general"][0]["copyURLtoClipboard"]
-        program_language = settings_dict["general"][0]["programLanguage"]
-        app_theme = settings_dict["general"][0]["appTheme"]
-
-        shortcut_import_new_playlist = settings_dict["keyboard_shortcuts"][0][
-            "importNewPlaylist"
-        ]
-        shortcut_export_playlist = settings_dict["keyboard_shortcuts"][0][
-            "exportPlaylist"
-        ]
-        shortcut_reset_playlist = settings_dict["keyboard_shortcuts"][0][
-            "clearPlaylist"
-        ]
-        shortcut_generate_playlist = settings_dict["keyboard_shortcuts"][0][
-            "generatePlaylist"
-        ]
-
-        SettingsDialog(self).comboBox_language.setCurrentText(program_language)
-
-        if open_url_automatically is True:
-            SettingsDialog(self).checkBox_option1.setCheckState(Qt.CheckState.Checked)
-
-        elif open_url_automatically is False:
-            SettingsDialog(self).checkBox_option1.setCheckState(Qt.CheckState.Unchecked)
-
-        if copy_url_to_clipboard is True:
-            SettingsDialog(self).checkBox_option2.setCheckState(Qt.CheckState.Checked)
-
-        elif copy_url_to_clipboard is False:
-            SettingsDialog(self).checkBox_option2.setCheckState(Qt.CheckState.Unchecked)
-
-        key_sequence_import_new_playlist = QKeySequence.fromString(
-            shortcut_import_new_playlist,
-            format=QKeySequence.SequenceFormat.PortableText,
-        )
-
-        SettingsDialog(self).label_keyboard_shortcuts_option1.setText(
-            shortcut_import_new_playlist
-        )
-
-        SettingsDialog(self).keySequenceEdit_option1.setKeySequence(
-            key_sequence_import_new_playlist
-        )
-
-        SettingsDialog(self).keySequenceEdit_option2.setKeySequence(
-            shortcut_export_playlist
-        )
-
-        SettingsDialog(self).keySequenceEdit_option3.setKeySequence(
-            shortcut_reset_playlist
-        )
-
-        SettingsDialog(self).keySequenceEdit_option4.setKeySequence(
-            shortcut_generate_playlist
-        )
-
-    def get_settings(self) -> dict:
-        """Return content from settings.config."""
-        return Ui.read_json_file(
-            self,
-            app_context.get_resource("config/settings.config"),
-        )
-
-    def output_settings_as_dict(
-        self,
-        components_dict: dict,
-    ) -> dict:
-        """Generate from settings inside settings dialog dict."""
-        return {
-            "general": [
-                {
-                    "openURLautomatically": components_dict["option_1"],
-                    "copyURLtoClipboard": components_dict["option_2"],
-                    "programLanguage": components_dict["language"],
-                    "appTheme": components_dict["theme"],
-                },
-            ],
-            "keyboard_shortcuts": [
-                {
-                    "importNewPlaylist": components_dict["shortcut_1"],
-                    "exportPlaylist": components_dict["shortcut_2"],
-                    "clearPlaylist": components_dict["shortcut_3"],
-                    "generatePlaylist": components_dict["shortcut_4"],
-                    "shufflePlaylist": components_dict["shortcut_5"],
-                }
-            ],
-        }
-
     def act_settings(self) -> None:
         """Open settings dialog."""
-        settings_dict = Ui.get_settings(self)
+        settings_dict = get_settings()
         dlg = SettingsDialog(self)
-        Ui.load_settings(self, settings_dict)
+        SettingsDialog(self).load_settings(settings_dict)
 
         if dlg.exec():
             radio_button_os_state = dlg.radioButton_OS.isChecked()
@@ -859,220 +734,8 @@ class Ui(QMainWindow, QtStyleTools):
             }
 
             logging.debug(components_dict)
-            settings_dict = Ui.output_settings_as_dict(self, components_dict)
-            Ui.save_settings_to_conf_file(self, settings_dict)
-
-
-class ListBoxWidget(Ui):
-    """
-    Class for the ListBoxWidget with drag and drop function.
-    """
-
-    def __init__(self) -> None:
-        """Connect UI components with specific functions."""
-        super().__init__()
-        Ui.listWidget_playlist_items.setAcceptDrops(True)
-
-    def drag_enter_event(self, event) -> None:
-        """Handle drag event from user."""
-        if event.mimeData().hasUrls():
-            event.accept()
-        else:
-            event.ignore()
-
-    def drag_move_event(self, event) -> None:
-        """Handle drag move event from user."""
-        if event.mimeData().hasUrls():
-            event.setDropAction(Qt.DropAction.CopyAction)
-            event.accept()
-        else:
-            event.ignore()
-
-    def drop_event(self, event) -> None:
-        """Handle drop event from user."""
-        if event.mimeData().hasUrls():
-            event.setDropAction(Qt.DropAction.CopyAction)
-            event.accept()
-
-            print(event.mimeData().urls())
-
-            links = []
-
-            for url in event.mimeData().urls():
-                if url.isLocalFile():
-                    links.append(str(url.toLocalFile()))
-
-                ytplaylist_dict = Ui.read_json_file(self, url.path())
-                Ui.import_from_dict(self, ytplaylist_dict)
-            # self.addItems(links)
-        else:
-            event.ignore()
-
-
-class AskPlaylistResetDialog(QDialog):
-    """
-    Class for the dialog to ask if the playlist should be deleted with all its components.
-    """
-
-    def __init__(self, parent=None) -> None:
-        """Build the dialog with its components."""
-        super().__init__(parent)
-
-        self.setWindowTitle("Are you sure?")
-        self.setFixedSize(450, 140)
-        self.setWindowIcon(QIcon(app_context.get_resource("config/settings.config")))
-        self.setFont(QFont("Roboto"))
-
-        q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
-
-        self.button_box = QDialogButtonBox(q_btn)
-        self.button_box.accepted.connect(self.accept)
-        self.button_box.rejected.connect(self.reject)
-
-        self.layout = QVBoxLayout()
-        message = QLabel(
-            "Do you really want to reset your playlist? That deletes all of your items!"
-        )
-        self.layout.addWidget(message)
-        self.layout.addWidget(self.button_box)
-        self.setLayout(self.layout)
-
-
-class AskPlaylistImport(QDialog):
-    """
-    Class for the dialog to ask if you want to create a new playlist
-    or if you want to add the imported playlist to the existing playlist.
-    """
-
-    def __init__(self, parent=None) -> None:
-        """Build the dialog with its components."""
-        super().__init__(parent)
-
-        self.setWindowTitle("One more thing...")
-        self.setFixedSize(450, 160)
-        self.setWindowIcon(QIcon(app_context.get_resource("icon/youtube-play.icns")))
-        self.setFont(QFont("Roboto"))
-
-        q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
-
-        self.button_box = QDialogButtonBox(q_btn)
-        self.button_box.accepted.connect(self.accept)
-        self.button_box.rejected.connect(self.reject)
-
-        self.layout = QVBoxLayout()
-        message1 = QLabel("There are already items in the playlist!")
-        message2 = QLabel(
-            "Do you want to add the imported playlist to the existing playlist?"
-        )
-        message3 = QLabel(
-            '"No" will delete your current playlist and create a new one.'
-        )
-        self.layout.addWidget(message1)
-        self.layout.addWidget(message2)
-        self.layout.addWidget(message3)
-        self.layout.addWidget(self.button_box)
-        self.setLayout(self.layout)
-
-
-class SettingsDialog(QDialog):
-    """
-    Class for the settings dialog with all its components and functions.
-    """
-
-    def __init__(self, parent=None) -> None:
-        """Load settings_dialog.ui file and connect components to their functions."""
-        super().__init__(parent)
-        uic.loadUi(
-            app_context.get_resource("forms/settings_dialog.ui"),
-            self,
-        )
-        self.setWindowIcon(QIcon(app_context.get_resource("icon/youtube-play.icns")))
-        self.setFont(QFont("Roboto"))
-        self.radioButton_OS.clicked.connect(self.change_theme)
-        self.radioButton_white.clicked.connect(self.change_theme)
-        self.radioButton_dark.clicked.connect(self.change_theme)
-        self.pushButton_change_option1.clicked.connect(
-            self.change_button_option1_clicked
-        )
-        self.pushButton_change_option2.clicked.connect(
-            self.change_button_option2_clicked
-        )
-        self.pushButton_change_option3.clicked.connect(
-            self.change_button_option3_clicked
-        )
-        self.pushButton_change_option4.clicked.connect(
-            self.change_button_option4_clicked
-        )
-        self.pushButton_change_option5.clicked.connect(
-            self.change_button_option5_clicked
-        )
-
-    def change_theme(self) -> None:
-        """Change theme in runtime."""
-        if self.radioButton_OS.isChecked():
-            if darkdetect.isDark():
-                apply_stylesheet(
-                    app, theme=app_context.get_resource("theme/yt-dark-red.xml")
-                )
-                logging.debug("Theme regarding to OS theme set: %s", darkdetect.theme())
-            elif darkdetect.isLight():
-                apply_stylesheet(
-                    app,
-                    theme=app_context.get_resource("theme/yt-white-red.xml"),
-                    invert_secondary=True,
-                )
-                logging.debug("Theme regarding to OS theme set: %s", darkdetect.theme())
-        elif self.radioButton_white.isChecked():
-            apply_stylesheet(
-                app,
-                theme=app_context.get_resource("theme/yt-white-red.xml"),
-                invert_secondary=True,
-            )
-            logging.debug("White theme set!")
-        elif self.radioButton_dark.isChecked():
-            apply_stylesheet(
-                app, theme=app_context.get_resource("theme/yt-dark-red.xml")
-            )
-            logging.debug("Dark theme set!")
-
-    def change_language(self) -> None:
-        """Change language in runtime."""
-        pass
-
-    def change_button_option1_clicked(self) -> None:
-        """Get text from keySequenceEdit1 field and display in label."""
-        if self.keySequenceEdit_option1.keySequence().toString() != "":
-            self.label_keyboard_shortcuts_option1.setText(
-                self.keySequenceEdit_option1.keySequence().toString()
-            )
-
-    def change_button_option2_clicked(self) -> None:
-        """Get text from keySequenceEdit2 field and display in label."""
-        if self.keySequenceEdit_option2.keySequence().toString() != "":
-            self.label_keyboard_shortcuts_option2.setText(
-                self.keySequenceEdit_option2.keySequence().toString()
-            )
-
-    def change_button_option3_clicked(self) -> None:
-        """Get text from keySequenceEdit3 field and display in label."""
-        if self.keySequenceEdit_option3.keySequence().toString() != "":
-            self.label_keyboard_shortcuts_option3.setText(
-                self.keySequenceEdit_option3.keySequence().toString()
-            )
-
-    def change_button_option4_clicked(self) -> None:
-        """Get text from keySequenceEdit4 field and display in label."""
-        if self.keySequenceEdit_option4.keySequence().toString() != "":
-            self.label_keyboard_shortcuts_option4.setText(
-                self.keySequenceEdit_option4.keySequence().toString()
-            )
-
-    def change_button_option5_clicked(self) -> None:
-        """Get text from keySequenceEdit5 field and display in label."""
-        if self.keySequenceEdit_option5.keySequence().toString() != "":
-            self.label_keyboard_shortcuts_option5.setText(
-                self.keySequenceEdit_option5.keySequence().toString()
-            )
+            settings_dict = output_settings_as_dict(components_dict)
+            save_settings_to_conf_file(settings_dict)
 
 
 if __name__ == "__main__":
