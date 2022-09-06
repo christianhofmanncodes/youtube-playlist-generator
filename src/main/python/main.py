@@ -1,6 +1,5 @@
 """main module"""
 import contextlib
-import json
 import logging
 import random
 import ssl
@@ -25,17 +24,17 @@ from PyQt6.QtWidgets import (
 from qt_material import QtStyleTools, apply_stylesheet
 
 from dialogs import import_playlist, reset_playlist
-from dialogs.dialogs import show_info_dialog, show_error_dialog, show_question_dialog
-from file.file import read_file, read_json_file, write_json_file
+from dialogs.dialogs import show_error_dialog, show_info_dialog, show_question_dialog
 from dialogs.settings_dialog import SettingsDialog
+from file.file import read_file, read_json_file, write_json_file
 from settings.operations import (
     get_settings,
-    save_settings_to_conf_file,
     output_settings_as_dict,
+    save_settings_to_conf_file,
 )
 
 APP_VERSION = "0.1.0"
-RELEASE_DATE = "Aug 30 2022"
+RELEASE_DATE = "Sept 30 2022"
 
 with contextlib.suppress(ImportError):
     from ctypes import windll  # Only exists on Windows
@@ -274,8 +273,7 @@ class Ui(QMainWindow, QtStyleTools):
             self,
             "About YouTube Playlist Generator",
             f"""YouTube Playlist Generator by Christian Hofmann\n
-            Version {APP_VERSION} ({RELEASE_DATE})\n
-            made with PyQt6 based on the Qt-Framework with StyleSheet from Qt-Material""",
+            Version {APP_VERSION} ({RELEASE_DATE})""",
         )
 
     def act_about_qt(self) -> QMessageBox:

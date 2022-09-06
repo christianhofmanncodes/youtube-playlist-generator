@@ -52,7 +52,7 @@ class SettingsDialog(QDialog):
         open_url_automatically = settings_dict["general"][0]["openURLautomatically"]
         copy_url_to_clipboard = settings_dict["general"][0]["copyURLtoClipboard"]
         program_language = settings_dict["general"][0]["programLanguage"]
-        app_theme = settings_dict["general"][0]["appTheme"]
+        # app_theme = settings_dict["general"][0]["appTheme"]
 
         shortcut_import_new_playlist = settings_dict["keyboard_shortcuts"][0][
             "importNewPlaylist"
@@ -120,7 +120,7 @@ class SettingsDialog(QDialog):
 
     def change_language(self) -> None:
         """Change language in runtime."""
-        pass
+        logging.debug("This will change the language...")
 
     def change_button_option1_clicked(self) -> None:
         """Get text from keySequenceEdit1 field and display in label."""
