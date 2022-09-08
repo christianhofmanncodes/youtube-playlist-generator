@@ -10,14 +10,15 @@ from urllib import error, request
 import darkdetect
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from PyQt6 import uic
-from PyQt6.QtCore import Qt, QTranslator
-from PyQt6.QtGui import QFont, QIcon
+from PyQt6.QtCore import Qt, QTranslator, pyqtSlot
+from PyQt6.QtGui import QAction, QFont, QIcon
 from PyQt6.QtWidgets import (
     QApplication,
     QDialog,
     QFileDialog,
     QInputDialog,
     QMainWindow,
+    QMenu,
     QMessageBox,
     QTextEdit,
 )
@@ -26,10 +27,13 @@ from qt_material import QtStyleTools, apply_stylesheet
 from dialogs import import_playlist, reset_playlist
 from dialogs.dialogs import show_error_dialog, show_info_dialog, show_question_dialog
 from dialogs.settings_dialog import SettingsDialog
-from file.file import read_file, read_json_file, write_json_file
+from file.file import check_file_format, read_file, read_json_file, write_json_file
 from settings.operations import (
+    get_menu_config,
     get_settings,
+    output_menu_config_as_dict,
     output_settings_as_dict,
+    save_menu_to_conf_file,
     save_settings_to_conf_file,
 )
 
@@ -81,6 +85,121 @@ class Ui(QMainWindow, QtStyleTools):
                 theme=app_context.get_resource("theme/yt-white-red.xml"),
                 invert_secondary=True,
             )
+
+        self.create_recent_file_menu()
+        self.load_settings()
+
+    def create_recent_file_menu(self):
+        self.file_menu = self.menuFile
+        self.recent_files_menu = self.file_menu.addMenu("&Open recent")
+        self.recent_files_menu.triggered.connect(self.act_recent_file)
+
+    def load_settings(self):
+        menu_config = get_menu_config()
+        if menu_config != "":
+            file_names = menu_config["recent_files"]
+            logging.debug(file_names)
+            for file_name in file_names:
+                self.add_recent_filename(file_name)
+            self.recent_files_menu.addSeparator()
+            self.action = QAction()
+            self.action.setText("Clear recent files")
+            self.recent_files_menu.addAction(self.action)
+        else:
+            logging.info("No recent files!")
+
+    def save_settings(self):
+        recent_files = [
+            action.text() for action in self.recent_files_menu.actions()[::-1]
+        ]
+
+        while "" in recent_files:
+            recent_files.remove("")
+
+        while "Clear recent files" in recent_files:
+            recent_files.remove("Clear recent files")
+
+        menu_dict = output_menu_config_as_dict(recent_files)
+        save_menu_to_conf_file(menu_dict)
+
+    @pyqtSlot(QAction)
+    def act_recent_file(self, action):
+        if action.text() == "Clear recent files":
+            actions = self.recent_files_menu.actions()
+            for action in actions:
+                self.recent_files_menu.removeAction(action)
+        else:
+            self.process_filename(action)
+
+    def add_recent_filename(self, filename):
+        action = QAction(filename, self)
+        actions = self.recent_files_menu.actions()
+        before_action = actions[0] if actions else None
+        self.recent_files_menu.insertAction(before_action, action)
+
+    def open_ytplaylist_file_from_menu(self, action):
+        filename = action.text()
+        ytplaylist_dict = read_json_file(filename)
+
+        if check_file_format(filename, ".ytplaylist"):
+            if ytplaylist_dict != "":
+                logging.debug("Playlist to be imported:")
+                logging.debug(ytplaylist_dict)
+                if self.check_if_items_in_playlist():
+                    logging.debug("There are already items in playlist!")
+                    dlg = import_playlist.PlaylistImportDialog()
+
+                    if dlg.exec():
+                        Ui.import_from_dict(self, ytplaylist_dict)
+                    else:
+                        Ui.act_new(self)
+                        Ui.import_from_dict(self, ytplaylist_dict)
+                        self.lineEdit_url_id.setFocus()
+                else:
+                    Ui.import_from_dict(self, ytplaylist_dict)
+                    self.lineEdit_url_id.setFocus()
+
+                self.pushButton_new.setEnabled(True)
+                self.pushButton_delete_item.setEnabled(True)
+                self.pushButton_generate.setEnabled(True)
+                self.pushButton_shuffle_playlist.setEnabled(True)
+                self.actionReset_Playlist.setEnabled(True)
+                self.actionDelete_Item.setEnabled(True)
+                self.actionGenerate_Playlist.setEnabled(True)
+                self.actionShuffle.setEnabled(True)
+                self.actionRename_item.setEnabled(True)
+                self.actionSave.setEnabled(True)
+                self.actionRemove_duplicates.setEnabled(True)
+                self.menuSort_items.setEnabled(True)
+                self.actionAscending.setEnabled(True)
+                self.actionDescending.setEnabled(True)
+                self.actionClear_all_items.setEnabled(True)
+
+            else:
+                show_error_dialog(
+                    self,
+                    "File not found!",
+                    f"File '{filename}' not found!\n\nMaybe it was deleted?",
+                )
+                self.recent_files_menu.removeAction(action)
+        else:
+            show_error_dialog(
+                self,
+                "Wrong file format!",
+                f"File '{filename}' is not a valid 'ytplaylist' file!",
+            )
+            self.recent_files_menu.removeAction(action)
+
+    def process_filename(self, action):
+        """
+        Import YouTube Playlist file
+        YouTube Playlist file (*.ytplaylist)
+        """
+        self.open_ytplaylist_file_from_menu(action)
+
+    def closeEvent(self, event):
+        super().closeEvent(event)
+        self.save_settings()
 
     def create_actions(self) -> None:
         """Create the applications menu actions."""
@@ -549,6 +668,7 @@ class Ui(QMainWindow, QtStyleTools):
                 self.actionAscending.setEnabled(True)
                 self.actionDescending.setEnabled(True)
                 self.actionClear_all_items.setEnabled(True)
+                self.add_recent_filename(filename[0])
         except FileNotFoundError:
             logging.error("File not found. No file was imported.")
 
