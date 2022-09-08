@@ -18,7 +18,6 @@ from PyQt6.QtWidgets import (
     QFileDialog,
     QInputDialog,
     QMainWindow,
-    QMenu,
     QMessageBox,
     QTextEdit,
 )
@@ -61,7 +60,6 @@ class Ui(QMainWindow, QtStyleTools):
 
     def initialize_ui(self) -> None:
         """Set up the application's GUI."""
-
         self.translator = QTranslator()
         self.translator.load(
             app_context.get_resource(
@@ -90,11 +88,13 @@ class Ui(QMainWindow, QtStyleTools):
         self.load_settings()
 
     def create_recent_file_menu(self):
+        """Create Open recent file menu."""
         self.file_menu = self.menuFile
         self.recent_files_menu = self.file_menu.addMenu("&Open recent")
         self.recent_files_menu.triggered.connect(self.act_recent_file)
 
     def load_settings(self):
+        """Load settings from menu.config."""
         menu_config = get_menu_config()
         if menu_config != "":
             file_names = menu_config["recent_files"]
@@ -109,6 +109,7 @@ class Ui(QMainWindow, QtStyleTools):
             logging.info("No recent files!")
 
     def save_settings(self):
+        """Save settings to menu.config."""
         recent_files = [
             action.text() for action in self.recent_files_menu.actions()[::-1]
         ]
@@ -124,20 +125,23 @@ class Ui(QMainWindow, QtStyleTools):
 
     @pyqtSlot(QAction)
     def act_recent_file(self, action):
+        """Action for click on one recent file."""
         if action.text() == "Clear recent files":
             actions = self.recent_files_menu.actions()
-            for action in actions:
-                self.recent_files_menu.removeAction(action)
+            for action_to_remove in actions:
+                self.recent_files_menu.removeAction(action_to_remove)
         else:
             self.process_filename(action)
 
     def add_recent_filename(self, filename):
+        """Add filename to recent file menu."""
         action = QAction(filename, self)
         actions = self.recent_files_menu.actions()
         before_action = actions[0] if actions else None
         self.recent_files_menu.insertAction(before_action, action)
 
     def open_ytplaylist_file_from_menu(self, action):
+        """Open *.ytplaylist file from recent files menu."""
         filename = action.text()
         ytplaylist_dict = read_json_file(filename)
 
@@ -191,13 +195,11 @@ class Ui(QMainWindow, QtStyleTools):
             self.recent_files_menu.removeAction(action)
 
     def process_filename(self, action):
-        """
-        Import YouTube Playlist file
-        YouTube Playlist file (*.ytplaylist)
-        """
+        """Import YouTube Playlist file (*.ytplaylist)"""
         self.open_ytplaylist_file_from_menu(action)
 
     def closeEvent(self, event):
+        """Save settings before app closes."""
         super().closeEvent(event)
         self.save_settings()
 
