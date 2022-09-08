@@ -412,7 +412,7 @@ p, li { white-space: pre-wrap; }
     </layout>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
+  <widget class="QMenuBar" name="menuBarApp">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -904,6 +904,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionLicense">
    <property name="text">
     <string>License</string>
+   </property>
+  </action>
+  <action name="actionOpen_recent_file">
+   <property name="text">
+    <string>Open recent file</string>
    </property>
   </action>
  </widget>
