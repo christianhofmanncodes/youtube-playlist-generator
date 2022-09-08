@@ -15,6 +15,13 @@ def get_settings() -> dict:
     )
 
 
+def get_menu_config() -> list:
+    """Return content from menu.config."""
+    return read_json_file(
+        app_context.get_resource("config/menu.config"),
+    )
+
+
 def save_settings_to_conf_file(settings_dict: dict) -> None:
     """Write content from dict to settings.config."""
     with open(
@@ -23,6 +30,16 @@ def save_settings_to_conf_file(settings_dict: dict) -> None:
         encoding="UTF-8",
     ) as file:
         json.dump(settings_dict, file, indent=4)
+
+
+def save_menu_to_conf_file(menu_dict: dict) -> None:
+    """Write content from dict to menu.config."""
+    with open(
+        app_context.get_resource("config/menu.config"),
+        "w",
+        encoding="UTF-8",
+    ) as file:
+        json.dump(menu_dict, file, indent=4)
 
 
 def output_settings_as_dict(
@@ -48,3 +65,8 @@ def output_settings_as_dict(
             }
         ],
     }
+
+
+def output_menu_config_as_dict(recent_files: list) -> dict:
+    """Generate dict from menu items."""
+    return {"recent_files": list(recent_files)}
