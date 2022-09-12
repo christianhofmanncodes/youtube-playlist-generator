@@ -4,6 +4,8 @@ import json
 
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from file.file import read_json_file
+from main import MainWindow
+from menu import menu
 
 app_context = ApplicationContext()
 
@@ -12,13 +14,6 @@ def get_settings() -> dict:
     """Return content from settings.config."""
     return read_json_file(
         app_context.get_resource("config/settings.config"),
-    )
-
-
-def get_menu_config() -> list:
-    """Return content from menu.config."""
-    return read_json_file(
-        app_context.get_resource("config/menu.config"),
     )
 
 
@@ -57,11 +52,18 @@ def output_settings_as_dict(
         ],
         "keyboard_shortcuts": [
             {
-                "importNewPlaylist": components_dict["shortcut_1"],
-                "exportPlaylist": components_dict["shortcut_2"],
-                "clearPlaylist": components_dict["shortcut_3"],
-                "generatePlaylist": components_dict["shortcut_4"],
-                "shufflePlaylist": components_dict["shortcut_5"],
+                "newPlaylist": components_dict["shortcut_1"],
+                "openPlaylist": components_dict["shortcut_2"],
+                "savePlaylist": components_dict["shortcut_3"],
+                "addItem": components_dict["shortcut_4"],
+                "deleteItem": components_dict["shortcut_5"],
+                "renameItem": components_dict["shortcut_6"],
+                "shufflePlaylist": components_dict["shortcut_7"],
+                "generatePlaylist": components_dict["shortcut_8"],
+                "countItems": components_dict["shortcut_9"],
+                "clearAllItems": components_dict["shortcut_10"],
+                "removeDuplicates": components_dict["shortcut_11"],
+                "copyURL": components_dict["shortcut_12"],
             }
         ],
     }
@@ -70,3 +72,17 @@ def output_settings_as_dict(
 def output_menu_config_as_dict(recent_files: list) -> dict:
     """Generate dict from menu items."""
     return {"recent_files": list(recent_files)}
+
+
+def load_settings(self) -> None:
+    """Load settings from menu.config."""
+    MainWindow.create_recent_file_menu(self)
+    menu.load_recent_files(self)
+
+
+def save_settings(self) -> None:
+    """Save settings to menu.config."""
+    menu.delete_unnecessary_entries_recent_file_menu(self)
+    recent_files = menu.get_recent_files_items_menu(self)
+    menu_dict = output_menu_config_as_dict(recent_files)
+    save_menu_to_conf_file(menu_dict)
