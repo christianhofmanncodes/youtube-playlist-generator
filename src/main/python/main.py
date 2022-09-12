@@ -154,7 +154,6 @@ class Ui(QMainWindow, QtStyleTools):
         """Open *.ytplaylist file from recent files menu."""
         filename = action.text()
         ytplaylist_dict = read_json_file(filename)
-
         if check_file_format(filename, ".ytplaylist"):
             if ytplaylist_dict != "":
                 logging.debug("Playlist to be imported:")
@@ -162,17 +161,19 @@ class Ui(QMainWindow, QtStyleTools):
                 if self.check_if_items_in_playlist():
                     logging.debug("There are already items in playlist!")
                     dlg = import_playlist.PlaylistImportDialog()
-
                     if dlg.exec():
                         Ui.import_from_dict(self, ytplaylist_dict)
                     else:
                         Ui.act_new(self)
                         Ui.import_from_dict(self, ytplaylist_dict)
                         self.lineEdit_url_id.setFocus()
+                    self.recent_files_menu.addSeparator()
+                    self.new_action = QAction()
+                    self.new_action.setText("Clear recent files")
+                    self.recent_files_menu.addAction(self.new_action)
                 else:
                     Ui.import_from_dict(self, ytplaylist_dict)
                     self.lineEdit_url_id.setFocus()
-
                 self.pushButton_new.setEnabled(True)
                 self.pushButton_delete_item.setEnabled(True)
                 self.pushButton_generate.setEnabled(True)
@@ -188,13 +189,13 @@ class Ui(QMainWindow, QtStyleTools):
                 self.actionAscending.setEnabled(True)
                 self.actionDescending.setEnabled(True)
                 self.actionClear_all_items.setEnabled(True)
-
             else:
                 show_error_dialog(
                     self,
                     "File not found!",
                     f"File '{filename}' not found!\n\nMaybe it was deleted?",
                 )
+
                 self.recent_files_menu.removeAction(action)
         else:
             show_error_dialog(
@@ -202,6 +203,7 @@ class Ui(QMainWindow, QtStyleTools):
                 "Wrong file format!",
                 f"File '{filename}' is not a valid 'ytplaylist' file!",
             )
+
             self.recent_files_menu.removeAction(action)
 
     def process_filename(self, action):
@@ -809,9 +811,8 @@ class Ui(QMainWindow, QtStyleTools):
     def generate_playlist_url(self, video_ids_url: str) -> str:
         """Generate the playlist URL from the video ids URL."""
         try:
-            context = ssl._create_unverified_context()
-
-            with request.urlopen(video_ids_url, context=context) as response:
+            ctx = ssl._create_default_https_context()
+            with request.urlopen(video_ids_url, context=ctx) as response:
                 playlist_link = response.geturl()
                 playlist_link = playlist_link.split("list=")[1]
 
