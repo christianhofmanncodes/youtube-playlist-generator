@@ -12,10 +12,10 @@ def read_json_file(filename: str) -> dict:
         return data
     except json.decoder.JSONDecodeError:
         logging.error("JSON file empty!")
-        return ""
+        return {}
     except FileNotFoundError:
         logging.error("File %s not found!", filename)
-        return ""
+        return {}
 
 
 def read_file(filename: str) -> str:
@@ -35,3 +35,8 @@ def check_file_format(filename: str, file_format: str) -> bool:
     """Check if file_format in filename and return bool."""
     if file_format in filename:
         return True
+
+
+def export_ytplaylist_file(self, filename: str, ytplaylist_dict: dict) -> None:
+    """Write playlist title and playlist items from dict to given filename.ytplaylist file."""
+    write_json_file(filename=filename, content=ytplaylist_dict)
