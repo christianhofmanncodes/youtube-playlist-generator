@@ -110,20 +110,18 @@ def generate_dict_from_fields(playlist_title: str, playlist_ids: list) -> dict:
 def generate_video_ids_url(self, comma_separated_string: str) -> None:
     """Generate the video ids URL from a comma separated string."""
     if self.lineEdit_playlist_title.text() == "":
-        video_ids_url = url.create_playlist_url_without_title(
-            self, comma_separated_string
-        )
+        video_ids_url = url.create_playlist_url(comma_separated_string, "", False)
 
     elif check_string.has_space_in_string(self.lineEdit_playlist_title.text()):
         title_no_spaces = strings.replace_string.replace_space_in_string(
             self.lineEdit_playlist_title.text()
         )
-        video_ids_url = url.create_playlist_url_with_title(
-            comma_separated_string, title_no_spaces
+        video_ids_url = url.create_playlist_url(
+            comma_separated_string, title_no_spaces, True
         )
     else:
-        video_ids_url = url.create_playlist_url_with_title(
-            comma_separated_string, self.lineEdit_playlist_title.text()
+        video_ids_url = url.create_playlist_url(
+            comma_separated_string, self.lineEdit_playlist_title.text(), True
         )
     playlist_url = generate_url.playlist_url(self, video_ids_url)
     if playlist_url != "":

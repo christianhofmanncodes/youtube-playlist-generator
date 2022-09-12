@@ -4,10 +4,16 @@ import json
 
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from file.file import read_json_file
-from main import MainWindow
 from menu import menu
 
 app_context = ApplicationContext()
+
+
+def create_recent_file_menu(self) -> None:
+    """Create Open recent file menu."""
+    self.file_menu = self.menuFile
+    self.recent_files_menu = self.file_menu.addMenu("&Open recent")
+    self.recent_files_menu.triggered.connect(self.act_recent_file)
 
 
 def get_settings() -> dict:
@@ -76,7 +82,7 @@ def output_menu_config_as_dict(recent_files: list) -> dict:
 
 def load_settings(self) -> None:
     """Load settings from menu.config."""
-    MainWindow.create_recent_file_menu(self)
+    create_recent_file_menu(self)
     menu.load_recent_files(self)
 
 

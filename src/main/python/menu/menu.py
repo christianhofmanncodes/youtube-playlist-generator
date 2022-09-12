@@ -2,18 +2,16 @@
 
 import logging
 
-from actions import actions
+# from actions.actions import act_new #FIXME: Throws Cyclic import
 from dialogs import import_playlist
 from dialogs.dialogs import show_error_dialog
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from file import file
-from PyQt6.QtGui import QAction
-
 from playlist import playlist
+from PyQt6.QtGui import QAction
+from settings.settings import RECENT_FILES_STRING
 
 app_context = ApplicationContext()
-
-from settings.settings import RECENT_FILES_STRING
 
 
 def get_menu_config() -> list:
@@ -57,16 +55,16 @@ def load_recent_files(self) -> None:
 
 def add_recent_filename(self, filename):
     """Add filename to recent file menu."""
-    action = QAction(filename, self)
+    filename_action = QAction(filename, self)
     actions = self.recent_files_menu.actions()
     before_action = actions[0] if actions else None
-    self.recent_files_menu.insertAction(before_action, action)
+    self.recent_files_menu.insertAction(before_action, filename_action)
 
 
 def open_ytplaylist_file_from_menu(self, action):
     """Open *.ytplaylist file from recent files menu."""
     filename = action.text()
-    ytplaylist_dict = read_json_file(filename)
+    ytplaylist_dict = file.read_json_file(filename)
     if file.check_file_format(filename, ".ytplaylist"):
         if ytplaylist_dict:
             logging.debug("Playlist to be imported:")
@@ -77,7 +75,7 @@ def open_ytplaylist_file_from_menu(self, action):
                 if dlg.exec():
                     playlist.import_from_dict(self, ytplaylist_dict)
                 else:
-                    actions.act_new(self)
+                    # act_new(self)
                     playlist.import_from_dict(self, ytplaylist_dict)
                     self.lineEdit_url_id.setFocus()
                 self.recent_files_menu.addSeparator()
