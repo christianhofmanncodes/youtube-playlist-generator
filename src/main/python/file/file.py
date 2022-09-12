@@ -33,10 +33,9 @@ def write_json_file(filename: str, content: dict) -> None:
 
 def check_file_format(filename: str, file_format: str) -> bool:
     """Check if file_format in filename and return bool."""
-    if file_format in filename:
-        return True
+    return file_format in filename
 
 
-def export_ytplaylist_file(self, filename: str, ytplaylist_dict: dict) -> None:
+def export_ytplaylist_file(filename: str, ytplaylist_dict: dict) -> None:
     """Write playlist title and playlist items from dict to given filename.ytplaylist file."""
     write_json_file(filename=filename, content=ytplaylist_dict)
