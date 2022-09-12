@@ -190,15 +190,15 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def act_github(self):
         """Action for github."""
-        actions.act_github(self)
+        actions.act_github()
 
     def act_report_a_bug(self):
         """Action for report_a_bug."""
-        actions.act_report_a_bug(self)
+        actions.act_report_a_bug()
 
     def act_contact(self):
         """Action for contact."""
-        actions.act_contact(self)
+        actions.act_contact()
 
     def act_about_qt(self):
         """Action for about_qt."""
@@ -217,14 +217,6 @@ class MainWindow(QMainWindow, QtStyleTools):
     def act_url_id_text_change(self):
         """Action for url_id_text_change."""
         actions.act_url_id_text_change(self)
-
-    def act_add_item(self):
-        """Action for add_item."""
-        actions.act_add_item(self)
-
-    def act_rename_item(self):
-        """Action for rename_item."""
-        actions.act_rename_item(self)
 
     def create_trigger(self) -> None:
         """Create the trigger for several MainWindow components."""
