@@ -10,11 +10,8 @@ def cut_url_to_id(url: str) -> str:
     return get_id[-1]
 
 
-def create_playlist_url_with_title(video_ids: str, playlist_title: str) -> str:
-    """Create playlist URL with a title from video ids and title."""
-    return f"https://www.youtube.com/watch_videos?video_ids={video_ids}&title={playlist_title}"
-
-
-def create_playlist_url_without_title(video_ids: str) -> str:
-    """Create playlist URL without a title from video ids."""
+def create_playlist_url(video_ids: str, playlist_title: str, with_title: bool) -> str:
+    """Create playlist URL with a title from video ids and title, if title given."""
+    if with_title:
+        return f"https://www.youtube.com/watch_videos?video_ids={video_ids}&title={playlist_title}"
     return f"https://www.youtube.com/watch_videos?video_ids={video_ids}"
