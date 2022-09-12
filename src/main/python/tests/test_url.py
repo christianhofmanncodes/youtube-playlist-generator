@@ -1,13 +1,15 @@
 """tests.test_url module"""
-from main import Ui
+
+from strings import check_string
+from url import url
 
 
 def test_is_string_valid_url() -> None:
-    """Test Ui.is_string_valid_url()"""
+    """Test check_string.is_string_valid_url()"""
     url_string = "https://youtube-playlist-generator.com"
     youtube_url_string = "https://invidious.namazso.eu/watch?v=gQlMMD8auMs"
-    assert Ui.is_string_valid_url(Ui, url_string) is True
-    assert Ui.is_string_valid_youtube_url(Ui, youtube_url_string) is True
+    assert check_string.is_string_valid_url(url_string) is True
+    assert check_string.is_string_valid_youtube_url(youtube_url_string) is True
 
 
 def test_create_playlist_url() -> None:
@@ -15,10 +17,10 @@ def test_create_playlist_url() -> None:
     video_ids = "gQlMMD8auMs,dYRITmpFbJ4"
     playlist_title = "K-Pop"
     assert (
-        Ui.create_playlist_url_without_title(Ui, video_ids)
+        url.create_playlist_url(video_ids, "", False)
         == "https://www.youtube.com/watch_videos?video_ids=gQlMMD8auMs,dYRITmpFbJ4"
     )
     assert (
-        Ui.create_playlist_url_with_title(Ui, video_ids, playlist_title)
+        url.create_playlist_url(video_ids, playlist_title, True)
         == "https://www.youtube.com/watch_videos?video_ids=gQlMMD8auMs,dYRITmpFbJ4&title=K-Pop"
     )
