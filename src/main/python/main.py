@@ -10,10 +10,8 @@ from PyQt6.QtWidgets import QApplication, QMainWindow
 from qt_material import QtStyleTools, apply_stylesheet
 
 from actions import actions
-from dialogs import license
-from menu import menu
-from playlist import playlist
-from settings import operations, settings
+from dialogs import license_dialog
+from settings.operations import load_settings, save_settings
 from settings.settings import RECENT_FILES_STRING
 
 
@@ -34,9 +32,9 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def initialize_ui(self) -> None:
         """Set up the application's GUI."""
-        license.create_license_dialog(self)
+        license_dialog.create_license_dialog(self)
         self.set_theme()
-        operations.load_settings(self)
+        load_settings(self)
 
     def set_theme(self) -> None:
         """Check OS theme and apply to UI."""
@@ -54,16 +52,10 @@ class MainWindow(QMainWindow, QtStyleTools):
         uic.loadUi(app_context.get_resource("forms/main_window.ui"), self)
         self.setFont(QFont("Roboto"))
 
-    def create_recent_file_menu(self) -> None:
-        """Create Open recent file menu."""
-        self.file_menu = self.menuFile
-        self.recent_files_menu = self.file_menu.addMenu("&Open recent")
-        self.recent_files_menu.triggered.connect(self.act_recent_file)
-
     def closeEvent(self, event):
         """Save settings before app closes."""
         super().closeEvent(event)
-        operations.save_settings(self)
+        save_settings(self)
 
     def create_actions(self) -> None:
         """Create the applications menu actions."""
@@ -101,18 +93,23 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.actionLicense.triggered.connect(self.act_license)
 
     def act_new(self):
+        """Action for new."""
         actions.act_new(self)
 
     def act_open(self):
+        """Action for open."""
         actions.act_open(self)
 
     def act_save(self):
+        """Action for save."""
         actions.act_save(self)
 
     def act_about(self):
+        """Action for about."""
         actions.act_about(self)
 
     def act_settings(self):
+        """Action for settings."""
         actions.act_settings(self)
 
     def act_quit(self) -> None:
@@ -120,86 +117,113 @@ class MainWindow(QMainWindow, QtStyleTools):
         app.quit()
 
     def act_undo(self):
-        actions.act_undo(self)
+        """Action for undo."""
+        actions.act_undo()
 
     def act_redo(self):
-        actions.act_redo(self)
+        """Action for redo."""
+        actions.act_redo()
 
     def act_cut(self):
-        actions.act_cut(self)
+        """Action for cut."""
+        actions.act_cut()
 
     def act_copy(self):
-        actions.act_copy(self)
+        """Action for copy."""
+        actions.act_copy()
 
     def act_paste(self):
-        actions.act_paste(self)
+        """Action for paste."""
+        actions.act_paste()
 
     def act_select_all(self):
-        actions.act_select_all(self)
+        """Action for select_all."""
+        actions.act_select_all()
 
     def act_find(self):
+        """Action for find."""
         actions.act_find(self)
 
     def act_add_item(self):
+        """Action for add_item."""
         actions.act_add_item(self)
 
     def act_delete_item(self):
+        """Action for delete_item."""
         actions.act_delete_item(self)
 
     def act_rename_item(self):
+        """Action for rename_item."""
         actions.act_rename_item(self)
 
     def act_shuffle(self):
+        """Action for shuffle."""
         actions.act_shuffle(self)
 
     def act_generate(self):
+        """Action for generate."""
         actions.act_generate(self)
 
     def act_sort_items_ascending(self):
+        """Action for sort_items_ascending."""
         actions.act_sort_items_ascending(self)
 
     def act_sort_items_descending(self):
+        """Action for sort_items_descending."""
         actions.act_sort_items_descending(self)
 
     def act_count_items(self):
+        """Action for count_items."""
         actions.act_count_items(self)
 
     def act_clear_items(self):
+        """Action for clear_items."""
         actions.act_clear_items(self)
 
     def act_remove_duplicates(self):
+        """Action for remove_duplicates."""
         actions.act_remove_duplicates(self)
 
     def act_copy_url(self):
+        """Action for copy_url."""
         actions.act_copy_url(self)
 
     def act_github(self):
+        """Action for github."""
         actions.act_github(self)
 
     def act_report_a_bug(self):
+        """Action for report_a_bug."""
         actions.act_report_a_bug(self)
 
     def act_contact(self):
+        """Action for contact."""
         actions.act_contact(self)
 
     def act_about_qt(self):
+        """Action for about_qt."""
         actions.act_about_qt(self)
 
     def act_license(self):
+        """Action for license."""
         actions.act_license(self)
 
     def act_recent_file(self):
+        """Action for recent_file."""
         actions.act_recent_file(self, self.action)
 
     # TRIGGER:
 
     def act_url_id_text_change(self):
+        """Action for url_id_text_change."""
         actions.act_url_id_text_change(self)
 
     def act_add_item(self):
+        """Action for add_item."""
         actions.act_add_item(self)
 
     def act_rename_item(self):
+        """Action for rename_item."""
         actions.act_rename_item(self)
 
     def create_trigger(self) -> None:
