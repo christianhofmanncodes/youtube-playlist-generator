@@ -1,7 +1,10 @@
 """module url.generate_url"""
 
+import logging
 import ssl
 from urllib import error, request
+
+from dialogs import creating_url
 
 
 def playlist_url(self, video_ids_url: str) -> str:
@@ -17,6 +20,6 @@ def playlist_url(self, video_ids_url: str) -> str:
             + "&disable_polymer=true"
         )
     except (error.URLError, IndexError, UnicodeEncodeError):
-        MainWindow.show_error_creating_url_dialog(self)
+        creating_url.show_error_creating_url_dialog(self)
         logging.warning("An error occurred while generating the playlist URL!")
         return ""
