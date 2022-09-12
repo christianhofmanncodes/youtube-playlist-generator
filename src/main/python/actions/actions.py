@@ -210,19 +210,19 @@ def act_license(self) -> QMessageBox:
     return self.license_dialog.exec()
 
 
-def act_contact(self) -> None:
+def act_contact() -> None:
     """Open default mail software with contact email address."""
     open_url.in_webbrowser("mailto:contact@youtube-playlist-generator.com")
 
 
-def act_report_a_bug(self) -> None:
+def act_report_a_bug() -> None:
     """Open Github issue page from project."""
     open_url.in_webbrowser(
         "https://github.com/christianhofmanncodes/youtube-playlist-generator/issues"
     )
 
 
-def act_github(self) -> None:
+def act_github() -> None:
     """Open Github page from project."""
     open_url.in_webbrowser(
         "https://github.com/christianhofmanncodes/youtube-playlist-generator"
