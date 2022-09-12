@@ -2,18 +2,15 @@
 
 import logging
 
-from dialogs.dialogs import (
-    show_error_dialog,
-    show_info_dialog,
-    show_question_dialog,
-)
+from dialogs import import_playlist, reset_playlist
+from dialogs.dialogs import show_info_dialog, show_question_dialog
 from dialogs.settings_dialog import SettingsDialog
-from dialogs import reset_playlist
+from file import file
 from file.file import read_json_file
-from menu import menu
+from menu.menu import add_recent_filename, open_ytplaylist_file_from_menu
 from playlist import playlist
 from PyQt6.QtCore import Qt, pyqtSlot
-from PyQt6.QtGui import QAction, QFont, QIcon
+from PyQt6.QtGui import QAction
 from PyQt6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMessageBox
 from settings.operations import (
     get_settings,
@@ -21,8 +18,9 @@ from settings.operations import (
     save_settings_to_conf_file,
 )
 from settings.settings import APP_VERSION, RELEASE_DATE
-from url import open_url
 from strings import check_string
+from url import open_url
+from url.url import cut_url_to_id
 
 
 def disable_components(self) -> None:
@@ -43,7 +41,7 @@ def disable_components(self) -> None:
 
 def process_filename(self, action):
     """Import YouTube Playlist file (*.ytplaylist)"""
-    menu.open_ytplaylist_file_from_menu(self, action)
+    open_ytplaylist_file_from_menu(self, action)
 
 
 @pyqtSlot(QAction)
@@ -91,32 +89,32 @@ def act_new(self) -> None:
             self.lineEdit_playlist_title.setFocus()
 
 
-def act_undo(self) -> None:
+def act_undo() -> None:
     """Undo last change."""
     print("Undo...")
 
 
-def act_redo(self) -> None:
+def act_redo() -> None:
     """Redo last change."""
     print("Redo...")
 
 
-def act_cut(self) -> None:
+def act_cut() -> None:
     """Cut text from selected text field."""
     print("Cut...")
 
 
-def act_copy(self) -> None:
+def act_copy() -> None:
     """Copy text from selected text field."""
     print("Copy...")
 
 
-def act_paste(self) -> None:
+def act_paste() -> None:
     """Paste text to selected text field."""
     print("Paste...")
 
 
-def act_select_all(self) -> None:
+def act_select_all() -> None:
     """Select all tex from selected text field."""
     print("Select all...")
 
@@ -250,7 +248,7 @@ def act_add_item(self) -> None:
         if check_string.is_string_valid_url(
             text
         ) and check_string.is_string_valid_youtube_url(text):
-            user_id = url.cut_url_to_id(text)
+            user_id = cut_url_to_id(text)
             self.listWidget_playlist_items.addItem(str(user_id))
 
             item = self.listWidget_playlist_items.findItems(
@@ -373,7 +371,7 @@ def act_open(self) -> None:
             self.actionAscending.setEnabled(True)
             self.actionDescending.setEnabled(True)
             self.actionClear_all_items.setEnabled(True)
-            menu.add_recent_filename(self, filename[0])
+            add_recent_filename(self, filename[0])
     except FileNotFoundError:
         logging.error("File not found. No file was imported.")
 
@@ -389,12 +387,11 @@ def act_save(self) -> None:
         ):
             logging.debug("Playlist exported under:")
             logging.debug(filename[0])
-            ytplaylist_dict = self.generate_dict_from_fields(
-                self,
+            ytplaylist_dict = playlist.generate_dict_from_fields(
                 self.lineEdit_playlist_title.text(),
-                self.output_list_from_playlist_ids(self),
+                playlist.output_list_from_playlist_ids(self),
             )
-            self.export_ytplaylist_file(self, filename[0], ytplaylist_dict)
+            file.export_ytplaylist_file(filename[0], ytplaylist_dict)
     except FileNotFoundError:
         logging.error("Error during export process! No file was exported.")
 
