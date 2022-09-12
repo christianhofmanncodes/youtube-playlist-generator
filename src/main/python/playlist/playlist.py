@@ -113,7 +113,7 @@ def generate_video_ids_url(self, comma_separated_string: str) -> None:
         video_ids_url = url.create_playlist_url(comma_separated_string, "", False)
 
     elif check_string.has_space_in_string(self.lineEdit_playlist_title.text()):
-        title_no_spaces = strings.replace_string.replace_space_in_string(
+        title_no_spaces = replace_string.replace_space_in_string(
             self.lineEdit_playlist_title.text()
         )
         video_ids_url = url.create_playlist_url(
