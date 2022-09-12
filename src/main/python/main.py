@@ -96,7 +96,8 @@ class Ui(QMainWindow, QtStyleTools):
     def load_settings(self):
         """Load settings from menu.config."""
         menu_config = get_menu_config()
-        if menu_config != "":
+
+        if menu_config["recent_files"]:
             file_names = menu_config["recent_files"]
             logging.debug(file_names)
             for file_name in file_names:
@@ -107,6 +108,15 @@ class Ui(QMainWindow, QtStyleTools):
             self.recent_files_menu.addAction(self.action)
         else:
             logging.info("No recent files!")
+            recent_files = [
+                action.text() for action in self.recent_files_menu.actions()[::-1]
+            ]
+
+            while "" in recent_files:
+                recent_files.remove("")
+
+            while "Clear recent files" in recent_files:
+                recent_files.remove("Clear recent files")
 
     def save_settings(self):
         """Save settings to menu.config."""
