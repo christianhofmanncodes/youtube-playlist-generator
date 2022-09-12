@@ -69,7 +69,7 @@ def open_ytplaylist_file_from_menu(self, action):
         if ytplaylist_dict:
             logging.debug("Playlist to be imported:")
             logging.debug(ytplaylist_dict)
-            if playlist.check_if_items_in_playlist():
+            if playlist.check_if_items_in_playlist(self):
                 logging.debug("There are already items in playlist!")
                 dlg = import_playlist.PlaylistImportDialog()
                 if dlg.exec():
