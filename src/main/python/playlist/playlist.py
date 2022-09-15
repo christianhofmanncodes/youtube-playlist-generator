@@ -9,7 +9,12 @@ from dialogs import dialogs
 
 
 def shuffle(self) -> None:
-    """Shuffle playlist with random.shuffle()."""
+    """
+    The shuffle function shuffles the playlist with random.shuffle().
+
+    :param self: Used to Access the class attributes.
+    :return: None.
+    """
     logging.debug("Shuffle playlist...")
     playlist = output_list_from_playlist_ids(self)
     random.shuffle(playlist)
@@ -24,23 +29,47 @@ def shuffle(self) -> None:
 
 
 def number_of_playlist_items(self) -> int:
-    """Return number of items in playlist as int."""
+    """
+    The number_of_playlist_items function returns the number of items in the playlist as an integer.
+
+    :param self: Used to Access the attributes and methods of the class in python.
+    :return: The number of items in the playlist.
+    """
     playlist = self.listWidget_playlist_items
     return len([playlist.item(x) for x in range(playlist.count())])
 
 
 def playlist_widget_has_x_or_more_items(self, number: int) -> bool:
-    """Return True if one ore more items in playlist."""
+    """
+    The playlist_widget_has_x_or_more_items function returns True
+    if the number of items in the playlist is greater than or equal to x.
+
+    :param self: Used to Access the class attributes.
+    :param number:int: Used to Specify the minimum number of items that should be in the playlist.
+    :return: True if the number of items in the playlist is greater than or equal to a specified number.
+    """
     return number_of_playlist_items(self) >= number
 
 
 def is_playlist_widget_empty(self) -> bool:
-    """Return True if no items in the playlist."""
+    """
+    The is_playlist_widget_empty function returns True if no items are in the playlist.
+    Otherwise, it returns False.
+
+    :param self: Used to Access the attributes and methods of the class in which it is used.
+    :return: True if the number of items in the playlist is 0.
+    """
     return number_of_playlist_items(self) == 0
 
 
 def make_item_editable(self) -> None:
-    """Make item in playlist editable."""
+    """
+    The make_item_editable function makes the selected item in the playlist editable.
+    The function is called when a user double clicks on an item in the playlist.
+
+    :param self: Used to Access the attributes and methods of the class in which it is used.
+    :return: None.
+    """
     index = self.listWidget_playlist_items.currentIndex()
     if index.isValid():
         item = self.listWidget_playlist_items.itemFromIndex(index)
@@ -50,15 +79,28 @@ def make_item_editable(self) -> None:
 
 
 def output_list_from_playlist_ids(self) -> list:
-    """Return playlist items as a list."""
+    """
+    The output_list_from_playlist_ids function returns a list of the items in the playlist.
+    It is called by other functions to get a list of the items in the playlist.
+
+    :param self: Used to Access the class attributes.
+    :return: A list of all the playlist items in the playlist.
+    """
     playlist = self.listWidget_playlist_items
     return [playlist.item(x).text() for x in range(playlist.count())]
 
 
 def remove_duplicates_from_playlist(self) -> None:
-    """If playlist contains duplicated items remove them from the list."""
+    """
+    The remove_duplicates_from_playlist function removes any duplicates from the playlist.
+    It does this by creating a list of all the items in the playlist, and then removing any duplicates from that list.
+    The function then generates a dictionary containing only those items which are not duplicated, and finally imports
+    those back into the GUI.
+
+    :param self: Used to Access the objects and methods of the class.
+    :return: None.
+    """
     logging.debug("Remove duplicates from playlist:")
-    dialogs.show_info_dialog(self, "Success!", "Any duplicates have been deleted.")
     playlist = output_list_from_playlist_ids(self)
     logging.debug(playlist)
 
@@ -71,9 +113,11 @@ def remove_duplicates_from_playlist(self) -> None:
 
     self.listWidget_playlist_items.clear()
     import_from_dict(self, ytplaylist_dict)
+    dialogs.show_info_dialog(self, "Success!", "Any duplicates have been deleted.")
 
     if not playlist_widget_has_x_or_more_items(self, 1):
         self.actionClear_all_items.setEnabled(False)
+        self.actionGet_video_information.setEnabled(False)
 
     if not playlist_widget_has_x_or_more_items(self, 2):
         self.actionRemove_duplicates.setEnabled(False)
@@ -86,7 +130,14 @@ def remove_duplicates_from_playlist(self) -> None:
 
 
 def import_from_dict(self, ytplaylist_dict: dict) -> None:
-    """Get content from dict and load it into the fields in the application."""
+    """
+    The import_from_dict function takes a dictionary as an argument
+    and loads the values into the fields in the application.
+
+    :param self: Used to Access the class attributes.
+    :param ytplaylist_dict:dict: Used to Get the content from the dictionary.
+    :return: None.
+    """
     playlist_title = ytplaylist_dict["playlistTitle"]
     playlist_ids = ytplaylist_dict["playlistIDs"]
 
@@ -96,19 +147,41 @@ def import_from_dict(self, ytplaylist_dict: dict) -> None:
 
 
 def check_if_items_in_playlist(self) -> bool:
-    """Returns True if more than one item in playlist."""
+    """
+    The check_if_items_in_playlist function checks if there are any items in the playlist.
+    It returns True if there is at least one item, and False otherwise.
+
+    :param self: Used to Access the attributes of the class.
+    :return: A boolean value.
+    """
     number_of_items = self.listWidget_playlist_items.count()
     logging.debug("Playlist items count: %s", number_of_items)
     return number_of_items >= 1
 
 
 def generate_dict_from_fields(playlist_title: str, playlist_ids: list) -> dict:
-    """Return playlist items and title as dict."""
+    """
+    The generate_dict_from_fields function takes a playlist title and list of IDs as arguments.
+    It returns a dictionary with the playlist title as the key and the list of IDs as its value.
+
+    :param playlist_title:str: Used to Store the playlist title.
+    :param playlist_ids:list: Used to Store the list of song ids that are to be added to a playlist.
+    :return: A dictionary with the playlist title and a list of ids.
+    """
     return {"playlistTitle": playlist_title, "playlistIDs": playlist_ids}
 
 
 def generate_video_ids_url(self, comma_separated_string: str) -> None:
-    """Generate the video ids URL from a comma separated string."""
+    """
+    The generate_video_ids_url function generates the video ids URL from a comma separated string.
+    If no playlist title is given, it will generate the URL with no title.
+    If there is a space in the playlist title, it will replace all spaces with underscores and add %20 for each space.
+    Otherwise, if there are no spaces in the playlist title, it will add %20 after every comma.
+
+    :param self: Used to Access the class variables.
+    :param comma_separated_string:str: Used to Pass the comma separated string from the textedit_playlist_urls.
+    :return: The url of the playlist.
+    """
     if self.lineEdit_playlist_title.text() == "":
         video_ids_url = url.create_playlist_url(comma_separated_string, "", False)
 
@@ -133,7 +206,13 @@ def generate_video_ids_url(self, comma_separated_string: str) -> None:
 
 
 def generate_playlist(self) -> None:
-    """Generate playlist URL and enable copy button."""
+    """
+    The generate_playlist function generates a playlist URL from the items in the playlist widget.
+    The function also enables the copy button once a playlist has been generated.
+
+    :param self: Used to Access the class attributes.
+    :return: None.
+    """
     if not is_playlist_widget_empty(self):
         playlist_widget = self.listWidget_playlist_items
         playlist_items = [
