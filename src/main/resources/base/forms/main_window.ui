@@ -501,6 +501,7 @@ p, li { white-space: pre-wrap; }
      </property>
      <addaction name="actionCount_items"/>
      <addaction name="actionClear_all_items"/>
+     <addaction name="actionGet_video_information"/>
      <addaction name="actionRemove_duplicates"/>
     </widget>
     <addaction name="actionAdd_item"/>
@@ -863,7 +864,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionCount_items">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Count items</string>
@@ -878,6 +879,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Clear all items</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+C</string>
    </property>
   </action>
   <action name="actionNew">
@@ -909,6 +913,17 @@ p, li { white-space: pre-wrap; }
   <action name="actionOpen_recent_file">
    <property name="text">
     <string>Open recent file</string>
+   </property>
+  </action>
+  <action name="actionGet_video_information">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Get video information</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+I</string>
    </property>
   </action>
  </widget>
