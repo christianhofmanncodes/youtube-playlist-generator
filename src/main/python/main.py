@@ -1,4 +1,5 @@
 """main module"""
+import contextlib
 import logging
 import sys
 
@@ -14,6 +15,12 @@ from dialogs import license_dialog
 from settings.operations import load_settings, save_settings
 from settings.settings import RECENT_FILES_STRING
 
+with contextlib.suppress(ImportError):
+    from ctypes import windll  # Only exists on Windows
+
+    APP_ID = f"christianhofmann.youtube-playlist-generator.gui.{APP_VERSION}"
+    windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
+
 
 class MainWindow(QMainWindow, QtStyleTools):
     """
@@ -21,23 +28,40 @@ class MainWindow(QMainWindow, QtStyleTools):
     """
 
     def __init__(self) -> None:
-        """Connect MainWindow components with specific functions."""
+        """
+        The __init__ function is called automatically every time the class is
+        instantiated. It sets up all of the attributes and performs any initializing
+        code.
+
+        :param self: Used to Reference the object itself.
+        :return: None.
+        """
         super().__init__()
         self.initialize_ui()
         self.create_actions()
         self.create_trigger()
 
-        self.action = QAction()
-        self.action.setText(RECENT_FILES_STRING)
-
     def initialize_ui(self) -> None:
-        """Set up the application's GUI."""
+        """
+        The initialize_ui function sets up the application's GUI.
+        It creates a license dialog box and sets the theme for the application.
+
+        :param self: Used to Access the attributes and methods of the class MainWindow.
+        :return: None.
+        """
         license_dialog.create_license_dialog(self)
         self.set_theme()
         load_settings(self)
 
     def set_theme(self) -> None:
-        """Check OS theme and apply to UI."""
+        """
+        The set_theme function checks the OS theme and applies a stylesheet to the UI.
+        If the OS is dark, it will apply a dark stylesheet. If it's light, it will apply
+        a light one.
+
+        :param self: Used to Access the attributes and methods of the class.
+        :return: None.
+        """
         if darkdetect.isDark():
             invert_color = False
             app_theme = "theme/yt-dark-red.xml"
@@ -53,12 +77,25 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.setFont(QFont("Roboto"))
 
     def closeEvent(self, event):
-        """Save settings before app closes."""
+        """
+        The closeEvent function is called when the user closes the GUI.
+        It saves all settings before closing.
+
+        :param self: Used to Access the attributes and methods of the class.
+        :param event: Used to Handle the event when a user tries to close the window.
+        :return: The event that is created when the user closes the window.
+        """
         super().closeEvent(event)
         save_settings(self)
 
     def create_actions(self) -> None:
-        """Create the applications menu actions."""
+        """
+        The create_actions function creates the applications menu actions.
+        The function connects each action to its corresponding slot method.
+
+        :param self: Used to Access the attributes and methods of the class.
+        :return: None.
+        """
         self.actionNew.triggered.connect(self.act_new)
         self.actionOpen.triggered.connect(self.act_open)
         self.actionSave.triggered.connect(self.act_save)
@@ -84,6 +121,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.actionCount_items.triggered.connect(self.act_count_items)
         self.actionClear_all_items.triggered.connect(self.act_clear_items)
         self.actionRemove_duplicates.triggered.connect(self.act_remove_duplicates)
+        self.actionGet_video_information.triggered.connect(self.act_video_information)
         self.actionCopy_URL.triggered.connect(self.act_copy_url)
 
         self.actionGithub.triggered.connect(self.act_github)
@@ -113,7 +151,12 @@ class MainWindow(QMainWindow, QtStyleTools):
         actions.act_settings(self)
 
     def act_quit(self) -> None:
-        """Quits the application."""
+        """
+        The act_quit function quits the application.
+
+        :param self: Used to Access the attributes and methods of the class in python.
+        :return: None.
+        """
         app.quit()
 
     def act_undo(self):
@@ -184,6 +227,10 @@ class MainWindow(QMainWindow, QtStyleTools):
         """Action for remove_duplicates."""
         actions.act_remove_duplicates(self)
 
+    def act_video_information(self):
+        """Action when item in playlist clicked."""
+        actions.act_video_information(self)
+
     def act_copy_url(self):
         """Action for copy_url."""
         actions.act_copy_url(self)
@@ -212,13 +259,21 @@ class MainWindow(QMainWindow, QtStyleTools):
         """Action for recent_file."""
         actions.act_recent_file(self, self.action)
 
-    # TRIGGER:
-
     def act_url_id_text_change(self):
         """Action for url_id_text_change."""
         actions.act_url_id_text_change(self)
 
     def create_trigger(self) -> None:
+        """
+        The create_trigger function creates the trigger for several MainWindow components.
+        The lineEdit_playlist_title is set to focus, and the lineEdit_url_id text is changed when it changes.
+        The pushButton add button calls act_add item when clicked, and the listWidget playlist items double click calls act rename item when clicked.
+        The pushButton new button calls act new when clicked, the pushButton delete item button clicks act delete item when clicked,
+        and the shuffle playlists pushes call shuffle playlist when pushed.
+
+        :param self: Used to Access the class attributes and methods.
+        :return: None.
+        """
         """Create the trigger for several MainWindow components."""
         self.lineEdit_playlist_title.setFocus()
         self.lineEdit_url_id.textChanged.connect(self.act_url_id_text_change)
