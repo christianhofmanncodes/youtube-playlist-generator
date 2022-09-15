@@ -8,23 +8,35 @@ from dialogs.settings_dialog import SettingsDialog
 from file import file
 from file.file import read_json_file
 from menu.menu import add_recent_filename, open_ytplaylist_file_from_menu
-from playlist import playlist
+from playlist import playlist, video_info
 from PyQt6.QtCore import Qt, pyqtSlot
-from PyQt6.QtGui import QAction
-from PyQt6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMessageBox
+from PyQt6.QtGui import QAction, QCursor
+from PyQt6.QtWidgets import (
+    QApplication,
+    QFileDialog,
+    QInputDialog,
+    QMessageBox,
+    QDialog,
+    QToolTip,
+)
 from settings.operations import (
     get_settings,
     output_settings_as_dict,
     save_settings_to_conf_file,
 )
-from settings.settings import APP_VERSION, RELEASE_DATE
+from settings.settings import APP_VERSION, RELEASE_DATE, RECENT_FILES_STRING
 from strings import check_string
 from url import open_url
 from url.url import cut_url_to_id
 
 
 def disable_components(self) -> None:
-    """Disable specific components."""
+    """
+    The disable_components function disables specific components.
+
+    :param self: Used to Access the class attributes.
+    :return: None.
+    """
     self.pushButton_new.setEnabled(False)
     self.pushButton_delete_item.setEnabled(False)
     self.pushButton_generate.setEnabled(False)
@@ -35,19 +47,42 @@ def disable_components(self) -> None:
     self.actionShuffle.setEnabled(False)
     self.actionRename_item.setEnabled(False)
     self.actionSave.setEnabled(False)
+    self.actionCount_items.setEnabled(False)
+    self.actionGet_video_information.setEnabled(False)
+    self.actionClear_all_items.setEnabled(False)
     self.actionRemove_duplicates.setEnabled(False)
     self.textEdit_playlist_generated_url.setEnabled(False)
+    self.actionAscending.setEnabled(False)
+    self.actionDescending.setEnabled(False)
 
 
 def process_filename(self, action):
+    """
+    The process_filename function imports a YouTube Playlist file (*.ytplaylist)
+    and creates a new playlist.
+
+    :param self: Used to Access the attributes and methods of the class MainWindow.
+    :param action: Used to Pass the menu action to the function.
+    :return: The filename of the youtube playlist file that was imported.
+    """
+
     """Import YouTube Playlist file (*.ytplaylist)"""
     open_ytplaylist_file_from_menu(self, action)
 
 
 @pyqtSlot(QAction)
 def act_recent_file(self, action):
-    """Action for click on one recent file."""
-    if action.text() == "Clear recent files":
+    """
+    The act_recent_file function is a function that is called when the user clicks on one of the recent files in
+    the recent files menu. It takes as input an action, which is a QAction object. If the action's text is RECENT_FILES_STRING,
+    then it removes all actions from self.recent_files_menu and then adds them back in (except for RECENT_FILES_STRING).
+    Otherwise, it calls the process_filename function with that file name.
+
+    :param self: Used to Access the variables and methods of the class.
+    :param action: Used to Identify the action that has been clicked.
+    :return: The action that is clicked on.
+    """
+    if action.text() == RECENT_FILES_STRING:
         actions = self.recent_files_menu.actions()
         for action_to_remove in actions:
             self.recent_files_menu.removeAction(action_to_remove)
@@ -57,10 +92,13 @@ def act_recent_file(self, action):
 
 def act_new(self) -> None:
     """
-    Creates a blank state to start a new playlist.
-    If the playlist already contains items and should be deleted
-    remove all items in playlist and disable all buttons
-    and clear playlist title field.
+    The act_new function creates a blank state to start a new playlist.
+    If the playlist already contains items and should be deleted,
+    it removes all items in playlist and disables all buttons
+    and finally clears playlist title field.
+
+    :param self: Used to Access the components of the MainWindow.
+    :return: None.
     """
     if playlist.playlist_widget_has_x_or_more_items(self, 1):
         dlg = reset_playlist.PlaylistResetDialog()
@@ -90,37 +128,66 @@ def act_new(self) -> None:
 
 
 def act_undo() -> None:
-    """Undo last change."""
+    """
+    The act_undo function undoes the last change.
+
+    :return: None.
+    """
     print("Undo...")
 
 
 def act_redo() -> None:
-    """Redo last change."""
+    """
+    The act_redo function redoes the last change.
+
+    :return: None.
+    """
     print("Redo...")
 
 
 def act_cut() -> None:
-    """Cut text from selected text field."""
+    """
+    The act_cut function cuts text from selected text field.
+
+    :return: None.
+    """
     print("Cut...")
 
 
 def act_copy() -> None:
-    """Copy text from selected text field."""
+    """
+    The act_copy function copies text from selected text field.
+
+    :return: None.
+    """
     print("Copy...")
 
 
 def act_paste() -> None:
-    """Paste text to selected text field."""
+    """
+    The act_paste function pastes text to the selected text field.
+
+    :return: None.
+    """
     print("Paste...")
 
 
 def act_select_all() -> None:
-    """Select all tex from selected text field."""
+    """
+    The act_select_all function selects all text from the selected text field.
+
+    :return: None.
+    """
     print("Select all...")
 
 
 def act_find(self) -> None:
-    """Find text in playlist."""
+    """
+    The act_find function finds text in the playlist.
+
+    :param self: Used to Access the widgets and other properties of the MainWindow class.
+    :return: None.
+    """
     find_text, button_ok = QInputDialog.getText(self, "Find", "Playlist item:")
 
     if button_ok and find_text != "":
@@ -135,7 +202,14 @@ def act_find(self) -> None:
 
 
 def act_count_items(self) -> None:
-    """Opens CountItemsDialog and displays count of items in playlist."""
+    """
+    The act_count_items function displays the number of items in the playlist.
+    It opens a dialog box and displays a message with the number of items in
+    the playlist.
+
+    :param self: Used to Access the attributes and methods of the class in which it is used.
+    :return: A message box that displays the number of items in the playlist.
+    """
     QMessageBox.information(
         self,
         "Info",
@@ -145,8 +219,11 @@ def act_count_items(self) -> None:
 
 def act_clear_items(self) -> None:
     """
-    Deletes all items in playlist.
+    The act_clear_items function clears all items in the playlist.
     This is not the reset function!
+
+    :param self: Used to Access the class variables.
+    :return: None.
     """
     self.listWidget_playlist_items.clear()
     logging.debug("All items in playlist deleted successfully.")
@@ -159,9 +236,19 @@ def act_clear_items(self) -> None:
 
     if not playlist.playlist_widget_has_x_or_more_items(self, 1):
         self.actionClear_all_items.setEnabled(False)
+        self.actionGet_video_information.setEnabled(False)
 
 
 def act_sort_items_ascending(self) -> None:
+    """
+    The act_sort_items_ascending function sorts the items in the playlist
+    in ascending order. The function is called when the user clicks on the 'Ascending'
+    entry in the menu located under "Sort items".
+
+    :param self: Used to Access the attributes and methods of the class.
+    :return: None.
+    """
+
     """Sort items in playlist ascending."""
     self.listWidget_playlist_items.setSortingEnabled(True)
     self.listWidget_playlist_items.sortItems(Qt.SortOrder.AscendingOrder)
@@ -169,14 +256,26 @@ def act_sort_items_ascending(self) -> None:
 
 
 def act_sort_items_descending(self) -> None:
-    """Sort items in playlist descending."""
+    """
+    The act_sort_items_descending function sorts the items in the playlist list widget
+    in descending order. The function is called when the user clicks on the 'Descending'
+    entry in the menu located under "Sort items".
+
+    :param self: Used to Access the variables, methods and signals of the class.
+    :return: None.
+    """
     self.listWidget_playlist_items.setSortingEnabled(True)
     self.listWidget_playlist_items.sortItems(Qt.SortOrder.DescendingOrder)
     self.listWidget_playlist_items.setSortingEnabled(False)
 
 
 def act_url_id_text_change(self) -> None:
-    """Enable Add button only if lineEdit_url_id is not empty."""
+    """
+    The act_url_id_text_change function enables the Add button only if the lineEdit_url_id is not empty.
+
+    :param self: Used to Access the attributes and methods of the class.
+    :return: None.
+    """
     if self.lineEdit_url_id.text():
         self.pushButton_add.setEnabled(True)
         self.actionAdd_item.setEnabled(True)
@@ -186,12 +285,23 @@ def act_url_id_text_change(self) -> None:
 
 
 def act_shuffle(self):
-    """Shuffle playlist items."""
+    """
+    The act_shuffle function shuffles the playlist items.
+
+    :param self: Used to Access the class instance inside of a method.
+    :return: A list of shuffled playlist items.
+    """
     playlist.shuffle(self)
 
 
 def act_about(self) -> QMessageBox:
-    """Execute About QMessageBox."""
+    """
+    The act_about function executes a QMessageBox with the title "About YouTube Playlist Generator"
+    and the version number and release date of that version as text.
+
+    :param self: Used to Access the attributes and methods of the class.
+    :return: A QMessagebox.
+    """
     return QMessageBox.about(
         self,
         "About YouTube Playlist Generator",
@@ -201,36 +311,67 @@ def act_about(self) -> QMessageBox:
 
 
 def act_about_qt(self) -> QMessageBox:
-    """Execute About QMessageBox."""
+    """
+    The act_about_qt function executes the About QMessageBox.
+
+    :returns: The result of the QMessageBox.aboutQt function.
+
+    :param self: Used to Access the attributes and methods of the class.
+    :return: The QMessageBox.
+    """
     return QMessageBox.aboutQt(self)
 
 
 def act_license(self) -> QMessageBox:
-    """Execute License Information as QMessageBox."""
+    """
+    The act_license function executes the License Information dialog box.
+    It returns a QMessageBox object.
+
+    :param self: Used to Access the attributes and methods of the parent class.
+    :return: The value of the license_dialog object.
+    """
     return self.license_dialog.exec()
 
 
 def act_contact() -> None:
-    """Open default mail software with contact email address."""
+    """
+    The act_contact function opens the default mail software with the contact email address.
+
+    :return: None.
+    """
     open_url.in_webbrowser("mailto:contact@youtube-playlist-generator.com")
 
 
 def act_report_a_bug() -> None:
-    """Open Github issue page from project."""
+    """
+    The act_report_a_bug function opens the Github issue page from project.
+
+    :return: None.
+    """
     open_url.in_webbrowser(
         "https://github.com/christianhofmanncodes/youtube-playlist-generator/issues"
     )
 
 
 def act_github() -> None:
-    """Open Github page from project."""
+    """
+    The act_github function opens the Github page of the project in a web browser.
+
+    :return: None.
+    """
     open_url.in_webbrowser(
         "https://github.com/christianhofmanncodes/youtube-playlist-generator"
     )
 
 
 def act_rename_item(self) -> None:
-    """Add flag ItemIsEditable to double clicked item in playlist."""
+    """
+    The act_rename_item function adds the ItemIsEditable flag to all items in the playlist.
+    This allows for double clicking on an item and renaming it.
+
+    :param self: Used to Access the attributes and methods of the class.
+    :return: None.
+    """
     list_widget = self.listWidget_playlist_items
     for index in range(list_widget.count()):
         item = list_widget.item(index)
@@ -240,8 +381,13 @@ def act_rename_item(self) -> None:
 
 def act_add_item(self) -> None:
     """
-    Get content from textEdit field and convert URL to ID if necessary.
-    Otherwise add new item to playlist.
+    The act_add_item function is used to add items to the playlist.
+    It first checks if the textEdit field is empty, and if it is not, then it will check if the string in that field is a valid URL.
+    If so, then it will convert that URL into an ID and add that item to the playlist.
+    Otherwise, it will just add whatever string was in there as an item.
+
+    :param self: Used to Access the variables and methods of the class.
+    :return: None.
     """
     text = self.lineEdit_url_id.text()
     if text != "":
@@ -271,7 +417,9 @@ def act_add_item(self) -> None:
         self.actionReset_Playlist.setEnabled(True)
 
         if playlist.playlist_widget_has_x_or_more_items(self, 1):
+            self.actionCount_items.setEnabled(True)
             self.actionClear_all_items.setEnabled(True)
+            self.actionGet_video_information.setEnabled(True)
 
         if playlist.playlist_widget_has_x_or_more_items(self, 2):
             self.pushButton_generate.setEnabled(True)
@@ -288,13 +436,25 @@ def act_add_item(self) -> None:
 
 
 def act_remove_duplicates(self) -> None:
-    """Check if two or more items in playlist. Remove duplicates."""
+    """
+    The act_remove_duplicates function removes duplicate items from the playlist.
+    It checks if there are two or more items in the playlist, and if so, it removes duplicates.
+
+    :param self: Used to Access the class attributes.
+    :return: None.
+    """
     if playlist.playlist_widget_has_x_or_more_items(self, 2):
         playlist.remove_duplicates_from_playlist(self)
 
 
 def act_delete_item(self) -> [None, bool]:
-    """If item selected delete it from the playlist."""
+    """
+    The act_delete_item function is a function that is called when the user clicks on the delete item button.
+    It will remove any selected items from the playlist widget.
+
+    :param self: Used to Access the components of the MainWindow class.
+    :return: None.
+    """
     list_items = self.listWidget_playlist_items.selectedItems()
     if not list_items:
         return
@@ -306,7 +466,9 @@ def act_delete_item(self) -> [None, bool]:
         disable_components(self)
 
     elif not playlist.playlist_widget_has_x_or_more_items(self, 1):
+        self.actionCount_items.setEnabled(False)
         self.actionClear_all_items.setEnabled(False)
+        self.actionGet_video_information.setEnabled(False)
 
     elif not playlist.playlist_widget_has_x_or_more_items(self, 2):
         self.pushButton_generate.setEnabled(False)
@@ -317,7 +479,6 @@ def act_delete_item(self) -> [None, bool]:
         self.menuSort_items.setEnabled(False)
         self.actionAscending.setEnabled(False)
         self.actionDescending.setEnabled(False)
-        self.actionClear_all_items.setEnabled(False)
 
     elif not playlist.playlist_widget_has_x_or_more_items(self, 3):
         self.pushButton_shuffle_playlist.setEnabled(False)
@@ -325,13 +486,25 @@ def act_delete_item(self) -> [None, bool]:
 
 
 def act_copy_url(self) -> None:
-    """Get content from textEdit_playlist_generated_url and copy it to clipboard."""
+    """
+    The act_copy_url function copies the text from the textEdit_playlist_generated_url to clipboard.
+
+    :param self: Used to Access the variables and methods of the class.
+    :return: None.
+    """
     text = self.textEdit_playlist_generated_url.toPlainText()
     QApplication.clipboard().setText(text)
 
 
 def act_open(self) -> None:
-    """Get path of .ytplaylist-file and import it via import_from_dict()."""
+    """
+    The act_open function is called when the user clicks on the "Open" action.
+    It opens a file dialog and lets the user choose a .ytplaylist-file to import.
+    The function then imports that file into the program.
+
+    :param self: Used to Access the class variables.
+    :return: None.
+    """
     try:
         if filename := QFileDialog.getOpenFileName(
             self,
@@ -370,14 +543,23 @@ def act_open(self) -> None:
             self.menuSort_items.setEnabled(True)
             self.actionAscending.setEnabled(True)
             self.actionDescending.setEnabled(True)
+            self.actionCount_items.setEnabled(True)
             self.actionClear_all_items.setEnabled(True)
+            self.actionGet_video_information.setEnabled(True)
             add_recent_filename(self, filename[0])
     except FileNotFoundError:
         logging.error("File not found. No file was imported.")
 
 
 def act_save(self) -> None:
-    """Get path to save .ytplaylist-file and generate file."""
+    """
+    The act_save function is called when the user clicks on the "Save" button.
+    It will open a file dialog to get a path from the user, and then generate
+    a .ytplaylist-file using that path. The function will also log what happened.
+
+    :param self: Used to Access the fields of the main window.
+    :return: None.
+    """
     try:
         if filename := QFileDialog.getSaveFileName(
             self,
@@ -398,10 +580,13 @@ def act_save(self) -> None:
 
 def act_generate(self) -> None:
     """
-    Check if playlist title empty, ask if it should be added.
-    Otherwise generate playlist URL.
-    """
+    The act_generate function checks if the playlist title is empty. If it is,
+    it asks the user if they want to proceed. If not, it proceeds with generating
+    the playlist URL.
 
+    :param self: Used to Access the class variables.
+    :return: None.
+    """
     if self.lineEdit_playlist_title.text() == "":
         if (
             show_question_dialog(
@@ -417,7 +602,14 @@ def act_generate(self) -> None:
 
 
 def act_settings(self) -> None:
-    """Open settings dialog."""
+    """
+    The act_settings function opens the settings dialog.
+    The user can change the language, theme, and keyboard shortcuts.
+    The function saves these changes to a configuration file.
+
+    :param self: Used to Access the attributes and methods of the class in which it is used.
+    :return: None.
+    """
     settings_dict = get_settings()
     dlg = SettingsDialog(self)
     SettingsDialog(self).load_settings(settings_dict)
@@ -451,8 +643,38 @@ def act_settings(self) -> None:
             "shortcut_10": dlg.label_keyboard_shortcuts_option10.text(),
             "shortcut_11": dlg.label_keyboard_shortcuts_option11.text(),
             "shortcut_12": dlg.label_keyboard_shortcuts_option12.text(),
+            "shortcut_13": dlg.label_keyboard_shortcuts_option13.text(),
         }
 
         logging.debug(components_dict)
         settings_dict = output_settings_as_dict(components_dict)
         save_settings_to_conf_file(settings_dict)
+
+
+def act_video_information(self) -> None:
+    """
+    The act_video_information function displays the video title of the selected item in the playlist.
+    If no item is selected, a warning message box appears.
+
+    :param self: Used to Access the class attributes.
+    :return: The video title and the channel name of the selected item in playlist.
+    """
+    try:
+        video_id = self.listWidget_playlist_items.currentItem().text()
+        if video_title_channel := video_info.get_title__channel_from_youtube_link(
+            video_id
+        ):
+            QMessageBox.information(self, "Video information", video_title_channel)
+            # QToolTip.showText(QCursor.pos(), video_title_channel)
+        else:
+            QMessageBox.critical(
+                self,
+                "Error while fetching video information",
+                f"The id '{video_id}' is invalid.",
+            )
+    except AttributeError:
+        QMessageBox.critical(
+            self,
+            "Error while fetching video information",
+            "No item in playlist selected.",
+        )
