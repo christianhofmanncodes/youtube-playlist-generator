@@ -21,6 +21,7 @@ As of version 0.0.5, the console version will no longer be developed.
 - Reset playlist (deletes all items in the playlist)
 - Playlist Tools (Count items, Clear all items, Remove duplicates)
 - Sort items (Ascending & Descending)
+- Search for items in playlist
 - Rename specific items
 - Change order of playlist items
 - Delete specific items
@@ -30,6 +31,8 @@ As of version 0.0.5, the console version will no longer be developed.
 - Copy URL to clipboard
 - Open .ytplaylist file
 - Save .ytplaylist file
+- Darkmode & Whitemode (switchable in settings)
+- Recent files in File menu
 
 ## Screenshots
 
@@ -129,8 +132,8 @@ Simply free up some space.
 
 ## Roadmap
 
-- Change program language in settings (English/Deutsch)
-- Darkmode & Whitemode (switchable in settings)
+- Drag & Drop a .yt-playlist file into the playlist items section
+- Fetch YouTube video information (title, channel and thumbnail)
 
 ## FAQ
 
