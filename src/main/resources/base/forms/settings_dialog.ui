@@ -53,7 +53,7 @@
      <x>10</x>
      <y>20</y>
      <width>681</width>
-     <height>471</height>
+     <height>481</height>
     </rect>
    </property>
    <property name="tabPosition">
@@ -231,7 +231,7 @@
        <x>10</x>
        <y>10</y>
        <width>661</width>
-       <height>381</height>
+       <height>431</height>
       </rect>
      </property>
      <property name="title">
@@ -242,12 +242,12 @@
        <rect>
         <x>20</x>
         <y>30</y>
-        <width>631</width>
-        <height>61</height>
+        <width>411</width>
+        <height>51</height>
        </rect>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>360</x>
@@ -288,7 +288,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>360</x>
@@ -329,7 +329,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>360</x>
@@ -370,7 +370,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>360</x>
@@ -411,7 +411,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -452,25 +452,25 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>360</x>
-        <y>340</y>
+        <y>390</y>
         <width>291</width>
         <height>32</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_12">
+      <layout class="QHBoxLayout" name="horizontalLayout_13">
        <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option12_text">
+        <widget class="QLabel" name="label_keyboard_shortcuts_option13_text">
          <property name="text">
           <string>Copy URL</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option12">
+        <widget class="QLabel" name="label_keyboard_shortcuts_option13">
          <property name="font">
           <font>
            <bold>true</bold>
@@ -485,7 +485,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_change_option12">
+        <widget class="QPushButton" name="pushButton_change_option13">
          <property name="text">
           <string>Change</string>
          </property>
@@ -493,25 +493,25 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>360</x>
-        <y>290</y>
+        <y>340</y>
         <width>291</width>
         <height>32</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_11">
+      <layout class="QHBoxLayout" name="horizontalLayout_12">
        <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option11_text">
+        <widget class="QLabel" name="label_keyboard_shortcuts_option12_text">
          <property name="text">
           <string>Remove duplicates</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option11">
+        <widget class="QLabel" name="label_keyboard_shortcuts_option12">
          <property name="font">
           <font>
            <bold>true</bold>
@@ -526,7 +526,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_change_option11">
+        <widget class="QPushButton" name="pushButton_change_option12">
          <property name="text">
           <string>Change</string>
          </property>
@@ -534,7 +534,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -575,7 +575,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -616,7 +616,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -657,7 +657,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -698,7 +698,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -739,22 +739,63 @@
        </item>
       </layout>
      </widget>
-    </widget>
-    <widget class="QPushButton" name="pushButton_reset_defaults">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>400</y>
-       <width>171</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Reset to defaults</string>
-     </property>
+     <widget class="QPushButton" name="pushButton_reset_defaults">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>40</y>
+        <width>161</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reset to defaults</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>290</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option11_text">
+         <property name="text">
+          <string>Get video information</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option11">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Alt+I</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option11">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </widget>
   </widget>
