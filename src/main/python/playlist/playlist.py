@@ -45,8 +45,10 @@ def playlist_widget_has_x_or_more_items(self, number: int) -> bool:
     if the number of items in the playlist is greater than or equal to x.
 
     :param self: Used to Access the class attributes.
-    :param number:int: Used to Specify the minimum number of items that should be in the playlist.
-    :return: True if the number of items in the playlist is greater than or equal to a specified number.
+    :param number:int: Used to Specify the minimum number
+    of items that should be in the playlist.
+    :return: True if the number of items in the playlist is greater than
+    or equal to a specified number.
     """
     return number_of_playlist_items(self) >= number
 
@@ -93,9 +95,10 @@ def output_list_from_playlist_ids(self) -> list:
 def remove_duplicates_from_playlist(self) -> None:
     """
     The remove_duplicates_from_playlist function removes any duplicates from the playlist.
-    It does this by creating a list of all the items in the playlist, and then removing any duplicates from that list.
-    The function then generates a dictionary containing only those items which are not duplicated, and finally imports
-    those back into the GUI.
+    It does this by creating a list of all the items in the playlist,
+    and then removing any duplicates from that list.
+    The function then generates a dictionary containing only those items which are not duplicated,
+    and finally imports those back into the GUI.
 
     :param self: Used to Access the objects and methods of the class.
     :return: None.
@@ -175,11 +178,13 @@ def generate_video_ids_url(self, comma_separated_string: str) -> None:
     """
     The generate_video_ids_url function generates the video ids URL from a comma separated string.
     If no playlist title is given, it will generate the URL with no title.
-    If there is a space in the playlist title, it will replace all spaces with underscores and add %20 for each space.
-    Otherwise, if there are no spaces in the playlist title, it will add %20 after every comma.
+    If there is a space in the playlist title, it will replace all spaces with underscores
+    and add %20 for each space. Otherwise, if there are no spaces in the playlist title,
+    it will add %20 after every comma.
 
     :param self: Used to Access the class variables.
-    :param comma_separated_string:str: Used to Pass the comma separated string from the textedit_playlist_urls.
+    :param comma_separated_string:str: Used to Pass the comma separated string from the
+    textedit_playlist_urls.
     :return: The url of the playlist.
     """
     if self.lineEdit_playlist_title.text() == "":

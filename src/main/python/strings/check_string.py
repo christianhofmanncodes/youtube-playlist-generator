@@ -14,7 +14,8 @@ def is_string_valid_url(string: str) -> bool:
 
 def is_string_valid_youtube_url(string: str) -> bool:
     """
-    The is_string_valid_youtube_url function checks if the string contains either "watch?" or "be/" in it.
+    The is_string_valid_youtube_url function checks if the string contains
+    either "watch?" or "be/" in it.
     If it does, then the function returns True, otherwise False.
 
     :param string:str: Used to Pass a string value to the function.

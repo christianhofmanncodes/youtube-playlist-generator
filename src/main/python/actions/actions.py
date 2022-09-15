@@ -10,14 +10,12 @@ from file.file import read_json_file
 from menu.menu import add_recent_filename, open_ytplaylist_file_from_menu
 from playlist import playlist, video_info
 from PyQt6.QtCore import Qt, pyqtSlot
-from PyQt6.QtGui import QAction, QCursor
+from PyQt6.QtGui import QAction
 from PyQt6.QtWidgets import (
     QApplication,
     QFileDialog,
     QInputDialog,
     QMessageBox,
-    QDialog,
-    QToolTip,
 )
 from settings.operations import (
     get_settings,
@@ -65,17 +63,17 @@ def process_filename(self, action):
     :param action: Used to Pass the menu action to the function.
     :return: The filename of the youtube playlist file that was imported.
     """
-
-    """Import YouTube Playlist file (*.ytplaylist)"""
     open_ytplaylist_file_from_menu(self, action)
 
 
 @pyqtSlot(QAction)
 def act_recent_file(self, action):
     """
-    The act_recent_file function is a function that is called when the user clicks on one of the recent files in
-    the recent files menu. It takes as input an action, which is a QAction object. If the action's text is RECENT_FILES_STRING,
-    then it removes all actions from self.recent_files_menu and then adds them back in (except for RECENT_FILES_STRING).
+    The act_recent_file function is a function that is called when the user clicks
+    on one of the recent files in the recent files menu. It takes as input an action,
+    which is a QAction object. If the action's text is RECENT_FILES_STRING,
+    then it removes all actions from self.recent_files_menu and then adds them back in
+    (except for RECENT_FILES_STRING).
     Otherwise, it calls the process_filename function with that file name.
 
     :param self: Used to Access the variables and methods of the class.
@@ -248,8 +246,6 @@ def act_sort_items_ascending(self) -> None:
     :param self: Used to Access the attributes and methods of the class.
     :return: None.
     """
-
-    """Sort items in playlist ascending."""
     self.listWidget_playlist_items.setSortingEnabled(True)
     self.listWidget_playlist_items.sortItems(Qt.SortOrder.AscendingOrder)
     self.listWidget_playlist_items.setSortingEnabled(False)
@@ -271,7 +267,8 @@ def act_sort_items_descending(self) -> None:
 
 def act_url_id_text_change(self) -> None:
     """
-    The act_url_id_text_change function enables the Add button only if the lineEdit_url_id is not empty.
+    The act_url_id_text_change function enables the Add button only
+    if the lineEdit_url_id is not empty.
 
     :param self: Used to Access the attributes and methods of the class.
     :return: None.
@@ -382,7 +379,8 @@ def act_rename_item(self) -> None:
 def act_add_item(self) -> None:
     """
     The act_add_item function is used to add items to the playlist.
-    It first checks if the textEdit field is empty, and if it is not, then it will check if the string in that field is a valid URL.
+    It first checks if the textEdit field is empty, and if it is not, then it will check
+    if the string in that field is a valid URL.
     If so, then it will convert that URL into an ID and add that item to the playlist.
     Otherwise, it will just add whatever string was in there as an item.
 
@@ -449,7 +447,8 @@ def act_remove_duplicates(self) -> None:
 
 def act_delete_item(self) -> [None, bool]:
     """
-    The act_delete_item function is a function that is called when the user clicks on the delete item button.
+    The act_delete_item function is a function that is called
+    when the user clicks on the delete item button.
     It will remove any selected items from the playlist widget.
 
     :param self: Used to Access the components of the MainWindow class.
@@ -653,7 +652,7 @@ def act_settings(self) -> None:
 
 def act_video_information(self) -> None:
     """
-    The act_video_information function displays the video title of the selected item in the playlist.
+    The act_video_information function displays the video title of the selected item in playlist.
     If no item is selected, a warning message box appears.
 
     :param self: Used to Access the class attributes.

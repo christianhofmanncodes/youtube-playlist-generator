@@ -21,9 +21,12 @@ class SettingsDialog(QDialog):
 
     def __init__(self, parent=None) -> None:
         """
-        The __init__ function is called automatically every time the class is being used to create a new object.
-        The first argument of every class method, including init, is always a reference to the current instance of the class.
-        By convention, this argument is always named self. In init __self__ refers to the newly created object; in other
+        The __init__ function is called automatically every time
+        the class is being used to create a new object.
+        The first argument of every class method, including init,
+        is always a reference to the current instance of the class.
+        By convention, this argument is always named self.
+        In init __self__ refers to the newly created object; in other
         class methods, it refers to the instance whose method was called.
 
         :param self: Used to Access the attributes and methods of the class.
@@ -87,8 +90,6 @@ class SettingsDialog(QDialog):
         :param settings_dict:dict: Used to Pass the settings_dict to the function.
         :return: None.
         """
-
-        """Display settings in dialog from dict."""
         open_url_automatically = settings_dict["general"][0]["openURLautomatically"]
         copy_url_to_clipboard = settings_dict["general"][0]["copyURLtoClipboard"]
         program_language = settings_dict["general"][0]["programLanguage"]

@@ -18,8 +18,10 @@ def test_is_string_valid_url() -> None:
 
 def test_create_playlist_url() -> None:
     """
-    The test_create_playlist_url function tests the create_playlist_url function in the url.py file.
-    It does this by creating a playlist URL with two video IDs and one title, then comparing it to an expected result.
+    The test_create_playlist_url function tests the create_playlist_url function
+    in the url.py file.
+    It does this by creating a playlist URL with two video IDs and one title,
+    then comparing it to an expected result.
 
     :return: The correct url for a playlist.
     """

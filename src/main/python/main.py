@@ -6,14 +6,14 @@ import sys
 import darkdetect
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from PyQt6 import uic
-from PyQt6.QtGui import QAction, QFont, QIcon
+from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QApplication, QMainWindow
 from qt_material import QtStyleTools, apply_stylesheet
 
 from actions import actions
 from dialogs import license_dialog
 from settings.operations import load_settings, save_settings
-from settings.settings import RECENT_FILES_STRING
+from settings.settings import APP_VERSION
 
 with contextlib.suppress(ImportError):
     from ctypes import windll  # Only exists on Windows
@@ -266,15 +266,15 @@ class MainWindow(QMainWindow, QtStyleTools):
     def create_trigger(self) -> None:
         """
         The create_trigger function creates the trigger for several MainWindow components.
-        The lineEdit_playlist_title is set to focus, and the lineEdit_url_id text is changed when it changes.
-        The pushButton add button calls act_add item when clicked, and the listWidget playlist items double click calls act rename item when clicked.
-        The pushButton new button calls act new when clicked, the pushButton delete item button clicks act delete item when clicked,
+        The lineEdit_playlist_title is set to focus, and the lineEdit_url_id text is changed.
+        The button add button calls act_add item when clicked, and the listWidget playlist items
+        double click calls act rename item when clicked. The pushButton new button calls act new
+        when clicked, the pushButton delete item button clicks act delete item when clicked,
         and the shuffle playlists pushes call shuffle playlist when pushed.
 
         :param self: Used to Access the class attributes and methods.
         :return: None.
         """
-        """Create the trigger for several MainWindow components."""
         self.lineEdit_playlist_title.setFocus()
         self.lineEdit_url_id.textChanged.connect(self.act_url_id_text_change)
         self.pushButton_add.clicked.connect(self.act_add_item)

@@ -39,7 +39,8 @@ def get_recent_files_items_menu(self) -> list:
 
 def add_clear_recent_files_action_to_menu(self) -> None:
     """
-    The add_clear_recent_files_action_to_menu function adds a clear recent files option to the recent files menu.
+    The add_clear_recent_files_action_to_menu function adds
+    a clear recent files option to the recent files menu.
 
     :param self: Used to Access the attributes and methods of the class.
     :return: None.
@@ -78,7 +79,8 @@ def load_recent_files(self) -> None:
 
 def check_if_filename_already_exist(self, filename) -> bool:
     """
-    The check_if_filename_already_exist function checks if the filename already exist in the recent files menu.
+    The check_if_filename_already_exist function checks
+    if the filename already exist in the recent files menu.
     If it does, then it returns True, otherwise False.
 
     :param self: Used to Access the attributes and methods of the class.
@@ -105,13 +107,15 @@ def add_recent_filename(self, filename) -> None:
         before_action = actions[0] if actions else None
         self.recent_files_menu.insertAction(before_action, filename_action)
     else:
-        logging.info(f"'{filename}' already exists in recent files menu.")
+        logging.info("'%s' already exists in recent files menu.", filename)
 
 
 def open_ytplaylist_file_from_menu(self, action) -> None:
     """
-    The open_ytplaylist_file_from_menu function opens a *.ytplaylist file from the recent files menu.
-    It checks if the file is in correct format and if it is, it imports its content into playlist.
+    The open_ytplaylist_file_from_menu function opens
+    a *.ytplaylist file from the recent files menu.
+    It checks if the file is in correct format and if it is,
+    it imports its content into playlist.
 
     :param self: Used to Access the class variables.
     :param action: Used to Get the filename of the file that was opened.

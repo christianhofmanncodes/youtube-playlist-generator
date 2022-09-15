@@ -37,9 +37,11 @@ def get_settings() -> dict:
 
 def save_settings_to_conf_file(settings_dict: dict) -> None:
     """
-    The save_settings_to_conf_file function writes the content of a dictionary to settings.config.
+    The save_settings_to_conf_file function writes the content
+    of a dictionary to settings.config.
 
-    :param settings_dict:dict: Used to Pass the settings dictionary to the save_settings_to_conf_file function.
+    :param settings_dict:dict: Used to Pass the settings dictionary
+           to the save_settings_to_conf_file function.
     :return: None.
     """
     with open(
@@ -53,7 +55,8 @@ def save_settings_to_conf_file(settings_dict: dict) -> None:
 def save_menu_to_conf_file(menu_dict: dict) -> None:
     """
     The save_menu_to_conf_file function writes the content of a dictionary to a file.
-    The function takes one argument, menu_dict, which is the dictionary that will be written to file.
+    The function takes one argument, menu_dict,
+    which is the dictionary that will be written to file.
 
     :param menu_dict:dict: Used to Pass the menu_dict to the save_menu_to_conf_file function.
     :return: None.
@@ -77,12 +80,11 @@ def output_settings_as_dict(
     containing two keys: general and keyboard shortcuts. Each key contains another
     dictionary with each setting as its own key and value pair.
 
-    :param components_dict:dict: Used to Pass the dictionary of settings from the settings dialog to this function.
+    :param components_dict:dict: Used to Pass the dictionary of settings
+           from the settings dialog to this function.
     :param : Used to Generate the settings dict.
     :return: A dictionary with the settings that are inside the settings dialog.
     """
-
-    """Generate from settings inside settings dialog dict."""
     return {
         "general": [
             {
@@ -117,8 +119,10 @@ def output_menu_config_as_dict(recent_files: list) -> dict:
     The output_menu_config_as_dict function generates a dictionary from the recent files list.
     The output_menu_config_as_dict function takes in a list of strings and returns a dictionary.
 
-    :param recent_files:list: Used to Pass a list of recent files to the output_menu_config function.
-    :return: A dictionary with a single key, "recent_files", which has a value of the recent files list.
+    :param recent_files:list: Used to Pass a list of recent files
+           to the output_menu_config function.
+    :return: A dictionary with a single key, "recent_files",
+             which has a value of the recent files list.
     """
     return {"recent_files": list(recent_files)}
 
@@ -134,11 +138,12 @@ def load_settings(self) -> None:
     menu.load_recent_files(self)
 
 
-def remove_unnecessary_entries_from_menu_dict(self, menu_dict) -> dict:
+def remove_unnecessary_entries_from_menu_dict(menu_dict) -> dict:
     """
-    The remove_unnecessary_entries_from_menu_dict function removes the RECENT_FILES_STRING and empty strings from
-    the recent files list in the menu dictionary. This is done to prevent these entries from being displayed in the
-    menu bar.
+    The remove_unnecessary_entries_from_menu_dict function removes
+    the RECENT_FILES_STRING and empty strings from the recent files list
+    in the menu dictionary. This is done to prevent these entries
+    from being displayed in the menu bar.
 
     :param self: Used to Access the class attributes.
     :param menu_dict: Used to Store the menu items in a dictionary.
@@ -165,9 +170,7 @@ def save_settings(self) -> None:
     :param self: Used to Access the class attributes.
     :return: None.
     """
-
-    """Save settings to menu.config."""
     recent_files = menu.get_recent_files_items_menu(self)
     menu_dict = output_menu_config_as_dict(recent_files)
-    new_menu_dict = remove_unnecessary_entries_from_menu_dict(self, menu_dict)
+    new_menu_dict = remove_unnecessary_entries_from_menu_dict(menu_dict)
     save_menu_to_conf_file(new_menu_dict)

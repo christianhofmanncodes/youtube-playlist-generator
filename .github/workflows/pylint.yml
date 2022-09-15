@@ -21,6 +21,7 @@ jobs:
         #pip install pytest
         #pip install pytest-cov
         #pip install fbs
+        pip install lxml
         pip install pandas
         pip install PyQt6
         pip install qt_material
