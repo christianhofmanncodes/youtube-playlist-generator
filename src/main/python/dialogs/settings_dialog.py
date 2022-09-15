@@ -20,7 +20,17 @@ class SettingsDialog(QDialog):
     """
 
     def __init__(self, parent=None) -> None:
-        """Load settings_dialog.ui file and connect components to their functions."""
+        """
+        The __init__ function is called automatically every time the class is being used to create a new object.
+        The first argument of every class method, including init, is always a reference to the current instance of the class.
+        By convention, this argument is always named self. In init __self__ refers to the newly created object; in other
+        class methods, it refers to the instance whose method was called.
+
+        :param self: Used to Access the attributes and methods of the class.
+        :param parent=None: Used to Ensure that the dialog box does not close when it is launched.
+        :return: None.
+        """
+
         super().__init__(parent)
         uic.loadUi(
             app_context.get_resource("forms/settings_dialog.ui"),
@@ -68,7 +78,16 @@ class SettingsDialog(QDialog):
             self.change_button_option12_clicked
         )
 
-    def load_settings(self, settings_dict: dict) -> None:  # doesn't work yet
+    def load_settings(self, settings_dict: dict) -> None:  # FIXME doesn't work yet
+        """
+        The load_settings function loads the settings from a dictionary into the dialog.
+        The function takes one argument, which is a dictionary containing all of the settings.
+
+        :param self: Used to Access variables, methods etc in the rest of the class.
+        :param settings_dict:dict: Used to Pass the settings_dict to the function.
+        :return: None.
+        """
+
         """Display settings in dialog from dict."""
         open_url_automatically = settings_dict["general"][0]["openURLautomatically"]
         copy_url_to_clipboard = settings_dict["general"][0]["copyURLtoClipboard"]
@@ -90,6 +109,9 @@ class SettingsDialog(QDialog):
         shortcut_count_items = settings_dict["keyboard_shortcuts"][0]["countItems"]
         shortcut_clear_all_items = settings_dict["keyboard_shortcuts"][0][
             "clearAllItems"
+        ]
+        shortcut_get_video_information = settings_dict["keyboard_shortcuts"][0][
+            "getVideoInformation"
         ]
         shortcut_remove_duplicates = settings_dict["keyboard_shortcuts"][0][
             "removeDuplicates"
@@ -120,11 +142,19 @@ class SettingsDialog(QDialog):
         self.label_keyboard_shortcuts_option8.setText(shortcut_generate_playlist)
         self.label_keyboard_shortcuts_option9.setText(shortcut_count_items)
         self.label_keyboard_shortcuts_option10.setText(shortcut_clear_all_items)
-        self.label_keyboard_shortcuts_option11.setText(shortcut_remove_duplicates)
-        self.label_keyboard_shortcuts_option12.setText(shortcut_copy_url)
+        self.label_keyboard_shortcuts_option11.setText(shortcut_get_video_information)
+        self.label_keyboard_shortcuts_option12.setText(shortcut_remove_duplicates)
+        self.label_keyboard_shortcuts_option13.setText(shortcut_copy_url)
 
     def change_theme(self) -> None:
-        """Change theme in runtime."""
+        """
+        The change_theme function changes the theme of the application.
+        It is called when a user clicks on one of three radio buttons,
+        which are used to select between three different themes: OS theme, white and dark.
+
+        :param self: Used to Access the attributes and methods of the class in python.
+        :return: None.
+        """
         if self.radioButton_OS.isChecked():
             if darkdetect.isDark():
                 apply_stylesheet(
@@ -151,7 +181,12 @@ class SettingsDialog(QDialog):
             logging.debug("Dark theme set!")
 
     def change_language(self) -> None:
-        """Change language in runtime."""
+        """
+        The change_language function will change the language in runtime.
+
+        :param self: Used to Reference the instance of the object itself.
+        :return: None.
+        """
         logging.debug("This will change the language...")
 
     def change_button_option1_clicked(self) -> None:
