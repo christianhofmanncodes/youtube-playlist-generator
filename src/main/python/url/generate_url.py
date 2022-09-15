@@ -8,7 +8,15 @@ from dialogs import creating_url
 
 
 def playlist_url(self, video_ids_url: str) -> str:
-    """Generate the playlist URL from the video ids URL."""
+    """
+    The playlist_url function generates the playlist URL from the video ids URL.
+    It is called by the create_playlist function and takes one argument, which is
+    the video ids URL.
+
+    :param self: Used to Access the variables and methods of the class.
+    :param video_ids_url:str: Used to Get the video ids from the user input.
+    :return: The url of the playlist that is generated from the video ids url.
+    """
     try:
         ctx = ssl._create_default_https_context()
         with request.urlopen(video_ids_url, context=ctx) as response:

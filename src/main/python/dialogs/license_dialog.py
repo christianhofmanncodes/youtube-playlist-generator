@@ -9,7 +9,12 @@ app_context = ApplicationContext()
 
 
 def create_license_dialog(self) -> None:
-    """Create license dialog."""
+    """
+    The create_license_dialog function creates a license dialog.
+
+    :param self: Used to Access the attributes and methods of the class.
+    :return: The license_dialog object.
+    """
     self.license_dialog = QDialog(self)
     self.license_text_object = QTextEdit(self.license_dialog)
     self.license_dialog.setMinimumSize(602, 400)

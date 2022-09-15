@@ -5,7 +5,14 @@ from dialogs import dialogs
 
 
 def show_error_creating_url_dialog(self) -> QMessageBox:
-    """Show error creating URL dialog using show_error_dialog."""
+    """
+    The show_error_creating_url_dialog function shows an error dialog
+    when there is an error creating the playlist URL.
+    It uses the show_error_dialog function to create and display the dialog.
+
+    :param self: Used to Access the variables and methods inside of a class.
+    :return: A QMessageBox object.
+    """
     return dialogs.show_error_dialog(
         self,
         "Error with creating playlist URL",

@@ -13,7 +13,16 @@ class PlaylistResetDialog(QDialog):
     """
 
     def __init__(self, parent=None) -> None:
-        """Build the dialog with its components."""
+        """
+        The __init__ function is called when an instance of the class is created.
+        It initializes variables that are defined in the body of the class, and it sets up
+        the initial state of its attributes. It can take arguments as input (e.g., parent).
+        The __init__ function is used to initialize all member variables, either directly or indirectly.
+
+        :param self: Used to Access the variables and methods of the class.
+        :param parent=None: Used to Pass the parent widget of this dialog.
+        :return: None.
+        """
         super().__init__(parent)
 
         self.setWindowTitle("Are you sure?")

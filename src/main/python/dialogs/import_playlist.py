@@ -14,7 +14,15 @@ class PlaylistImportDialog(QDialog):
     """
 
     def __init__(self, parent=None) -> None:
-        """Build the dialog with its components."""
+        """
+        The __init__ function is called automatically every time the class is
+        instantiated. It sets up all the objects and functionality that will be used by
+        the class. In this case, it creates a dialog box with a message and two buttons.
+
+        :param self: Used to Reference the current instance of the class.
+        :param parent=None: Used to Specify that this QDialog will be a top-level window.
+        :return: None.
+        """
         super().__init__(parent)
 
         self.setWindowTitle("One more thing...")
