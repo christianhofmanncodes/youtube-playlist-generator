@@ -80,6 +80,9 @@ class SettingsDialog(QDialog):
         self.pushButton_change_option12.clicked.connect(
             self.change_button_option12_clicked
         )
+        self.pushButton_change_option13.clicked.connect(
+            self.change_button_option13_clicked
+        )
 
     def load_settings(self, settings_dict: dict) -> None:
         """
@@ -279,5 +282,12 @@ class SettingsDialog(QDialog):
         """Get text from keySequenceEdit field and display in label."""
         if self.keySequenceEdit.keySequence().toString() != "":
             self.label_keyboard_shortcuts_option12.setText(
+                self.keySequenceEdit.keySequence().toString()
+            )
+
+    def change_button_option13_clicked(self) -> None:
+        """Get text from keySequenceEdit field and display in label."""
+        if self.keySequenceEdit.keySequence().toString() != "":
+            self.label_keyboard_shortcuts_option13.setText(
                 self.keySequenceEdit.keySequence().toString()
             )
