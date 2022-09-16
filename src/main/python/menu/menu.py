@@ -2,12 +2,12 @@
 
 import logging
 
-# from actions.actions import act_new #FIXME Throws Cyclic import
+from actions import actions
 from dialogs import import_playlist
 from dialogs.dialogs import show_error_dialog
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
-from file import file
-from playlist import playlist
+from file.file import check_file_format, read_json_file
+from playlist.playlist import check_if_items_in_playlist, import_from_dict
 from PyQt6.QtGui import QAction
 from settings.settings import RECENT_FILES_STRING
 
@@ -20,7 +20,7 @@ def get_menu_config() -> list:
 
     :return: A list of dictionaries.
     """
-    return file.read_json_file(
+    return read_json_file(
         app_context.get_resource("config/menu.config"),
     )
 
@@ -122,26 +122,26 @@ def open_ytplaylist_file_from_menu(self, action) -> None:
     :return: None.
     """
     filename = action.text()
-    ytplaylist_dict = file.read_json_file(filename)
-    if file.check_file_format(filename, ".ytplaylist"):
+    ytplaylist_dict = read_json_file(filename)
+    if check_file_format(filename, ".ytplaylist"):
         if ytplaylist_dict:
             logging.debug("Playlist to be imported:")
             logging.debug(ytplaylist_dict)
-            if playlist.check_if_items_in_playlist(self):
+            if check_if_items_in_playlist(self):
                 logging.debug("There are already items in playlist!")
                 dlg = import_playlist.PlaylistImportDialog()
                 if dlg.exec():
-                    playlist.import_from_dict(self, ytplaylist_dict)
+                    import_from_dict(self, ytplaylist_dict)
                 else:
-                    # act_new(self)
-                    playlist.import_from_dict(self, ytplaylist_dict)
+                    actions.act_new(self)
+                    import_from_dict(self, ytplaylist_dict)
                     self.lineEdit_url_id.setFocus()
                 self.recent_files_menu.addSeparator()
                 self.new_action = QAction()
                 self.new_action.setText(RECENT_FILES_STRING)
                 self.recent_files_menu.addAction(self.new_action)
             else:
-                playlist.import_from_dict(self, ytplaylist_dict)
+                import_from_dict(self, ytplaylist_dict)
                 self.lineEdit_url_id.setFocus()
             self.pushButton_new.setEnabled(True)
             self.pushButton_delete_item.setEnabled(True)
