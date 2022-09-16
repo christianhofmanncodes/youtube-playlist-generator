@@ -24,28 +24,37 @@ def create_recent_file_menu(self) -> None:
     self.recent_files_menu.triggered.connect(self.act_recent_file)
 
 
-def get_settings() -> dict:
+def get_settings(filename: str) -> dict:
     """
     The get_settings function returns the settings.config file as a dictionary.
 
     :return: A dictionary.
     """
     return read_json_file(
-        app_context.get_resource("config/settings.config"),
+        app_context.get_resource(filename),
     )
 
 
-def save_settings_to_conf_file(settings_dict: dict) -> None:
+def get_default_settings(filename: str) -> dict:
+    """
+    The get_default_settings function returns the settings_default.config file as a dictionary.
+
+    :return: A dictionary.
+    """
+    return read_json_file(app_context.get_resource(filename))
+
+
+def save_settings_to_conf_file(settings_dict: dict, filename: str) -> None:
     """
     The save_settings_to_conf_file function writes the content
-    of a dictionary to settings.config.
+    of a dictionary to the specified filename.
 
-    :param settings_dict:dict: Used to Pass the settings dictionary
-           to the save_settings_to_conf_file function.
+    :param settings_dict:dict: Used to Pass the settings dictionary to.
+    :param filename:str: Used to Pass the filename of the settings.
     :return: None.
     """
     with open(
-        app_context.get_resource("config/settings.config"),
+        app_context.get_resource(filename),
         "w",
         encoding="UTF-8",
     ) as file:
