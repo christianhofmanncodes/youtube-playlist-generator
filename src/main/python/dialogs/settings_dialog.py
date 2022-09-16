@@ -81,7 +81,7 @@ class SettingsDialog(QDialog):
             self.change_button_option12_clicked
         )
 
-    def load_settings(self, settings_dict: dict) -> None:  # FIXME doesn't work yet
+    def load_settings(self, settings_dict: dict) -> None:
         """
         The load_settings function loads the settings from a dictionary into the dialog.
         The function takes one argument, which is a dictionary containing all of the settings.
@@ -93,6 +93,7 @@ class SettingsDialog(QDialog):
         open_url_automatically = settings_dict["general"][0]["openURLautomatically"]
         copy_url_to_clipboard = settings_dict["general"][0]["copyURLtoClipboard"]
         program_language = settings_dict["general"][0]["programLanguage"]
+        app_theme = settings_dict["general"][0]["appTheme"]
 
         shortcut_new_playlist = settings_dict["keyboard_shortcuts"][0]["newPlaylist"]
         shortcut_open_playlist = settings_dict["keyboard_shortcuts"][0]["openPlaylist"]
@@ -146,6 +147,13 @@ class SettingsDialog(QDialog):
         self.label_keyboard_shortcuts_option11.setText(shortcut_get_video_information)
         self.label_keyboard_shortcuts_option12.setText(shortcut_remove_duplicates)
         self.label_keyboard_shortcuts_option13.setText(shortcut_copy_url)
+
+        if app_theme == "os":
+            self.radioButton_OS.nextCheckState()
+        elif app_theme == "white":
+            self.radioButton_white.nextCheckState()
+        elif app_theme == "dark":
+            self.radioButton_dark.nextCheckState()
 
     def change_theme(self) -> None:
         """
