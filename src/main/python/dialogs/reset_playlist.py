@@ -27,7 +27,7 @@ class PlaylistResetDialog(QDialog):
 
         self.setWindowTitle("Are you sure?")
         self.setFixedSize(450, 140)
-        self.setWindowIcon(QIcon(app_context.get_resource("config/settings.config")))
+        self.setWindowIcon(QIcon(app_context.get_resource("icon/youtube-play.icns")))
         self.setFont(QFont("Roboto"))
 
         q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
