@@ -13,11 +13,9 @@ def get_title__channel_from_youtube_link(video_id) -> str:
     :param video_id: Used to Specify the video id of the youtube link.
     :return: The title of the video from the youtube link.
     """
-    youtube = etree.HTML(
-        urllib.request.urlopen(f"https://www.youtube.com/watch?v={video_id}").read()
-    )  # TODO: Use with statement
-
-    video_title = youtube.xpath("//meta[@name='title']/@content")
+    with urllib.request.urlopen(f"https://www.youtube.com/watch?v={video_id}") as video:
+        youtube = etree.HTML(video.read())
+        video_title = youtube.xpath("//meta[@name='title']/@content")
 
     if video_title == [""]:
         return ""
@@ -33,8 +31,7 @@ def get_video_thumbnail_url_from_video_id(video_id) -> str:
     :param video_id: Used to Specify the video id.
     :return: The url of the video thumbnail.
     """
-    return etree.HTML(
-        urllib.request.urlopen(
-            f"img.youtube.com/vi/{video_id}/maxresdefault.jpg"
-        ).read()
-    )
+    with urllib.request.urlopen(
+        f"img.youtube.com/vi/{video_id}/maxresdefault.jpg"
+    ) as thumbnail:
+        return etree.HTML(thumbnail.read())
