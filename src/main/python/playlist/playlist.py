@@ -184,7 +184,7 @@ def generate_video_ids_url(self, comma_separated_string: str) -> None:
 
     :param self: Used to Access the class variables.
     :param comma_separated_string:str: Used to Pass the comma separated string from the
-    textedit_playlist_urls.
+    TextEdit_playlist_urls.
     :return: The url of the playlist.
     """
     if self.lineEdit_playlist_title.text() == "":
