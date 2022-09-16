@@ -45,13 +45,40 @@ def disable_components(self) -> None:
     self.actionShuffle.setEnabled(False)
     self.actionRename_item.setEnabled(False)
     self.actionSave.setEnabled(False)
-    self.actionCount_items.setEnabled(False)
-    self.actionGet_video_information.setEnabled(False)
-    self.actionClear_all_items.setEnabled(False)
     self.actionRemove_duplicates.setEnabled(False)
+    self.actionCount_items.setEnabled(False)
+    self.menuSort_items.setEnabled(True)
+    self.actionClear_all_items.setEnabled(False)
+    self.actionGet_video_information.setEnabled(False)
     self.textEdit_playlist_generated_url.setEnabled(False)
     self.actionAscending.setEnabled(False)
     self.actionDescending.setEnabled(False)
+
+
+def enable_components(self) -> None:
+    """
+    The enable_components function enables specific components.
+
+    :param self: Used to Access the class attributes.
+    :return: None.
+    """
+    self.pushButton_new.setEnabled(True)
+    self.pushButton_delete_item.setEnabled(True)
+    self.pushButton_generate.setEnabled(True)
+    self.pushButton_shuffle_playlist.setEnabled(True)
+    self.actionReset_Playlist.setEnabled(True)
+    self.actionDelete_Item.setEnabled(True)
+    self.actionGenerate_Playlist.setEnabled(True)
+    self.actionShuffle.setEnabled(True)
+    self.actionRename_item.setEnabled(True)
+    self.actionSave.setEnabled(True)
+    self.actionRemove_duplicates.setEnabled(True)
+    self.actionCount_items.setEnabled(True)
+    self.menuSort_items.setEnabled(True)
+    self.actionClear_all_items.setEnabled(True)
+    self.actionGet_video_information.setEnabled(True)
+    self.actionAscending.setEnabled(True)
+    self.actionDescending.setEnabled(True)
 
 
 def process_filename(self, action):
@@ -527,24 +554,7 @@ def act_open(self) -> None:
             else:
                 playlist.import_from_dict(self, ytplaylist_dict)
                 self.lineEdit_url_id.setFocus()
-
-            self.pushButton_new.setEnabled(True)
-            self.pushButton_delete_item.setEnabled(True)
-            self.pushButton_generate.setEnabled(True)
-            self.pushButton_shuffle_playlist.setEnabled(True)
-            self.actionReset_Playlist.setEnabled(True)
-            self.actionDelete_Item.setEnabled(True)
-            self.actionGenerate_Playlist.setEnabled(True)
-            self.actionShuffle.setEnabled(True)
-            self.actionRename_item.setEnabled(True)
-            self.actionSave.setEnabled(True)
-            self.actionRemove_duplicates.setEnabled(True)
-            self.menuSort_items.setEnabled(True)
-            self.actionAscending.setEnabled(True)
-            self.actionDescending.setEnabled(True)
-            self.actionCount_items.setEnabled(True)
-            self.actionClear_all_items.setEnabled(True)
-            self.actionGet_video_information.setEnabled(True)
+            enable_components(self)
             add_recent_filename(self, filename[0])
     except FileNotFoundError:
         logging.error("File not found. No file was imported.")

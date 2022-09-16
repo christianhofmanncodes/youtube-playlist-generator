@@ -103,8 +103,8 @@ def add_recent_filename(self, filename) -> None:
     """
     if not check_if_filename_already_exist(self, filename):
         filename_action = QAction(filename, self)
-        actions = self.recent_files_menu.actions()
-        before_action = actions[0] if actions else None
+        menu_actions = self.recent_files_menu.actions()
+        before_action = menu_actions[0] if menu_actions else None
         self.recent_files_menu.insertAction(before_action, filename_action)
     else:
         logging.info("'%s' already exists in recent files menu.", filename)
@@ -143,22 +143,7 @@ def open_ytplaylist_file_from_menu(self, action) -> None:
             else:
                 import_from_dict(self, ytplaylist_dict)
                 self.lineEdit_url_id.setFocus()
-            self.pushButton_new.setEnabled(True)
-            self.pushButton_delete_item.setEnabled(True)
-            self.pushButton_generate.setEnabled(True)
-            self.pushButton_shuffle_playlist.setEnabled(True)
-            self.actionReset_Playlist.setEnabled(True)
-            self.actionDelete_Item.setEnabled(True)
-            self.actionGenerate_Playlist.setEnabled(True)
-            self.actionShuffle.setEnabled(True)
-            self.actionRename_item.setEnabled(True)
-            self.actionSave.setEnabled(True)
-            self.actionRemove_duplicates.setEnabled(True)
-            self.menuSort_items.setEnabled(True)
-            self.actionAscending.setEnabled(True)
-            self.actionDescending.setEnabled(True)
-            self.actionClear_all_items.setEnabled(True)
-            self.actionGet_video_information.setEnabled(True)
+            action.enable_components(self)
         else:
             show_error_dialog(
                 self,
