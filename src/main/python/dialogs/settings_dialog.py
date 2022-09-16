@@ -321,8 +321,8 @@ class SettingsDialog(QDialog):
     def check_if_settings_not_default(self) -> bool:
         """
         The check_if_settings_not_default function checks if the current settings are not default.
-        It does this by comparing the current settings to the default settings. If they are different,
-        then it returns True, otherwise it returns False.
+        It does this by comparing the current settings to the default settings.
+        If they are different, then it returns True, otherwise it returns False.
 
         :param self: Used to Access variables that belongs to the class.
         :return: True if the current settings are not default.
@@ -333,7 +333,8 @@ class SettingsDialog(QDialog):
 
     def enable_reset_default_settings(self) -> None:
         """
-        The enable_reset_default_settings function enables the reset to default settings button if the current
+        The enable_reset_default_settings function enables
+        the reset to default settings button if the current
         settings are not equal to the default settings.
 
         :param self: Used to Access the class attributes.
