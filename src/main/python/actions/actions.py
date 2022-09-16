@@ -611,7 +611,7 @@ def act_settings(self) -> None:
     """
     settings_dict = get_settings()
     dlg = SettingsDialog(self)
-    SettingsDialog(self).load_settings(settings_dict)
+    dlg.load_settings(settings_dict)
 
     if dlg.exec():
         radio_button_os_state = dlg.radioButton_OS.isChecked()
