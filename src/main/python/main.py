@@ -76,18 +76,6 @@ class MainWindow(QMainWindow, QtStyleTools):
         uic.loadUi(app_context.get_resource("forms/main_window.ui"), self)
         self.setFont(QFont("Roboto"))
 
-    def closeEvent(self, event):
-        """
-        The closeEvent function is called when the user closes the GUI.
-        It saves all settings before closing.
-
-        :param self: Used to Access the attributes and methods of the class.
-        :param event: Used to Handle the event when a user tries to close the window.
-        :return: The event that is created when the user closes the window.
-        """
-        super().closeEvent(event)
-        save_settings(self)
-
     def create_actions(self) -> None:
         """
         The create_actions function creates the applications menu actions.
@@ -153,10 +141,12 @@ class MainWindow(QMainWindow, QtStyleTools):
     def act_quit(self) -> None:
         """
         The act_quit function quits the application.
+        It saves all settings before closing.
 
         :param self: Used to Access the attributes and methods of the class in python.
         :return: None.
         """
+        save_settings(self)
         app.quit()
 
     def act_undo(self):
