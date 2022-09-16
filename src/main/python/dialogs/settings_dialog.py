@@ -9,6 +9,12 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QApplication, QDialog
 from qt_material import apply_stylesheet
+from settings.operations import (
+    get_default_settings,
+    get_settings,
+    save_settings_to_conf_file,
+)
+from settings.settings import DEFAULT_SETTINGS_FILE_LOCATION, SETTING_FILE_LOCATION
 
 app = QApplication(sys.argv)
 app_context = ApplicationContext()
@@ -41,6 +47,9 @@ class SettingsDialog(QDialog):
         )
         self.setWindowIcon(QIcon(app_context.get_resource("icon/youtube-play.icns")))
         self.setFont(QFont("Roboto"))
+
+        self.enable_reset_default_settings()
+
         self.radioButton_OS.clicked.connect(self.change_theme)
         self.radioButton_white.clicked.connect(self.change_theme)
         self.radioButton_dark.clicked.connect(self.change_theme)
@@ -82,6 +91,9 @@ class SettingsDialog(QDialog):
         )
         self.pushButton_change_option13.clicked.connect(
             self.change_button_option13_clicked
+        )
+        self.pushButton_reset_defaults.clicked.connect(
+            self.reset_button_defaults_clicked
         )
 
     def load_settings(self, settings_dict: dict) -> None:
@@ -291,3 +303,21 @@ class SettingsDialog(QDialog):
             self.label_keyboard_shortcuts_option13.setText(
                 self.keySequenceEdit.keySequence().toString()
             )
+
+    def reset_button_defaults_clicked(self) -> None:
+        """Reset all settings to default values."""
+        default_settings_dict = get_default_settings(DEFAULT_SETTINGS_FILE_LOCATION)
+        save_settings_to_conf_file(default_settings_dict, SETTING_FILE_LOCATION)
+        settings_dict = get_settings(SETTING_FILE_LOCATION)
+        self.load_settings(settings_dict)
+
+    def check_if_settings_not_default(self) -> bool:
+        """Check if settings are not default."""
+        current_settings_dict = get_settings(SETTING_FILE_LOCATION)
+        default_settings_dict = get_default_settings(DEFAULT_SETTINGS_FILE_LOCATION)
+        return current_settings_dict != default_settings_dict
+
+    def enable_reset_default_settings(self):
+        """Enable Reset to default settings button."""
+        if self.check_if_settings_not_default():
+            self.pushButton_reset_defaults.setEnabled(True)
