@@ -11,18 +11,18 @@ from menu.menu import add_recent_filename, open_ytplaylist_file_from_menu
 from playlist import playlist, video_info
 from PyQt6.QtCore import Qt, pyqtSlot
 from PyQt6.QtGui import QAction
-from PyQt6.QtWidgets import (
-    QApplication,
-    QFileDialog,
-    QInputDialog,
-    QMessageBox,
-)
+from PyQt6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMessageBox
 from settings.operations import (
     get_settings,
     output_settings_as_dict,
     save_settings_to_conf_file,
 )
-from settings.settings import APP_VERSION, RELEASE_DATE, RECENT_FILES_STRING
+from settings.settings import (
+    APP_VERSION,
+    RECENT_FILES_STRING,
+    RELEASE_DATE,
+    SETTING_FILE_LOCATION,
+)
 from strings import check_string
 from url import open_url
 from url.url import cut_url_to_id
@@ -609,7 +609,7 @@ def act_settings(self) -> None:
     :param self: Used to Access the attributes and methods of the class in which it is used.
     :return: None.
     """
-    settings_dict = get_settings()
+    settings_dict = get_settings(SETTING_FILE_LOCATION)
     dlg = SettingsDialog(self)
     dlg.load_settings(settings_dict)
 
@@ -647,7 +647,7 @@ def act_settings(self) -> None:
 
         logging.debug(components_dict)
         settings_dict = output_settings_as_dict(components_dict)
-        save_settings_to_conf_file(settings_dict)
+        save_settings_to_conf_file(settings_dict, SETTING_FILE_LOCATION)
 
 
 def act_video_information(self) -> None:
