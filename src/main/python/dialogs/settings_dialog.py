@@ -305,19 +305,39 @@ class SettingsDialog(QDialog):
             )
 
     def reset_button_defaults_clicked(self) -> None:
-        """Reset all settings to default values."""
+        """
+        The reset_button_defaults_clicked function resets all settings to default values.
+        It does this by reading the default settings from a file, and then saving those
+        defaults to a configuration file. The function then loads the defaults into the GUI.
+
+        :param self: Used to Access the class attributes and methods.
+        :return: None.
+        """
         default_settings_dict = get_default_settings(DEFAULT_SETTINGS_FILE_LOCATION)
         save_settings_to_conf_file(default_settings_dict, SETTING_FILE_LOCATION)
         settings_dict = get_settings(SETTING_FILE_LOCATION)
         self.load_settings(settings_dict)
 
     def check_if_settings_not_default(self) -> bool:
-        """Check if settings are not default."""
+        """
+        The check_if_settings_not_default function checks if the current settings are not default.
+        It does this by comparing the current settings to the default settings. If they are different,
+        then it returns True, otherwise it returns False.
+
+        :param self: Used to Access variables that belongs to the class.
+        :return: True if the current settings are not default.
+        """
         current_settings_dict = get_settings(SETTING_FILE_LOCATION)
         default_settings_dict = get_default_settings(DEFAULT_SETTINGS_FILE_LOCATION)
         return current_settings_dict != default_settings_dict
 
-    def enable_reset_default_settings(self):
-        """Enable Reset to default settings button."""
+    def enable_reset_default_settings(self) -> None:
+        """
+        The enable_reset_default_settings function enables the reset to default settings button if the current
+        settings are not equal to the default settings.
+
+        :param self: Used to Access the class attributes.
+        :return: None.
+        """
         if self.check_if_settings_not_default():
             self.pushButton_reset_defaults.setEnabled(True)
