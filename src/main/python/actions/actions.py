@@ -664,16 +664,16 @@ def act_video_information(self) -> None:
             video_id
         ):
             QMessageBox.information(self, "Video information", video_title_channel)
-            # QToolTip.showText(QCursor.pos(), video_title_channel)
         else:
             QMessageBox.critical(
                 self,
                 "Error while fetching video information",
                 f"The id '{video_id}' is invalid.",
             )
-    except AttributeError:
+    except AttributeError as attribute_error:
         QMessageBox.critical(
             self,
             "Error while fetching video information",
             "No item in playlist selected.",
         )
+        logging.warning(attribute_error)
