@@ -153,8 +153,7 @@ def remove_unnecessary_entries_from_menu_dict(menu_dict) -> dict:
     for menu_item in menu_items_list:
         if menu_item == RECENT_FILES_STRING:
             menu_items_list.remove(menu_item)
-        if "" in menu_item:
-            menu_items_list.remove("")
+        menu_items_list = [item for item in menu_items_list if item]
     return {"recent_files": menu_items_list}
 
 
