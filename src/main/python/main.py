@@ -13,7 +13,7 @@ from qt_material import QtStyleTools, apply_stylesheet
 from actions import actions
 from dialogs import license_dialog
 from settings.operations import load_settings, save_settings
-from settings.settings import APP_VERSION
+from settings.settings import APP_ICON, APP_VERSION
 
 with contextlib.suppress(ImportError):
     from ctypes import windll  # Only exists on Windows
@@ -286,7 +286,7 @@ if __name__ == "__main__":
 
     app = QApplication(sys.argv)
     app.setWindowIcon(
-        QIcon(app_context.get_resource("icon/youtube-play.icns")),
+        QIcon(app_context.get_resource(APP_ICON)),
     )
 
     window = MainWindow()

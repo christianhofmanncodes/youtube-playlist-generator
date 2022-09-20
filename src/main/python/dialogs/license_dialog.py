@@ -4,6 +4,7 @@ from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from file.file import read_file
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QDialog, QTextEdit
+from settings.settings import APP_ICON
 
 app_context = ApplicationContext()
 
@@ -21,9 +22,7 @@ def create_license_dialog(self) -> None:
     self.license_dialog.setMaximumSize(602, 400)
     self.license_dialog.resize(602, 400)
     self.license_dialog.setWindowTitle("License information")
-    self.license_dialog.setWindowIcon(
-        QIcon(app_context.get_resource("icon/youtube-play.icns"))
-    )
+    self.license_dialog.setWindowIcon(QIcon(app_context.get_resource(APP_ICON)))
 
     self.license_text_object.setReadOnly(True)
     self.license_text_object.resize(602, 400)

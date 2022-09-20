@@ -3,6 +3,7 @@
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QLabel, QVBoxLayout
+from settings.settings import APP_ICON
 
 app_context = ApplicationContext()
 
@@ -27,7 +28,7 @@ class PlaylistImportDialog(QDialog):
 
         self.setWindowTitle("One more thing...")
         self.setFixedSize(450, 160)
-        self.setWindowIcon(QIcon(app_context.get_resource("icon/youtube-play.icns")))
+        self.setWindowIcon(QIcon(app_context.get_resource(APP_ICON)))
         self.setFont(QFont("Roboto"))
 
         q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No

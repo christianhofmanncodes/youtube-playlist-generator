@@ -14,7 +14,11 @@ from settings.operations import (
     get_settings,
     save_settings_to_conf_file,
 )
-from settings.settings import DEFAULT_SETTINGS_FILE_LOCATION, SETTING_FILE_LOCATION
+from settings.settings import (
+    APP_ICON,
+    DEFAULT_SETTINGS_FILE_LOCATION,
+    SETTING_FILE_LOCATION,
+)
 
 app = QApplication(sys.argv)
 app_context = ApplicationContext()
@@ -45,7 +49,7 @@ class SettingsDialog(QDialog):
             app_context.get_resource("forms/settings_dialog.ui"),
             self,
         )
-        self.setWindowIcon(QIcon(app_context.get_resource("icon/youtube-play.icns")))
+        self.setWindowIcon(QIcon(app_context.get_resource(APP_ICON)))
         self.setFont(QFont("Roboto"))
 
         self.enable_reset_default_settings()
