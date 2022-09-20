@@ -6,6 +6,13 @@
 ![GitHub top language](https://img.shields.io/badge/language-python-orange)
 ![Python Version](https://img.shields.io/badge/python-3.10.6-yellow)
 ![License](https://img.shields.io/badge/license-GNU%20v3.0-blue)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=bugs)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
 
 A fun program based on Python to generate YouTube playlists without an account.  
 
@@ -108,6 +115,10 @@ You can check for security issues with the following commands:
 ```bash
   safety check
 ```
+
+You can also find the results of sonarcloud checks here:
+
+[sonarcloud](https://sonarcloud.io/project/overview?id=christianhofmanncodes_youtube-playlist-generator)
 
 ## Known issues & possible fixes
 
