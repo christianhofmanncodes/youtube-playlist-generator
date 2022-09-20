@@ -96,6 +96,19 @@ Run the app
 Note: On Linux and macOS you have to use `pip3` and `python3`.  
 Pandas only needs to be installed if you want to use the console version.
 
+## Security
+
+You can check for security issues with the following commands:
+
+```bash
+  sudo chmod +x src/main/python/scanners/bandit.sh
+  sudo sh src/main/python/scanners/bandit.sh
+```
+
+```bash
+  safety check
+```
+
 ## Known issues & possible fixes
 
 If you have any issues with running the program please first check your python version.
