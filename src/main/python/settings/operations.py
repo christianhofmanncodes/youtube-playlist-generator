@@ -97,7 +97,7 @@ def output_settings_as_dict(
     return {
         "general": [
             {
-                "openURLautomatically": components_dict["option_1"],
+                "openURL": components_dict["option_1"],
                 "copyURLtoClipboard": components_dict["option_2"],
                 "programLanguage": components_dict["language"],
                 "appTheme": components_dict["theme"],

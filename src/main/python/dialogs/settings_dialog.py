@@ -109,7 +109,7 @@ class SettingsDialog(QDialog):
         :param settings_dict:dict: Used to Pass the settings_dict to the function.
         :return: None.
         """
-        open_url_automatically = settings_dict["general"][0]["openURLautomatically"]
+        open_url = settings_dict["general"][0]["openURL"]
         copy_url_to_clipboard = settings_dict["general"][0]["copyURLtoClipboard"]
         program_language = settings_dict["general"][0]["programLanguage"]
         app_theme = settings_dict["general"][0]["appTheme"]
@@ -141,10 +141,10 @@ class SettingsDialog(QDialog):
 
         self.comboBox_language.setCurrentText(program_language)
 
-        if open_url_automatically is True:
+        if open_url is True:
             self.checkBox_option1.setCheckState(Qt.CheckState.Checked)
 
-        elif open_url_automatically is False:
+        elif open_url is False:
             self.checkBox_option1.setCheckState(Qt.CheckState.Unchecked)
 
         if copy_url_to_clipboard is True:
