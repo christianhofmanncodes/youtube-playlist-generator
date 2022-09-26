@@ -73,7 +73,6 @@ def enable_components(self) -> None:
     self.actionCount_items.setEnabled(True)
     self.menuSort_items.setEnabled(True)
     self.actionClear_all_items.setEnabled(True)
-    self.actionGet_video_information.setEnabled(True)
     self.actionAscending.setEnabled(True)
     self.actionDescending.setEnabled(True)
 
@@ -258,7 +257,6 @@ def act_clear_items(self) -> None:
 
     if not playlist.playlist_widget_has_x_or_more_items(self, 1):
         self.actionClear_all_items.setEnabled(False)
-        self.actionGet_video_information.setEnabled(False)
 
 
 def act_sort_items_ascending(self) -> None:
@@ -306,15 +304,23 @@ def act_url_id_text_change(self) -> None:
 
 
 def act_click_playlist_item(self) -> None:
-    """Enables or disables the pushButton_delete_item."""
+    """
+    The act_click_playlist_item function enables or disables
+    specific components based on selection in the playlist.
+
+    :param self: Used to Access the class attributes and methods.
+    :return: None.
+    """
     if not self.listWidget_playlist_items.selectedItems():
         self.pushButton_delete_item.setEnabled(False)
         self.actionDelete_Item.setEnabled(False)
         self.actionRename_item.setEnabled(False)
+        self.actionGet_video_information.setEnabled(False)
     else:
         self.pushButton_delete_item.setEnabled(True)
         self.actionDelete_Item.setEnabled(True)
         self.actionRename_item.setEnabled(True)
+        self.actionGet_video_information.setEnabled(True)
 
 
 def act_shuffle(self):
@@ -450,7 +456,6 @@ def act_add_item(self) -> None:
         if playlist.playlist_widget_has_x_or_more_items(self, 1):
             self.actionCount_items.setEnabled(True)
             self.actionClear_all_items.setEnabled(True)
-            self.actionGet_video_information.setEnabled(True)
 
         if playlist.playlist_widget_has_x_or_more_items(self, 2):
             self.pushButton_generate.setEnabled(True)
@@ -500,7 +505,6 @@ def act_delete_item(self) -> [None, bool]:
     elif not playlist.playlist_widget_has_x_or_more_items(self, 1):
         self.actionCount_items.setEnabled(False)
         self.actionClear_all_items.setEnabled(False)
-        self.actionGet_video_information.setEnabled(False)
 
     elif not playlist.playlist_widget_has_x_or_more_items(self, 2):
         self.pushButton_generate.setEnabled(False)

@@ -120,7 +120,6 @@ def remove_duplicates_from_playlist(self) -> None:
 
     if not playlist_widget_has_x_or_more_items(self, 1):
         self.actionClear_all_items.setEnabled(False)
-        self.actionGet_video_information.setEnabled(False)
 
     if not playlist_widget_has_x_or_more_items(self, 2):
         self.actionRemove_duplicates.setEnabled(False)
