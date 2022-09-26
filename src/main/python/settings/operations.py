@@ -59,7 +59,7 @@ def save_settings_to_conf_file(settings_dict: dict, filename: str, app_context) 
         json.dump(settings_dict, file, indent=4)
 
 
-def save_menu_to_conf_file(menu_dict: dict) -> None:
+def save_menu_to_conf_file(menu_dict: dict, app_context) -> None:
     """
     The save_menu_to_conf_file function writes the content of a dictionary to a file.
     The function takes one argument, menu_dict,
@@ -164,7 +164,7 @@ def remove_unnecessary_entries_from_menu_dict(menu_dict) -> dict:
     return {"recent_files": menu_items_list}
 
 
-def save_settings(self) -> None:
+def save_settings(self, app_context) -> None:
     """
     The save_settings function saves the current settings to menu.config.
     It does this by first getting the recent files items from the menu, and then
@@ -179,4 +179,4 @@ def save_settings(self) -> None:
     recent_files = menu.get_recent_files_items_menu(self)
     menu_dict = output_menu_config_as_dict(recent_files)
     new_menu_dict = remove_unnecessary_entries_from_menu_dict(menu_dict)
-    save_menu_to_conf_file(new_menu_dict)
+    save_menu_to_conf_file(new_menu_dict, app_context)

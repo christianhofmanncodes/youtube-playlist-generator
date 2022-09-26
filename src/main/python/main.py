@@ -149,7 +149,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         :param self: Used to Access the attributes and methods of the class in python.
         :return: None.
         """
-        save_settings(self)
+        save_settings(self, app_context)
         app.quit()
 
     def act_undo(self):
