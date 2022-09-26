@@ -5,8 +5,6 @@ from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QLabel, QVBoxLayout
 from settings.settings import APP_ICON
 
-app_context = ApplicationContext()
-
 
 class PlaylistImportDialog(QDialog):
     """
@@ -14,7 +12,7 @@ class PlaylistImportDialog(QDialog):
     or if you want to add the imported playlist to the existing playlist.
     """
 
-    def __init__(self, parent=None) -> None:
+    def __init__(self, app_context, parent=None) -> None:
         """
         The __init__ function is called automatically every time the class is
         instantiated. It sets up all the objects and functionality that will be used by

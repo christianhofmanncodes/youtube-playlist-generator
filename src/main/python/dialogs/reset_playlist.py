@@ -5,15 +5,13 @@ from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QLabel, QVBoxLayout
 from settings.settings import APP_ICON
 
-app_context = ApplicationContext()
-
 
 class PlaylistResetDialog(QDialog):
     """
     Class for the dialog to ask if the playlist should be deleted with all its components.
     """
 
-    def __init__(self, parent=None) -> None:
+    def __init__(self, app_context, parent=None) -> None:
         """
         The __init__ function is called when an instance of the class is created.
         It initializes variables that are defined in the body of the class, and it sets up

@@ -7,8 +7,6 @@ from file.file import read_json_file
 from menu import menu
 from settings.settings import RECENT_FILES_STRING
 
-app_context = ApplicationContext()
-
 
 def create_recent_file_menu(self) -> None:
     """
@@ -24,7 +22,7 @@ def create_recent_file_menu(self) -> None:
     self.recent_files_menu.triggered.connect(self.act_recent_file)
 
 
-def get_settings(filename: str) -> dict:
+def get_settings(filename: str, app_context) -> dict:
     """
     The get_settings function returns the settings.config file as a dictionary.
 
@@ -35,7 +33,7 @@ def get_settings(filename: str) -> dict:
     )
 
 
-def get_default_settings(filename: str) -> dict:
+def get_default_settings(filename: str, app_context) -> dict:
     """
     The get_default_settings function returns the settings_default.config file as a dictionary.
 
@@ -44,7 +42,7 @@ def get_default_settings(filename: str) -> dict:
     return read_json_file(app_context.get_resource(filename))
 
 
-def save_settings_to_conf_file(settings_dict: dict, filename: str) -> None:
+def save_settings_to_conf_file(settings_dict: dict, filename: str, app_context) -> None:
     """
     The save_settings_to_conf_file function writes the content
     of a dictionary to the specified filename.

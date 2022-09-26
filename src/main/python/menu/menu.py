@@ -108,7 +108,7 @@ def add_recent_filename(self, filename) -> None:
         logging.info("'%s' already exists in recent files menu.", filename)
 
 
-def open_ytplaylist_file_from_menu(self, action) -> None:
+def open_ytplaylist_file_from_menu(self, action, app_context) -> None:
     """
     The open_ytplaylist_file_from_menu function opens
     a *.ytplaylist file from the recent files menu.
@@ -131,7 +131,7 @@ def open_ytplaylist_file_from_menu(self, action) -> None:
                 if dlg.exec():
                     import_from_dict(self, ytplaylist_dict)
                 else:
-                    actions.act_new(self)
+                    actions.act_new(self, app_context)
                     import_from_dict(self, ytplaylist_dict)
                     self.lineEdit_url_id.setFocus()
                 self.recent_files_menu.addSeparator()

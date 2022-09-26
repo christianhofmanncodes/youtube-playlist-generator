@@ -81,7 +81,7 @@ def enable_components(self) -> None:
     self.actionDescending.setEnabled(True)
 
 
-def process_filename(self, action):
+def process_filename(self, action, app_context):
     """
     The process_filename function imports a YouTube Playlist file (*.ytplaylist)
     and creates a new playlist.
@@ -90,11 +90,11 @@ def process_filename(self, action):
     :param action: Used to Pass the menu action to the function.
     :return: The filename of the youtube playlist file that was imported.
     """
-    open_ytplaylist_file_from_menu(self, action)
+    open_ytplaylist_file_from_menu(self, action, app_context)
 
 
 @pyqtSlot(QAction)
-def act_recent_file(self, action):
+def act_recent_file(self, action, app_context):
     """
     The act_recent_file function is a function that is called when the user clicks
     on one of the recent files in the recent files menu. It takes as input an action,
@@ -112,10 +112,10 @@ def act_recent_file(self, action):
         for action_to_remove in actions:
             self.recent_files_menu.removeAction(action_to_remove)
     else:
-        process_filename(self, action)
+        process_filename(self, action, app_context)
 
 
-def act_new(self) -> None:
+def act_new(self, app_context) -> None:
     """
     The act_new function creates a blank state to start a new playlist.
     If the playlist already contains items and should be deleted,
@@ -126,7 +126,7 @@ def act_new(self) -> None:
     :return: None.
     """
     if playlist.playlist_widget_has_x_or_more_items(self, 1):
-        dlg = reset_playlist.PlaylistResetDialog()
+        dlg = reset_playlist.PlaylistResetDialog(app_context)
         if dlg.exec():
             self.listWidget_playlist_items.clear()
             logging.debug("Playlist was reset successfully.")
@@ -522,7 +522,7 @@ def act_copy_url(self) -> None:
     QApplication.clipboard().setText(text)
 
 
-def act_open(self) -> None:
+def act_open(self, app_context) -> None:
     """
     The act_open function is called when the user clicks on the "Open" action.
     It opens a file dialog and lets the user choose a .ytplaylist-file to import.
@@ -548,12 +548,12 @@ def act_open(self) -> None:
         logging.debug(ytplaylist_dict)
         if playlist.check_if_items_in_playlist(self):
             logging.debug("There are already items in playlist!")
-            dlg = import_playlist.PlaylistImportDialog()
+            dlg = import_playlist.PlaylistImportDialog(app_context)
 
             if dlg.exec():
                 playlist.import_from_dict(self, ytplaylist_dict)
             else:
-                act_new(self)
+                act_new(self, app_context)
                 playlist.import_from_dict(self, ytplaylist_dict)
                 self.lineEdit_url_id.setFocus()
         else:
@@ -614,7 +614,7 @@ def act_generate(self) -> None:
         playlist.generate_playlist(self)
 
 
-def act_settings(self) -> None:
+def act_settings(self, app, app_context) -> None:
     """
     The act_settings function opens the settings dialog.
     The user can change the language, theme, and keyboard shortcuts.
@@ -623,8 +623,8 @@ def act_settings(self) -> None:
     :param self: Used to Access the attributes and methods of the class in which it is used.
     :return: None.
     """
-    settings_dict = get_settings(SETTING_FILE_LOCATION)
-    dlg = SettingsDialog(self)
+    settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
+    dlg = SettingsDialog(app, app_context)
     dlg.load_settings(settings_dict)
 
     if dlg.exec():
@@ -661,7 +661,7 @@ def act_settings(self) -> None:
 
         logging.debug(components_dict)
         settings_dict = output_settings_as_dict(components_dict)
-        save_settings_to_conf_file(settings_dict, SETTING_FILE_LOCATION)
+        save_settings_to_conf_file(settings_dict, SETTING_FILE_LOCATION, app_context)
 
 
 def act_video_information(self) -> None:

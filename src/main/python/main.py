@@ -123,11 +123,11 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def act_new(self):
         """Action for new."""
-        actions.act_new(self)
+        actions.act_new(self, app_context)
 
     def act_open(self):
         """Action for open."""
-        actions.act_open(self)
+        actions.act_open(self, app_context)
 
     def act_save(self):
         """Action for save."""
@@ -139,7 +139,7 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def act_settings(self):
         """Action for settings."""
-        actions.act_settings(self)
+        actions.act_settings(self, app, app_context)
 
     def act_quit(self) -> None:
         """
@@ -250,7 +250,7 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def act_recent_file(self):
         """Action for recent_file."""
-        actions.act_recent_file(self, self.action)
+        actions.act_recent_file(self, self.action, app_context)
 
     def act_url_id_text_change(self):
         """Action for url_id_text_change."""
