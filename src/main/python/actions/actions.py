@@ -527,37 +527,41 @@ def act_open(self) -> None:
     The act_open function is called when the user clicks on the "Open" action.
     It opens a file dialog and lets the user choose a .ytplaylist-file to import.
     The function then imports that file into the program.
+    If the playlist already contains items, the user will be prompted to choose
+    if he wants to add them or create a new playlist.
 
     :param self: Used to Access the class variables.
     :return: None.
     """
     try:
-        if filename := QFileDialog.getOpenFileName(
+        filename = QFileDialog.getOpenFileName(
             self,
             "Import YouTube Playlist file",
             "",
             "YouTube Playlist file (*.ytplaylist)",
-        ):
-            ytplaylist_dict = read_json_file(filename[0])
-            logging.debug("Playlist to be imported:")
-            logging.debug(ytplaylist_dict)
-            if playlist.check_if_items_in_playlist(self):
-                logging.debug("There are already items in playlist!")
-                dlg = import_playlist.PlaylistImportDialog()
-
-                if dlg.exec():
-                    playlist.import_from_dict(self, ytplaylist_dict)
-                else:
-                    act_new(self)
-                    playlist.import_from_dict(self, ytplaylist_dict)
-                    self.lineEdit_url_id.setFocus()
-            else:
-                playlist.import_from_dict(self, ytplaylist_dict)
-                self.lineEdit_url_id.setFocus()
-            enable_components(self)
-            add_recent_filename(self, filename[0])
+        )
     except FileNotFoundError:
         logging.error("File not found. No file was imported.")
+    if filename[0] != "":
+        ytplaylist_dict = read_json_file(filename[0])
+        logging.debug("Playlist to be imported:")
+        logging.debug(ytplaylist_dict)
+        if playlist.check_if_items_in_playlist(self):
+            logging.debug("There are already items in playlist!")
+            dlg = import_playlist.PlaylistImportDialog()
+
+            if dlg.exec():
+                playlist.import_from_dict(self, ytplaylist_dict)
+            else:
+                act_new(self)
+                playlist.import_from_dict(self, ytplaylist_dict)
+                self.lineEdit_url_id.setFocus()
+        else:
+            logging.debug("Playlist is empty.")
+            playlist.import_from_dict(self, ytplaylist_dict)
+            self.lineEdit_url_id.setFocus()
+        enable_components(self)
+        add_recent_filename(self, filename[0])
 
 
 def act_save(self) -> None:
