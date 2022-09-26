@@ -63,14 +63,11 @@ def enable_components(self) -> None:
     :return: None.
     """
     self.pushButton_new.setEnabled(True)
-    self.pushButton_delete_item.setEnabled(True)
     self.pushButton_generate.setEnabled(True)
     self.pushButton_shuffle_playlist.setEnabled(True)
     self.actionReset_Playlist.setEnabled(True)
-    self.actionDelete_Item.setEnabled(True)
     self.actionGenerate_Playlist.setEnabled(True)
     self.actionShuffle.setEnabled(True)
-    self.actionRename_item.setEnabled(True)
     self.actionSave.setEnabled(True)
     self.actionRemove_duplicates.setEnabled(True)
     self.actionCount_items.setEnabled(True)
@@ -308,6 +305,18 @@ def act_url_id_text_change(self) -> None:
         self.actionAdd_item.setEnabled(False)
 
 
+def act_click_playlist_item(self) -> None:
+    """Enables or disables the pushButton_delete_item."""
+    if not self.listWidget_playlist_items.selectedItems():
+        self.pushButton_delete_item.setEnabled(False)
+        self.actionDelete_Item.setEnabled(False)
+        self.actionRename_item.setEnabled(False)
+    else:
+        self.pushButton_delete_item.setEnabled(True)
+        self.actionDelete_Item.setEnabled(True)
+        self.actionRename_item.setEnabled(True)
+
+
 def act_shuffle(self):
     """
     The act_shuffle function shuffles the playlist items.
@@ -436,9 +445,6 @@ def act_add_item(self) -> None:
 
         self.lineEdit_url_id.clear()
         self.pushButton_new.setEnabled(True)
-        self.pushButton_delete_item.setEnabled(True)
-        self.actionDelete_Item.setEnabled(True)
-        self.actionRename_item.setEnabled(True)
         self.actionReset_Playlist.setEnabled(True)
 
         if playlist.playlist_widget_has_x_or_more_items(self, 1):

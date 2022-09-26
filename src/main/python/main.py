@@ -256,6 +256,10 @@ class MainWindow(QMainWindow, QtStyleTools):
         """Action for url_id_text_change."""
         actions.act_url_id_text_change(self)
 
+    def act_click_playlist_item(self):
+        """Action for click_playlist_item."""
+        actions.act_click_playlist_item(self)
+
     def create_trigger(self) -> None:
         """
         The create_trigger function creates the trigger for several MainWindow components.
@@ -270,6 +274,9 @@ class MainWindow(QMainWindow, QtStyleTools):
         """
         self.lineEdit_playlist_title.setFocus()
         self.lineEdit_url_id.textChanged.connect(self.act_url_id_text_change)
+        self.listWidget_playlist_items.itemSelectionChanged.connect(
+            self.act_click_playlist_item
+        )
         self.pushButton_add.clicked.connect(self.act_add_item)
         self.listWidget_playlist_items.itemDoubleClicked.connect(self.act_rename_item)
         self.pushButton_new.clicked.connect(self.act_new)
