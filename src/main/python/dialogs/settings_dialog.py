@@ -29,7 +29,7 @@ class SettingsDialog(QDialog):
     Class for the settings dialog with all its components and functions.
     """
 
-    def __init__(self, parent=None) -> None:
+    def __init__(self, app, app_context, parent=None) -> None:
         """
         The __init__ function is called automatically every time
         the class is being used to create a new object.
@@ -52,11 +52,11 @@ class SettingsDialog(QDialog):
         self.setWindowIcon(QIcon(app_context.get_resource(APP_ICON)))
         self.setFont(QFont("Roboto"))
 
-        self.enable_reset_default_settings()
+        self.enable_reset_default_settings(app_context)
 
-        self.radioButton_OS.clicked.connect(self.change_theme)
-        self.radioButton_white.clicked.connect(self.change_theme)
-        self.radioButton_dark.clicked.connect(self.change_theme)
+        self.radioButton_OS.clicked.connect(self.change_to_os_theme)
+        self.radioButton_white.clicked.connect(self.change_to_white_theme)
+        self.radioButton_dark.clicked.connect(self.change_to_dark_theme)
         self.pushButton_change_option1.clicked.connect(
             self.change_button_option1_clicked
         )
@@ -174,39 +174,53 @@ class SettingsDialog(QDialog):
         elif app_theme == "dark":
             self.radioButton_dark.nextCheckState()
 
-    def change_theme(self) -> None:
+    def change_to_os_theme(self) -> None:
         """
-        The change_theme function changes the theme of the application.
-        It is called when a user clicks on one of three radio buttons,
-        which are used to select between three different themes: OS theme, white and dark.
+        The change_to_os_theme function changes the theme to the OS theme.
+        It detects if the OS theme is dark and sets the theme to dark.
+        If the OS theme is light, it sets the theme to white.
+        It is called when a user clicks on the radio button radioButton_os.
 
         :param self: Used to Access the attributes and methods of the class in python.
         :return: None.
         """
-        if self.radioButton_OS.isChecked():
-            if darkdetect.isDark():
-                apply_stylesheet(
-                    app, theme=app_context.get_resource("theme/yt-dark-red.xml")
-                )
-            elif darkdetect.isLight():
-                apply_stylesheet(
-                    app,
-                    theme=app_context.get_resource("theme/yt-white-red.xml"),
-                    invert_secondary=True,
-                )
-            logging.debug("Theme regarding to OS theme set: %s", darkdetect.theme())
-        elif self.radioButton_white.isChecked():
+        if darkdetect.isDark():
+            apply_stylesheet(
+                app, theme=app_context.get_resource("theme/yt-dark-red.xml")
+            )
+        elif darkdetect.isLight():
             apply_stylesheet(
                 app,
                 theme=app_context.get_resource("theme/yt-white-red.xml"),
                 invert_secondary=True,
             )
-            logging.debug("White theme set!")
-        elif self.radioButton_dark.isChecked():
-            apply_stylesheet(
-                app, theme=app_context.get_resource("theme/yt-dark-red.xml")
-            )
-            logging.debug("Dark theme set!")
+            logging.debug("Theme regarding to OS theme set: %s", darkdetect.theme())
+
+    def change_to_dark_theme(self) -> None:
+        """
+        The change_to_dark_theme function changes the theme to dark.
+        It is called when a user clicks on the radio button radioButton_dark.
+
+        :param self: Used to Access the attributes and methods of the class in python.
+        :return: None.
+        """
+        apply_stylesheet(app, theme=app_context.get_resource("theme/yt-dark-red.xml"))
+        logging.debug("Dark theme set!")
+
+    def change_to_white_theme(self) -> None:
+        """
+        The change_to_white_theme function changes the theme to white.
+        It is called when a user clicks on the radio button radioButton_white.
+
+        :param self: Used to Access the attributes and methods of the class in python.
+        :return: None.
+        """
+        apply_stylesheet(
+            app,
+            theme=app_context.get_resource("theme/yt-white-red.xml"),
+            invert_secondary=True,
+        )
+        logging.debug("White theme set!")
 
     def change_language(self) -> None:
         """
@@ -317,12 +331,16 @@ class SettingsDialog(QDialog):
         :param self: Used to Access the class attributes and methods.
         :return: None.
         """
-        default_settings_dict = get_default_settings(DEFAULT_SETTINGS_FILE_LOCATION)
-        save_settings_to_conf_file(default_settings_dict, SETTING_FILE_LOCATION)
-        settings_dict = get_settings(SETTING_FILE_LOCATION)
+        default_settings_dict = get_default_settings(
+            DEFAULT_SETTINGS_FILE_LOCATION, app_context
+        )
+        save_settings_to_conf_file(
+            default_settings_dict, SETTING_FILE_LOCATION, app_context
+        )
+        settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
         self.load_settings(settings_dict)
 
-    def check_if_settings_not_default(self) -> bool:
+    def check_if_settings_not_default(self, app_context) -> bool:
         """
         The check_if_settings_not_default function checks if the current settings are not default.
         It does this by comparing the current settings to the default settings.
@@ -331,11 +349,13 @@ class SettingsDialog(QDialog):
         :param self: Used to Access variables that belongs to the class.
         :return: True if the current settings are not default.
         """
-        current_settings_dict = get_settings(SETTING_FILE_LOCATION)
-        default_settings_dict = get_default_settings(DEFAULT_SETTINGS_FILE_LOCATION)
+        current_settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
+        default_settings_dict = get_default_settings(
+            DEFAULT_SETTINGS_FILE_LOCATION, app_context
+        )
         return current_settings_dict != default_settings_dict
 
-    def enable_reset_default_settings(self) -> None:
+    def enable_reset_default_settings(self, app_context) -> None:
         """
         The enable_reset_default_settings function enables
         the reset to default settings button if the current
@@ -344,5 +364,5 @@ class SettingsDialog(QDialog):
         :param self: Used to Access the class attributes.
         :return: None.
         """
-        if self.check_if_settings_not_default():
+        if self.check_if_settings_not_default(app_context):
             self.pushButton_reset_defaults.setEnabled(True)
