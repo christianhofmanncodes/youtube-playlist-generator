@@ -624,7 +624,7 @@ def act_generate(self) -> None:
         playlist.generate_playlist(self)
 
 
-def act_settings(self, app, app_context) -> None:
+def act_settings(app, app_context) -> None:
     """
     The act_settings function opens the settings dialog.
     The user can change the language, theme, and keyboard shortcuts.

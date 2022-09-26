@@ -1,6 +1,5 @@
 """dialogs.playlist_import_dialog module"""
 
-from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QLabel, QVBoxLayout
 from settings.settings import APP_ICON

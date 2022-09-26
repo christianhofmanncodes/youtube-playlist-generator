@@ -2,7 +2,6 @@
 
 import json
 
-from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from file.file import read_json_file
 from menu import menu
 from settings.settings import RECENT_FILES_STRING

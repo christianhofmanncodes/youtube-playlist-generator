@@ -5,7 +5,6 @@ import logging
 from actions import actions
 from dialogs import import_playlist
 from dialogs.dialogs import show_error_dialog
-from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from file.file import check_file_format, read_json_file
 from playlist.playlist import check_if_items_in_playlist, import_from_dict
 from PyQt6.QtGui import QAction
@@ -127,7 +126,7 @@ def open_ytplaylist_file_from_menu(self, action, app_context) -> None:
             logging.debug(ytplaylist_dict)
             if check_if_items_in_playlist(self):
                 logging.debug("There are already items in playlist!")
-                dlg = import_playlist.PlaylistImportDialog()
+                dlg = import_playlist.PlaylistImportDialog(app_context)
                 if dlg.exec():
                     import_from_dict(self, ytplaylist_dict)
                 else:

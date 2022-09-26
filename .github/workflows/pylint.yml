@@ -27,5 +27,5 @@ jobs:
           pip install qt_material
       - name: Analyzing the code with pylint
         run: |
-          pylint --disable=E0401,E0611,I1101,R0401,R0801,R0903,R0904,R0914,W0212 --ignore-imports true --extension-pkg-whitelist PyQt6 $(git ls-files '*.py')
+          pylint --disable=E0401,E0611,I1101,R0401,R0801,R0903,R0904,R0914,W0212,W0621,W0613 --ignore-imports true --extension-pkg-whitelist PyQt6 $(git ls-files '*.py')
           # pytest --cov

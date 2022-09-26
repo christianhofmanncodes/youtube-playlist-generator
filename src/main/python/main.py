@@ -139,7 +139,7 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def act_settings(self):
         """Action for settings."""
-        actions.act_settings(self, app, app_context)
+        actions.act_settings(app, app_context)
 
     def act_quit(self) -> None:
         """
