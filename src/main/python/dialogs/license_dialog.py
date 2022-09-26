@@ -6,10 +6,8 @@ from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QDialog, QTextEdit
 from settings.settings import APP_ICON
 
-app_context = ApplicationContext()
 
-
-def create_license_dialog(self) -> None:
+def create_license_dialog(self, app_context) -> None:
     """
     The create_license_dialog function creates a license dialog.
 

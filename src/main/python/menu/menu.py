@@ -11,10 +11,8 @@ from playlist.playlist import check_if_items_in_playlist, import_from_dict
 from PyQt6.QtGui import QAction
 from settings.settings import RECENT_FILES_STRING
 
-app_context = ApplicationContext()
 
-
-def get_menu_config() -> list:
+def get_menu_config(app_context) -> list:
     """
     The get_menu_config function returns the content from menu.config.
 
@@ -57,14 +55,14 @@ def add_clear_recent_files_action_to_menu(self) -> None:
         self.recent_files_menu.addAction(self.action)
 
 
-def load_recent_files(self) -> None:
+def load_recent_files(self, app_context) -> None:
     """
     The load_recent_files function adds items to the recent files menu.
 
     :param self: Used to Access the class attributes.
     :return: None.
     """
-    menu_config = get_menu_config()
+    menu_config = get_menu_config(app_context)
 
     if menu_config["recent_files"]:
         file_names = menu_config["recent_files"]

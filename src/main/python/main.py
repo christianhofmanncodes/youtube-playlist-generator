@@ -52,9 +52,9 @@ class MainWindow(QMainWindow, QtStyleTools):
         :param self: Used to Access the attributes and methods of the class MainWindow.
         :return: None.
         """
-        license_dialog.create_license_dialog(self)
+        license_dialog.create_license_dialog(self, app_context)
         self.set_theme()
-        load_settings(self)
+        load_settings(self, app_context)
 
     def set_theme(self) -> None:
         """

@@ -136,7 +136,7 @@ def output_menu_config_as_dict(recent_files: list) -> dict:
     return {"recent_files": list(recent_files)}
 
 
-def load_settings(self) -> None:
+def load_settings(self, app_context) -> None:
     """
     The load_settings function loads the settings from menu.config into the program.
 
@@ -144,7 +144,7 @@ def load_settings(self) -> None:
     :return: None.
     """
     create_recent_file_menu(self)
-    menu.load_recent_files(self)
+    menu.load_recent_files(self, app_context)
 
 
 def remove_unnecessary_entries_from_menu_dict(menu_dict) -> dict:
