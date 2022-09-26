@@ -1,10 +1,10 @@
 """main module"""
-import contextlib
 import logging
 import sys
 
 import darkdetect
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
+from fbs_runtime import platform
 from PyQt6 import uic
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QApplication, QMainWindow
@@ -15,11 +15,14 @@ from dialogs import license_dialog
 from settings.operations import load_settings, save_settings
 from settings.settings import APP_ICON, APP_VERSION
 
-with contextlib.suppress(ImportError):
-    from ctypes import windll  # Only exists on Windows
+
+if platform.is_windows():
+    from ctypes import windll
 
     APP_ID = f"christianhofmann.youtube-playlist-generator.gui.{APP_VERSION}"
     windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
+
+logging.info("OS: %s", platform.name())
 
 
 class MainWindow(QMainWindow, QtStyleTools):
@@ -280,7 +283,7 @@ if __name__ == "__main__":
     app_context = ApplicationContext()
 
     logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.ERROR,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     )
 
