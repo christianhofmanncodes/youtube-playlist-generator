@@ -694,10 +694,10 @@ def act_video_information(self) -> None:
                 "Error while fetching video information",
                 f"The id '{video_id}' is invalid.",
             )
-    except AttributeError as attribute_error:
+    except AttributeError:
         QMessageBox.critical(
             self,
             "Error while fetching video information",
-            "No item in playlist selected.",
+            "Please select an item in the playlist.",
         )
-        logging.warning(attribute_error)
+        logging.warning("No item in playlist selected.")
