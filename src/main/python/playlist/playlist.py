@@ -3,9 +3,12 @@
 import logging
 import random
 
+from actions import actions
+from dialogs import dialogs
+from settings import operations
+from settings.settings import SETTING_FILE_LOCATION
 from strings import check_string, replace_string
 from url import generate_url, open_url, url
-from dialogs import dialogs
 
 
 def shuffle(self) -> None:
@@ -173,7 +176,7 @@ def generate_dict_from_fields(playlist_title: str, playlist_ids: list) -> dict:
     return {"playlistTitle": playlist_title, "playlistIDs": playlist_ids}
 
 
-def generate_video_ids_url(self, comma_separated_string: str) -> None:
+def generate_video_ids_url(self, comma_separated_string: str, app_context) -> None:
     """
     The generate_video_ids_url function generates the video ids URL from a comma separated string.
     If no playlist title is given, it will generate the URL with no title.
@@ -206,10 +209,16 @@ def generate_video_ids_url(self, comma_separated_string: str) -> None:
         self.textEdit_playlist_generated_url.setEnabled(True)
         self.pushButton_copy.setEnabled(True)
         self.actionCopy_URL.setEnabled(True)
-        open_url.in_webbrowser(playlist_url)
+
+        settings_dict = operations.get_settings(SETTING_FILE_LOCATION, app_context)
+
+        if settings_dict["general"][0]["openURL"]:
+            open_url.in_webbrowser(playlist_url)
+        if settings_dict["general"][0]["copyURLtoClipboard"]:
+            actions.act_copy_url(self)
 
 
-def generate_playlist(self) -> None:
+def generate_playlist(self, app_context) -> None:
     """
     The generate_playlist function generates a playlist URL from the items in the playlist widget.
     The function also enables the copy button once a playlist has been generated.
@@ -226,4 +235,4 @@ def generate_playlist(self) -> None:
         comma_separated_string = replace_string.create_comma_separated_string(
             playlist_items
         )
-        generate_video_ids_url(self, comma_separated_string)
+        generate_video_ids_url(self, comma_separated_string, app_context)

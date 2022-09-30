@@ -601,7 +601,7 @@ def act_save(self) -> None:
         logging.error("Error during export process! No file was exported.")
 
 
-def act_generate(self) -> None:
+def act_generate(self, app_context) -> None:
     """
     The act_generate function checks if the playlist title is empty. If it is,
     it asks the user if they want to proceed. If not, it proceeds with generating
@@ -619,9 +619,9 @@ def act_generate(self) -> None:
             )
             == QMessageBox.StandardButton.Yes
         ):
-            playlist.generate_playlist(self)
+            playlist.generate_playlist(self, app_context)
     else:
-        playlist.generate_playlist(self)
+        playlist.generate_playlist(self, app_context)
 
 
 def act_settings(app, app_context) -> None:

@@ -198,7 +198,7 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def act_generate(self):
         """Action for generate."""
-        actions.act_generate(self)
+        actions.act_generate(self, app_context)
 
     def act_sort_items_ascending(self):
         """Action for sort_items_ascending."""
