@@ -2,6 +2,7 @@
 
 import json
 
+from actions import actions
 from file.file import read_json_file
 from menu import menu
 
@@ -15,15 +16,12 @@ from settings.settings import (
 def create_recent_file_menu(self) -> None:
     """
     The create_recent_file_menu function creates a menu that lists the most recently opened files.
-    The function is called when the user clicks on "Open recent" in the File menu. The function
-    connects to an event handler, which is triggered when a file from this list is clicked.
 
     :param self: Used to Access the variables and methods.
     :return: The recent_files_menu.
     """
     self.file_menu = self.menuFile
     self.recent_files_menu = self.file_menu.addMenu("&Open recent")
-    self.recent_files_menu.triggered.connect(self.act_recent_file)
 
 
 def get_settings(filename: str, app_context) -> dict:
