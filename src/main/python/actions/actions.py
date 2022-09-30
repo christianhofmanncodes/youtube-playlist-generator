@@ -7,7 +7,11 @@ from dialogs.dialogs import show_info_dialog, show_question_dialog
 from dialogs.settings_dialog import SettingsDialog
 from file import file
 from file.file import read_json_file
-from menu.menu import add_recent_filename, open_ytplaylist_file_from_menu
+from menu.menu import (
+    add_recent_filename,
+    apply_shortcuts_to_actions,
+    open_ytplaylist_file_from_menu,
+)
 from playlist import playlist, video_info
 from PyQt6.QtCore import Qt, pyqtSlot
 from PyQt6.QtGui import QAction
@@ -624,7 +628,7 @@ def act_generate(self, app_context) -> None:
         playlist.generate_playlist(self, app_context)
 
 
-def act_settings(app, app_context) -> None:
+def act_settings(self, app, app_context) -> None:
     """
     The act_settings function opens the settings dialog.
     The user can change the language, theme, and keyboard shortcuts.
@@ -671,6 +675,7 @@ def act_settings(app, app_context) -> None:
 
         logging.debug(components_dict)
         settings_dict = output_settings_as_dict(components_dict)
+        apply_shortcuts_to_actions(self, app_context)
         save_settings_to_conf_file(settings_dict, SETTING_FILE_LOCATION, app_context)
 
 

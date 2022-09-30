@@ -7,8 +7,9 @@ from dialogs import import_playlist
 from dialogs.dialogs import show_error_dialog
 from file.file import check_file_format, read_json_file
 from playlist.playlist import check_if_items_in_playlist, import_from_dict
-from PyQt6.QtGui import QAction
-from settings.settings import RECENT_FILES_STRING
+from PyQt6.QtGui import QAction, QKeySequence
+from settings import operations
+from settings.settings import RECENT_FILES_STRING, SETTING_FILE_LOCATION
 
 
 def get_menu_config(app_context) -> list:
@@ -157,3 +158,50 @@ def open_ytplaylist_file_from_menu(self, action, app_context) -> None:
         )
 
         self.recent_files_menu.removeAction(action)
+
+
+def apply_shortcuts_to_actions(self, app_context):
+    """If settings differ from the default settings, apply shortcuts to actions."""
+    if operations.check_if_settings_not_default(self, app_context):
+        settings_dict = operations.get_settings(SETTING_FILE_LOCATION, app_context)
+        self.actionNew.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["newPlaylist"])
+        )
+        self.actionOpen.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["openPlaylist"])
+        )
+        self.actionSave.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["savePlaylist"])
+        )
+        self.actionAdd_item.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["addItem"])
+        )
+        self.actionDelete_Item.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["deleteItem"])
+        )
+        self.actionRename_item.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["renameItem"])
+        )
+        self.actionShuffle.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["shufflePlaylist"])
+        )
+        self.actionGenerate_Playlist.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["generatePlaylist"])
+        )
+        self.actionCount_items.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["countItems"])
+        )
+        self.actionClear_all_items.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["clearAllItems"])
+        )
+        self.actionGet_video_information.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["getVideoInformation"])
+        )
+        self.actionRemove_duplicates.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["removeDuplicates"])
+        )
+        self.actionCopy_URL.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["copyURL"])
+        )
+    else:
+        print("Settings are equal")
