@@ -3,8 +3,8 @@ import logging
 import sys
 
 import darkdetect
-from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from fbs_runtime import platform
+from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from PyQt6 import uic
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QApplication, QMainWindow
@@ -12,9 +12,8 @@ from qt_material import QtStyleTools, apply_stylesheet
 
 from actions import actions
 from dialogs import license_dialog
-from settings.operations import load_settings, save_settings
-from settings.settings import APP_ICON, APP_VERSION
-
+from settings.operations import get_settings, load_settings, save_settings
+from settings.settings import APP_ICON, APP_VERSION, SETTING_FILE_LOCATION
 
 if platform.is_windows():
     from ctypes import windll
@@ -71,13 +70,41 @@ class MainWindow(QMainWindow, QtStyleTools):
         elif darkdetect.isLight():
             invert_color = True
             app_theme = "theme/yt-white-red.xml"
+
+        settings_theme = self.compare_os_with_settings_theme()
+
+        if settings_theme is not None:
+            if settings_theme == "dark":
+                app_theme = "theme/yt-dark-red.xml"
+                invert_color = False
+            elif settings_theme == "white":
+                app_theme = "theme/yt-white-red.xml"
+                invert_color = True
+
         apply_stylesheet(
             app,
             theme=app_context.get_resource(app_theme),
             invert_secondary=invert_color,
         )
+
         uic.loadUi(app_context.get_resource("forms/main_window.ui"), self)
         self.setFont(QFont("Roboto"))
+        self.compare_os_with_settings_theme()
+
+    def compare_os_with_settings_theme(self) -> [str, None]:
+        """
+        The compare_os_with_settings_theme function compares the OS theme to the settings theme.
+        Return appTheme if they mismatch.
+
+        :param self: Used to Reference the class instance.
+        :return: The appTheme if the os theme and settings theme mismatch.
+        """
+        settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
+
+        if darkdetect.theme().lower() != settings_dict["general"][0]["appTheme"]:
+            return settings_dict["general"][0]["appTheme"]
+        else:
+            return None
 
     def create_actions(self) -> None:
         """
