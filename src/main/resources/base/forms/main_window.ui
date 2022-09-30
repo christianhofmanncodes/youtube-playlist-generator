@@ -581,6 +581,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Alt+F4</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::QuitRole</enum>
+   </property>
   </action>
   <action name="actionSettings">
    <property name="text">
@@ -940,5 +943,22 @@ p, li { white-space: pre-wrap; }
   <tabstop>lineEdit_playlist_title</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionQuit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>284</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
