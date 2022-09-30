@@ -203,5 +203,3 @@ def apply_shortcuts_to_actions(self, app_context):
         self.actionCopy_URL.setShortcut(
             QKeySequence(settings_dict["keyboard_shortcuts"][0]["copyURL"])
         )
-    else:
-        print("Settings are equal")
