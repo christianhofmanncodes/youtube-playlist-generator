@@ -119,7 +119,6 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.actionSave.triggered.connect(self.act_save)
         self.actionAbout.triggered.connect(self.act_about)
         self.actionSettings.triggered.connect(self.act_settings)
-        self.actionQuit.triggered.connect(self.act_quit)
 
         self.actionUndo.triggered.connect(self.act_undo)
         self.actionRedo.triggered.connect(self.act_redo)
@@ -168,15 +167,17 @@ class MainWindow(QMainWindow, QtStyleTools):
         """Action for settings."""
         actions.act_settings(self, app, app_context)
 
-    def act_quit(self) -> None:
+    def closeEvent(self, event) -> None:
         """
-        The act_quit function quits the application.
-        It saves all settings before closing.
+        The closeEvent function is called when the user closes the application.
+        It saves the settings and closes the application.
 
-        :param self: Used to Access the attributes and methods of the class in python.
-        :return: None.
+        :param self: Used to Access the attributes and methods of the class in which it is used.
+        :param event: Used to Close the application.
+        :return: The event that is generated when the user tries to close the application window.
         """
         save_settings(self, app_context)
+        logging.info("All settings saved successfully.")
         app.quit()
 
     def act_undo(self):
@@ -275,9 +276,9 @@ class MainWindow(QMainWindow, QtStyleTools):
         """Action for license."""
         actions.act_license(self)
 
-    def act_recent_file(self):
+    def act_recent_file(self, app_context, action):
         """Action for recent_file."""
-        actions.act_recent_file(self, self.action, app_context)
+        actions.act_recent_file(self, app_context, action)
 
     def act_url_id_text_change(self):
         """Action for url_id_text_change."""
