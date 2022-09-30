@@ -13,6 +13,7 @@ from settings.operations import (
     get_default_settings,
     get_settings,
     save_settings_to_conf_file,
+    check_if_settings_not_default,
 )
 from settings.settings import (
     APP_ICON,
@@ -340,21 +341,6 @@ class SettingsDialog(QDialog):
         settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
         self.load_settings(settings_dict)
 
-    def check_if_settings_not_default(self, app_context) -> bool:
-        """
-        The check_if_settings_not_default function checks if the current settings are not default.
-        It does this by comparing the current settings to the default settings.
-        If they are different, then it returns True, otherwise it returns False.
-
-        :param self: Used to Access variables that belongs to the class.
-        :return: True if the current settings are not default.
-        """
-        current_settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
-        default_settings_dict = get_default_settings(
-            DEFAULT_SETTINGS_FILE_LOCATION, app_context
-        )
-        return current_settings_dict != default_settings_dict
-
     def enable_reset_default_settings(self, app_context) -> None:
         """
         The enable_reset_default_settings function enables
@@ -364,5 +350,5 @@ class SettingsDialog(QDialog):
         :param self: Used to Access the class attributes.
         :return: None.
         """
-        if self.check_if_settings_not_default(app_context):
+        if check_if_settings_not_default(self, app_context):
             self.pushButton_reset_defaults.setEnabled(True)

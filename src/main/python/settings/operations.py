@@ -4,7 +4,12 @@ import json
 
 from file.file import read_json_file
 from menu import menu
-from settings.settings import RECENT_FILES_STRING
+
+from settings.settings import (
+    DEFAULT_SETTINGS_FILE_LOCATION,
+    RECENT_FILES_STRING,
+    SETTING_FILE_LOCATION,
+)
 
 
 def create_recent_file_menu(self) -> None:
@@ -142,6 +147,7 @@ def load_settings(self, app_context) -> None:
     """
     create_recent_file_menu(self)
     menu.load_recent_files(self, app_context)
+    menu.apply_shortcuts_to_actions(self, app_context)
 
 
 def remove_unnecessary_entries_from_menu_dict(menu_dict) -> dict:
@@ -179,3 +185,19 @@ def save_settings(self, app_context) -> None:
     menu_dict = output_menu_config_as_dict(recent_files)
     new_menu_dict = remove_unnecessary_entries_from_menu_dict(menu_dict)
     save_menu_to_conf_file(new_menu_dict, app_context)
+
+
+def check_if_settings_not_default(self, app_context) -> bool:
+    """
+    The check_if_settings_not_default function checks if the current settings are not default.
+    It does this by comparing the current settings to the default settings.
+    If they are different, then it returns True, otherwise it returns False.
+
+    :param self: Used to Access variables that belongs to the class.
+    :return: True if the current settings are not default.
+    """
+    current_settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
+    default_settings_dict = get_default_settings(
+        DEFAULT_SETTINGS_FILE_LOCATION, app_context
+    )
+    return current_settings_dict != default_settings_dict
