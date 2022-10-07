@@ -244,7 +244,7 @@
     <message>
         <location filename="../../../../python/main.py" line="417"/>
         <source>Generate Playlist URL</source>
-        <translation type="unfinished">Generiere die Playlist-URL</translation>
+        <translation>Generiere die Playlist-URL</translation>
     </message>
     <message>
         <location filename="../../../../python/main.py" line="420"/>
