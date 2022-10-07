@@ -155,12 +155,12 @@
       </property>
       <item>
        <property name="text">
-        <string>English</string>
+        <string comment="eng">English</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Deutsch</string>
+        <string comment="de">Deutsch</string>
        </property>
       </item>
      </widget>
