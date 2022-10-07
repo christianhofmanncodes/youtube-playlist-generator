@@ -6,6 +6,7 @@ import darkdetect
 from fbs_runtime import platform
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from PyQt6 import uic
+from PyQt6.QtCore import QLocale, QTranslator
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QApplication, QMainWindow
 from qt_material import QtStyleTools, apply_stylesheet
@@ -42,6 +43,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.initialize_ui()
         self.create_actions()
         self.create_trigger()
+        self.translate_ui()
 
     def initialize_ui(self) -> None:
         """
@@ -312,6 +314,114 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.pushButton_shuffle_playlist.clicked.connect(self.act_shuffle)
         self.pushButton_generate.clicked.connect(self.act_generate)
         self.pushButton_copy.clicked.connect(self.act_copy_url)
+
+    def translate_ui(self):
+        """Translates the UI based on language settings"""
+        self.trans = QTranslator(self)
+
+        settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
+
+        if settings_dict["general"][0]["programLanguage"] == "English":
+            logging.info("Program language is English.")
+
+        elif settings_dict["general"][0]["programLanguage"] == "Deutsch":
+            data = app_context.get_resource("forms/translations/de.qm")
+            german = QLocale(QLocale.Language.German, QLocale.Country.Germany)
+            self.trans.load(german, data)
+            app.instance().installTranslator(self.trans)
+
+        # Menu:
+        self.menuFile.setTitle(app.translate("MainWindow", "&File"))
+        self.actionNew.setText(app.translate("MainWindow", "New playlist"))
+        self.actionOpen.setText(app.translate("MainWindow", "Open"))
+        self.actionSave.setText(app.translate("MainWindow", "Save"))
+        self.actionAbout.setText(app.translate("MainWindow", "About"))
+        self.actionSettings.setText(app.translate("MainWindow", "Settings"))
+        self.actionQuit.setText(app.translate("MainWindow", "Quit"))
+
+        self.menuEdit.setTitle(app.translate("MainWindow", "&Edit"))
+        self.actionUndo.setText(app.translate("MainWindow", "Undo"))
+        self.actionRedo.setText(app.translate("MainWindow", "Redo"))
+        self.actionCut.setText(app.translate("MainWindow", "Cut"))
+        self.actionCopy.setText(app.translate("MainWindow", "Copy"))
+        self.actionPaste.setText(app.translate("MainWindow", "Paste"))
+        self.actionSelect_all.setText(app.translate("MainWindow", "Select All"))
+        self.actionFind.setText(app.translate("MainWindow", "Find"))
+
+        self.menuPlaylist.setTitle(app.translate("MainWindow", "&Playlist"))
+        self.actionAdd_item.setText(app.translate("MainWindow", "Add item"))
+        self.actionDelete_Item.setText(app.translate("MainWindow", "Delete item"))
+        self.actionRename_item.setText(app.translate("MainWindow", "Rename item"))
+        self.actionShuffle.setText(app.translate("MainWindow", "Shuffle"))
+        self.actionGenerate_Playlist.setText(app.translate("MainWindow", "Generate"))
+
+        self.menuSort_items.setTitle(app.translate("MainWindow", "Sort items"))
+        self.actionAscending.setText(app.translate("MainWindow", "Ascending"))
+        self.actionDescending.setText(app.translate("MainWindow", "Descending"))
+
+        self.menuTools.setTitle(app.translate("MainWindow", "Tools"))
+        self.actionCount_items.setText(app.translate("MainWindow", "Count items"))
+        self.actionClear_all_items.setText(
+            app.translate("MainWindow", "Clear all items")
+        )
+        self.actionGet_video_information.setText(
+            app.translate("MainWindow", "Get video information")
+        )
+        self.actionRemove_duplicates.setText(
+            app.translate("MainWindow", "Remove duplicates")
+        )
+
+        self.actionCopy_URL.setText(app.translate("MainWindow", "Copy URL"))
+
+        self.menuHelp.setTitle(app.translate("MainWindow", "&Help"))
+        self.actionAbout_Qt.setText(app.translate("MainWindow", "About Qt"))
+        self.actionContact.setText(app.translate("MainWindow", "Contact"))
+        self.actionGithub.setText(app.translate("MainWindow", "Github"))
+        self.actionLicense.setText(app.translate("MainWindow", "License"))
+        self.actionReport_a_bug.setText(app.translate("MainWindow", "Report a bug"))
+
+        # UI:
+        self.lineEdit_playlist_title.setPlaceholderText(
+            app.translate("MainWindow", "Playlist title")
+        )
+        self.lineEdit_url_id.setPlaceholderText(
+            app.translate("MainWindow", "URL or ID")
+        )
+
+        self.pushButton_new.setText(app.translate("MainWindow", "New"))
+        self.pushButton_delete_item.setText(app.translate("MainWindow", "Delete Item"))
+        self.pushButton_shuffle_playlist.setText(app.translate("MainWindow", "Shuffle"))
+        self.pushButton_generate.setText(app.translate("MainWindow", "Generate"))
+
+        self.textEdit_playlist_generated_url.setPlaceholderText(
+            app.translate("MainWindow", "Playlist URL will show up here...")
+        )
+
+        # Tooltips
+
+        self.lineEdit_playlist_title.setToolTip(
+            app.translate("MainWindow", "Add a playlist title here")
+        )
+        self.lineEdit_url_id.setToolTip(app.translate("MainWindow", "Enter URL or ID"))
+        self.pushButton_add.setToolTip(app.translate("MainWindow", "Add new item"))
+        self.pushButton_new.setToolTip(
+            app.translate("MainWindow", "Create new playlist")
+        )
+        self.pushButton_delete_item.setToolTip(
+            app.translate("MainWindow", "Delete selected item")
+        )
+        self.pushButton_shuffle_playlist.setToolTip(
+            app.translate("MainWindow", "Apply Shuffle")
+        )
+        self.pushButton_generate.setToolTip(
+            app.translate("MainWindow", "Generate Playlist URL")
+        )
+        self.textEdit_playlist_generated_url.setToolTip(
+            app.translate("MainWindow", "Playlist URL")
+        )
+        self.pushButton_copy.setToolTip(
+            app.translate("MainWindow", "Copy generated URL")
+        )
 
 
 if __name__ == "__main__":
