@@ -1,0 +1,8 @@
+1. Generate .ts file
+pylupdate6 src/main/python/main.py -ts src/main/resources/base/forms/translations/de.ts
+
+2. Open .ts file via context menu in Finder
+
+3. Translate strings in Linguist
+
+4. Then goto File - Release (creates .qm file in same folder)
