@@ -322,7 +322,7 @@ p, li { white-space: pre-wrap; }
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="toolTip">
-        <string>Reset playlist</string>
+        <string>Create new playlist</string>
        </property>
        <property name="styleSheet">
         <string notr="true"/>
