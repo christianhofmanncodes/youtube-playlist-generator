@@ -5,15 +5,15 @@ import sys
 import darkdetect
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from PyQt6 import uic
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import QLocale, Qt, QTranslator
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QApplication, QDialog
 from qt_material import apply_stylesheet
 from settings.operations import (
+    check_if_settings_not_default,
     get_default_settings,
     get_settings,
     save_settings_to_conf_file,
-    check_if_settings_not_default,
 )
 from settings.settings import (
     APP_ICON,
@@ -53,6 +53,7 @@ class SettingsDialog(QDialog):
         self.setWindowIcon(QIcon(app_context.get_resource(APP_ICON)))
         self.setFont(QFont("Roboto"))
 
+        self.translate_ui()
         self.enable_reset_default_settings(app_context)
 
         self.radioButton_OS.clicked.connect(self.change_to_os_theme)
@@ -174,6 +175,21 @@ class SettingsDialog(QDialog):
             self.radioButton_white.nextCheckState()
         elif app_theme == "dark":
             self.radioButton_dark.nextCheckState()
+
+    def translate_ui(self):
+        """Translates the UI based on language settings"""
+        self.trans = QTranslator(self)
+
+        settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
+
+        if settings_dict["general"][0]["programLanguage"] == "English":
+            logging.info("Program language is English.")
+
+        elif settings_dict["general"][0]["programLanguage"] == "Deutsch":
+            data = app_context.get_resource("forms/translations/de.qm")
+            german = QLocale(QLocale.Language.German, QLocale.Country.Germany)
+            self.trans.load(german, data)
+            app.instance().installTranslator(self.trans)
 
     def change_to_os_theme(self) -> None:
         """
