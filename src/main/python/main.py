@@ -335,6 +335,7 @@ class MainWindow(QMainWindow, QtStyleTools):
             app.instance().installTranslator(self.trans)
 
     def translate_menu(self) -> None:
+        """Translates the Menu based on language settings"""
         self.menuFile.setTitle(app.translate("MainWindow", "&File"))
         self.actionNew.setText(app.translate("MainWindow", "New playlist"))
         self.actionOpen.setText(app.translate("MainWindow", "Open"))
@@ -385,6 +386,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.actionReport_a_bug.setText(app.translate("MainWindow", "Report a bug"))
 
     def translate_main_window(self) -> None:
+        """Translates the MainWindow based on language settings"""
         self.lineEdit_playlist_title.setPlaceholderText(
             app.translate("MainWindow", "Playlist title")
         )
@@ -402,6 +404,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         )
 
     def translate_tooltips(self) -> None:
+        """Translates the tooltips based on language settings"""
         self.lineEdit_playlist_title.setToolTip(
             app.translate("MainWindow", "Add a playlist title here")
         )
