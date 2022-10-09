@@ -2,7 +2,6 @@
 
 import json
 
-from actions import actions
 from file.file import read_json_file
 from menu import menu
 
