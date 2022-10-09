@@ -13,11 +13,10 @@ def cut_url_to_id(url: str) -> str:
     if "v=" in url:
         get_id = url.split("v=")
         return get_id[-1]
-    elif "be/" in url:
+    if "be/" in url:
         get_id = url.split("be/")
         return get_id[-1]
-    else:
-        return ""
+    return ""
 
 
 def create_playlist_url(video_ids: str, playlist_title: str, with_title: bool) -> str:
