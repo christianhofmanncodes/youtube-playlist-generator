@@ -12,7 +12,7 @@ from settings import operations
 from settings.settings import RECENT_FILES_STRING, SETTING_FILE_LOCATION
 
 
-def get_menu_config(app_context) -> list:
+def get_menu_config(app_context) -> dict:
     """
     The get_menu_config function returns the content from menu.config.
 
