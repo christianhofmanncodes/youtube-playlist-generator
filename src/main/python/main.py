@@ -114,6 +114,7 @@ class MainWindow(QMainWindow, QtStyleTools):
 
         if darkdetect.theme().lower() != settings_dict["general"][0]["appTheme"]:
             return settings_dict["general"][0]["appTheme"]
+        return None
 
     def create_actions(self) -> None:
         """
@@ -322,12 +323,8 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.pushButton_generate.clicked.connect(self.act_generate)
         self.pushButton_copy.clicked.connect(self.act_copy_url)
 
-    def translate_ui(self) -> None:
-        """Translates the UI based on language settings"""
-        self.trans = QTranslator(self)
-
-        settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
-
+    def install_translator(self, settings_dict) -> None:
+        """Installs the Translator based on the program language settings."""
         if settings_dict["general"][0]["programLanguage"] == "English":
             logging.info("Program language is English.")
 
@@ -337,7 +334,7 @@ class MainWindow(QMainWindow, QtStyleTools):
             self.trans.load(german, data)
             app.instance().installTranslator(self.trans)
 
-        # Menu:
+    def translate_menu(self) -> None:
         self.menuFile.setTitle(app.translate("MainWindow", "&File"))
         self.actionNew.setText(app.translate("MainWindow", "New playlist"))
         self.actionOpen.setText(app.translate("MainWindow", "Open"))
@@ -387,7 +384,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.actionLicense.setText(app.translate("MainWindow", "License"))
         self.actionReport_a_bug.setText(app.translate("MainWindow", "Report a bug"))
 
-        # UI:
+    def translate_main_window(self) -> None:
         self.lineEdit_playlist_title.setPlaceholderText(
             app.translate("MainWindow", "Playlist title")
         )
@@ -404,8 +401,7 @@ class MainWindow(QMainWindow, QtStyleTools):
             app.translate("MainWindow", "Playlist URL will show up here...")
         )
 
-        # Tooltips
-
+    def translate_tooltips(self) -> None:
         self.lineEdit_playlist_title.setToolTip(
             app.translate("MainWindow", "Add a playlist title here")
         )
@@ -429,6 +425,17 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.pushButton_copy.setToolTip(
             app.translate("MainWindow", "Copy generated URL")
         )
+
+    def translate_ui(self) -> None:
+        """Translates the UI based on language settings"""
+        self.trans = QTranslator(self)
+
+        settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
+
+        self.install_translator(settings_dict)
+        self.translate_menu()
+        self.translate_main_window()
+        self.translate_tooltips()
 
 
 if __name__ == "__main__":
