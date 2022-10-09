@@ -440,7 +440,8 @@ def act_add_item(self) -> None:
             text
         ) and check_string.is_string_valid_youtube_url(text):
             user_id = cut_url_to_id(text)
-            self.listWidget_playlist_items.addItem(str(user_id))
+            if user_id != "":
+                self.listWidget_playlist_items.addItem(str(user_id))
 
             item = self.listWidget_playlist_items.findItems(
                 user_id, Qt.MatchFlag.MatchRegularExpression
