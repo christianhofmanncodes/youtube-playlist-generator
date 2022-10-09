@@ -114,8 +114,6 @@ class MainWindow(QMainWindow, QtStyleTools):
 
         if darkdetect.theme().lower() != settings_dict["general"][0]["appTheme"]:
             return settings_dict["general"][0]["appTheme"]
-        else:
-            return None
 
     def create_actions(self) -> None:
         """
@@ -324,7 +322,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.pushButton_generate.clicked.connect(self.act_generate)
         self.pushButton_copy.clicked.connect(self.act_copy_url)
 
-    def translate_ui(self):
+    def translate_ui(self) -> None:
         """Translates the UI based on language settings"""
         self.trans = QTranslator(self)
 
