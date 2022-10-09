@@ -14,7 +14,7 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
 
-A fun program based on Python to generate YouTube playlists without an account.  
+Generate YouTube playlists without an account.
 
 ## Please note
 
@@ -25,12 +25,12 @@ As of version 0.0.5, the console version will no longer be developed.
 
 - Add URL or ID
 - Specify playlist title
-- Reset playlist (deletes all items in the playlist)
+- Create new playlist (deletes all items in the playlist)
 - Playlist Tools (Count items, Clear all items, Remove duplicates)
 - Sort items (Ascending & Descending)
-- Search for items in playlist
+- Search for items in playlist (Find)
 - Rename specific items
-- Change order of playlist items
+- Change order of playlist items (via drag and drop)
 - Delete specific items
 - Shuffle-mode
 - Generate playlist URL
@@ -40,6 +40,9 @@ As of version 0.0.5, the console version will no longer be developed.
 - Save .ytplaylist file
 - Darkmode & Whitemode (switchable in settings)
 - Recent files in File menu
+- Supported languages (switchable in settings)
+  - English
+  - Deutsch (German)
 
 ## Screenshots
 
@@ -158,6 +161,7 @@ Simply free up some space.
 
 - Drag & Drop a .yt-playlist file into the playlist items section
 - Fetch YouTube video information (title, channel and thumbnail)
+- Display playlist duration
 
 ## FAQ
 
