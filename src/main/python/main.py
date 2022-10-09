@@ -14,7 +14,13 @@ from qt_material import QtStyleTools, apply_stylesheet
 from actions import actions
 from dialogs import license_dialog
 from settings.operations import get_settings, load_settings, save_settings
-from settings.settings import APP_ICON, APP_VERSION, SETTING_FILE_LOCATION
+from settings.settings import (
+    APP_ICON,
+    APP_VERSION,
+    DARK_THEME_LOCATION,
+    SETTING_FILE_LOCATION,
+    WHITE_THEME_LOCATION,
+)
 
 if platform.is_windows():
     from ctypes import windll
@@ -66,21 +72,24 @@ class MainWindow(QMainWindow, QtStyleTools):
         :param self: Used to Access the attributes and methods of the class.
         :return: None.
         """
+        invert_color = False
+        app_theme = DARK_THEME_LOCATION
+
         if darkdetect.isDark():
             invert_color = False
-            app_theme = "theme/yt-dark-red.xml"
+            app_theme = DARK_THEME_LOCATION
         elif darkdetect.isLight():
             invert_color = True
-            app_theme = "theme/yt-white-red.xml"
+            app_theme = WHITE_THEME_LOCATION
 
         settings_theme = self.compare_os_with_settings_theme()
 
         if settings_theme is not None:
             if settings_theme == "dark":
-                app_theme = "theme/yt-dark-red.xml"
+                app_theme = DARK_THEME_LOCATION
                 invert_color = False
             elif settings_theme == "white":
-                app_theme = "theme/yt-white-red.xml"
+                app_theme = WHITE_THEME_LOCATION
                 invert_color = True
 
         apply_stylesheet(
@@ -93,7 +102,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.setFont(QFont("Roboto"))
         self.compare_os_with_settings_theme()
 
-    def compare_os_with_settings_theme(self) -> [str, None]:
+    def compare_os_with_settings_theme(self) -> str | None:
         """
         The compare_os_with_settings_theme function compares the OS theme to the settings theme.
         Return appTheme if they mismatch.
