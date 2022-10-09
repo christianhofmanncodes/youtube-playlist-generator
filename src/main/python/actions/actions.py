@@ -489,7 +489,7 @@ def act_remove_duplicates(self) -> None:
         playlist.remove_duplicates_from_playlist(self)
 
 
-def act_delete_item(self) -> [None, bool]:
+def act_delete_item(self) -> None | bool:
     """
     The act_delete_item function is a function that is called
     when the user clicks on the delete item button.
@@ -558,6 +558,7 @@ def act_open(self, app_context) -> None:
         )
     except FileNotFoundError:
         logging.error("File not found. No file was imported.")
+        filename = ""
     if filename[0] != "":
         ytplaylist_dict = read_json_file(filename[0])
         logging.debug("Playlist to be imported:")
