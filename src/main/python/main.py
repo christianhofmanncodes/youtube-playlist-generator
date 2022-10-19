@@ -334,6 +334,12 @@ class MainWindow(QMainWindow, QtStyleTools):
             self.trans.load(german, data)
             app.instance().installTranslator(self.trans)
 
+        elif settings_dict["general"][0]["programLanguage"] == "Español":
+            data = app_context.get_resource("forms/translations/es-ES/MainWindow.qm")
+            german = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
+            self.trans.load(german, data)
+            app.instance().installTranslator(self.trans)
+
     def translate_menu(self) -> None:
         """Translates the Menu based on language settings"""
         self.menuFile.setTitle(app.translate("MainWindow", "&File"))

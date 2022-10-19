@@ -163,6 +163,11 @@
         <string comment="de">Deutsch</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string comment="es-ES">Español</string>
+       </property>
+      </item>
      </widget>
     </widget>
     <widget class="QGroupBox" name="groupBox_theme">

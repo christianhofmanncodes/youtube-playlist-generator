@@ -191,6 +191,12 @@ class SettingsDialog(QDialog):
             self.trans.load(german, data)
             app.instance().installTranslator(self.trans)
 
+        elif settings_dict["general"][0]["programLanguage"] == "Español":
+            data = app_context.get_resource("forms/translations/es-ES/MainWindow.qm")
+            german = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
+            self.trans.load(german, data)
+            app.instance().installTranslator(self.trans)
+
     def change_to_os_theme(self) -> None:
         """
         The change_to_os_theme function changes the theme to the OS theme.
