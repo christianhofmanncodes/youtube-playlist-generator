@@ -200,19 +200,19 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def act_cut(self):
         """Action for cut."""
-        actions.act_cut()
+        actions.act_cut(self)
 
     def act_copy(self):
         """Action for copy."""
-        actions.act_copy()
+        actions.act_copy(self)
 
     def act_paste(self):
         """Action for paste."""
-        actions.act_paste()
+        actions.act_paste(self)
 
     def act_select_all(self):
         """Action for select_all."""
-        actions.act_select_all()
+        actions.act_select_all(self)
 
     def act_find(self):
         """Action for find."""
@@ -329,7 +329,7 @@ class MainWindow(QMainWindow, QtStyleTools):
             logging.info("Program language is English.")
 
         elif settings_dict["general"][0]["programLanguage"] == "Deutsch":
-            data = app_context.get_resource("forms/translations/de.qm")
+            data = app_context.get_resource("forms/translations/de/MainWindow.qm")
             german = QLocale(QLocale.Language.German, QLocale.Country.Germany)
             self.trans.load(german, data)
             app.instance().installTranslator(self.trans)
@@ -381,7 +381,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.menuHelp.setTitle(app.translate("MainWindow", "&Help"))
         self.actionAbout_Qt.setText(app.translate("MainWindow", "About Qt"))
         self.actionContact.setText(app.translate("MainWindow", "Contact"))
-        self.actionGithub.setText(app.translate("MainWindow", "Github"))
+        self.actionGithub.setText(app.translate("MainWindow", "GitHub"))
         self.actionLicense.setText(app.translate("MainWindow", "License"))
         self.actionReport_a_bug.setText(app.translate("MainWindow", "Report a bug"))
 
