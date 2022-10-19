@@ -13,6 +13,7 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Crowdin](https://badges.crowdin.net/youtube-playlist-generator/localized.svg)](https://crowdin.com/project/youtube-playlist-generator)
 
 Generate YouTube playlists without an account.
 
@@ -195,6 +196,11 @@ See `CONTRIBUTING.md` for ways to get started.
 
 You can report any issues and are welcome to create pull requests.
 Please use the labels accordingly: `bug` for bugs, `documentation` for improvements to the documentation and `enhancement` for feature requests.
+
+### Translations
+
+You are always welcome to create translations for this project.  
+We simply use [Crowdin](https://crowdin.com/project/youtube-playlist-generator).
 
 ## License
 
