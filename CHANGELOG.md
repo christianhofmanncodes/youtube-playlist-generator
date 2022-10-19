@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Compare changes to last version]
 
-## [0.1.0] - 2022-09-30
+## [0.1.0] - 2022-10-30
 
 ### Added
 
@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - "New playlist" option
 - New license dialog
 - Native About_Qt dialog
+- Translations (switchable in settings)
+  - Deutsch (German)
 
 ### Changed
 
