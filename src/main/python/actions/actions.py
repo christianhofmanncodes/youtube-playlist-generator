@@ -171,40 +171,52 @@ def act_redo() -> None:
     print("Redo...")
 
 
-def act_cut() -> None:
+def act_cut(self) -> None:
     """
     The act_cut function cuts text from selected text field.
 
     :return: None.
     """
-    print("Cut...")
+    if self.lineEdit_playlist_title.hasSelectedText():
+        self.lineEdit_playlist_title.cut()
+    elif self.lineEdit_url_id.hasSelectedText():
+        self.lineEdit_url_id.cut()
 
 
-def act_copy() -> None:
+def act_copy(self) -> None:
     """
     The act_copy function copies text from selected text field.
 
     :return: None.
     """
-    print("Copy...")
+    if self.lineEdit_playlist_title.hasSelectedText():
+        self.lineEdit_playlist_title.copy()
+    elif self.lineEdit_url_id.hasSelectedText():
+        self.lineEdit_url_id.copy()
 
 
-def act_paste() -> None:
+def act_paste(self) -> None:
     """
     The act_paste function pastes text to the selected text field.
 
     :return: None.
     """
-    print("Paste...")
+    if self.lineEdit_playlist_title.isModified():  # FIXME If selected
+        self.lineEdit_playlist_title.paste()
+    elif self.lineEdit_url_id.isModified():
+        self.lineEdit_url_id.paste()
 
 
-def act_select_all() -> None:
+def act_select_all(self) -> None:
     """
     The act_select_all function selects all text from the selected text field.
 
     :return: None.
     """
-    print("Select all...")
+    if self.lineEdit_playlist_title.text() != "":
+        self.lineEdit_playlist_title.selectAll()
+    elif self.lineEdit_url_id.text() != "":
+        self.lineEdit_url_id.selectAll()
 
 
 def act_find(self) -> None:
