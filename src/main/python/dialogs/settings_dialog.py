@@ -186,7 +186,7 @@ class SettingsDialog(QDialog):
             logging.info("Program language is English.")
 
         elif settings_dict["general"][0]["programLanguage"] == "Deutsch":
-            data = app_context.get_resource("forms/translations/de.qm")
+            data = app_context.get_resource("forms/translations/de/MainWindow.qm")
             german = QLocale(QLocale.Language.German, QLocale.Country.Germany)
             self.trans.load(german, data)
             app.instance().installTranslator(self.trans)
