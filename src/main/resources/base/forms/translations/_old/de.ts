@@ -143,7 +143,7 @@
     <message>
         <location filename="../../../../python/main.py" line="368"/>
         <source>Get video information</source>
-        <translation>Videodaten abrufen</translation>
+        <translation>Videoinformationen anzeigen</translation>
     </message>
     <message>
         <location filename="../../../../python/main.py" line="371"/>
@@ -184,7 +184,7 @@
     <message>
         <location filename="../../../../python/main.py" line="381"/>
         <source>Report a bug</source>
-        <translation>Einen Fehler melden</translation>
+        <translation>Problem melden</translation>
     </message>
     <message>
         <location filename="../../../../python/main.py" line="385"/>
@@ -214,7 +214,7 @@
     <message>
         <location filename="../../../../python/main.py" line="403"/>
         <source>Add a playlist title here</source>
-        <translation>Gib hier einen Playlist-Titel an</translation>
+        <translation>Füge hier einen Playlist-Titel hinzu</translation>
     </message>
     <message>
         <location filename="../../../../python/main.py" line="405"/>
@@ -239,7 +239,7 @@
     <message>
         <location filename="../../../../python/main.py" line="414"/>
         <source>Apply Shuffle</source>
-        <translation>Wende Shuffle an</translation>
+        <translation>Shuffle anwenden</translation>
     </message>
     <message>
         <location filename="../../../../python/main.py" line="417"/>
@@ -254,7 +254,7 @@
     <message>
         <location filename="../../../../python/main.py" line="423"/>
         <source>Copy generated URL</source>
-        <translation>Kopiere die generierte URL</translation>
+        <translation>Generierte URL kopieren</translation>
     </message>
 </context>
 </TS>
