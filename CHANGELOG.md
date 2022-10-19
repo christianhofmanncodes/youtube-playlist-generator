@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Native About_Qt dialog
 - Translations (switchable in settings)
   - Deutsch (German)
+  - Spanish (Español)
 
 ### Changed
 

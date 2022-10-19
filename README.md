@@ -44,6 +44,7 @@ As of version 0.0.5, the console version will no longer be developed.
 - Supported languages (switchable in settings)
   - English
   - Deutsch (German)
+  - Spanish (Español)
 
 ## Screenshots
 
