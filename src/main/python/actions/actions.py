@@ -388,7 +388,7 @@ def act_about_qt(self):
     return QMessageBox.aboutQt(self)
 
 
-def act_license(self) -> QMessageBox:
+def act_license(self):
     """
     The act_license function executes the License Information dialog box.
     It returns a QMessageBox object.

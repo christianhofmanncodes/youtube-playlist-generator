@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import QMessageBox
 from dialogs import dialogs
 
 
-def show_error_creating_url_dialog(self) -> QMessageBox:
+def show_error_creating_url_dialog(self):
     """
     The show_error_creating_url_dialog function shows an error dialog
     when there is an error creating the playlist URL.

@@ -3,7 +3,7 @@
 from PyQt6.QtWidgets import QMessageBox
 
 
-def show_question_dialog(self, title: str, text: str) -> QMessageBox:
+def show_question_dialog(self, title: str, text: str):
     """
     The show_question_dialog function shows a predefined question dialog.
 
@@ -15,7 +15,7 @@ def show_question_dialog(self, title: str, text: str) -> QMessageBox:
     return QMessageBox.question(self, title, text)
 
 
-def show_info_dialog(self, title: str, text: str) -> QMessageBox:
+def show_info_dialog(self, title: str, text: str):
     """
     The show_info_dialog function shows a predefined info dialog.
 
@@ -27,7 +27,7 @@ def show_info_dialog(self, title: str, text: str) -> QMessageBox:
     return QMessageBox.information(self, title, text)
 
 
-def show_error_dialog(self, title: str, text: str) -> QMessageBox:
+def show_error_dialog(self, title: str, text: str):
     """
     The show_error_dialog function shows a predefined error dialog.
 
@@ -39,7 +39,7 @@ def show_error_dialog(self, title: str, text: str) -> QMessageBox:
     return QMessageBox.critical(self, title, text)
 
 
-def show_warning_dialog(self, title: str, text: str) -> QMessageBox:
+def show_warning_dialog(self, title: str, text: str):
     """
     The show_warning_dialog function shows a predefined warning dialog.
 
