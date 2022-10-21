@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Native About_Qt dialog
 - Translations (switchable in settings)
   - Deutsch (German)
-  - Spanish (Español)
+  - Español (Spanish)
 
 ### Changed
 
@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Change program language in settings (English/Deutsch)
+- Change program language in settings
 - Edit menu functions now work probably
 - Settings are now loaded automatically
 - Keyboard shortcuts can now be changed
