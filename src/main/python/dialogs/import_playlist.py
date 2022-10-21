@@ -34,7 +34,7 @@ class PlaylistImportDialog(QDialog):
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
 
-        self.layout = QVBoxLayout()
+        self.vbox_layout = QVBoxLayout()
         message1 = QLabel("There are already items in the playlist!")
         message2 = QLabel(
             "Do you want to add the imported playlist to the existing playlist?"
@@ -42,8 +42,8 @@ class PlaylistImportDialog(QDialog):
         message3 = QLabel(
             '"No" will delete your current playlist and create a new one.'
         )
-        self.layout.addWidget(message1)
-        self.layout.addWidget(message2)
-        self.layout.addWidget(message3)
-        self.layout.addWidget(self.button_box)
-        self.setLayout(self.layout)
+        self.vbox_layout.addWidget(message1)
+        self.vbox_layout.addWidget(message2)
+        self.vbox_layout.addWidget(message3)
+        self.vbox_layout.addWidget(self.button_box)
+        self.setLayout(self.vbox_layout)

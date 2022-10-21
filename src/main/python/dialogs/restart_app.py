@@ -34,11 +34,11 @@ class RestartAppDialog(QDialog):
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
 
-        self.layout = QVBoxLayout()
+        self.vbox_layout = QVBoxLayout()
         message = QLabel(
             """To update the language settings the program needs to be restarted.
             Do you want to restart now?"""
         )
-        self.layout.addWidget(message)
-        self.layout.addWidget(self.button_box)
-        self.setLayout(self.layout)
+        self.vbox_layout.addWidget(message)
+        self.vbox_layout.addWidget(self.button_box)
+        self.setLayout(self.vbox_layout)

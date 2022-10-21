@@ -34,10 +34,10 @@ class PlaylistResetDialog(QDialog):
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
 
-        self.layout = QVBoxLayout()
+        self.vbox_layout = QVBoxLayout()
         message = QLabel(
             "Do you really want to reset your playlist? That deletes all of your items!"
         )
-        self.layout.addWidget(message)
-        self.layout.addWidget(self.button_box)
-        self.setLayout(self.layout)
+        self.vbox_layout.addWidget(message)
+        self.vbox_layout.addWidget(self.button_box)
+        self.setLayout(self.vbox_layout)
