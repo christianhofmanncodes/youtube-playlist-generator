@@ -21,6 +21,9 @@ from settings.settings import (
     SETTING_FILE_LOCATION,
 )
 
+from dialogs import restart_app
+
+
 app = QApplication(sys.argv)
 app_context = ApplicationContext()
 
@@ -252,7 +255,9 @@ class SettingsDialog(QDialog):
         :param self: Used to Reference the instance of the object itself.
         :return: None.
         """
-        logging.debug("This will change the language...")
+        logging.debug(
+            "This will change the language..."
+        )  # TODO: Use this function or remove it.
 
     def change_button_option1_clicked(self) -> None:
         """Get text from keySequenceEdit field and display in label."""
@@ -374,3 +379,9 @@ class SettingsDialog(QDialog):
         """
         if check_if_settings_not_default(self, app_context):
             self.pushButton_reset_defaults.setEnabled(True)
+
+    def restart_if_confirmed(self, app, app_context) -> None:
+        """Show dialog to restart application."""
+        dlg = restart_app.RestartAppDialog(app_context)
+        if dlg.exec():
+            app.exit(-123456789)
