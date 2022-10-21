@@ -5,6 +5,7 @@ bandit src/main/python/dialogs/dialogs.py
 bandit src/main/python/dialogs/import_playlist.py
 bandit src/main/python/dialogs/license_dialog.py
 bandit src/main/python/dialogs/reset_playlist.py
+bandit src/main/python/dialogs/restart_app.py
 bandit src/main/python/dialogs/settings_dialog.py
 bandit src/main/python/file/file.py
 bandit src/main/python/menu/menu.py
