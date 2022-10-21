@@ -44,7 +44,7 @@ As of version 0.0.5, the console version will no longer be developed.
 - Supported languages (switchable in settings)
   - English
   - Deutsch (German)
-  - Spanish (Español)
+  - Español (Spanish)
 
 ## Screenshots
 
@@ -200,7 +200,7 @@ Please use the labels accordingly: `bug` for bugs, `documentation` for improveme
 
 ### Translations
 
-You are always welcome to create translations for this project.  
+You are always welcome to help translating this project.  
 We simply use [Crowdin](https://crowdin.com/project/youtube-playlist-generator).
 
 ## License
