@@ -57,6 +57,7 @@ class SettingsDialog(QDialog):
         self.setFont(QFont("Roboto"))
 
         self.translate_ui()
+        self.translate_settings()
         self.enable_reset_default_settings(app_context)
 
         self.radioButton_OS.clicked.connect(self.change_to_os_theme)
@@ -189,16 +190,125 @@ class SettingsDialog(QDialog):
             logging.info("Program language is English.")
 
         elif settings_dict["general"][0]["programLanguage"] == "Deutsch":
-            data = app_context.get_resource("forms/translations/de/MainWindow.qm")
+            data = app_context.get_resource("forms/translations/de/SettingsDialog.qm")
             german = QLocale(QLocale.Language.German, QLocale.Country.Germany)
             self.trans.load(german, data)
             app.instance().installTranslator(self.trans)
 
         elif settings_dict["general"][0]["programLanguage"] == "Español":
-            data = app_context.get_resource("forms/translations/es-ES/MainWindow.qm")
+            data = app_context.get_resource(
+                "forms/translations/es-ES/SettingsDialog.qm"
+            )
             german = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
             self.trans.load(german, data)
             app.instance().installTranslator(self.trans)
+
+    def translate_settings(self) -> None:
+        """Translates the SettingsDialog based on language settings"""
+        self.tabWidget.setTabText(0, app.translate("SettingsDialog", "General"))
+        self.groupBox_General.setTitle(app.translate("SettingsDialog", "General"))
+        self.checkBox_option1.setText(
+            app.translate(
+                "SettingsDialog", "Open URL in Web Browser after playlist was generated"
+            ),
+        )
+        self.checkBox_option2.setText(
+            app.translate(
+                "SettingsDialog", "Copy URL to clipboard after playlist was generated"
+            )
+        )
+        self.groupBox_language.setTitle(app.translate("SettingsDialog", "Language"))
+        self.groupBox_theme.setTitle(app.translate("SettingsDialog", "Theme"))
+        self.pushButton_reset_defaults.setText(
+            app.translate("SettingsDialog", "Reset to defaults")
+        )
+
+        self.tabWidget.setTabText(
+            1, app.translate("SettingsDialog", "Keyboard Shortcuts")
+        )
+
+        self.groupBox_keyboard_shortcuts.setTitle(
+            app.translate("SettingsDialog", "Keyboard Shortcuts")
+        )
+        self.label_keyboard_shortcuts_option1_text.setText(
+            app.translate("SettingsDialog", "New playlist")
+        )
+        self.label_keyboard_shortcuts_option2_text.setText(
+            app.translate("SettingsDialog", "Open playlist")
+        )
+        self.label_keyboard_shortcuts_option3_text.setText(
+            app.translate("SettingsDialog", "Save playlist")
+        )
+        self.label_keyboard_shortcuts_option4_text.setText(
+            app.translate("SettingsDialog", "Add item")
+        )
+        self.label_keyboard_shortcuts_option5_text.setText(
+            app.translate("SettingsDialog", "Delete item")
+        )
+        self.label_keyboard_shortcuts_option6_text.setText(
+            app.translate("SettingsDialog", "Rename item")
+        )
+        self.label_keyboard_shortcuts_option7_text.setText(
+            app.translate("SettingsDialog", "Shuffle")
+        )
+        self.label_keyboard_shortcuts_option8_text.setText(
+            app.translate("SettingsDialog", "Generate")
+        )
+        self.label_keyboard_shortcuts_option9_text.setText(
+            app.translate("SettingsDialog", "Count items")
+        )
+        self.label_keyboard_shortcuts_option10_text.setText(
+            app.translate("SettingsDialog", "Clear all items")
+        )
+        self.label_keyboard_shortcuts_option11_text.setText(
+            app.translate("SettingsDialog", "Get video information")
+        )
+        self.label_keyboard_shortcuts_option12_text.setText(
+            app.translate("SettingsDialog", "Remove duplicates")
+        )
+        self.label_keyboard_shortcuts_option13_text.setText(
+            app.translate("SettingsDialog", "Copy URL")
+        )
+
+        self.pushButton_change_option1.setText(
+            app.translate("SettingsDialog", "Change")
+        )
+        self.pushButton_change_option2.setText(
+            app.translate("SettingsDialog", "Change")
+        )
+        self.pushButton_change_option3.setText(
+            app.translate("SettingsDialog", "Change")
+        )
+        self.pushButton_change_option4.setText(
+            app.translate("SettingsDialog", "Change")
+        )
+        self.pushButton_change_option5.setText(
+            app.translate("SettingsDialog", "Change")
+        )
+        self.pushButton_change_option6.setText(
+            app.translate("SettingsDialog", "Change")
+        )
+        self.pushButton_change_option7.setText(
+            app.translate("SettingsDialog", "Change")
+        )
+        self.pushButton_change_option8.setText(
+            app.translate("SettingsDialog", "Change")
+        )
+        self.pushButton_change_option9.setText(
+            app.translate("SettingsDialog", "Change")
+        )
+        self.pushButton_change_option10.setText(
+            app.translate("SettingsDialog", "Change")
+        )
+        self.pushButton_change_option11.setText(
+            app.translate("SettingsDialog", "Change")
+        )
+        self.pushButton_change_option12.setText(
+            app.translate("SettingsDialog", "Change")
+        )
+        self.pushButton_change_option13.setText(
+            app.translate("SettingsDialog", "Change")
+        )
 
     def change_to_os_theme(self) -> None:
         """
