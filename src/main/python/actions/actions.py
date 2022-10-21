@@ -154,22 +154,28 @@ def act_new(self, app_context) -> None:
             self.lineEdit_playlist_title.setFocus()
 
 
-def act_undo() -> None:
+def act_undo(self) -> None:
     """
     The act_undo function undoes the last change.
 
     :return: None.
     """
-    print("Undo...")
+    if self.lineEdit_playlist_title.hasFocus():
+        self.lineEdit_playlist_title.undo()
+    elif self.lineEdit_url_id.hasFocus():
+        self.lineEdit_url_id.undo()
 
 
-def act_redo() -> None:
+def act_redo(self) -> None:
     """
     The act_redo function redoes the last change.
 
     :return: None.
     """
-    print("Redo...")
+    if self.lineEdit_playlist_title.hasFocus():
+        self.lineEdit_playlist_title.redo()
+    elif self.lineEdit_url_id.hasFocus():
+        self.lineEdit_url_id.redo()
 
 
 def act_cut(self) -> None:
@@ -202,9 +208,9 @@ def act_paste(self) -> None:
 
     :return: None.
     """
-    if self.lineEdit_playlist_title.isModified():  # FIXME If selected
+    if self.lineEdit_playlist_title.hasFocus():
         self.lineEdit_playlist_title.paste()
-    elif self.lineEdit_url_id.isModified():
+    elif self.lineEdit_url_id.hasFocus():
         self.lineEdit_url_id.paste()
 
 
@@ -214,9 +220,12 @@ def act_select_all(self) -> None:
 
     :return: None.
     """
-    if self.lineEdit_playlist_title.text() != "":
+    if (
+        self.lineEdit_playlist_title.text() != ""
+        and self.lineEdit_playlist_title.hasFocus()
+    ):
         self.lineEdit_playlist_title.selectAll()
-    elif self.lineEdit_url_id.text() != "":
+    elif self.lineEdit_url_id.text() != "" and self.lineEdit_url_id.hasFocus():
         self.lineEdit_url_id.selectAll()
 
 
@@ -351,7 +360,7 @@ def act_shuffle(self):
     playlist.shuffle(self)
 
 
-def act_about(self) -> QMessageBox:
+def act_about(self):
     """
     The act_about function executes a QMessageBox with the title "About YouTube Playlist Generator"
     and the version number and release date of that version as text.
@@ -367,7 +376,7 @@ def act_about(self) -> QMessageBox:
     )
 
 
-def act_about_qt(self) -> QMessageBox:
+def act_about_qt(self):
     """
     The act_about_qt function executes the About QMessageBox.
 

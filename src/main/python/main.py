@@ -192,11 +192,11 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def act_undo(self):
         """Action for undo."""
-        actions.act_undo()
+        actions.act_undo(self)
 
     def act_redo(self):
         """Action for redo."""
-        actions.act_redo()
+        actions.act_redo(self)
 
     def act_cut(self):
         """Action for cut."""
