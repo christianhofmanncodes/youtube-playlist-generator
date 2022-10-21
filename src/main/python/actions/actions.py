@@ -17,6 +17,7 @@ from PyQt6.QtCore import Qt, pyqtSlot
 from PyQt6.QtGui import QAction
 from PyQt6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMessageBox
 from settings.operations import (
+    check_if_language_was_changed,
     get_settings,
     output_settings_as_dict,
     save_settings_to_conf_file,
@@ -691,7 +692,13 @@ def act_settings(self, app, app_context) -> None:
         logging.debug(components_dict)
         settings_dict = output_settings_as_dict(components_dict)
         apply_shortcuts_to_actions(self, app_context)
-        save_settings_to_conf_file(settings_dict, SETTING_FILE_LOCATION, app_context)
+        selected_language = dlg.comboBox_language.currentText()
+
+        if check_if_language_was_changed(self, app_context, selected_language):
+            save_settings_to_conf_file(
+                settings_dict, SETTING_FILE_LOCATION, app_context
+            )
+            SettingsDialog.restart_if_confirmed(self, app, app_context)
 
 
 def act_video_information(self) -> None:
