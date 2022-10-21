@@ -198,3 +198,15 @@ def check_if_settings_not_default(self, app_context) -> bool:
         DEFAULT_SETTINGS_FILE_LOCATION, app_context
     )
     return current_settings_dict != default_settings_dict
+
+
+def check_if_language_was_changed(self, app_context, selected_language) -> bool:
+    """
+    The check_if_language_was_changed function checks if the language was changed in the settings.
+
+    :param self: Used to Access the class attributes.
+    :param app_context: Used to Access the app_context.
+    :return: True if the language was changed, false otherwise.
+    """
+    current_settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
+    return current_settings_dict["general"][0]["programLanguage"] != selected_language
