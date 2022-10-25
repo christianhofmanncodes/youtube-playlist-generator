@@ -358,17 +358,6 @@ class SettingsDialog(QDialog):
         )
         logging.debug("White theme set!")
 
-    def change_language(self) -> None:
-        """
-        The change_language function will change the language in runtime.
-
-        :param self: Used to Reference the instance of the object itself.
-        :return: None.
-        """
-        logging.debug(
-            "This will change the language..."
-        )  # TODO: Use this function or remove it.
-
     def change_button_option1_clicked(self) -> None:
         """Get text from keySequenceEdit field and display in label."""
         if self.keySequenceEdit.keySequence().toString() != "":
