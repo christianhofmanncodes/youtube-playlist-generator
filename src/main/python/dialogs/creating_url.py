@@ -1,6 +1,5 @@
 """module dialogs.creating_url"""
 
-from PyQt6.QtWidgets import QMessageBox
 from dialogs import dialogs
 
 
