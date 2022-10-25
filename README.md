@@ -19,8 +19,8 @@ Generate YouTube playlists without an account.
 
 ## Please note
 
-This project originally contained both a console and a GUI version.
-As of version 0.0.5, the console version will no longer be developed.
+This project originally contained both a CLI and a GUI version.
+As of version 0.0.5, the CLI version will no longer be developed.
 
 ## Features
 
