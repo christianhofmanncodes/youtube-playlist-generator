@@ -1,942 +1,467 @@
 """main module"""
-import contextlib
-import json
 import logging
-import random
-import ssl
 import sys
-import webbrowser
-from urllib import error, request
 
+import darkdetect
+from fbs_runtime import platform
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from PyQt6 import uic
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QFont, QIcon, QKeySequence
-from PyQt6.QtWidgets import (
-    QApplication,
-    QDialog,
-    QDialogButtonBox,
-    QFileDialog,
-    QLabel,
-    QMainWindow,
-    QMessageBox,
-    QVBoxLayout,
+from PyQt6.QtCore import QLocale, QTranslator, pyqtSlot
+from PyQt6.QtGui import QFont, QIcon, QAction
+from PyQt6.QtWidgets import QApplication, QMainWindow
+from qt_material import QtStyleTools, apply_stylesheet
+
+from actions import actions
+from dialogs import license_dialog
+from settings.operations import get_settings, load_settings, save_settings
+from settings.settings import (
+    APP_ICON,
+    APP_VERSION,
+    DARK_THEME_LOCATION,
+    SETTING_FILE_LOCATION,
+    WHITE_THEME_LOCATION,
 )
-from qt_material import apply_stylesheet
 
-with contextlib.suppress(ImportError):
-    from ctypes import windll  # Only exists on Windows
+if platform.is_windows():
+    from ctypes import windll
 
-    APP_ID = "christianhofmann.youtube-playlist-generator.gui.0.0.5"
+    APP_ID = f"christianhofmann.youtube-playlist-generator.gui.{APP_VERSION}"
     windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
 
+logging.info("OS: %s", platform.name())
 
-class Ui(QMainWindow):
+
+class MainWindow(QMainWindow, QtStyleTools):
     """
     Class for the main window with all its components and functions.
     """
 
-    def __init__(self):
-        """Connect UI components with specific functions."""
-        super(Ui, self).__init__()
-        uic.loadUi(app_context.get_resource("forms/form.ui"), self)
-        self.setFont(QFont("Roboto"))
-        self.pushButton_add.clicked.connect(self.add_button_pressed)
-        self.actionAdd_item.triggered.connect(self.add_button_pressed)
-        self.pushButton_copy.clicked.connect(self.copy_button_pressed)
-        self.actionCopy_URL.triggered.connect(self.copy_button_pressed)
-        self.actionImport.triggered.connect(self.import_button_pressed)
-        self.actionExport.triggered.connect(self.export_button_pressed)
-        self.pushButton_generate.clicked.connect(self.generate_button_pressed)
-        self.actionGenerate_Playlist.triggered.connect(self.generate_button_pressed)
-        self.pushButton_delete_item.clicked.connect(self.delete_item_button_clicked)
-        self.actionDelete_Item.triggered.connect(self.delete_item_button_clicked)
-        self.pushButton_reset_playlist.clicked.connect(
-            self.reset_playlist_button_clicked
-        )
-        self.pushButton_shuffle_playlist.clicked.connect(self.shuffle_clicked)
-        self.actionReset_Playlist.triggered.connect(self.reset_playlist_button_clicked)
-        self.listWidget_playlist_items.itemDoubleClicked.connect(
-            self.item_double_clicked
-        )
-        self.actionRename_item.triggered.connect(self.item_double_clicked)
-        self.actionSettings.triggered.connect(self.settings_clicked)
-        self.actionGithub.triggered.connect(self.github_clicked)
-        self.actionReport_a_bug.triggered.connect(self.report_a_bug)
-        self.actionContact.triggered.connect(self.contact)
-        self.actionAbout.triggered.connect(self.info_button_pressed)
-        self.actionShuffle.triggered.connect(self.shuffle_clicked)
-        self.lineEdit_url_id.textChanged.connect(self.url_id_text_changed)
-        self.actionRemove_duplicates.triggered.connect(self.remove_duplicates_clicked)
-        self.actionAscending.triggered.connect(self.sort_items_ascending)
-        self.actionDescending.triggered.connect(self.sort_items_descending)
-        self.actionClear_all_items.triggered.connect(self.clear_items)
-        self.actionCount_items.triggered.connect(self.count_items_dialog)
-        self.actionQuit.triggered.connect(self.quit)
-        self.lineEdit_playlist_title.setFocus()
+    def __init__(self) -> None:
+        """
+        The __init__ function is called automatically every time the class is
+        instantiated. It sets up all of the attributes and performs any initializing
+        code.
 
-    def quit(self):
-        """Quits the application."""
+        :param self: Used to Reference the object itself.
+        :return: None.
+        """
+        super().__init__()
+        self.initialize_ui()
+        self.create_actions()
+        self.create_trigger()
+        self.translate_ui()
+
+    def initialize_ui(self) -> None:
+        """
+        The initialize_ui function sets up the application's GUI.
+        It creates a license dialog box and sets the theme for the application.
+
+        :param self: Used to Access the attributes and methods of the class MainWindow.
+        :return: None.
+        """
+        license_dialog.create_license_dialog(self, app_context)
+        self.set_theme()
+        load_settings(self, app_context)
+
+    def set_theme(self) -> None:
+        """
+        The set_theme function checks the OS theme and applies a stylesheet to the UI.
+        If the OS is dark, it will apply a dark stylesheet. If it's light, it will apply
+        a light one.
+
+        :param self: Used to Access the attributes and methods of the class.
+        :return: None.
+        """
+        invert_color = False
+        app_theme = DARK_THEME_LOCATION
+
+        if darkdetect.isDark():
+            invert_color = False
+            app_theme = DARK_THEME_LOCATION
+        elif darkdetect.isLight():
+            invert_color = True
+            app_theme = WHITE_THEME_LOCATION
+
+        settings_theme = self.compare_os_with_settings_theme()
+
+        if settings_theme is not None:
+            if settings_theme == "dark":
+                app_theme = DARK_THEME_LOCATION
+                invert_color = False
+            elif settings_theme == "white":
+                app_theme = WHITE_THEME_LOCATION
+                invert_color = True
+
+        apply_stylesheet(
+            app,
+            theme=app_context.get_resource(app_theme),
+            invert_secondary=invert_color,
+        )
+
+        uic.loadUi(app_context.get_resource("forms/main_window.ui"), self)
+        self.setFont(QFont("Roboto"))
+        self.compare_os_with_settings_theme()
+
+    def compare_os_with_settings_theme(self) -> str | None:
+        """
+        The compare_os_with_settings_theme function compares the OS theme to the settings theme.
+        Return appTheme if they mismatch.
+
+        :param self: Used to Reference the class instance.
+        :return: The appTheme if the os theme and settings theme mismatch.
+        """
+        settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
+
+        if darkdetect.theme().lower() != settings_dict["general"][0]["appTheme"]:
+            return settings_dict["general"][0]["appTheme"]
+        return None
+
+    def create_actions(self) -> None:
+        """
+        The create_actions function creates the applications menu actions.
+        The function connects each action to its corresponding slot method.
+
+        :param self: Used to Access the attributes and methods of the class.
+        :return: None.
+        """
+        self.actionNew.triggered.connect(self.act_new)
+        self.actionOpen.triggered.connect(self.act_open)
+        self.actionSave.triggered.connect(self.act_save)
+        self.actionAbout.triggered.connect(self.act_about)
+        self.actionSettings.triggered.connect(self.act_settings)
+
+        self.actionUndo.triggered.connect(self.act_undo)
+        self.actionRedo.triggered.connect(self.act_redo)
+        self.actionCut.triggered.connect(self.act_cut)
+        self.actionCopy.triggered.connect(self.act_copy)
+        self.actionPaste.triggered.connect(self.act_paste)
+        self.actionSelect_all.triggered.connect(self.act_select_all)
+        self.actionFind.triggered.connect(self.act_find)
+
+        self.actionAdd_item.triggered.connect(self.act_add_item)
+        self.actionDelete_Item.triggered.connect(self.act_delete_item)
+        self.actionRename_item.triggered.connect(self.act_rename_item)
+        self.actionShuffle.triggered.connect(self.act_shuffle)
+        self.actionGenerate_Playlist.triggered.connect(self.act_generate)
+        self.actionAscending.triggered.connect(self.act_sort_items_ascending)
+        self.actionDescending.triggered.connect(self.act_sort_items_descending)
+        self.actionCount_items.triggered.connect(self.act_count_items)
+        self.actionClear_all_items.triggered.connect(self.act_clear_items)
+        self.actionRemove_duplicates.triggered.connect(self.act_remove_duplicates)
+        self.actionGet_video_information.triggered.connect(self.act_video_information)
+        self.actionCopy_URL.triggered.connect(self.act_copy_url)
+
+        self.actionGithub.triggered.connect(self.act_github)
+        self.actionReport_a_bug.triggered.connect(self.act_report_a_bug)
+        self.actionContact.triggered.connect(self.act_contact)
+        self.actionAbout_Qt.triggered.connect(self.act_about_qt)
+        self.actionLicense.triggered.connect(self.act_license)
+
+    def act_new(self):
+        """Action for new."""
+        actions.act_new(self, app_context)
+
+    def act_open(self):
+        """Action for open."""
+        actions.act_open(self, app_context)
+
+    def act_save(self):
+        """Action for save."""
+        actions.act_save(self)
+
+    def act_about(self):
+        """Action for about."""
+        actions.act_about(self)
+
+    def act_settings(self):
+        """Action for settings."""
+        actions.act_settings(self, app, app_context)
+
+    def closeEvent(self, event) -> None:
+        """
+        The closeEvent function is called when the user closes the application.
+        It saves the settings and closes the application.
+
+        :param self: Used to Access the attributes and methods of the class in which it is used.
+        :param event: Used to Close the application.
+        :return: The event that is generated when the user tries to close the application window.
+        """
+        save_settings(self, app_context)
+        logging.info("All settings saved successfully.")
         app.quit()
 
-    def count_items_dialog(self):
-        """Opens CountItemsDialog and displays count of items in playlist."""
-        QMessageBox.information(
-            self,
-            "Info",
-            f"Number of items in playlist: {self.listWidget_playlist_items.count()}",
-        )
+    def act_undo(self):
+        """Action for undo."""
+        actions.act_undo(self)
 
-    def clear_items(self):
+    def act_redo(self):
+        """Action for redo."""
+        actions.act_redo(self)
+
+    def act_cut(self):
+        """Action for cut."""
+        actions.act_cut(self)
+
+    def act_copy(self):
+        """Action for copy."""
+        actions.act_copy(self)
+
+    def act_paste(self):
+        """Action for paste."""
+        actions.act_paste(self)
+
+    def act_select_all(self):
+        """Action for select_all."""
+        actions.act_select_all(self)
+
+    def act_find(self):
+        """Action for find."""
+        actions.act_find(self)
+
+    def act_add_item(self):
+        """Action for add_item."""
+        actions.act_add_item(self)
+
+    def act_delete_item(self):
+        """Action for delete_item."""
+        actions.act_delete_item(self)
+
+    def act_rename_item(self):
+        """Action for rename_item."""
+        actions.act_rename_item(self)
+
+    def act_shuffle(self):
+        """Action for shuffle."""
+        actions.act_shuffle(self)
+
+    def act_generate(self):
+        """Action for generate."""
+        actions.act_generate(self, app_context)
+
+    def act_sort_items_ascending(self):
+        """Action for sort_items_ascending."""
+        actions.act_sort_items_ascending(self)
+
+    def act_sort_items_descending(self):
+        """Action for sort_items_descending."""
+        actions.act_sort_items_descending(self)
+
+    def act_count_items(self):
+        """Action for count_items."""
+        actions.act_count_items(self)
+
+    def act_clear_items(self):
+        """Action for clear_items."""
+        actions.act_clear_items(self)
+
+    def act_remove_duplicates(self):
+        """Action for remove_duplicates."""
+        actions.act_remove_duplicates(self)
+
+    def act_video_information(self):
+        """Action when item in playlist clicked."""
+        actions.act_video_information(self)
+
+    def act_copy_url(self):
+        """Action for copy_url."""
+        actions.act_copy_url(self)
+
+    def act_github(self):
+        """Action for github."""
+        actions.act_github()
+
+    def act_report_a_bug(self):
+        """Action for report_a_bug."""
+        actions.act_report_a_bug()
+
+    def act_contact(self):
+        """Action for contact."""
+        actions.act_contact()
+
+    def act_about_qt(self):
+        """Action for about_qt."""
+        actions.act_about_qt(self)
+
+    def act_license(self):
+        """Action for license."""
+        actions.act_license(self)
+
+    @pyqtSlot(QAction)
+    def act_recent_file(self, action):
+        """Action for recent_file."""
+        actions.act_recent_file(self, app_context, action)
+
+    def act_url_id_text_change(self):
+        """Action for url_id_text_change."""
+        actions.act_url_id_text_change(self)
+
+    def act_click_playlist_item(self):
+        """Action for click_playlist_item."""
+        actions.act_click_playlist_item(self)
+
+    def create_trigger(self) -> None:
         """
-        Deletes all items in playlist.
-        This is not the reset function!
+        The create_trigger function creates the trigger for several MainWindow components.
+        The lineEdit_playlist_title is set to focus, and the lineEdit_url_id text is changed.
+        The button add button calls act_add item when clicked, and the listWidget playlist items
+        double click calls act rename item when clicked. The pushButton new button calls act new
+        when clicked, the pushButton delete item button clicks act delete item when clicked,
+        and the shuffle playlists pushes call shuffle playlist when pushed.
+
+        :param self: Used to Access the class attributes and methods.
+        :return: None.
         """
-        self.listWidget_playlist_items.clear()
-        logging.debug("All items in playlist deleted successfully.")
-        Ui.show_info_dialog(
-            self, "Success!", "All items in playlist deleted successfully."
+        self.lineEdit_playlist_title.setFocus()
+        self.lineEdit_url_id.textChanged.connect(self.act_url_id_text_change)
+        self.listWidget_playlist_items.itemSelectionChanged.connect(
+            self.act_click_playlist_item
         )
-        if Ui.is_playlist_widget_empty(self):
-            Ui.disable_components(self)
-            self.pushButton_copy.setEnabled(False)
-            self.actionCopy_URL.setEnabled(False)
-            self.lineEdit_url_id.setFocus()
+        self.pushButton_add.clicked.connect(self.act_add_item)
+        self.listWidget_playlist_items.itemDoubleClicked.connect(self.act_rename_item)
+        self.pushButton_new.clicked.connect(self.act_new)
+        self.pushButton_delete_item.clicked.connect(self.act_delete_item)
+        self.pushButton_shuffle_playlist.clicked.connect(self.act_shuffle)
+        self.pushButton_generate.clicked.connect(self.act_generate)
+        self.pushButton_copy.clicked.connect(self.act_copy_url)
 
-        if not Ui.playlist_widget_has_one_or_more_items(self):
-            self.actionClear_all_items.setEnabled(False)
+    def install_translator(self, settings_dict) -> None:
+        """Installs the Translator based on the program language settings."""
+        if settings_dict["general"][0]["programLanguage"] == "English":
+            logging.info("Program language is English.")
 
-    def sort_items_ascending(self):
-        """Sort items in playlist ascending."""
-        self.listWidget_playlist_items.setSortingEnabled(True)
-        self.listWidget_playlist_items.sortItems(Qt.SortOrder.AscendingOrder)
-        self.listWidget_playlist_items.setSortingEnabled(False)
+        elif settings_dict["general"][0]["programLanguage"] == "Deutsch":
+            data = app_context.get_resource("forms/translations/de/MainWindow.qm")
+            german = QLocale(QLocale.Language.German, QLocale.Country.Germany)
+            self.trans.load(german, data)
+            app.instance().installTranslator(self.trans)
 
-    def sort_items_descending(self):
-        """Sort items in playlist descending."""
-        self.listWidget_playlist_items.setSortingEnabled(True)
-        self.listWidget_playlist_items.sortItems(Qt.SortOrder.DescendingOrder)
-        self.listWidget_playlist_items.setSortingEnabled(False)
+        elif settings_dict["general"][0]["programLanguage"] == "Español":
+            data = app_context.get_resource("forms/translations/es-ES/MainWindow.qm")
+            german = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
+            self.trans.load(german, data)
+            app.instance().installTranslator(self.trans)
 
-    def url_id_text_changed(self):
-        """Enable Add button only if lineEdit_url_id is not empty."""
-        if self.lineEdit_url_id.text() != "":
-            self.pushButton_add.setEnabled(True)
-            self.actionAdd_item.setEnabled(True)
-        else:
-            self.pushButton_add.setEnabled(False)
-            self.actionAdd_item.setEnabled(False)
+    def translate_menu(self) -> None:
+        """Translates the Menu based on language settings"""
+        self.menuFile.setTitle(app.translate("MainWindow", "&File"))
+        self.actionNew.setText(app.translate("MainWindow", "New playlist"))
+        self.actionOpen.setText(app.translate("MainWindow", "Open"))
+        self.actionSave.setText(app.translate("MainWindow", "Save"))
+        self.actionAbout.setText(app.translate("MainWindow", "About"))
+        self.actionSettings.setText(app.translate("MainWindow", "Settings"))
+        self.actionQuit.setText(app.translate("MainWindow", "Quit"))
 
-    def shuffle_clicked(self):
-        """Shuffle playlist with random.shuffle()."""
-        logging.debug("Shuffle playlist...")
-        playlist = Ui.output_list_from_playlist_ids(self)
-        random.shuffle(playlist)
+        self.menuEdit.setTitle(app.translate("MainWindow", "&Edit"))
+        self.actionUndo.setText(app.translate("MainWindow", "Undo"))
+        self.actionRedo.setText(app.translate("MainWindow", "Redo"))
+        self.actionCut.setText(app.translate("MainWindow", "Cut"))
+        self.actionCopy.setText(app.translate("MainWindow", "Copy"))
+        self.actionPaste.setText(app.translate("MainWindow", "Paste"))
+        self.actionSelect_all.setText(app.translate("MainWindow", "Select All"))
+        self.actionFind.setText(app.translate("MainWindow", "Find"))
 
-        ytplaylist_dict = Ui.generate_dict_from_fields(
-            self,
-            self.lineEdit_playlist_title.text(),
-            playlist,
+        self.menuPlaylist.setTitle(app.translate("MainWindow", "&Playlist"))
+        self.actionAdd_item.setText(app.translate("MainWindow", "Add item"))
+        self.actionDelete_Item.setText(app.translate("MainWindow", "Delete item"))
+        self.actionRename_item.setText(app.translate("MainWindow", "Rename item"))
+        self.actionShuffle.setText(app.translate("MainWindow", "Shuffle"))
+        self.actionGenerate_Playlist.setText(app.translate("MainWindow", "Generate"))
+
+        self.menuSort_items.setTitle(app.translate("MainWindow", "Sort items"))
+        self.actionAscending.setText(app.translate("MainWindow", "Ascending"))
+        self.actionDescending.setText(app.translate("MainWindow", "Descending"))
+
+        self.menuTools.setTitle(app.translate("MainWindow", "Tools"))
+        self.actionCount_items.setText(app.translate("MainWindow", "Count items"))
+        self.actionClear_all_items.setText(
+            app.translate("MainWindow", "Clear all items")
         )
-
-        self.listWidget_playlist_items.clear()
-        Ui.import_from_dict(self, ytplaylist_dict)
-
-    def info_button_pressed(self):
-        """Execute InfoDialog."""
-        dlg = InfoDialog(self)
-        dlg.exec()
-
-    def contact(self):
-        """Open default mail software with contact email address."""
-        self.open_url_in_webbrowser("mailto:contact@youtube-playlist-generator.com")
-
-    def report_a_bug(self):
-        """Open Github issue page from project."""
-        self.open_url_in_webbrowser(
-            "https://github.com/christianhofmanncodes/youtube-playlist-generator/issues"
+        self.actionGet_video_information.setText(
+            app.translate("MainWindow", "Get video information")
         )
-
-    def github_clicked(self):
-        """Open Github page from project."""
-        self.open_url_in_webbrowser(
-            "https://github.com/christianhofmanncodes/youtube-playlist-generator"
-        )
-
-    def item_double_clicked(self, item):
-        """Add flag ItemIsEditable to double clicked item in playlist."""
-        list_widget = self.listWidget_playlist_items
-        for index in range(list_widget.count()):
-            item = list_widget.item(index)
-            item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEditable)
-        Ui.make_item_editable(self)
-
-    def make_item_editable(self):
-        """Make item in playlist editable."""
-        index = self.listWidget_playlist_items.currentIndex()
-        if index.isValid():
-            item = self.listWidget_playlist_items.itemFromIndex(index)
-            if not item.isSelected():
-                item.setSelected(True)
-            self.listWidget_playlist_items.edit(index)
-
-    def add_button_pressed(self):
-        """
-        Get content from textEdit field and convert URL to ID if necessary.
-        Otherwise add new item to playlist.
-        """
-        text = self.lineEdit_url_id.text()
-        if text != "":
-            if Ui.is_string_valid_url(self, text) and Ui.is_string_valid_youtube_url(
-                self, text
-            ):
-                user_id = Ui.cut_url_to_id(self, text)
-                self.listWidget_playlist_items.addItem(str(user_id))
-
-                item = self.listWidget_playlist_items.findItems(
-                    user_id, Qt.MatchFlag.MatchRegularExpression
-                )[0]
-            else:
-                self.listWidget_playlist_items.addItem(str(text))
-
-                item = self.listWidget_playlist_items.findItems(
-                    text, Qt.MatchFlag.MatchRegularExpression
-                )[0]
-            item.setSelected(True)
-            self.listWidget_playlist_items.scrollToItem(item)
-
-            self.lineEdit_url_id.clear()
-            self.pushButton_reset_playlist.setEnabled(True)
-            self.pushButton_delete_item.setEnabled(True)
-            self.actionDelete_Item.setEnabled(True)
-            self.actionRename_item.setEnabled(True)
-            self.actionReset_Playlist.setEnabled(True)
-
-            if Ui.playlist_widget_has_one_or_more_items(self):
-                self.actionClear_all_items.setEnabled(True)
-
-            if Ui.playlist_widget_has_two_or_more_items(self):
-                self.pushButton_generate.setEnabled(True)
-                self.actionGenerate_Playlist.setEnabled(True)
-                self.actionExport.setEnabled(True)
-                self.actionRemove_duplicates.setEnabled(True)
-                self.menuSort_items.setEnabled(True)
-                self.actionAscending.setEnabled(True)
-                self.actionDescending.setEnabled(True)
-
-            if Ui.playlist_widget_has_three_or_more_items(self):
-                self.pushButton_shuffle_playlist.setEnabled(True)
-                self.actionShuffle.setEnabled(True)
-
-    def is_string_valid_url(self, string):
-        """Check if http:// or https:// in string and return bool value."""
-        return "http://" in string or "https://" in string
-
-    def is_string_valid_youtube_url(self, string):
-        """Check if watch? or be/ in string and return bool value."""
-        return "watch?" in string or "be/" in string
-
-    def cut_url_to_id(self, url):
-        """Return id from video URL."""
-        if "v=" in url:
-            get_id = url.split("v=")
-        elif "be/" in url:
-            get_id = url.split("be/")
-        return get_id[-1]
-
-    def number_of_playlist_items(self):
-        """Return number of items in playlist as int."""
-        playlist = self.listWidget_playlist_items
-        return len([playlist.item(x) for x in range(playlist.count())])
-
-    def playlist_widget_has_one_or_more_items(self):
-        """Return True if one ore more items in playlist."""
-        return Ui.number_of_playlist_items(self) >= 1
-
-    def playlist_widget_has_two_or_more_items(self):
-        """Return True if two ore more items in playlist."""
-        return Ui.number_of_playlist_items(self) >= 2
-
-    def playlist_widget_has_three_or_more_items(self):
-        """Return True if three or more items in playlist."""
-        return Ui.number_of_playlist_items(self) >= 3
-
-    def is_playlist_widget_empty(self):
-        """Return True if no items in the playlist."""
-        return Ui.number_of_playlist_items(self) == 0
-
-    def disable_components(self):
-        """Disable specific components."""
-        self.pushButton_reset_playlist.setEnabled(False)
-        self.pushButton_delete_item.setEnabled(False)
-        self.pushButton_generate.setEnabled(False)
-        self.pushButton_shuffle_playlist.setEnabled(False)
-        self.actionReset_Playlist.setEnabled(False)
-        self.actionDelete_Item.setEnabled(False)
-        self.actionGenerate_Playlist.setEnabled(False)
-        self.actionShuffle.setEnabled(False)
-        self.actionRename_item.setEnabled(False)
-        self.actionExport.setEnabled(False)
-        self.actionRemove_duplicates.setEnabled(False)
-        self.textEdit_playlist_generated_url.setEnabled(False)
-
-    def remove_duplicates_clicked(self):
-        """Check if two or more items in playlist. Remove duplicates."""
-        if Ui.playlist_widget_has_two_or_more_items(self):
-            Ui.remove_duplicates_from_playlist(self)
-
-    def remove_duplicates_from_playlist(self):
-        """If playlist contains duplicated items remove them from the list."""
-        logging.debug("Remove duplicates from playlist:")
-        Ui.show_info_dialog(self, "Success!", "Any duplicates have been deleted.")
-        playlist = Ui.output_list_from_playlist_ids(self)
-        logging.debug(playlist)
-
-        playlist_without_duplicates = list(dict.fromkeys(playlist))
-
-        ytplaylist_dict = Ui.generate_dict_from_fields(
-            self,
-            self.lineEdit_playlist_title.text(),
-            playlist_without_duplicates,
+        self.actionRemove_duplicates.setText(
+            app.translate("MainWindow", "Remove duplicates")
         )
 
-        self.listWidget_playlist_items.clear()
-        Ui.import_from_dict(self, ytplaylist_dict)
+        self.actionCopy_URL.setText(app.translate("MainWindow", "Copy URL"))
 
-        if not Ui.playlist_widget_has_one_or_more_items(self):
-            self.actionClear_all_items.setEnabled(False)
+        self.menuHelp.setTitle(app.translate("MainWindow", "&Help"))
+        self.actionAbout_Qt.setText(app.translate("MainWindow", "About Qt"))
+        self.actionContact.setText(app.translate("MainWindow", "Contact"))
+        self.actionGithub.setText(app.translate("MainWindow", "GitHub"))
+        self.actionLicense.setText(app.translate("MainWindow", "License"))
+        self.actionReport_a_bug.setText(app.translate("MainWindow", "Report a bug"))
 
-        if not Ui.playlist_widget_has_two_or_more_items(self):
-            self.actionRemove_duplicates.setEnabled(False)
-            self.menuSort_items.setEnabled(False)
-            self.actionAscending.setEnabled(False)
-            self.actionDescending.setEnabled(False)
-
-        if not Ui.playlist_widget_has_three_or_more_items(self):
-            self.pushButton_shuffle_playlist.setEnabled(False)
-
-    def reset_playlist_button_clicked(self):
-        """
-        If playlist should be deleted remove all items in playlist and disable all buttons
-        and clear playlist title field.
-        """
-        dlg = AskPlaylistResetDialog(self)
-        if dlg.exec():
-            self.listWidget_playlist_items.clear()
-            logging.debug("Playlist was reset successfully.")
-            if Ui.is_playlist_widget_empty(self):
-                Ui.disable_components(self)
-                self.pushButton_copy.setEnabled(False)
-                self.actionCopy_URL.setEnabled(False)
-                self.lineEdit_playlist_title.clear()
-                self.textEdit_playlist_generated_url.clear()
-                self.lineEdit_playlist_title.setFocus()
-        else:
-            logging.debug("Playlist reset cancelled.")
-            logging.debug("No item was deleted!")
-
-    def delete_item_button_clicked(self):
-        """If item selected delete it from the playlist."""
-        list_items = self.listWidget_playlist_items.selectedItems()
-        if not list_items:
-            return
-        for item in list_items:
-            self.listWidget_playlist_items.takeItem(
-                self.listWidget_playlist_items.row(item)
-            )
-        if Ui.is_playlist_widget_empty(self):
-            Ui.disable_components(self)
-
-        elif not Ui.playlist_widget_has_one_or_more_items(self):
-            self.actionClear_all_items.setEnabled(False)
-
-        elif not Ui.playlist_widget_has_two_or_more_items(self):
-            self.pushButton_generate.setEnabled(False)
-            self.actionGenerate_Playlist.setEnabled(False)
-            self.pushButton_shuffle_playlist.setEnabled(False)
-            self.actionExport.setEnabled(False)
-            self.actionRemove_duplicates.setEnabled(False)
-            self.menuSort_items.setEnabled(False)
-            self.actionAscending.setEnabled(False)
-            self.actionDescending.setEnabled(False)
-            self.actionClear_all_items.setEnabled(False)
-
-        elif not Ui.playlist_widget_has_three_or_more_items(self):
-            self.pushButton_shuffle_playlist.setEnabled(False)
-            self.actionShuffle.setEnabled(False)
-
-    def has_text_edit_playlist_generated_url_content(self):  # deprecated
-        """Return True if textEdit_playlist_generated_url is not empty."""
-        return self.textEdit_playlist_generated_url.toPlainText() != ""
-
-    def copy_button_pressed(self):
-        """Get content from textEdit_playlist_generated_url and copy it to clipboard."""
-        text = self.textEdit_playlist_generated_url.toPlainText()
-        QApplication.clipboard().setText(text)
-
-    def read_json_file(self, filename):
-        """Return content from json-file."""
-        with open(filename, "r", encoding="UTF-8") as file:
-            data = json.load(file)
-        return data
-
-    def import_from_dict(self, ytplaylist_dict):
-        """Get content from dict and load it into the fields in the application."""
-        playlist_title = ytplaylist_dict["playlistTitle"]
-        playlist_ids = ytplaylist_dict["playlistIDs"]
-
-        self.lineEdit_playlist_title.setText(playlist_title)
-        logging.debug(playlist_ids)
-        self.listWidget_playlist_items.addItems(playlist_ids)
-
-    def check_if_items_in_playlist(self):
-        """Returns True if more than one item in playlist."""
-        number_of_items = self.listWidget_playlist_items.count()
-        logging.debug(f"Playlist items count: {number_of_items}")
-        return number_of_items >= 1
-
-    def return_number_of_items_in_playlist(self):  # deprecated
-        """Returns number of items in playlist."""
-        number_of_items = self.listWidget_playlist_items.count()
-        logging.debug(f"Playlist items count: {number_of_items}")
-        return number_of_items
-
-    def import_button_pressed(self):
-        """Get path of .ytplaylist-file and import it via import_from_dict()."""
-        try:
-            if filename := QFileDialog.getOpenFileName(
-                self,
-                "Import YouTube Playlist file",
-                "",
-                "YouTube Playlist file (*.ytplaylist)",
-            ):
-                ytplaylist_dict = Ui.read_json_file(self, filename[0])
-                logging.debug("Playlist to be imported:")
-                logging.debug(ytplaylist_dict)
-                if self.check_if_items_in_playlist():
-                    logging.debug("There are already items in playlist!")
-                    dlg = AskPlaylistImport(self)
-
-                    if dlg.exec():
-                        Ui.import_from_dict(self, ytplaylist_dict)
-                    else:
-                        Ui.reset_playlist_button_clicked(self)
-                        Ui.import_from_dict(self, ytplaylist_dict)
-                        self.lineEdit_url_id.setFocus()
-                else:
-                    Ui.import_from_dict(self, ytplaylist_dict)
-                    self.lineEdit_url_id.setFocus()
-
-                self.pushButton_reset_playlist.setEnabled(True)
-                self.pushButton_delete_item.setEnabled(True)
-                self.pushButton_generate.setEnabled(True)
-                self.pushButton_shuffle_playlist.setEnabled(True)
-                self.actionReset_Playlist.setEnabled(True)
-                self.actionDelete_Item.setEnabled(True)
-                self.actionGenerate_Playlist.setEnabled(True)
-                self.actionShuffle.setEnabled(True)
-                self.actionRename_item.setEnabled(True)
-                self.actionExport.setEnabled(True)
-                self.actionRemove_duplicates.setEnabled(True)
-                self.menuSort_items.setEnabled(True)
-                self.actionAscending.setEnabled(True)
-                self.actionDescending.setEnabled(True)
-                self.actionClear_all_items.setEnabled(True)
-        except FileNotFoundError:
-            logging.error("File not found. No file was imported.")
-
-    def export_ytplaylist_file(self, filename, ytplaylist_dict):
-        """Write playlist title and playlist items from dict to given filename.ytplaylist file."""
-        with open(filename, "w", encoding="UTF-8") as file:
-            json.dump(ytplaylist_dict, file, indent=4)
-
-    def generate_dict_from_fields(self, playlist_title, playlist_ids):
-        """Return playlist items and title as dict."""
-        return {"playlistTitle": playlist_title, "playlistIDs": playlist_ids}
-
-    def output_list_from_playlist_ids(self):
-        """Return playlist items as a list."""
-        playlist = self.listWidget_playlist_items
-        return [playlist.item(x).text() for x in range(playlist.count())]
-
-    def export_button_pressed(self):
-        """Get path to save .ytplaylist-file and generate file."""
-        try:
-            if filename := QFileDialog.getSaveFileName(
-                self,
-                "Export YouTube Playlist file",
-                "",
-                "YouTube Playlist file (*.ytplaylist)",
-            ):
-                logging.debug("Playlist exported under:")
-                logging.debug(filename[0])
-                ytplaylist_dict = Ui.generate_dict_from_fields(
-                    self,
-                    self.lineEdit_playlist_title.text(),
-                    Ui.output_list_from_playlist_ids(self),
-                )
-                Ui.export_ytplaylist_file(self, filename[0], ytplaylist_dict)
-        except FileNotFoundError:
-            logging.error("Error during export process! No file was exported.")
-
-    def show_question_dialog(self, title, text):
-        """Shows a predefined question dialog."""
-        return QMessageBox.question(self, title, text)
-
-    def show_info_dialog(self, title, text):
-        """Shows a predefined info dialog."""
-        return QMessageBox.information(self, title, text)
-
-    def show_error_dialog(self, title, text):
-        """Shows a predefined error dialog."""
-        return QMessageBox.critical(self, title, text)
-
-    def show_warning_dialog(self, title, text):
-        """Shows a predefined warning dialog."""
-        return QMessageBox.warning(self, title, text)
-
-    def generate_button_pressed(self):
-        """
-        Check if playlist title empty, ask if it should be added.
-        Otherwise generate playlist URL.
-        """
-
-        if self.lineEdit_playlist_title.text() == "":
-            if (
-                Ui.show_question_dialog(
-                    self,
-                    "Your playlist title is currently empty",
-                    "There is no title for playlist yet. Do you want to proceed?",
-                )
-                == QMessageBox.StandardButton.Yes
-            ):
-                Ui.generate_playlist(self)
-        else:
-            Ui.generate_playlist(self)
-
-    def generate_playlist(self):
-        """Generate playlist URL and enable copy button."""
-        if not Ui.is_playlist_widget_empty(self):
-            playlist = self.listWidget_playlist_items
-            playlist_items = [playlist.item(x).text() for x in range(playlist.count())]
-
-            comma_separated_string = Ui.create_comma_separated_string(
-                self, playlist_items
-            )
-            Ui.generate_video_ids_url(self, comma_separated_string)
-
-    def create_comma_separated_string(self, content_list):
-        """Add commas after each item from list and return it as a string."""
-        return ",".join(content_list)
-
-    def generate_video_ids_url(self, comma_separated_string):
-        """Generate the video ids URL from a comma separated string."""
-        if self.lineEdit_playlist_title.text() == "":
-            video_ids_url = Ui.create_playlist_url_without_title(
-                self, comma_separated_string
-            )
-
-        elif Ui.has_space_in_title(self, self.lineEdit_playlist_title.text()):
-            title_no_spaces = Ui.replace_space_in_title(
-                self, self.lineEdit_playlist_title.text()
-            )
-            video_ids_url = Ui.create_playlist_url_with_title(
-                self, comma_separated_string, title_no_spaces
-            )
-        else:
-            video_ids_url = Ui.create_playlist_url_with_title(
-                self, comma_separated_string, self.lineEdit_playlist_title.text()
-            )
-        playlist_url = self.generate_playlist_url(video_ids_url)
-        if playlist_url != "":
-            self.textEdit_playlist_generated_url.setText(playlist_url)
-            self.textEdit_playlist_generated_url.setEnabled(True)
-            self.pushButton_copy.setEnabled(True)
-            self.actionCopy_URL.setEnabled(True)
-            Ui.open_playlist_url_in_webbrowser(self, playlist_url)
-
-    def has_space_in_title(self, title):
-        """Return True if space in title."""
-        return " " in title
-
-    def replace_space_in_title(self, title_with_space):
-        """Add URL encoding to playlist title."""
-        return title_with_space.replace(" ", "%20")
-
-    def create_playlist_url_with_title(self, video_ids, playlist_title):
-        """Create playlist URL with a title from video ids and title."""
-        return f"https://www.youtube.com/watch_videos?video_ids={video_ids}&title={playlist_title}"
-
-    def create_playlist_url_without_title(self, video_ids):
-        """Create playlist URL without a title from video ids."""
-        return f"https://www.youtube.com/watch_videos?video_ids={video_ids}"
-
-    def show_error_creating_url_dialog(self):
-        """Show error creating URL dialog using show_error_dialog."""
-        return Ui.show_error_dialog(
-            self,
-            "Error with creating playlist URL",
-            "There was an error with creating the playlist URL."
-            + "\n Check if all video ids are valid and correct.",
+    def translate_main_window(self) -> None:
+        """Translates the MainWindow based on language settings"""
+        self.lineEdit_playlist_title.setPlaceholderText(
+            app.translate("MainWindow", "Playlist title")
+        )
+        self.lineEdit_url_id.setPlaceholderText(
+            app.translate("MainWindow", "URL or ID")
         )
 
-    def generate_playlist_url(self, video_ids_url):
-        """Generate the playlist URL from the video ids URL."""
-        try:
-            context = ssl._create_unverified_context()
-            with request.urlopen(video_ids_url, context=context) as response:
-                playlist_link = response.geturl()
-                playlist_link = playlist_link.split("list=")[1]
+        self.pushButton_new.setText(app.translate("MainWindow", "New"))
+        self.pushButton_delete_item.setText(app.translate("MainWindow", "Delete Item"))
+        self.pushButton_shuffle_playlist.setText(app.translate("MainWindow", "Shuffle"))
+        self.pushButton_generate.setText(app.translate("MainWindow", "Generate"))
 
-            return (
-                f"https://www.youtube.com/playlist?list={playlist_link}"
-                + "&disable_polymer=true"
-            )
-        except (error.URLError, IndexError, UnicodeEncodeError):
-            Ui.show_error_creating_url_dialog(self)
-            logging.warning("An error occurred while generating the playlist URL!")
-            return ""
-
-    def open_url_in_webbrowser(self, url):
-        """Open a URL in Webbrowser in a new tab."""
-        logging.debug(f"\nOpening {url} in new Web browser tab...\n")
-        webbrowser.open_new_tab(url)
-
-    def open_playlist_url_in_webbrowser(self, playlist_url):
-        """Open the generated playlist URL in Webbrowser."""
-        Ui.open_url_in_webbrowser(self, playlist_url)
-
-    def save_settings_to_conf_file(self, settings_dict):
-        """Write content from dict to settings.config."""
-        with open(
-            app_context.get_resource("config/settings.config"),
-            "w",
-            encoding="UTF-8",
-        ) as file:
-            json.dump(settings_dict, file, indent=4)
-
-    def load_settings(self, settings_dict):
-        """Display settings in dialog from dict."""
-        program_language = settings_dict["programLanguage"]
-        open_url_automatically = settings_dict["openURLautomatically"]
-        copy_url_to_clipboard = settings_dict["copyURLtoClipboard"]
-
-        shortcut_import_new_playlist = settings_dict["keyboardShortcuts"][0][
-            "importNewPlaylist"
-        ]
-        shortcut_export_playlist = settings_dict["keyboardShortcuts"][0][
-            "exportPlaylist"
-        ]
-        shortcut_reset_playlist = settings_dict["keyboardShortcuts"][0]["clearPlaylist"]
-        shortcut_generate_playlist = settings_dict["keyboardShortcuts"][0][
-            "generatePlaylist"
-        ]
-
-        SettingsDialog(self).comboBox_language.setCurrentText(program_language)
-
-        if open_url_automatically is True:
-            SettingsDialog(self).checkBox_option1.setCheckState(Qt.CheckState.Checked)
-
-        elif open_url_automatically is False:
-            SettingsDialog(self).checkBox_option1.setCheckState(Qt.CheckState.Unchecked)
-
-        if copy_url_to_clipboard is True:
-            SettingsDialog(self).checkBox_option2.setCheckState(Qt.CheckState.Checked)
-
-        elif copy_url_to_clipboard is False:
-            SettingsDialog(self).checkBox_option2.setCheckState(Qt.CheckState.Unchecked)
-
-        key_sequence_import_new_playlist = QKeySequence.fromString(
-            shortcut_import_new_playlist,
-            format=QKeySequence.SequenceFormat.PortableText,
+        self.textEdit_playlist_generated_url.setPlaceholderText(
+            app.translate("MainWindow", "Playlist URL will show up here...")
         )
 
-        SettingsDialog(self).label_keyboard_shortcuts_option1.setText(
-            shortcut_import_new_playlist
+    def translate_tooltips(self) -> None:
+        """Translates the tooltips based on language settings"""
+        self.lineEdit_playlist_title.setToolTip(
+            app.translate("MainWindow", "Add a playlist title here")
+        )
+        self.lineEdit_url_id.setToolTip(app.translate("MainWindow", "Enter URL or ID"))
+        self.pushButton_add.setToolTip(app.translate("MainWindow", "Add new item"))
+        self.pushButton_new.setToolTip(
+            app.translate("MainWindow", "Create new playlist")
+        )
+        self.pushButton_delete_item.setToolTip(
+            app.translate("MainWindow", "Delete selected item")
+        )
+        self.pushButton_shuffle_playlist.setToolTip(
+            app.translate("MainWindow", "Apply Shuffle")
+        )
+        self.pushButton_generate.setToolTip(
+            app.translate("MainWindow", "Generate Playlist URL")
+        )
+        self.textEdit_playlist_generated_url.setToolTip(
+            app.translate("MainWindow", "Playlist URL")
+        )
+        self.pushButton_copy.setToolTip(
+            app.translate("MainWindow", "Copy generated URL")
         )
 
-        SettingsDialog(self).keySequenceEdit_option1.setKeySequence(
-            key_sequence_import_new_playlist
-        )
+    def translate_ui(self) -> None:
+        """Translates the UI based on language settings"""
+        self.trans = QTranslator(self)
 
-        SettingsDialog(self).keySequenceEdit_option2.setKeySequence(
-            shortcut_export_playlist
-        )
+        settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
 
-        SettingsDialog(self).keySequenceEdit_option3.setKeySequence(
-            shortcut_reset_playlist
-        )
-
-        SettingsDialog(self).keySequenceEdit_option4.setKeySequence(
-            shortcut_generate_playlist
-        )
-
-    def get_settings(self):
-        """Return content from settings.config."""
-        return Ui.read_json_file(
-            self,
-            app_context.get_resource("config/settings.config"),
-        )
-
-    def output_settings_as_dict(
-        self,
-        checkbox_option1_state,
-        checkbox_option2_state,
-        label_keyboard_shortcuts_option1_content,
-        label_keyboard_shortcuts_option2_content,
-        label_keyboard_shortcuts_option3_content,
-        label_keyboard_shortcuts_option4_content,
-        label_keyboard_shortcuts_option5_content,
-        combo_box_program_language_text,
-    ):
-        """Generate from settings inside settings dialog dict."""
-
-        if checkbox_option1_state is True:
-            checkbox_option1_state == "true"
-        elif checkbox_option1_state is False:
-            checkbox_option1_state == "false"
-
-        if checkbox_option2_state is True:
-            checkbox_option2_state == "true"
-        elif checkbox_option2_state is False:
-            checkbox_option2_state == "false"
-
-        return {
-            "programLanguage": combo_box_program_language_text,
-            "openURLautomatically": checkbox_option1_state,
-            "copyURLtoClipboard": checkbox_option2_state,
-            "keyboardShortcuts": [
-                {
-                    "importNewPlaylist": label_keyboard_shortcuts_option1_content,
-                    "exportPlaylist": label_keyboard_shortcuts_option2_content,
-                    "clearPlaylist": label_keyboard_shortcuts_option3_content,
-                    "generatePlaylist": label_keyboard_shortcuts_option4_content,
-                    "shufflePlaylist": label_keyboard_shortcuts_option5_content,
-                }
-            ],
-        }
-
-    def settings_clicked(self):
-        """Open settings dialog."""
-        settings_dict = Ui.get_settings(self)
-        dlg = SettingsDialog(self)
-        Ui.load_settings(self, settings_dict)
-
-        if dlg.exec():
-            checkbox_option1_state = dlg.checkBox_option1.isChecked()
-            checkbox_option2_state = dlg.checkBox_option2.isChecked()
-
-            label_keyboard_shortcuts_option1_content = (
-                dlg.label_keyboard_shortcuts_option1.text()
-            )
-            label_keyboard_shortcuts_option2_content = (
-                dlg.label_keyboard_shortcuts_option2.text()
-            )
-            label_keyboard_shortcuts_option3_content = (
-                dlg.label_keyboard_shortcuts_option3.text()
-            )
-            label_keyboard_shortcuts_option4_content = (
-                dlg.label_keyboard_shortcuts_option4.text()
-            )
-            label_keyboard_shortcuts_option5_content = (
-                dlg.label_keyboard_shortcuts_option5.text()
-            )
-
-            combo_box_program_language_text = dlg.comboBox_language.currentText()
-
-            logging.debug(f"Option 1: {checkbox_option1_state}")
-            logging.debug(f"Option 2: {checkbox_option2_state}")
-            logging.debug(
-                f"Keyboard Shortcut 1: {label_keyboard_shortcuts_option1_content}"
-            )
-            logging.debug(
-                f"Keyboard Shortcut 2: {label_keyboard_shortcuts_option2_content}"
-            )
-            logging.debug(
-                f"Keyboard Shortcut 3: {label_keyboard_shortcuts_option3_content}"
-            )
-            logging.debug(
-                f"Keyboard Shortcut 4: {label_keyboard_shortcuts_option4_content}"
-            )
-            logging.debug(
-                f"Keyboard Shortcut 5: {label_keyboard_shortcuts_option5_content}"
-            )
-            logging.debug(f"Program language: {combo_box_program_language_text}")
-
-            settings_dict = Ui.output_settings_as_dict(
-                self,
-                checkbox_option1_state,
-                checkbox_option2_state,
-                label_keyboard_shortcuts_option1_content,
-                label_keyboard_shortcuts_option2_content,
-                label_keyboard_shortcuts_option3_content,
-                label_keyboard_shortcuts_option4_content,
-                label_keyboard_shortcuts_option5_content,
-                combo_box_program_language_text,
-            )
-            Ui.save_settings_to_conf_file(self, settings_dict)
-
-
-class AskPlaylistResetDialog(QDialog):
-    """
-    Class for the dialog to ask if the playlist should be deleted with all its components.
-    """
-
-    def __init__(self, parent=None):
-        """Build the dialog with its components."""
-        super().__init__(parent)
-
-        self.setWindowTitle("Are you sure?")
-        self.setFixedSize(450, 140)
-        self.setWindowIcon(QIcon(app_context.get_resource("config/settings.config")))
-        self.setFont(QFont("Roboto"))
-
-        q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
-
-        self.button_box = QDialogButtonBox(q_btn)
-        self.button_box.accepted.connect(self.accept)
-        self.button_box.rejected.connect(self.reject)
-
-        self.layout = QVBoxLayout()
-        message = QLabel(
-            "Do you really want to reset your playlist? That deletes all of your items!"
-        )
-        self.layout.addWidget(message)
-        self.layout.addWidget(self.button_box)
-        self.setLayout(self.layout)
-
-
-class AskPlaylistImport(QDialog):
-    """
-    Class for the dialog to ask if you want to create a new playlist
-    or if you want to add the imported playlist to the existing playlist.
-    """
-
-    def __init__(self, parent=None):
-        """Build the dialog with its components."""
-        super().__init__(parent)
-
-        self.setWindowTitle("One more thing...")
-        self.setFixedSize(450, 160)
-        self.setWindowIcon(QIcon(app_context.get_resource("icon/youtube-play.icns")))
-        self.setFont(QFont("Roboto"))
-
-        q_btn = QDialogButtonBox.StandardButton.Yes | QDialogButtonBox.StandardButton.No
-
-        self.button_box = QDialogButtonBox(q_btn)
-        self.button_box.accepted.connect(self.accept)
-        self.button_box.rejected.connect(self.reject)
-
-        self.layout = QVBoxLayout()
-        message1 = QLabel("There are already items in the playlist!")
-        message2 = QLabel(
-            "Do you want to add the imported playlist to the existing playlist?"
-        )
-        message3 = QLabel(
-            '"No" will delete your current playlist and create a new one.'
-        )
-        self.layout.addWidget(message1)
-        self.layout.addWidget(message2)
-        self.layout.addWidget(message3)
-        self.layout.addWidget(self.button_box)
-        self.setLayout(self.layout)
-
-
-class InfoDialog(QDialog):
-    """
-    Class for the info dialog.
-    """
-
-    def __init__(self, parent=None):
-        """Load info_dialog.ui file."""
-        super().__init__(parent)
-        uic.loadUi((app_context.get_resource("forms/info_dialog.ui")), self)
-        self.setWindowIcon(QIcon(app_context.get_resource("icon/youtube-play.icns")))
-        self.setFont(QFont("Roboto"))
-
-
-class SettingsDialog(QDialog):
-    """
-    Class for the settings dialog with all its components and functions.
-    """
-
-    def __init__(self, parent=None):
-        """Load settings_dialog.ui file and connect components to their functions."""
-        super().__init__(parent)
-        uic.loadUi(
-            app_context.get_resource("forms/settings_dialog.ui"),
-            self,
-        )
-        self.setWindowIcon(QIcon(app_context.get_resource("icon/youtube-play.icns")))
-        self.setFont(QFont("Roboto"))
-        self.pushButton_change_option1.clicked.connect(
-            self.change_button_option1_clicked
-        )
-        self.pushButton_change_option2.clicked.connect(
-            self.change_button_option2_clicked
-        )
-        self.pushButton_change_option3.clicked.connect(
-            self.change_button_option3_clicked
-        )
-        self.pushButton_change_option4.clicked.connect(
-            self.change_button_option4_clicked
-        )
-        self.pushButton_change_option5.clicked.connect(
-            self.change_button_option5_clicked
-        )
-
-    def change_button_option1_clicked(self):
-        """Get text from keySequenceEdit1 field and display in label."""
-        if self.keySequenceEdit_option1.keySequence().toString() != "":
-            self.label_keyboard_shortcuts_option1.setText(
-                self.keySequenceEdit_option1.keySequence().toString()
-            )
-
-    def change_button_option2_clicked(self):
-        """Get text from keySequenceEdit2 field and display in label."""
-        if self.keySequenceEdit_option2.keySequence().toString() != "":
-            self.label_keyboard_shortcuts_option2.setText(
-                self.keySequenceEdit_option2.keySequence().toString()
-            )
-
-    def change_button_option3_clicked(self):
-        """Get text from keySequenceEdit3 field and display in label."""
-        if self.keySequenceEdit_option3.keySequence().toString() != "":
-            self.label_keyboard_shortcuts_option3.setText(
-                self.keySequenceEdit_option3.keySequence().toString()
-            )
-
-    def change_button_option4_clicked(self):
-        """Get text from keySequenceEdit4 field and display in label."""
-        if self.keySequenceEdit_option4.keySequence().toString() != "":
-            self.label_keyboard_shortcuts_option4.setText(
-                self.keySequenceEdit_option4.keySequence().toString()
-            )
-
-    def change_button_option5_clicked(self):
-        """Get text from keySequenceEdit5 field and display in label."""
-        if self.keySequenceEdit_option5.keySequence().toString() != "":
-            self.label_keyboard_shortcuts_option5.setText(
-                self.keySequenceEdit_option5.keySequence().toString()
-            )
+        self.install_translator(settings_dict)
+        self.translate_menu()
+        self.translate_main_window()
+        self.translate_tooltips()
 
 
 if __name__ == "__main__":
     app_context = ApplicationContext()
 
     logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.ERROR,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     )
 
     app = QApplication(sys.argv)
     app.setWindowIcon(
-        QIcon(app_context.get_resource("icon/youtube-play.icns")),
+        QIcon(app_context.get_resource(APP_ICON)),
     )
 
-    apply_stylesheet(app, theme=app_context.get_resource("theme/yt-dark-red.xml"))
-
-    window = Ui()
+    window = MainWindow()
     window.show()
 
     exit_code = app_context.app.exec()

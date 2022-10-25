@@ -6,30 +6,45 @@
 ![GitHub top language](https://img.shields.io/badge/language-python-orange)
 ![Python Version](https://img.shields.io/badge/python-3.10.6-yellow)
 ![License](https://img.shields.io/badge/license-GNU%20v3.0-blue)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=bugs)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
+[![Crowdin](https://badges.crowdin.net/youtube-playlist-generator/localized.svg)](https://crowdin.com/project/youtube-playlist-generator)
 
-A fun program based on Python to generate YouTube playlists without an account.  
+Generate YouTube playlists without an account.
 
 ## Please note
 
-This project originally contained both a console and a GUI version.
-As of version 0.0.5, the console version will no longer be developed.
+This project originally contained both a CLI and a GUI version.
+As of version 0.0.5, the CLI version will no longer be developed.
 
 ## Features
 
 - Add URL or ID
 - Specify playlist title
-- Reset playlist (deletes all items in the playlist)
+- Create new playlist (deletes all items in the playlist)
 - Playlist Tools (Count items, Clear all items, Remove duplicates)
 - Sort items (Ascending & Descending)
+- Search for items in playlist (Find)
 - Rename specific items
-- Change order of playlist items
+- Change order of playlist items (via drag and drop)
 - Delete specific items
 - Shuffle-mode
 - Generate playlist URL
 - Automatically open generated URL in default web browser
 - Copy URL to clipboard
-- Import .ytplaylist file
-- Export to .ytplaylist file
+- Open .ytplaylist file
+- Save .ytplaylist file
+- Darkmode & Whitemode (switchable in settings)
+- Recent files in File menu
+- Supported languages (switchable in settings)
+  - English
+  - Deutsch (German)
+  - Español (Spanish)
 
 ## Screenshots
 
@@ -56,7 +71,7 @@ As of version 0.0.5, the console version will no longer be developed.
 Just download and run the newest version from the Releases.
 Choose your file according to the operating system (Windows, Linux or macOS) you are using.
 
-Launch the program. Now you can either create a new playlist by adding an URL or ID to the playlist one by one, or you can import a `.ytplaylist` file. If you want to save your playlist, you can export the playlist to a `.ytplaylist` file with all its items and the playlist title. Share it with a friend if you want.
+Launch the program. Now you can either create a new playlist by adding an URL or ID to the playlist one by one, or you can open a `.ytplaylist` file. If you want to save your playlist, you can save the playlist to a `.ytplaylist` file with all its items and the playlist title. Share it with a friend if you want.
 
 ## Run Locally
 
@@ -92,6 +107,23 @@ Run the app
 
 Note: On Linux and macOS you have to use `pip3` and `python3`.  
 Pandas only needs to be installed if you want to use the console version.
+
+## Security
+
+You can check for security issues with the following commands:
+
+```bash
+  sudo chmod +x src/main/python/scanners/bandit.sh
+  sudo sh src/main/python/scanners/bandit.sh
+```
+
+```bash
+  safety check
+```
+
+You can also find the results of sonarcloud checks here:
+
+[sonarcloud](https://sonarcloud.io/project/overview?id=christianhofmanncodes_youtube-playlist-generator)
 
 ## Known issues & possible fixes
 
@@ -129,8 +161,9 @@ Simply free up some space.
 
 ## Roadmap
 
-- Change program language in settings (English/Deutsch)
-- Darkmode & Whitemode (switchable in settings)
+- Drag & Drop a .yt-playlist file into the playlist items section
+- Fetch YouTube video information (title, channel and thumbnail)
+- Display playlist duration
 
 ## FAQ
 
@@ -164,6 +197,11 @@ See `CONTRIBUTING.md` for ways to get started.
 
 You can report any issues and are welcome to create pull requests.
 Please use the labels accordingly: `bug` for bugs, `documentation` for improvements to the documentation and `enhancement` for feature requests.
+
+### Translations
+
+You are always welcome to help translating this project.  
+We simply use [Crowdin](https://crowdin.com/project/youtube-playlist-generator).
 
 ## License
 

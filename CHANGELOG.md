@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Compare changes to last version]
 
+## [0.1.0] - 2022-10-30
+
+### Added
+
+- Darkmode & Whitemode (switchable in settings)
+- Search for items in playlist (QInputDialog)
+- Recent files in File menu
+- "New playlist" option
+- New license dialog
+- Native About_Qt dialog
+- Translations (switchable in settings)
+  - Deutsch (German)
+  - Español (Spanish)
+
+### Changed
+
+- Refactor code
+- Redesign the settings dialog
+- "Import Playlist" is now simply "Open"
+- "Export Playlist" is now simply "Save"
+
+### Fixed
+
+- Change program language in settings
+- Edit menu functions now work probably
+- Settings are now loaded automatically
+- Keyboard shortcuts can now be changed
+
+### Deleted
+
+- "Reset playlist" option (replaced by "New Playlist")
+- InfoDialog (replaced by native About_Qt and new license dialog)
+
+### Security
+
+- Fix vulnerability sonarlint(python:S4830) - [RSPEC-4830](https://sonarsource.atlassian.net/browse/RSPEC-4830) [RSPEC-5436](https://sonarsource.atlassian.net/browse/RSPEC-5436)
+
 ## [0.0.5-alpha] - 2022-08-07
 
 ### Added
@@ -107,7 +144,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - This is the initial release of YouTube Playlist Generator
 
-[Compare changes to last version]: https://github.com/christianhofmanncodes/youtube-playlist-generator/compare/v0.0.4-alpha...v0.0.5-alpha
+[Compare changes to last version]: https://github.com/christianhofmanncodes/youtube-playlist-generator/compare/v0.0.5-alpha...v0.1.0
+[0.1.0]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.1.0
 [0.0.5-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.5-alpha
 [0.0.4-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.4-alpha
 [0.0.3-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.3-alpha

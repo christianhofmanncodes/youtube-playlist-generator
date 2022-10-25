@@ -1,0 +1,26 @@
+# New method
+
+1. Goto https://crowdin.com/project/youtube-playlist-generator
+
+2. Translate the project.
+
+3. Click on "Build & Download"
+
+4. Unzip the .zip file
+
+5. Copy folder to src/main/resources/base/forms/translations
+
+6. Open .ts file in Linguist
+
+7. Then goto File - Release (creates .qm file in same folder)
+
+# Old method
+
+1. Generate .ts file
+pylupdate6 src/main/python/main.py -ts src/main/resources/base/forms/translations/de/MainWindow.ts
+
+2. Open .ts file via context menu in Finder
+
+3. Translate strings in Linguist
+
+4. Then goto File - Release (creates .qm file in same folder)

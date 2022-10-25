@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>659</width>
-    <height>519</height>
+    <width>701</width>
+    <height>536</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>659</width>
-    <height>519</height>
+    <width>701</width>
+    <height>536</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>659</width>
-    <height>519</height>
+    <width>701</width>
+    <height>536</height>
    </size>
   </property>
   <property name="font">
@@ -34,8 +34,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>480</y>
+     <x>330</x>
+     <y>500</y>
      <width>341</width>
      <height>32</height>
     </rect>
@@ -47,384 +47,762 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
    </property>
   </widget>
-  <widget class="QGroupBox" name="groupBox_General">
+  <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
-     <width>641</width>
-     <height>121</height>
+     <y>20</y>
+     <width>681</width>
+     <height>481</height>
     </rect>
    </property>
-   <property name="title">
-    <string>General</string>
+   <property name="tabPosition">
+    <enum>QTabWidget::North</enum>
    </property>
-   <widget class="QCheckBox" name="checkBox_option1">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>40</y>
-      <width>481</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Open URL in Web Browser after 'Generate' button pressed.</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-    <property name="autoExclusive">
-     <bool>false</bool>
-    </property>
+   <property name="tabShape">
+    <enum>QTabWidget::Rounded</enum>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <property name="usesScrollButtons">
+    <bool>false</bool>
+   </property>
+   <property name="documentMode">
+    <bool>false</bool>
+   </property>
+   <property name="tabsClosable">
+    <bool>false</bool>
+   </property>
+   <widget class="QWidget" name="general">
+    <attribute name="title">
+     <string>General</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_General">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>651</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>General</string>
+     </property>
+     <widget class="QCheckBox" name="checkBox_option1">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>621</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Open URL in Web Browser after playlist was generated</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+      <property name="tristate">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_option2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>80</y>
+        <width>621</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Copy URL to clipboard after playlist was generated</string>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_language">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>651</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Language</string>
+     </property>
+     <widget class="QComboBox" name="comboBox_language">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>131</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="currentText">
+       <string>English</string>
+      </property>
+      <item>
+       <property name="text">
+        <string comment="eng">English</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string comment="de">Deutsch</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string comment="es-ES">Español</string>
+       </property>
+      </item>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_theme">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>250</y>
+       <width>651</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Theme</string>
+     </property>
+     <widget class="QRadioButton" name="radioButton_OS">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>121</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>OS Standard</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_white">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>40</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>White</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_dark">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>40</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Dark</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
-   <widget class="QCheckBox" name="checkBox_option2">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>80</y>
-      <width>481</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Copy URL to clipboard after 'Generate' button pressed.</string>
-    </property>
-    <property name="autoExclusive">
-     <bool>false</bool>
-    </property>
+   <widget class="QWidget" name="shortcuts">
+    <attribute name="title">
+     <string>Keyboard Shortcuts</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_keyboard_shortcuts">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>661</width>
+       <height>431</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Keyboard Shortcuts</string>
+     </property>
+     <widget class="QKeySequenceEdit" name="keySequenceEdit">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>411</width>
+        <height>51</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>140</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option8_text">
+         <property name="text">
+          <string>Generate</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option8">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Cmd+G</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option8">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>90</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option7_text">
+         <property name="text">
+          <string>Shuffle</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option7">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Alt+S</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option7">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>190</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option9_text">
+         <property name="text">
+          <string>Count items</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option9">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Alt+C</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option9">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>240</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_10">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option10_text">
+         <property name="text">
+          <string>Clear all items</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option10">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Cmd+Alt+C</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option10">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>340</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option6_text">
+         <property name="text">
+          <string>Rename item</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option6">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Cmd+Alt+R</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option6">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>390</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_13">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option13_text">
+         <property name="text">
+          <string>Copy URL</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option13">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Cmd+U</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option13">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>340</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_12">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option12_text">
+         <property name="text">
+          <string>Remove duplicates</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option12">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Alt+D</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option12">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>190</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option3_text">
+         <property name="text">
+          <string>Save playlist</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option3">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Cmd+S</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option3">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>240</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option4_text">
+         <property name="text">
+          <string>Add item</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option4">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Return</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option4">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>90</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option1_text">
+         <property name="text">
+          <string>New playlist</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option1">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Ctrl+N</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option1">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>140</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option2_text">
+         <property name="text">
+          <string>Open playlist</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option2">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Cmd+O</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option2">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>290</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option5_text">
+         <property name="text">
+          <string>Delete item</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option5">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Backspace</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option5">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>290</y>
+        <width>291</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option11_text">
+         <property name="text">
+          <string>Get video information</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_keyboard_shortcuts_option11">
+         <property name="font">
+          <font>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Alt+I</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_change_option11">
+         <property name="text">
+          <string>Change</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
    </widget>
   </widget>
-  <widget class="QGroupBox" name="groupBox_keyboard_shortcuts">
+  <widget class="QPushButton" name="pushButton_reset_defaults">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>140</y>
-     <width>641</width>
-     <height>241</height>
+     <y>500</y>
+     <width>331</width>
+     <height>31</height>
     </rect>
    </property>
-   <property name="title">
-    <string>Keyboard Shortcuts</string>
+   <property name="text">
+    <string>Reset to defaults</string>
    </property>
-   <widget class="QKeySequenceEdit" name="keySequenceEdit_option1">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>42</y>
-      <width>191</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option1_text">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>42</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Import new playlist</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option2_text">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>82</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Export playlist</string>
-    </property>
-   </widget>
-   <widget class="QKeySequenceEdit" name="keySequenceEdit_option2">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>82</y>
-      <width>191</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option3_text">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>122</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Reset</string>
-    </property>
-   </widget>
-   <widget class="QKeySequenceEdit" name="keySequenceEdit_option3">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>122</y>
-      <width>191</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option4_text">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>162</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Generate</string>
-    </property>
-   </widget>
-   <widget class="QKeySequenceEdit" name="keySequenceEdit_option4">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>162</y>
-      <width>191</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option1">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>42</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="autoFillBackground">
-     <bool>true</bool>
-    </property>
-    <property name="text">
-     <string>Cmd+I</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option2">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>82</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="autoFillBackground">
-     <bool>true</bool>
-    </property>
-    <property name="text">
-     <string>Cmd+E</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option3">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>122</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="autoFillBackground">
-     <bool>true</bool>
-    </property>
-    <property name="text">
-     <string>Alt+R</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option4">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>162</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="autoFillBackground">
-     <bool>true</bool>
-    </property>
-    <property name="text">
-     <string>Cmd+G</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_change_option1">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>40</y>
-      <width>100</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Change</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_change_option2">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>80</y>
-      <width>100</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Change</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_change_option3">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>120</y>
-      <width>100</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Change</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_change_option4">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>160</y>
-      <width>100</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Change</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option5">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>202</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="autoFillBackground">
-     <bool>true</bool>
-    </property>
-    <property name="text">
-     <string>Alt+S</string>
-    </property>
-   </widget>
-   <widget class="QKeySequenceEdit" name="keySequenceEdit_option5">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>202</y>
-      <width>191</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_keyboard_shortcuts_option5_text">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>202</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Shuffle</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_change_option5">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>200</y>
-      <width>100</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Change</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_language">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>390</y>
-     <width>641</width>
-     <height>81</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Language</string>
-   </property>
-   <widget class="QComboBox" name="comboBox_language">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>40</y>
-      <width>131</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>English</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Deutsch</string>
-     </property>
-    </item>
-   </widget>
   </widget>
  </widget>
  <resources/>

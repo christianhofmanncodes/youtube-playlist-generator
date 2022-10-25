@@ -44,6 +44,9 @@
   <property name="windowOpacity">
    <double>1.000000000000000</double>
   </property>
+  <property name="statusTip">
+   <string/>
+  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
@@ -65,6 +68,9 @@
     </property>
     <property name="contextMenuPolicy">
      <enum>Qt::DefaultContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
     </property>
     <property name="frameShape">
      <enum>QFrame::NoFrame</enum>
@@ -308,7 +314,7 @@ p, li { white-space: pre-wrap; }
       <number>-1</number>
      </property>
      <item>
-      <widget class="QPushButton" name="pushButton_reset_playlist">
+      <widget class="QPushButton" name="pushButton_new">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -316,13 +322,13 @@ p, li { white-space: pre-wrap; }
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="toolTip">
-        <string>Reset playlist</string>
+        <string>Create new playlist</string>
        </property>
        <property name="styleSheet">
         <string notr="true"/>
        </property>
        <property name="text">
-        <string>Reset</string>
+        <string>New</string>
        </property>
        <property name="icon">
         <iconset>
@@ -346,6 +352,9 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="toolTip">
         <string>Delete selected item</string>
+       </property>
+       <property name="statusTip">
+        <string/>
        </property>
        <property name="styleSheet">
         <string notr="true"/>
@@ -403,7 +412,7 @@ p, li { white-space: pre-wrap; }
     </layout>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
+  <widget class="QMenuBar" name="menuBarApp">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -425,11 +434,13 @@ p, li { white-space: pre-wrap; }
      </font>
     </property>
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
-    <addaction name="actionImport"/>
+    <addaction name="actionNew"/>
     <addaction name="separator"/>
-    <addaction name="actionExport"/>
+    <addaction name="actionOpen"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave"/>
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
     <addaction name="actionSettings"/>
@@ -446,7 +457,7 @@ p, li { white-space: pre-wrap; }
      <bool>false</bool>
     </property>
     <property name="title">
-     <string>Edit</string>
+     <string>&amp;Edit</string>
     </property>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -455,7 +466,9 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
     <addaction name="separator"/>
-    <addaction name="actionSelect_All"/>
+    <addaction name="actionSelect_all"/>
+    <addaction name="separator"/>
+    <addaction name="actionFind"/>
    </widget>
    <widget class="QMenu" name="menuPlaylist">
     <property name="font">
@@ -464,7 +477,7 @@ p, li { white-space: pre-wrap; }
      </font>
     </property>
     <property name="title">
-     <string>Playlist</string>
+     <string>&amp;Playlist</string>
     </property>
     <widget class="QMenu" name="menuSort_items">
      <property name="enabled">
@@ -488,6 +501,7 @@ p, li { white-space: pre-wrap; }
      </property>
      <addaction name="actionCount_items"/>
      <addaction name="actionClear_all_items"/>
+     <addaction name="actionGet_video_information"/>
      <addaction name="actionRemove_duplicates"/>
     </widget>
     <addaction name="actionAdd_item"/>
@@ -501,8 +515,6 @@ p, li { white-space: pre-wrap; }
     <addaction name="menuSort_items"/>
     <addaction name="menuTools"/>
     <addaction name="separator"/>
-    <addaction name="actionReset_Playlist"/>
-    <addaction name="separator"/>
     <addaction name="actionCopy_URL"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -512,21 +524,25 @@ p, li { white-space: pre-wrap; }
      </font>
     </property>
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="actionGithub"/>
     <addaction name="separator"/>
     <addaction name="actionReport_a_bug"/>
     <addaction name="actionContact"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_Qt"/>
+    <addaction name="separator"/>
+    <addaction name="actionLicense"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuPlaylist"/>
    <addaction name="menuHelp"/>
   </widget>
-  <action name="actionImport">
+  <action name="actionOpen">
    <property name="text">
-    <string>Import Playlist</string>
+    <string>Open</string>
    </property>
    <property name="font">
     <font>
@@ -534,15 +550,15 @@ p, li { white-space: pre-wrap; }
     </font>
    </property>
    <property name="shortcut">
-    <string>Ctrl+I</string>
+    <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionExport">
+  <action name="actionSave">
    <property name="enabled">
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Export Playlist</string>
+    <string>Save</string>
    </property>
    <property name="font">
     <font>
@@ -550,7 +566,7 @@ p, li { white-space: pre-wrap; }
     </font>
    </property>
    <property name="shortcut">
-    <string>Ctrl+E</string>
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionQuit">
@@ -564,6 +580,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Alt+F4</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::QuitRole</enum>
    </property>
   </action>
   <action name="actionSettings">
@@ -707,7 +726,7 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+Shift+Z</string>
    </property>
   </action>
-  <action name="actionSelect_All">
+  <action name="actionSelect_all">
    <property name="text">
     <string>Select All</string>
    </property>
@@ -848,7 +867,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionCount_items">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Count items</string>
@@ -864,13 +883,58 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Clear all items</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+C</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>New Playlist</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionFind">
+   <property name="text">
+    <string>Find</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionLicense">
+   <property name="text">
+    <string>License</string>
+   </property>
+  </action>
+  <action name="actionOpen_recent_file">
+   <property name="text">
+    <string>Open recent file</string>
+   </property>
+  </action>
+  <action name="actionGet_video_information">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Get video information</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+I</string>
+   </property>
   </action>
  </widget>
  <tabstops>
   <tabstop>lineEdit_url_id</tabstop>
   <tabstop>pushButton_add</tabstop>
   <tabstop>listWidget_playlist_items</tabstop>
-  <tabstop>pushButton_reset_playlist</tabstop>
+  <tabstop>pushButton_new</tabstop>
   <tabstop>pushButton_delete_item</tabstop>
   <tabstop>pushButton_shuffle_playlist</tabstop>
   <tabstop>pushButton_generate</tabstop>
@@ -879,5 +943,22 @@ p, li { white-space: pre-wrap; }
   <tabstop>lineEdit_playlist_title</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionQuit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>284</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
