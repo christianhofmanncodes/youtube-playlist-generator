@@ -114,7 +114,7 @@ def act_recent_file(self, app_context, action):
             self.recent_files_menu.removeAction(action_to_remove)
     else:
         process_filename(self, action, app_context)
-        print("It works!")
+        logging.info("Imported file: %s successfully.", action.text())
 
 
 def act_new(self, app_context) -> None:

@@ -141,7 +141,7 @@ def open_ytplaylist_file_from_menu(self, action, app_context) -> None:
             else:
                 import_from_dict(self, ytplaylist_dict)
                 self.lineEdit_url_id.setFocus()
-            action.enable_components(self)
+            actions.enable_components(self)
         else:
             show_error_dialog(
                 self,

@@ -6,8 +6,8 @@ import darkdetect
 from fbs_runtime import platform
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from PyQt6 import uic
-from PyQt6.QtCore import QLocale, QTranslator
-from PyQt6.QtGui import QFont, QIcon
+from PyQt6.QtCore import QLocale, QTranslator, pyqtSlot
+from PyQt6.QtGui import QFont, QIcon, QAction
 from PyQt6.QtWidgets import QApplication, QMainWindow
 from qt_material import QtStyleTools, apply_stylesheet
 
@@ -286,7 +286,8 @@ class MainWindow(QMainWindow, QtStyleTools):
         """Action for license."""
         actions.act_license(self)
 
-    def act_recent_file(self, app_context, action):
+    @pyqtSlot(QAction)
+    def act_recent_file(self, action):
         """Action for recent_file."""
         actions.act_recent_file(self, app_context, action)
 

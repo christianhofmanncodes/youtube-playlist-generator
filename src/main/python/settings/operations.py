@@ -21,6 +21,7 @@ def create_recent_file_menu(self) -> None:
     """
     self.file_menu = self.menuFile
     self.recent_files_menu = self.file_menu.addMenu("&Open recent")
+    self.recent_files_menu.triggered.connect(self.act_recent_file)
 
 
 def get_settings(filename: str, app_context) -> dict:
