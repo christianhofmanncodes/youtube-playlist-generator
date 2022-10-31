@@ -779,7 +779,7 @@ def act_video_information(self) -> None:
     """
     try:
         video_id = self.listWidget_playlist_items.currentItem().text()
-        if video_title_channel := video_info.get_title__channel_from_youtube_link(
+        if video_title_channel := video_info.get_title_channel_from_youtube_link(
             video_id
         ):
             QMessageBox.information(self, "Video information", video_title_channel)

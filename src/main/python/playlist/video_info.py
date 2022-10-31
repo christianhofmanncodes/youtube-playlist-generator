@@ -5,9 +5,9 @@ import urllib
 from lxml import etree
 
 
-def get_title__channel_from_youtube_link(video_id) -> str:
+def get_title_channel_from_youtube_link(video_id) -> str:
     """
-    The get_title__channel_from_youtube_link function takes a YouTube video ID
+    The get_title_channel_from_youtube_link function takes a YouTube video ID
     as an argument and returns the title of the video.
 
     :param video_id: Used to Specify the video id of the youtube link.
