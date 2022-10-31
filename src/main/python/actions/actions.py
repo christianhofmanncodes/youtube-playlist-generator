@@ -625,8 +625,21 @@ def act_import(self, app_context) -> None:
         logging.error("File not found. No file was imported.")
         filename = ""
     if filename[0] != "":
-        video_ids_list = read_txt_file(filename[0])
-        video_ids_list = [i for i in video_ids_list[0] if i]
+        list_of_strings = read_txt_file(filename[0])
+        list_of_strings = [
+            i for i in list_of_strings[0] if i
+        ]  # Move to function "remove_empty_strings_in_list"
+
+        video_ids_list = []
+        for item in list_of_strings:
+            if check_string.is_string_valid_url(
+                item
+            ) and check_string.is_string_valid_youtube_url(item):
+                video_id = cut_url_to_id(item)
+                video_ids_list.append(video_id)
+            else:
+                video_ids_list.append(item)
+
         ytplaylist_dict = playlist.generate_dict_from_fields("", video_ids_list)
         logging.debug("File content:")
         logging.debug(video_ids_list)
