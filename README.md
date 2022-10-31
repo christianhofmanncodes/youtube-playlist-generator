@@ -183,7 +183,7 @@ https://invidious.namazso.eu/watch?v=
 
 ### Can I batch import URLs / video IDs?
 
-As requested in #2 the function has been added to version 0.2.0.
+As requested in [#2](https://github.com/christianhofmanncodes/youtube-playlist-generator/issues/2) the function has been added to version 0.2.0.
 Just click on "Import" in the menu and select the Text file you want to import accordingly.
 
 It should look something like this:
