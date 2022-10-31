@@ -50,6 +50,38 @@ def read_txt_file(filename: str) -> list[str]:
     return strings_list
 
 
+def write_txt_file(filename: str, content: list) -> None:
+    """
+    The write_txt_file function writes a txt file with the given filename and content.
+    The function takes two arguments:
+        - filename (str): The name of the file to be written.
+        - content (list): The list containing all video ids.
+
+    :param filename:str: Used to Specify the name of the file that is to be written.
+    :param content:list: Used to Store the content that will be written into the txt file.
+    :return: None.
+    """
+    with open(filename, "w", encoding="UTF-8") as file:
+        for item in content:
+            file.writelines(item + "\n")
+
+
+def write_csv_file(filename: str, content: list) -> None:
+    """
+    The write_csv_file function writes a csv file with the given filename and content.
+    The function takes two arguments:
+        - filename (str): The name of the file to be written.
+        - content (list): The list containing all video ids.
+
+    :param filename:str: Used to Specify the name of the file that is to be written.
+    :param content:list: Used to Store the content that will be written into the txt file.
+    :return: None.
+    """
+    with open(filename, "w", encoding="UTF-8") as file:
+        for item in content:
+            file.writelines(f"{item},")
+
+
 def read_csv_file(filename: str) -> list[str]:
     """
     The read_csv_file function reads a file and returns a list of strings.

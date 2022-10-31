@@ -663,6 +663,33 @@ def act_import(self, app_context) -> None:
         # add_recent_filename(self, filename[0])
 
 
+def act_export(self) -> None:
+    """
+    The act_export function is called when the user clicks on the "Export" button.
+    It opens a file dialog and lets the user choose a location to either
+    export a .txt file or a .csv file.
+    The function then exports the playlist items to the chosen destination.
+
+    :param self: Used to Access the class variables.
+    :return: None.
+    """
+    video_ids_list = playlist.output_list_from_playlist_ids(self)
+    try:
+        filename = QFileDialog.getSaveFileName(
+            self,
+            "Export Text or CSV file",
+            "",
+            "Text file (*.txt);;CSV file (*.csv)",
+        )
+    except FileNotFoundError:
+        logging.error("File not found. No file was imported.")
+        filename = ""
+    if filename[1] == "Text file (*.txt)":
+        file.write_txt_file(filename[0], video_ids_list)
+    elif filename[1] == "CSV file (*.csv)":
+        file.write_csv_file(filename[0], video_ids_list)
+
+
 def act_save(self) -> None:
     """
     The act_save function is called when the user clicks on the "Save" button.

@@ -126,8 +126,9 @@ class MainWindow(QMainWindow, QtStyleTools):
         """
         self.actionNew.triggered.connect(self.act_new)
         self.actionOpen.triggered.connect(self.act_open)
-        self.actionImport.triggered.connect(self.act_import)
         self.actionSave.triggered.connect(self.act_save)
+        self.actionImport.triggered.connect(self.act_import)
+        self.actionExport.triggered.connect(self.act_export)
         self.actionAbout.triggered.connect(self.act_about)
         self.actionSettings.triggered.connect(self.act_settings)
 
@@ -169,6 +170,10 @@ class MainWindow(QMainWindow, QtStyleTools):
     def act_import(self):
         """Action for import."""
         actions.act_import(self, app_context)
+
+    def act_export(self):
+        """Action for import."""
+        actions.act_export(self)
 
     def act_save(self):
         """Action for save."""
