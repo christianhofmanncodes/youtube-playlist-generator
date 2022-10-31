@@ -443,6 +443,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionSave"/>
     <addaction name="separator"/>
     <addaction name="actionImport"/>
+    <addaction name="separator"/>
     <addaction name="actionExport"/>
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
@@ -941,6 +942,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionExport">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Export</string>
    </property>
