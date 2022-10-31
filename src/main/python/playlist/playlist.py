@@ -164,7 +164,7 @@ def check_if_items_in_playlist(self) -> bool:
     return number_of_items >= 1
 
 
-def generate_dict_from_fields(playlist_title: str, playlist_ids: list) -> dict:
+def generate_dict_from_fields(playlist_title: str, playlist_ids: list[str]) -> dict:
     """
     The generate_dict_from_fields function takes a playlist title and list of IDs as arguments.
     It returns a dictionary with the playlist title as the key and the list of IDs as its value.

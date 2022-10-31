@@ -126,6 +126,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         """
         self.actionNew.triggered.connect(self.act_new)
         self.actionOpen.triggered.connect(self.act_open)
+        self.actionImport.triggered.connect(self.act_import)
         self.actionSave.triggered.connect(self.act_save)
         self.actionAbout.triggered.connect(self.act_about)
         self.actionSettings.triggered.connect(self.act_settings)
@@ -164,6 +165,10 @@ class MainWindow(QMainWindow, QtStyleTools):
     def act_open(self):
         """Action for open."""
         actions.act_open(self, app_context)
+
+    def act_import(self):
+        """Action for import."""
+        actions.act_import(self, app_context)
 
     def act_save(self):
         """Action for save."""
@@ -346,6 +351,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.menuFile.setTitle(app.translate("MainWindow", "&File"))
         self.actionNew.setText(app.translate("MainWindow", "New playlist"))
         self.actionOpen.setText(app.translate("MainWindow", "Open"))
+        self.actionImport.setText(app.translate("MainWindow", "Import"))
         self.actionSave.setText(app.translate("MainWindow", "Save"))
         self.actionAbout.setText(app.translate("MainWindow", "About"))
         self.actionSettings.setText(app.translate("MainWindow", "Settings"))
