@@ -39,6 +39,8 @@ As of version 0.0.5, the CLI version will no longer be developed.
 - Copy URL to clipboard
 - Open .ytplaylist file
 - Save .ytplaylist file
+- Import a .txt file (items must be in new lines) or .csv file (items must be comma-separated)
+- Export playlist items as a .txt or .csv file
 - Darkmode & Whitemode (switchable in settings)
 - Recent files in File menu
 - Supported languages (switchable in settings)
