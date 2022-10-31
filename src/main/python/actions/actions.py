@@ -24,6 +24,7 @@ from settings.operations import (
 )
 from settings.settings import (
     APP_VERSION,
+    FILE_NOT_FOUND_STRING,
     RECENT_FILES_STRING,
     RELEASE_DATE,
     SETTING_FILE_LOCATION,
@@ -44,6 +45,7 @@ def disable_components(self) -> None:
     self.pushButton_delete_item.setEnabled(False)
     self.pushButton_generate.setEnabled(False)
     self.pushButton_shuffle_playlist.setEnabled(False)
+    self.actionExport.setEnabled(False)
     self.actionReset_Playlist.setEnabled(False)
     self.actionDelete_Item.setEnabled(False)
     self.actionGenerate_Playlist.setEnabled(False)
@@ -70,6 +72,7 @@ def enable_components(self) -> None:
     self.pushButton_new.setEnabled(True)
     self.pushButton_generate.setEnabled(True)
     self.pushButton_shuffle_playlist.setEnabled(True)
+    self.actionExport.setEnabled(True)
     self.actionReset_Playlist.setEnabled(True)
     self.actionGenerate_Playlist.setEnabled(True)
     self.actionShuffle.setEnabled(True)
@@ -579,7 +582,7 @@ def act_open(self, app_context) -> None:
             "YouTube Playlist file (*.ytplaylist)",
         )
     except FileNotFoundError:
-        logging.error("File not found. No file was imported.")
+        logging.error(FILE_NOT_FOUND_STRING)
         filename = ""
     if filename[0] != "":
         ytplaylist_dict = read_json_file(filename[0])
@@ -622,7 +625,7 @@ def act_import(self, app_context) -> None:
             "Text file (*.txt);;CSV file (*.csv)",
         )
     except FileNotFoundError:
-        logging.error("File not found. No file was imported.")
+        logging.error(FILE_NOT_FOUND_STRING)
         filename = ""
     if filename[0] != "":
         if filename[1] == "Text file (*.txt)":
@@ -682,7 +685,7 @@ def act_export(self) -> None:
             "Text file (*.txt);;CSV file (*.csv)",
         )
     except FileNotFoundError:
-        logging.error("File not found. No file was imported.")
+        logging.error(FILE_NOT_FOUND_STRING)
         filename = ""
     if filename[1] == "Text file (*.txt)":
         file.write_txt_file(filename[0], video_ids_list)
