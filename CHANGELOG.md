@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Compare changes to last version]
 
+## [0.2.0] - 2022-11-30
+
+## Added
+
+- Import function to import txt-file with multiple video IDs / URLs on new lines #2
+- Drag & Drop a .yt-playlist file into the playlist items section
+- Fetch YouTube video information (title, channel and thumbnail)
+- Display playlist duration
+- A proper Undo [FrameWork](https://doc.qt.io/qtforpython/overviews/qtwidgets-tools-undoframework-example.html)
+- Translate all dialogs
+- More language translations
+
 ## [0.1.0] - 2022-10-30
 
 ### Added
