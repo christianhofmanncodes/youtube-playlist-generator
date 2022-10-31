@@ -308,3 +308,4 @@ windows_venv/Scripts/deactivate.bat
 windows_venv/Scripts/Activate.ps1
 windows_venv/Scripts/activate.bat
 windows_venv/Scripts/activate
+macos_venv/
