@@ -20,3 +20,14 @@ def create_comma_separated_string(content_list: list) -> str:
     :return: A string with commas after each item from the list.
     """
     return ",".join(content_list)
+
+
+def remove_empty_strings_in_list(list_of_strings: list) -> list[str]:
+    """
+    The remove_empty_strings_in_list function takes a list of strings
+    and returns a list without empty strings.
+
+    :param list_of_strings:list: The list of strings to remove empty strings
+    :return: A list of strings with empty strings removed
+    """
+    return [i for i in list_of_strings[0] if i]

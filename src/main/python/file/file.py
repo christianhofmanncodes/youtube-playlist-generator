@@ -50,6 +50,20 @@ def read_txt_file(filename: str) -> list[str]:
     return strings_list
 
 
+def read_csv_file(filename: str) -> list[str]:
+    """
+    The read_csv_file function reads a file and returns a list of strings.
+
+    :param filename:str: Used to Specify the name of the file that is to be read.
+    :return: The content from a file as a list.
+    """
+    strings_list = []
+    with open(filename, "r", encoding="UTF-8") as file:
+        item = file.read().split(",")
+        strings_list.append(item)
+    return strings_list
+
+
 def write_json_file(filename: str, content: dict) -> None:
     """
     The write_json_file function writes a json file with the given filename and content.

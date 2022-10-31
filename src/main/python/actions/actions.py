@@ -6,7 +6,7 @@ from dialogs import import_playlist, reset_playlist
 from dialogs.dialogs import show_info_dialog, show_question_dialog
 from dialogs.settings_dialog import SettingsDialog
 from file import file
-from file.file import read_json_file, read_txt_file
+from file.file import read_csv_file, read_json_file, read_txt_file
 from menu.menu import (
     add_recent_filename,
     apply_shortcuts_to_actions,
@@ -28,7 +28,7 @@ from settings.settings import (
     RELEASE_DATE,
     SETTING_FILE_LOCATION,
 )
-from strings import check_string
+from strings import check_string, replace_string
 from url import open_url
 from url.url import cut_url_to_id
 
@@ -617,18 +617,19 @@ def act_import(self, app_context) -> None:
     try:
         filename = QFileDialog.getOpenFileName(
             self,
-            "Import Text file",
+            "Import Text or CSV file",
             "",
-            "Text file (*.txt)",
+            "Text file (*.txt);;CSV file (*.csv)",
         )
     except FileNotFoundError:
         logging.error("File not found. No file was imported.")
         filename = ""
     if filename[0] != "":
-        list_of_strings = read_txt_file(filename[0])
-        list_of_strings = [
-            i for i in list_of_strings[0] if i
-        ]  # Move to function "remove_empty_strings_in_list"
+        if filename[1] == "Text file (*.txt)":
+            list_of_strings = read_txt_file(filename[0])
+        elif filename[1] == "CSV file (*.csv)":
+            list_of_strings = read_csv_file(filename[0])
+        list_of_strings = replace_string.remove_empty_strings_in_list(list_of_strings)
 
         video_ids_list = []
         for item in list_of_strings:
