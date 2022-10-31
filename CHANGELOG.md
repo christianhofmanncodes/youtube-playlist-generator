@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 
-- Import function to import txt-file with multiple video IDs / URLs on new lines [#2](https://github.com/christianhofmanncodes/youtube-playlist-generator/issues/2)
+- Import function to batch import multiple video IDs / URLs via .txt and .csv file [#2](https://github.com/christianhofmanncodes/youtube-playlist-generator/issues/2)
 - Drag & Drop a .yt-playlist file into the playlist items section
 - Fetch YouTube video information (title, channel and thumbnail)
 - Display playlist duration

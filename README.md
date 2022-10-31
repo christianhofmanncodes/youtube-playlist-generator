@@ -184,11 +184,11 @@ https://invidious.namazso.eu/watch?v=
 ### Can I batch import URLs / video IDs?
 
 As requested in [#2](https://github.com/christianhofmanncodes/youtube-playlist-generator/issues/2) the function has been added to version 0.2.0.
-Just click on "Import" in the menu and select the Text file you want to import accordingly.
+Just click on "Import" in the menu and select the .txt file you want to import accordingly.
 
 It should look something like this:
 
-```txt
+```text
 Hbb5GPxXF1w
 4vbDFu0PUew
 Moq0aOiTUOA
@@ -198,7 +198,7 @@ juQvizeZJFM
 
 You can also use URLs:
 
-```txt
+```text
 https://youtu.be/gQlMMD8auMs
 https://www.youtube.com/watch?v=gQlMMD8auMs
 https://www.youtube.com/watch?v=f6YDKF0LVWw
@@ -223,6 +223,14 @@ ygJgQAYZVi0
 https://www.youtube.com/watch?v=gRnuFC4Ualw
 k6jqx9kZgPM
 ````
+
+If you want to import a .csv file, just select the file extension in the file dialog.
+
+It should look something like this:
+
+```csv
+Hbb5GPxXF1w,4vbDFu0PUew,Moq0aOiTUOA,qfVuRQX0ydQ,juQvizeZJFM
+```
 
 ## Acknowledgements
 
