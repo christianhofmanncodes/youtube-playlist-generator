@@ -585,25 +585,89 @@ def act_open(self, app_context) -> None:
         logging.error(FILE_NOT_FOUND_STRING)
         filename = ""
     if filename[0] != "":
-        ytplaylist_dict = read_json_file(filename[0])
-        logging.debug("Playlist to be imported:")
-        logging.debug(ytplaylist_dict)
-        if playlist.check_if_items_in_playlist(self):
-            logging.debug("There are already items in playlist!")
-            dlg = import_playlist.PlaylistImportDialog(app_context)
+        open_ytplaylist_file(self, app_context, filename[0])
 
-            if dlg.exec():
-                playlist.import_from_dict(self, ytplaylist_dict)
-            else:
-                act_new(self, app_context)
-                playlist.import_from_dict(self, ytplaylist_dict)
-                self.lineEdit_url_id.setFocus()
+
+def open_ytplaylist_file(self, app_context, filename) -> None:
+    """
+    The open_ytplaylist_file function opens a .ytplaylist file containing a list of YouTube video IDs.
+    The function then adds the videos to the playlist and enables components such as buttons etc.
+
+    :param self: Used to Access the class variables.
+    :param app_context: Used to Pass the QApplication object to the dialog.
+    :param filename: Used to Store the filename of the playlist that is imported.
+    :return: None.
+    """
+    ytplaylist_dict = read_json_file(filename)
+    logging.debug("Playlist to be imported:")
+    logging.debug(ytplaylist_dict)
+    if playlist.check_if_items_in_playlist(self):
+        logging.debug("There are already items in playlist!")
+        dlg = import_playlist.PlaylistImportDialog(app_context)
+
+        if dlg.exec():
+            playlist.import_from_dict(self, ytplaylist_dict)
         else:
-            logging.debug("Playlist is empty.")
+            act_new(self, app_context)
             playlist.import_from_dict(self, ytplaylist_dict)
             self.lineEdit_url_id.setFocus()
-        enable_components(self)
-        add_recent_filename(self, filename[0])
+    else:
+        logging.debug("Playlist is empty.")
+        playlist.import_from_dict(self, ytplaylist_dict)
+        self.lineEdit_url_id.setFocus()
+    enable_components(self)
+    add_recent_filename(self, filename)
+
+
+def import_txt_or_csv_file(self, app_context, filename) -> None:
+    """
+    The import_txt_or_csv_file function imports a list of video IDs or URLs from a text file,
+    CSV file, or URL into the current playlist. The function checks if there are any items in the
+    playlist already and displays an error message if so. If not, it imports the list of video IDs/URLs
+    into the current playlist.
+
+    :param self: Used to Access the fields of the MainWindow class.
+    :param app_context: Used to Pass the QApplication object to the dialog.
+    :param filename: Used to Store the path to the file.
+    :return: None
+    """
+
+    if filename[1] == "Text file (*.txt)":
+        list_of_strings = read_txt_file(filename[0])
+    elif filename[1] == "CSV file (*.csv)":
+        list_of_strings = read_csv_file(filename[0])
+    list_of_strings = replace_string.remove_empty_strings_in_list(list_of_strings)
+
+    video_ids_list = []
+    for item in list_of_strings:
+        if check_string.is_string_valid_url(
+            item
+        ) and check_string.is_string_valid_youtube_url(item):
+            video_id = cut_url_to_id(item)
+            video_ids_list.append(video_id)
+        else:
+            video_ids_list.append(item)
+
+    ytplaylist_dict = playlist.generate_dict_from_fields("", video_ids_list)
+    logging.debug("File content:")
+    logging.debug(video_ids_list)
+
+    if playlist.check_if_items_in_playlist(self):
+        logging.debug("There are already items in playlist!")
+        dlg = import_playlist.PlaylistImportDialog(app_context)
+
+        if dlg.exec():
+            playlist.import_from_dict(self, ytplaylist_dict)
+        else:
+            act_new(self, app_context)
+            playlist.import_from_dict(self, ytplaylist_dict)
+            self.lineEdit_playlist_title.setFocus()
+    else:
+        logging.debug("Playlist is empty.")
+        playlist.import_from_dict(self, ytplaylist_dict)
+        self.lineEdit_playlist_title.setFocus()
+    enable_components(self)
+    # add_recent_filename(self, filename[0])
 
 
 def act_import(self, app_context) -> None:
@@ -628,42 +692,7 @@ def act_import(self, app_context) -> None:
         logging.error(FILE_NOT_FOUND_STRING)
         filename = ""
     if filename[0] != "":
-        if filename[1] == "Text file (*.txt)":
-            list_of_strings = read_txt_file(filename[0])
-        elif filename[1] == "CSV file (*.csv)":
-            list_of_strings = read_csv_file(filename[0])
-        list_of_strings = replace_string.remove_empty_strings_in_list(list_of_strings)
-
-        video_ids_list = []
-        for item in list_of_strings:
-            if check_string.is_string_valid_url(
-                item
-            ) and check_string.is_string_valid_youtube_url(item):
-                video_id = cut_url_to_id(item)
-                video_ids_list.append(video_id)
-            else:
-                video_ids_list.append(item)
-
-        ytplaylist_dict = playlist.generate_dict_from_fields("", video_ids_list)
-        logging.debug("File content:")
-        logging.debug(video_ids_list)
-
-        if playlist.check_if_items_in_playlist(self):
-            logging.debug("There are already items in playlist!")
-            dlg = import_playlist.PlaylistImportDialog(app_context)
-
-            if dlg.exec():
-                playlist.import_from_dict(self, ytplaylist_dict)
-            else:
-                act_new(self, app_context)
-                playlist.import_from_dict(self, ytplaylist_dict)
-                self.lineEdit_playlist_title.setFocus()
-        else:
-            logging.debug("Playlist is empty.")
-            playlist.import_from_dict(self, ytplaylist_dict)
-            self.lineEdit_playlist_title.setFocus()
-        enable_components(self)
-        # add_recent_filename(self, filename[0])
+        import_txt_or_csv_file(self, app_context, filename)
 
 
 def act_export(self) -> None:
@@ -813,6 +842,7 @@ def act_video_information(self) -> None:
         if video_title_channel := video_info.get_title_channel_from_youtube_link(
             video_id
         ):
+            # video_length = video_info.get_video_length_from_video_id(video_id)
             QMessageBox.information(self, "Video information", video_title_channel)
         else:
             QMessageBox.critical(
