@@ -588,7 +588,7 @@ def act_open(self, app_context) -> None:
         open_ytplaylist_file(self, app_context, filename[0])
 
 
-def open_ytplaylist_file(self, app_context, filename) -> None:
+def open_ytplaylist_file(self, app_context, filename: str) -> None:
     """
     The open_ytplaylist_file function opens a .ytplaylist file containing
     a list of YouTube video IDs. The function then adds the videos to the playlist
@@ -620,7 +620,7 @@ def open_ytplaylist_file(self, app_context, filename) -> None:
     add_recent_filename(self, filename)
 
 
-def import_txt_or_csv_file(self, app_context, filename) -> None:
+def import_txt_or_csv_file(self, app_context, filename: tuple[str, str]) -> None:
     """
     The import_txt_or_csv_file function imports a list of video IDs or URLs from a text file,
     CSV file, or URL into the current playlist. The function checks if there are any items
@@ -632,43 +632,46 @@ def import_txt_or_csv_file(self, app_context, filename) -> None:
     :param filename: Used to Store the path to the file.
     :return: None
     """
-
     if filename[1] == "Text file (*.txt)":
         list_of_strings = read_txt_file(filename[0])
     elif filename[1] == "CSV file (*.csv)":
         list_of_strings = read_csv_file(filename[0])
-    list_of_strings = replace_string.remove_empty_strings_in_list(list_of_strings)
+    else:
+        list_of_strings = ""
 
-    video_ids_list = []
-    for item in list_of_strings:
-        if check_string.is_string_valid_url(
-            item
-        ) and check_string.is_string_valid_youtube_url(item):
-            video_id = cut_url_to_id(item)
-            video_ids_list.append(video_id)
+    if list_of_strings != "":
+        list_of_strings = replace_string.remove_empty_strings_in_list(list_of_strings)
+
+        video_ids_list = []
+        for item in list_of_strings:
+            if check_string.is_string_valid_url(
+                item
+            ) and check_string.is_string_valid_youtube_url(item):
+                video_id = cut_url_to_id(item)
+                video_ids_list.append(video_id)
+            else:
+                video_ids_list.append(item)
+
+        ytplaylist_dict = playlist.generate_dict_from_fields("", video_ids_list)
+        logging.debug("File content:")
+        logging.debug(video_ids_list)
+
+        if playlist.check_if_items_in_playlist(self):
+            logging.debug("There are already items in playlist!")
+            dlg = import_playlist.PlaylistImportDialog(app_context)
+
+            if dlg.exec():
+                playlist.import_from_dict(self, ytplaylist_dict)
+            else:
+                act_new(self, app_context)
+                playlist.import_from_dict(self, ytplaylist_dict)
+                self.lineEdit_playlist_title.setFocus()
         else:
-            video_ids_list.append(item)
-
-    ytplaylist_dict = playlist.generate_dict_from_fields("", video_ids_list)
-    logging.debug("File content:")
-    logging.debug(video_ids_list)
-
-    if playlist.check_if_items_in_playlist(self):
-        logging.debug("There are already items in playlist!")
-        dlg = import_playlist.PlaylistImportDialog(app_context)
-
-        if dlg.exec():
-            playlist.import_from_dict(self, ytplaylist_dict)
-        else:
-            act_new(self, app_context)
+            logging.debug("Playlist is empty.")
             playlist.import_from_dict(self, ytplaylist_dict)
             self.lineEdit_playlist_title.setFocus()
-    else:
-        logging.debug("Playlist is empty.")
-        playlist.import_from_dict(self, ytplaylist_dict)
-        self.lineEdit_playlist_title.setFocus()
-    enable_components(self)
-    # add_recent_filename(self, filename[0])
+        enable_components(self)
+        # add_recent_filename(self, filename[0])
 
 
 def act_import(self, app_context) -> None:
