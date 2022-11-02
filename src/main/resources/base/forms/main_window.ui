@@ -34,6 +34,9 @@
   <property name="font">
    <font/>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>YouTube Playlist Generator</string>
   </property>
@@ -82,10 +85,10 @@
      <bool>true</bool>
     </property>
     <property name="dragDropMode">
-     <enum>QAbstractItemView::InternalMove</enum>
+     <enum>QAbstractItemView::DragDrop</enum>
     </property>
     <property name="defaultDropAction">
-     <enum>Qt::MoveAction</enum>
+     <enum>Qt::CopyAction</enum>
     </property>
     <property name="alternatingRowColors">
      <bool>false</bool>
