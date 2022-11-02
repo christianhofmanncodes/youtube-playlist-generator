@@ -477,9 +477,9 @@ class MainWindow(QMainWindow, QtStyleTools):
     def dragMoveEvent(self, event):
         """
         The dragMoveEvent function is called when the user moves the mouse while dragging an item.
-        It is used to determine whether or not a drop action can occur at a given location, and if so,
-        what kind of action should be taken.
-        If the mimeData contains URLs then it sets the dropAction to CopyAction and accepts the event.
+        It is used to determine whether or not a drop action can occur at a given location,
+        and if so, what kind of action should be taken. If the mimeData contains URLs then
+        it sets the dropAction to CopyAction and accepts the event.
         Otherwise it ignores the event.
 
         :param self: Used to Access the attributes and methods of the parent class.

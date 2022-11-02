@@ -590,8 +590,9 @@ def act_open(self, app_context) -> None:
 
 def open_ytplaylist_file(self, app_context, filename) -> None:
     """
-    The open_ytplaylist_file function opens a .ytplaylist file containing a list of YouTube video IDs.
-    The function then adds the videos to the playlist and enables components such as buttons etc.
+    The open_ytplaylist_file function opens a .ytplaylist file containing
+    a list of YouTube video IDs. The function then adds the videos to the playlist
+    and enables components such as buttons etc.
 
     :param self: Used to Access the class variables.
     :param app_context: Used to Pass the QApplication object to the dialog.
@@ -622,9 +623,9 @@ def open_ytplaylist_file(self, app_context, filename) -> None:
 def import_txt_or_csv_file(self, app_context, filename) -> None:
     """
     The import_txt_or_csv_file function imports a list of video IDs or URLs from a text file,
-    CSV file, or URL into the current playlist. The function checks if there are any items in the
-    playlist already and displays an error message if so. If not, it imports the list of video IDs/URLs
-    into the current playlist.
+    CSV file, or URL into the current playlist. The function checks if there are any items
+    in the playlist already and displays an error message if so. If not, it imports the list
+    of video IDs/URLs into the current playlist.
 
     :param self: Used to Access the fields of the MainWindow class.
     :param app_context: Used to Pass the QApplication object to the dialog.
