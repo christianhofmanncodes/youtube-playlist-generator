@@ -2,17 +2,18 @@
 import logging
 import sys
 
+from PyQt6 import uic
+from PyQt6.QtCore import QLocale, QTranslator, Qt, pyqtSlot
+from PyQt6.QtGui import QAction, QFont, QIcon
+from PyQt6.QtWidgets import QApplication, QMainWindow
 import darkdetect
 from fbs_runtime import platform
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
-from PyQt6 import uic
-from PyQt6.QtCore import QLocale, QTranslator, pyqtSlot
-from PyQt6.QtGui import QFont, QIcon, QAction
-from PyQt6.QtWidgets import QApplication, QMainWindow
 from qt_material import QtStyleTools, apply_stylesheet
 
 from actions import actions
-from dialogs import license_dialog
+from dialogs import dialogs, license_dialog
+from file import file
 from settings.operations import get_settings, load_settings, save_settings
 from settings.settings import (
     APP_ICON,
@@ -457,6 +458,79 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.translate_menu()
         self.translate_main_window()
         self.translate_tooltips()
+
+    def dragEnterEvent(self, event):
+        """
+        The dragEnterEvent function accepts the drag event if it has urls.
+        If not, it ignores the event.
+
+        :param self: Used to Access the attributes and methods of the parent class.
+        :param event: Used to Specify the type of event that is being handled.
+        :return: A boolean value.
+        """
+
+        if event.mimeData().hasUrls:
+            event.accept()
+        else:
+            event.ignore()
+
+    def dragMoveEvent(self, event):
+        """
+        The dragMoveEvent function is called when the user moves the mouse while dragging an item.
+        It is used to determine whether or not a drop action can occur at a given location, and if so,
+        what kind of action should be taken.
+        If the mimeData contains URLs then it sets the dropAction to CopyAction and accepts the event.
+        Otherwise it ignores the event.
+
+        :param self: Used to Access the attributes and methods of the parent class.
+        :param event: Used to Handle the event.
+        :return: The action that the user wants to perform on the files.
+        """
+
+        if event.mimeData().hasUrls():
+            event.setDropAction(Qt.DropAction.CopyAction)
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        """
+        The dropEvent function accepts a QDropEvent and determines
+        whether the dropped item is a local file. If it is,
+        it appends the path to the list of links. If not, it ignores the event.
+
+        :param self: Used to Access the attributes and methods of the class.
+        :param event: Used to Determine the action of the drop event.
+        :return: A boolean value that indicates whether the event was accepted.
+        """
+        if event.mimeData().hasUrls():
+            event.setDropAction(Qt.DropAction.CopyAction)
+            event.accept()
+
+            links = []
+            for url in event.mimeData().urls():
+                if url.isLocalFile():
+                    links.append(str(url.toLocalFile()))
+                    logging.info(url.toLocalFile())
+
+                    if file.check_file_format(str(url.toLocalFile()), ".ytplaylist"):
+                        actions.open_ytplaylist_file(
+                            self, app_context, str(url.toLocalFile())
+                        )
+                    elif file.check_file_format(str(url.toLocalFile()), ".txt"):
+                        filename = (str(url.toLocalFile()), "Text file (*.txt)")
+                        actions.import_txt_or_csv_file(self, app_context, filename)
+                    elif file.check_file_format(str(url.toLocalFile()), ".csv"):
+                        filename = (str(url.toLocalFile()), "CSV file (*.csv)")
+                        actions.import_txt_or_csv_file(self, app_context, filename)
+                    else:
+                        dialogs.show_error_dialog(
+                            self,
+                            "Unknown file format",
+                            "This file format is not supported!",
+                        )
+        else:
+            event.ignore()
 
 
 if __name__ == "__main__":
