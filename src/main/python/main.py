@@ -271,7 +271,7 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def act_video_information(self):
         """Action when item in playlist clicked."""
-        actions.act_video_information(self)
+        actions.act_video_information(self, app, app_context)
 
     def act_copy_url(self):
         """Action for copy_url."""
