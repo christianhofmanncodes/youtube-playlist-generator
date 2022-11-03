@@ -5,7 +5,7 @@ import logging
 from pytube import YouTube, exceptions
 
 
-def get_video_info(video_id: str) -> dict[str]:
+def get_video_info(video_id: str) -> dict | None:
     """
     The get_video_info function accepts a YouTube video ID as an argument
     and returns the following:
@@ -32,7 +32,5 @@ def get_video_info(video_id: str) -> dict[str]:
                 "rating": yt.rating,
                 "views": yt.views,
             }
-        else:
-            return {}
     except exceptions.PytubeError:
         logging.warning("Video id %s is unavailable.", video_id)
