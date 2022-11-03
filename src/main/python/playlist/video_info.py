@@ -18,20 +18,21 @@ def get_video_info(video_id: str) -> dict[str]:
     """
     try:
         yt = YouTube(f"http://youtube.com/watch?v={video_id}")
+        if yt != {}:
+            return {
+                "title": yt.title,
+                "author": yt.author,
+                "channel_id": yt.channel_id,
+                "channel_url": yt.channel_url,
+                "thumbnail_url": yt.thumbnail_url,
+                "description": yt.description,
+                "keywords": yt.keywords,
+                "length": yt.length,
+                "publish_date": yt.publish_date,
+                "rating": yt.rating,
+                "views": yt.views,
+            }
+        else:
+            return {}
     except exceptions.PytubeError:
-        logging.warning(f"Video id {video_id} is unavailable.")
-        return {}
-    if yt != {}:
-        return {
-            "title": yt.title,
-            "author": yt.author,
-            "channel_id": yt.channel_id,
-            "channel_url": yt.channel_url,
-            "thumbnail_url": yt.thumbnail_url,
-            "description": yt.description,
-            "keywords": yt.keywords,
-            "length": yt.length,
-            "publish_date": yt.publish_date,
-            "rating": yt.rating,
-            "views": yt.views,
-        }
+        logging.warning("Video id %s is unavailable.", video_id)

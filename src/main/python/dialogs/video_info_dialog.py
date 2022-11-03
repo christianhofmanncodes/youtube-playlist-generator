@@ -71,17 +71,25 @@ class VideoInfoDialog(QDialog):
         and uses that to load the thumbnail image.
 
         :param self: Used to Access variables that belongs to the class.
-        :param video_information: Used to Get the thumbnail url from the video_information dictionary.
+        :param video_information: Used to Get the thumbnail url from the video_information dict.
         :return: None.
         """
         url = video_information["thumbnail_url"]
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        data = urllib.request.urlopen(req).read()
+
+        with urllib.request.urlopen(url) as response:
+            data = response.read()
+
         img = QImage()
         img.loadFromData(data)
         self.lbl_thumbnail.setPixmap(QPixmap(img))
 
     def translate_video_info_dialog(self) -> None:
+        """
+        The translate_video_info_dialog function is used to translate the VideoInfoDialog.
+
+        :param self: Used to Access the attributes and methods of the class.
+        :return: None.
+        """
         self.setWindowTitle(
             app.translate("VideoInfoDialog", "Video information"),
         )
