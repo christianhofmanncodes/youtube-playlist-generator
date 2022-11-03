@@ -5,6 +5,7 @@ import logging
 from dialogs import import_playlist, reset_playlist
 from dialogs.dialogs import show_info_dialog, show_question_dialog
 from dialogs.settings_dialog import SettingsDialog
+from dialogs.video_info_dialog import VideoInfoDialog
 from file import file
 from file.file import read_csv_file, read_json_file, read_txt_file
 from menu.menu import (
@@ -833,27 +834,18 @@ def act_settings(self, app, app_context) -> None:
             SettingsDialog.restart_if_confirmed(self, app, app_context)
 
 
-def act_video_information(self) -> None:
+def act_video_information(self, app, app_context) -> None:
     """
-    The act_video_information function displays the video title of the selected item in playlist.
-    If no item is selected, a warning message box appears.
+    The act_video_information function is called when the user clicks on "Get video information".
+    It will open a dialog window with information about that specific video.
 
     :param self: Used to Access the class attributes.
-    :return: The video title and the channel name of the selected item in playlist.
+    :param app: Used to Access the application instance.
+    :param app_context: Used to Pass the QApplication instance to the dialog.
+    :return: None.
     """
     try:
         video_id = self.listWidget_playlist_items.currentItem().text()
-        if video_title_channel := video_info.get_title_channel_from_youtube_link(
-            video_id
-        ):
-            # video_length = video_info.get_video_length_from_video_id(video_id)
-            QMessageBox.information(self, "Video information", video_title_channel)
-        else:
-            QMessageBox.critical(
-                self,
-                "Error while fetching video information",
-                f"The id '{video_id}' is invalid.",
-            )
     except AttributeError:
         QMessageBox.critical(
             self,
@@ -861,3 +853,16 @@ def act_video_information(self) -> None:
             "Please select an item in the playlist.",
         )
         logging.warning("No item in playlist selected.")
+        video_id = ""
+
+    if video_id != "":
+        if video_information := video_info.get_video_info(video_id):
+            dlg = VideoInfoDialog(app, app_context, video_information)
+            if dlg.exec():
+                logging.info("VideInfoDialog successfully opened.")
+        else:
+            QMessageBox.critical(
+                self,
+                "Error while fetching video information",
+                f"The id '{video_id}' is invalid.",
+            )
