@@ -32,5 +32,6 @@ def get_video_info(video_id: str) -> dict | None:
                 "rating": yt.rating,
                 "views": yt.views,
             }
+        return None
     except exceptions.PytubeError:
         logging.warning("Video id %s is unavailable.", video_id)
