@@ -17,21 +17,23 @@ def get_video_info(video_id: str) -> dict | None:
     :return: A dictionary containing information about the video.
     """
     try:
-        yt = YouTube(f"http://youtube.com/watch?v={video_id}")
-        if yt != {}:
-            return {
-                "title": yt.title,
-                "author": yt.author,
-                "channel_id": yt.channel_id,
-                "channel_url": yt.channel_url,
-                "thumbnail_url": yt.thumbnail_url,
-                "description": yt.description,
-                "keywords": yt.keywords,
-                "length": yt.length,
-                "publish_date": yt.publish_date,
-                "rating": yt.rating,
-                "views": yt.views,
-            }
-        return None
+        youtube_object = YouTube(f"http://youtube.com/watch?v={video_id}")
     except exceptions.PytubeError:
         logging.warning("Video id %s is unavailable.", video_id)
+        youtube_object = {}
+
+    if youtube_object != {}:
+        return {
+            "title": youtube_object.title,
+            "author": youtube_object.author,
+            "channel_id": youtube_object.channel_id,
+            "channel_url": youtube_object.channel_url,
+            "thumbnail_url": youtube_object.thumbnail_url,
+            "description": youtube_object.description,
+            "keywords": youtube_object.keywords,
+            "length": youtube_object.length,
+            "publish_date": youtube_object.publish_date,
+            "rating": youtube_object.rating,
+            "views": youtube_object.views,
+        }
+    return None
