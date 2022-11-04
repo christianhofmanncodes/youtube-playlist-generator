@@ -793,7 +793,7 @@ def generate_playlist_url(self, app_context) -> None:
     show_info_dialog(
         self,
         "Playlist generated successfully",
-        f"""Playlist length for generated playlist: 
+        f"""Playlist length for generated playlist:
         {video_info.get_playlist_length(playlist_url)}""",
     )
 
