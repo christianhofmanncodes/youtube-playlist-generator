@@ -41,14 +41,14 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>290</y>
+     <y>300</y>
      <width>561</width>
      <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>33</pointsize>
+     <pointsize>13</pointsize>
      <bold>true</bold>
     </font>
    </property>
@@ -67,7 +67,7 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>21</pointsize>
+     <pointsize>13</pointsize>
     </font>
    </property>
    <property name="text">
@@ -97,36 +97,39 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="lbl_keywords">
+  <widget class="QLabel" name="lbl_views">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>520</y>
-     <width>561</width>
+     <width>261</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Keywords</string>
+    <string>Views</string>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_length">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>240</y>
+     <x>450</x>
+     <y>300</y>
      <width>131</width>
      <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>16</pointsize>
+     <pointsize>13</pointsize>
      <bold>false</bold>
     </font>
    </property>
    <property name="text">
     <string>Length</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
    <property name="textInteractionFlags">
     <set>Qt::NoTextInteraction</set>
@@ -135,9 +138,9 @@ p, li { white-space: pre-wrap; }
   <widget class="QLabel" name="lbl_publish_date">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>320</y>
-     <width>141</width>
+     <x>390</x>
+     <y>520</y>
+     <width>191</width>
      <height>20</height>
     </rect>
    </property>
@@ -174,7 +177,7 @@ p, li { white-space: pre-wrap; }
   <zorder>lbl_title</zorder>
   <zorder>lbl_author</zorder>
   <zorder>textBrowser_description</zorder>
-  <zorder>lbl_keywords</zorder>
+  <zorder>lbl_views</zorder>
   <zorder>lbl_length</zorder>
   <zorder>lbl_publish_date</zorder>
  </widget>
