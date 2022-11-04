@@ -43,4 +43,4 @@ def format_int_with_commas(number: int) -> str:
     :param number:int: Used to Pass the number that will be formatted.
     :return: A string with commas in place of the thousands separator.
     """
-    return "{:,}".format(number)
+    return f"{number:,}"
