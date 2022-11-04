@@ -772,9 +772,30 @@ def act_generate(self, app_context) -> None:
             )
             == QMessageBox.StandardButton.Yes
         ):
-            playlist.generate_playlist(self, app_context)
+            generate_playlist_url(self, app_context)
     else:
-        playlist.generate_playlist(self, app_context)
+        generate_playlist_url(self, app_context)
+
+
+def generate_playlist_url(self, app_context) -> None:
+    """
+    The generate_playlist_url function generates a playlist url.
+    It then displays the generated playlist url in the text edit box
+    and shows an info dialog to let the user know that it was successful.
+    It also outputs the playlist duration.
+
+    :param self: Used to Access the class attributes.
+    :param app_context: Used to Pass the app object to the function.
+    :return: None.
+    """
+    playlist.generate_playlist(self, app_context)
+    playlist_url = self.textEdit_playlist_generated_url.toPlainText()
+    show_info_dialog(
+        self,
+        "Playlist generated successfully",
+        f"""Playlist length for generated playlist: 
+        {video_info.get_playlist_length(playlist_url)}""",
+    )
 
 
 def act_settings(self, app, app_context) -> None:
