@@ -44,6 +44,7 @@ As of version 0.0.5, the CLI version will no longer be developed.
 - Drag & Drop a .yt-playlist file or a .txt or .csv file onto the window
 - Fetch YouTube video information (title, channel, length, description, views, publish date and thumbnail)
 - Darkmode & Whitemode (switchable in settings)
+- Display playlist duration (after playlist generated successfully)
 - Recent files in File menu
 - Supported languages (switchable in settings)
   - English
@@ -165,7 +166,7 @@ Simply free up some space.
 
 ## Roadmap
 
-- Display playlist duration
+- Open an [Issue](https://github.com/christianhofmanncodes/youtube-playlist-generator/issues/new/choose) for a new feature request.
 
 ## FAQ
 
