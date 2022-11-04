@@ -2,7 +2,9 @@
 
 import logging
 
-from pytube import YouTube, exceptions
+from time_and_date import convert_time
+
+from pytube import Playlist, YouTube, exceptions
 
 
 def get_video_info(video_id: str) -> dict | None:
@@ -37,3 +39,28 @@ def get_video_info(video_id: str) -> dict | None:
             "views": youtube_object.views,
         }
     return None
+
+
+def get_playlist_length(playlist_url: str) -> str:
+    """
+    The get_playlist_length function takes a YouTube playlist URL as an argument
+    and returns the total length of all videos in the playlist.
+    The function first creates a Playlist object from the YouTubePlaylist class,
+    which takes in only one argument: the URL of the desired playlist.
+    The Playlist object has a method called video_urls, which returns a list
+    of URLs for each video in the playlist. We then iterate through this list
+    to create individual YouTube objects using our custom YouTube class (which we imported).
+    Each individual Youtube object has its own length attribute
+    that can be accessed by calling .length on each instance.
+
+    :param playlist_url:str: Used to Pass in the url of the playlist.
+    :return: The total length of the playlist in hours, minutes, and seconds.
+    """
+    playlist_object = Playlist(playlist_url)
+
+    video_duration_list = []
+    for video_url in playlist_object.video_urls:
+        youtube_object = YouTube(video_url)
+        video_duration_list.append(youtube_object.length)
+
+    return convert_time.convert_hours_minutes_seconds(sum(video_duration_list))
