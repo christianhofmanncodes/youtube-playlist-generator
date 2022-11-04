@@ -9,6 +9,8 @@ from PyQt6.QtWidgets import QApplication, QDialog
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 
 from settings.settings import APP_ICON
+from strings import replace_string
+from time_and_date import convert_date, convert_time
 
 
 app = QApplication(sys.argv)
@@ -56,13 +58,19 @@ class VideoInfoDialog(QDialog):
         :param video_information: Used to Pass the video information dictionary to the function.
         :return: None.
         """
+        self.length = convert_time.convert_hours_minutes_seconds(
+            video_information["length"]
+        )
+        self.publish_date = convert_date.format_date(video_information["publish_date"])
+        self.views = replace_string.format_int_with_commas(video_information["views"])
+
         self.load_thumbnail(video_information)
-        self.lbl_length.setText(str(video_information["length"]))
+        self.lbl_length.setText(self.length)
         self.lbl_title.setText(video_information["title"])
-        self.lbl_publish_date.setText(str(video_information["publish_date"]))
         self.lbl_author.setText(video_information["author"])
         self.textBrowser_description.setText(video_information["description"])
-        self.lbl_keywords.setText(str(video_information["keywords"]))
+        self.lbl_views.setText(f"Views: {self.views}")
+        self.lbl_publish_date.setText(f"Publish date: {self.publish_date}")
 
     def load_thumbnail(self, video_information) -> None:
         """
