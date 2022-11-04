@@ -109,7 +109,7 @@ Run the app
 ```
 
 Note: On Linux and macOS you have to use `pip3` and `python3`.  
-Pandas only needs to be installed if you want to use the console version.
+Pandas only needs to be installed if you want to use the CLI version.
 
 ## Security
 
