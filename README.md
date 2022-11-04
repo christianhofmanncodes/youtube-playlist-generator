@@ -42,6 +42,7 @@ As of version 0.0.5, the CLI version will no longer be developed.
 - Import a .txt file (items must be in new lines) or .csv file (items must be comma-separated)
 - Export playlist items as a .txt or .csv file
 - Drag & Drop a .yt-playlist file or a .txt or .csv file onto the window
+- Fetch YouTube video information (title, channel, length, description, views, publish date and thumbnail)
 - Darkmode & Whitemode (switchable in settings)
 - Recent files in File menu
 - Supported languages (switchable in settings)
@@ -164,7 +165,6 @@ Simply free up some space.
 
 ## Roadmap
 
-- Fetch YouTube video information (title, channel and thumbnail)
 - Display playlist duration
 
 ## FAQ

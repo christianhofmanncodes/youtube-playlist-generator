@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Import function to batch import multiple video IDs / URLs via .txt and .csv file [#2](https://github.com/christianhofmanncodes/youtube-playlist-generator/issues/2)
 - Drag & Drop a .yt-playlist file or a .txt or .csv file onto the window
-- Fetch YouTube video information (title, channel and thumbnail)
+- Fetch YouTube video information (title, channel, length, description, views, publish date and thumbnail)
 - Display playlist duration
 - A proper [Undo FrameWork](https://doc.qt.io/qtforpython/overviews/qtwidgets-tools-undoframework-example.html)
 - Translate all dialogs
