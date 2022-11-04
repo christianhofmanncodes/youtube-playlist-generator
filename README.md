@@ -241,6 +241,7 @@ Hbb5GPxXF1w,4vbDFu0PUew,Moq0aOiTUOA,qfVuRQX0ydQ,juQvizeZJFM
 - [PyQt6](https://www.riverbankcomputing.com/software/pyqt/)
 - [Qt-Material](https://github.com/UN-GCPDS/qt-material)
 - [fbs](https://build-system.fman.io/)
+- [pytube](https://github.com/pytube/pytube)
 
 ## Contributing
 
