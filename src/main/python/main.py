@@ -358,6 +358,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.actionNew.setText(app.translate("MainWindow", "New playlist"))
         self.actionOpen.setText(app.translate("MainWindow", "Open"))
         self.actionImport.setText(app.translate("MainWindow", "Import"))
+        self.actionExport.setText(app.translate("MainWindow", "Export"))
         self.actionSave.setText(app.translate("MainWindow", "Save"))
         self.actionAbout.setText(app.translate("MainWindow", "About"))
         self.actionSettings.setText(app.translate("MainWindow", "Settings"))
