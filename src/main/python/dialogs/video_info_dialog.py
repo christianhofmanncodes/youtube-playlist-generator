@@ -1,13 +1,17 @@
 """dialogs.video_info_dialog module"""
 
+import logging
 import sys
 import urllib
 
 from PyQt6 import uic
+from PyQt6.QtCore import QLocale, QTranslator
 from PyQt6.QtGui import QFont, QIcon, QImage, QPixmap
 from PyQt6.QtWidgets import QApplication, QDialog
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
 
+from settings.operations import get_settings
+from settings.settings import APP_ICON, SETTING_FILE_LOCATION
 from settings.settings import APP_ICON
 from strings import replace_string
 from time_and_date import convert_date, convert_time
@@ -45,6 +49,7 @@ class VideoInfoDialog(QDialog):
         self.setWindowIcon(QIcon(app_context.get_resource(APP_ICON)))
         self.setFont(QFont("Roboto"))
 
+        self.translate_ui()
         self.translate_video_info_dialog()
         self.fill_out_info(video_information)
 
@@ -101,3 +106,26 @@ class VideoInfoDialog(QDialog):
         self.setWindowTitle(
             app.translate("VideoInfoDialog", "Video information"),
         )
+
+    def translate_ui(self):
+        """Translates the UI based on language settings"""
+        self.trans = QTranslator(self)
+
+        settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
+
+        if settings_dict["general"][0]["programLanguage"] == "English":
+            logging.info("Program language is English.")
+
+        elif settings_dict["general"][0]["programLanguage"] == "Deutsch":
+            data = app_context.get_resource("forms/translations/de/VideoInfoDialog.qm")
+            german = QLocale(QLocale.Language.German, QLocale.Country.Germany)
+            self.trans.load(german, data)
+            app.instance().installTranslator(self.trans)
+
+        elif settings_dict["general"][0]["programLanguage"] == "Español":
+            data = app_context.get_resource(
+                "forms/translations/es-ES/VideoInfoDialog.qm"
+            )
+            german = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
+            self.trans.load(german, data)
+            app.instance().installTranslator(self.trans)
