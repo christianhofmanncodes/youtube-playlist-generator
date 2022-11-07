@@ -205,6 +205,9 @@ class SettingsDialog(QDialog):
 
     def translate_settings(self) -> None:
         """Translates the SettingsDialog based on language settings"""
+        self.setWindowTitle(
+            app.translate("SettingsDialog", "Settings"),
+        )
         self.tabWidget.setTabText(0, app.translate("SettingsDialog", "General"))
         self.groupBox_General.setTitle(app.translate("SettingsDialog", "General"))
         self.checkBox_option1.setText(
