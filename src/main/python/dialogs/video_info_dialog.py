@@ -12,7 +12,6 @@ from fbs_runtime.application_context.PyQt6 import ApplicationContext
 
 from settings.operations import get_settings
 from settings.settings import APP_ICON, SETTING_FILE_LOCATION
-from settings.settings import APP_ICON
 from strings import replace_string
 from time_and_date import convert_date, convert_time
 
