@@ -3,8 +3,8 @@ import logging
 import sys
 
 from PyQt6 import uic
-from PyQt6.QtCore import QLocale, QTranslator, Qt, pyqtSlot
-from PyQt6.QtGui import QAction, QFont, QIcon
+from PyQt6.QtCore import QLocale, QTranslator, Qt
+from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QApplication, QMainWindow
 import darkdetect
 from fbs_runtime import platform
