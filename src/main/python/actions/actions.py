@@ -564,7 +564,7 @@ def act_copy_url(self) -> None:
     QApplication.clipboard().setText(text)
 
 
-def act_open(self, app_context) -> None:
+def act_open(self, app, app_context) -> None:
     """
     The act_open function is called when the user clicks on the "Open" action.
     It opens a file dialog and lets the user choose a .ytplaylist-file to import.
@@ -586,7 +586,7 @@ def act_open(self, app_context) -> None:
         logging.error(FILE_NOT_FOUND_STRING)
         filename = ""
     if filename[0] != "":
-        open_ytplaylist_file(self, app_context, filename[0])
+        open_ytplaylist_file(self, app, app_context, filename[0])
 
 
 def open_ytplaylist_file(self, app, app_context, filename: str) -> None:

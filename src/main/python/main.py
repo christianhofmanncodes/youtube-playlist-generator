@@ -168,7 +168,7 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def act_open(self):
         """Action for open."""
-        actions.act_open(self, app_context)
+        actions.act_open(self, app, app_context)
 
     def act_import(self):
         """Action for import."""
