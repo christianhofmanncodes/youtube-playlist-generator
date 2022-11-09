@@ -9,15 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0] - 2022-11-30
 
-## Added
+### Added
 
 - Import function to batch import multiple video IDs / URLs via .txt and .csv file [#2](https://github.com/christianhofmanncodes/youtube-playlist-generator/issues/2)
+- Export function to export playlist items to .csv or .txt file
 - Drag & Drop a .yt-playlist file or a .txt or .csv file onto the window
 - Fetch YouTube video information (title, channel, length, description, views, publish date and thumbnail)
 - Display playlist duration
 - A proper [Undo FrameWork](https://doc.qt.io/qtforpython/overviews/qtwidgets-tools-undoframework-example.html)
 - Translate all dialogs
 - More language translations
+
+### Fixed
+
+- Open recent file menu is now correctly translated and placed after the open file option
+- Clear recent files is now directly displayed after new file was added to the recent files menu (not anymore only after restart)
 
 ## [0.1.0] - 2022-10-30
 
@@ -156,7 +162,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - This is the initial release of YouTube Playlist Generator
 
-[Compare changes to last version]: https://github.com/christianhofmanncodes/youtube-playlist-generator/compare/v0.0.5-alpha...v0.1.0
+[Compare changes to last version]: https://github.com/christianhofmanncodes/youtube-playlist-generator/compare/v0.1.0...v0.2.0
+[0.2.0]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.2.0
 [0.1.0]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.1.0
 [0.0.5-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.5-alpha
 [0.0.4-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.4-alpha
