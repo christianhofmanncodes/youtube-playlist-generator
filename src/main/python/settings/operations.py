@@ -4,24 +4,11 @@ import json
 
 from file.file import read_json_file
 from menu import menu
-
 from settings.settings import (
     DEFAULT_SETTINGS_FILE_LOCATION,
     RECENT_FILES_STRING,
     SETTING_FILE_LOCATION,
 )
-
-
-def create_recent_file_menu(self) -> None:
-    """
-    The create_recent_file_menu function creates a menu that lists the most recently opened files.
-
-    :param self: Used to Access the variables and methods.
-    :return: The recent_files_menu.
-    """
-    self.file_menu = self.menuFile
-    self.recent_files_menu = self.file_menu.addMenu("&Open recent")
-    self.recent_files_menu.triggered.connect(self.act_recent_file)
 
 
 def get_settings(filename: str, app_context) -> dict:
@@ -143,7 +130,6 @@ def load_settings(self, app_context) -> None:
     :param self: Used to Access the attributes and methods of the class.
     :return: None.
     """
-    create_recent_file_menu(self)
     menu.load_recent_files(self, app_context)
     menu.apply_shortcuts_to_actions(self, app_context)
 
@@ -162,6 +148,8 @@ def remove_unnecessary_entries_from_menu_dict(menu_dict) -> dict:
     menu_items_list = menu_dict["recent_files"]
     for menu_item in menu_items_list:
         if menu_item == RECENT_FILES_STRING:
+            menu_items_list.remove(menu_item)
+        if menu_item == " ":
             menu_items_list.remove(menu_item)
         menu_items_list = [item for item in menu_items_list if item]
     return {"recent_files": menu_items_list}
