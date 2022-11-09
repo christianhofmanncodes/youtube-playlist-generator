@@ -127,6 +127,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         """
         self.actionNew.triggered.connect(self.act_new)
         self.actionOpen.triggered.connect(self.act_open)
+        self.menuOpen_recent.triggered.connect(self.act_recent_file)
         self.actionSave.triggered.connect(self.act_save)
         self.actionImport.triggered.connect(self.act_import)
         self.actionExport.triggered.connect(self.act_export)
@@ -297,7 +298,6 @@ class MainWindow(QMainWindow, QtStyleTools):
         """Action for license."""
         actions.act_license(self)
 
-    @pyqtSlot(QAction)
     def act_recent_file(self, action):
         """Action for recent_file."""
         actions.act_recent_file(self, app_context, action)
@@ -357,6 +357,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.menuFile.setTitle(app.translate("MainWindow", "&File"))
         self.actionNew.setText(app.translate("MainWindow", "New playlist"))
         self.actionOpen.setText(app.translate("MainWindow", "Open"))
+        self.menuOpen_recent.setTitle(app.translate("MainWindow", "Open recent"))
         self.actionImport.setText(app.translate("MainWindow", "Import"))
         self.actionExport.setText(app.translate("MainWindow", "Export"))
         self.actionSave.setText(app.translate("MainWindow", "Save"))
