@@ -9,13 +9,14 @@ jobs:
       matrix:
         python-version: ["3.9", "3.10", "3.11"]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
+          using: 'node16'
           python -m pip install --upgrade pip
           pip install pylint
           #pip install pytest
@@ -27,5 +28,6 @@ jobs:
           pip install qt_material
       - name: Analyzing the code with pylint
         run: |
+          using: 'node16'
           pylint --disable=C0103,E0401,E0611,E1131,I1101,R0401,R0801,R0903,R0904,R0914,W0212,W0621,W0613 --ignore-imports true --extension-pkg-whitelist PyQt6 $(git ls-files '*.py')
           # pytest --cov
