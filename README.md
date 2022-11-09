@@ -14,6 +14,7 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
 [![Crowdin](https://badges.crowdin.net/youtube-playlist-generator/localized.svg)](https://crowdin.com/project/youtube-playlist-generator)
+[![Liberapay](https://img.shields.io/liberapay/receives/youtube-playlist-generator.svg)](https://liberapay.com/youtube-playlist-generator)
 
 Generate YouTube playlists without an account.
 
