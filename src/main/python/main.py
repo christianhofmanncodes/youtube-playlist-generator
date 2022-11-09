@@ -23,6 +23,8 @@ from settings.settings import (
     WHITE_THEME_LOCATION,
 )
 
+from translate import translator
+
 if platform.is_windows():
     from ctypes import windll
 
@@ -62,7 +64,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         """
         license_dialog.create_license_dialog(self, app_context)
         self.set_theme()
-        load_settings(self, app_context)
+        load_settings(self, app, app_context)
 
     def set_theme(self) -> None:
         """
@@ -337,20 +339,9 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def install_translator(self, settings_dict) -> None:
         """Installs the Translator based on the program language settings."""
-        if settings_dict["general"][0]["programLanguage"] == "English":
-            logging.info("Program language is English.")
-
-        elif settings_dict["general"][0]["programLanguage"] == "Deutsch":
-            data = app_context.get_resource("forms/translations/de/MainWindow.qm")
-            german = QLocale(QLocale.Language.German, QLocale.Country.Germany)
-            self.trans.load(german, data)
-            app.instance().installTranslator(self.trans)
-
-        elif settings_dict["general"][0]["programLanguage"] == "Español":
-            data = app_context.get_resource("forms/translations/es-ES/MainWindow.qm")
-            german = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
-            self.trans.load(german, data)
-            app.instance().installTranslator(self.trans)
+        translator.install_translator(
+            self, app, app_context, settings_dict, "MainWindow.qm"
+        )
 
     def translate_menu(self) -> None:
         """Translates the Menu based on language settings"""
