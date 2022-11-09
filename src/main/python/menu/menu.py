@@ -26,13 +26,13 @@ def get_menu_config(app_context) -> dict:
 def get_recent_files_items_menu(self) -> list:
     """
     The get_recent_files_items_menu function returns a list of the recent files from the menu.
-    The function returns a list with all the text from each action in self.recent_files_menu,
+    The function returns a list with all the text from each action in self.menuOpen_recent,
     which is ordered by most recent first.
 
     :param self: Used to Access the attributes and methods of the parent class.
     :return: A list containing the text of all actions in the recent files menu.
     """
-    return [action.text() for action in self.recent_files_menu.actions()[::-1]]
+    return [action.text() for action in self.menuOpen_recent.actions()[::-1]]
 
 
 def add_clear_recent_files_action_to_menu(self) -> None:
@@ -49,10 +49,10 @@ def add_clear_recent_files_action_to_menu(self) -> None:
     )
 
     if not clear_recent_files_option:
-        self.recent_files_menu.addSeparator()
+        self.menuOpen_recent.addSeparator()
         self.action = QAction()
         self.action.setText(RECENT_FILES_STRING)
-        self.recent_files_menu.addAction(self.action)
+        self.menuOpen_recent.addAction(self.action)
 
 
 def load_recent_files(self, app_context) -> None:
@@ -101,9 +101,10 @@ def add_recent_filename(self, filename) -> None:
     """
     if not check_if_filename_already_exist(self, filename):
         filename_action = QAction(filename, self)
-        menu_actions = self.recent_files_menu.actions()
+        menu_actions = self.menuOpen_recent.actions()
         before_action = menu_actions[0] if menu_actions else None
-        self.recent_files_menu.insertAction(before_action, filename_action)
+        self.menuOpen_recent.insertAction(before_action, filename_action)
+        add_clear_recent_files_action_to_menu(self)
     else:
         logging.info("'%s' already exists in recent files menu.", filename)
 
@@ -134,10 +135,10 @@ def open_ytplaylist_file_from_menu(self, action, app_context) -> None:
                     actions.act_new(self, app_context)
                     import_from_dict(self, ytplaylist_dict)
                     self.lineEdit_url_id.setFocus()
-                self.recent_files_menu.addSeparator()
+                self.menuOpen_recent.addSeparator()
                 self.new_action = QAction()
                 self.new_action.setText(RECENT_FILES_STRING)
-                self.recent_files_menu.addAction(self.new_action)
+                self.menuOpen_recent.addAction(self.new_action)
             else:
                 import_from_dict(self, ytplaylist_dict)
                 self.lineEdit_url_id.setFocus()
@@ -149,7 +150,7 @@ def open_ytplaylist_file_from_menu(self, action, app_context) -> None:
                 f"File '{filename}' not found!\n\nMaybe it was deleted?",
             )
 
-            self.recent_files_menu.removeAction(action)
+            self.menuOpen_recent.removeAction(action)
     else:
         show_error_dialog(
             self,
@@ -157,7 +158,7 @@ def open_ytplaylist_file_from_menu(self, action, app_context) -> None:
             f"File '{filename}' is not a valid 'ytplaylist' file!",
         )
 
-        self.recent_files_menu.removeAction(action)
+        self.menuOpen_recent.removeAction(action)
 
 
 def apply_shortcuts_to_actions(self, app_context):
