@@ -123,14 +123,14 @@ def output_menu_config_as_dict(recent_files: list) -> dict:
     return {"recent_files": list(recent_files)}
 
 
-def load_settings(self, app_context) -> None:
+def load_settings(self, app, app_context) -> None:
     """
     The load_settings function loads the settings from menu.config into the program.
 
     :param self: Used to Access the attributes and methods of the class.
     :return: None.
     """
-    menu.load_recent_files(self, app_context)
+    menu.load_recent_files(self, app, app_context)
     menu.apply_shortcuts_to_actions(self, app_context)
 
 
