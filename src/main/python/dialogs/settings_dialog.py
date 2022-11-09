@@ -2,13 +2,15 @@
 import logging
 import sys
 
-import darkdetect
-from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from PyQt6 import uic
-from PyQt6.QtCore import QLocale, Qt, QTranslator
+from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QApplication, QDialog
+import darkdetect
+from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from qt_material import apply_stylesheet
+
+from dialogs import restart_app
 from settings.operations import (
     check_if_settings_not_default,
     get_default_settings,
@@ -20,8 +22,7 @@ from settings.settings import (
     DEFAULT_SETTINGS_FILE_LOCATION,
     SETTING_FILE_LOCATION,
 )
-
-from dialogs import restart_app
+from translate import translator
 
 
 app = QApplication(sys.argv)
@@ -182,26 +183,10 @@ class SettingsDialog(QDialog):
 
     def translate_ui(self):
         """Translates the UI based on language settings"""
-        self.trans = QTranslator(self)
-
         settings_dict = get_settings(SETTING_FILE_LOCATION, app_context)
-
-        if settings_dict["general"][0]["programLanguage"] == "English":
-            logging.info("Program language is English.")
-
-        elif settings_dict["general"][0]["programLanguage"] == "Deutsch":
-            data = app_context.get_resource("forms/translations/de/SettingsDialog.qm")
-            german = QLocale(QLocale.Language.German, QLocale.Country.Germany)
-            self.trans.load(german, data)
-            app.instance().installTranslator(self.trans)
-
-        elif settings_dict["general"][0]["programLanguage"] == "Español":
-            data = app_context.get_resource(
-                "forms/translations/es-ES/SettingsDialog.qm"
-            )
-            german = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
-            self.trans.load(german, data)
-            app.instance().installTranslator(self.trans)
+        translator.install_translator(
+            self, app, app_context, settings_dict, "SettingsDialog.qm"
+        )
 
     def translate_settings(self) -> None:
         """Translates the SettingsDialog based on language settings"""
