@@ -3,7 +3,7 @@ import logging
 import sys
 
 from PyQt6 import uic
-from PyQt6.QtCore import QLocale, QTranslator, Qt
+from PyQt6.QtCore import QTranslator, Qt
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QApplication, QMainWindow
 import darkdetect
@@ -22,7 +22,6 @@ from settings.settings import (
     SETTING_FILE_LOCATION,
     WHITE_THEME_LOCATION,
 )
-
 from translate import translator
 
 if platform.is_windows():
