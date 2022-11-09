@@ -35,7 +35,7 @@ def get_recent_files_items_menu(self) -> list:
     return [action.text() for action in self.menuOpen_recent.actions()[::-1]]
 
 
-def add_clear_recent_files_action_to_menu(self) -> None:
+def add_clear_recent_files_action_to_menu(self, app) -> None:
     """
     The add_clear_recent_files_action_to_menu function adds
     a clear recent files option to the recent files menu.
@@ -51,11 +51,11 @@ def add_clear_recent_files_action_to_menu(self) -> None:
     if not clear_recent_files_option:
         self.menuOpen_recent.addSeparator()
         self.action = QAction()
-        self.action.setText(RECENT_FILES_STRING)
+        self.action.setText(app.translate("Menu", RECENT_FILES_STRING))
         self.menuOpen_recent.addAction(self.action)
 
 
-def load_recent_files(self, app_context) -> None:
+def load_recent_files(self, app, app_context) -> None:
     """
     The load_recent_files function adds items to the recent files menu.
 
@@ -68,8 +68,8 @@ def load_recent_files(self, app_context) -> None:
         file_names = menu_config["recent_files"]
         logging.debug(file_names)
         for file_name in file_names:
-            add_recent_filename(self, file_name)
-        add_clear_recent_files_action_to_menu(self)
+            add_recent_filename(self, app, file_name)
+        add_clear_recent_files_action_to_menu(self, app)
 
     else:
         logging.info("No recent files!")
@@ -89,7 +89,7 @@ def check_if_filename_already_exist(self, filename) -> bool:
     return filename in all_recent_files
 
 
-def add_recent_filename(self, filename) -> None:
+def add_recent_filename(self, app, filename) -> None:
     """
     The add_recent_filename function adds a filename to the recent files menu.
     It does this by creating an action for the filename and inserting it into the menu.
@@ -104,7 +104,7 @@ def add_recent_filename(self, filename) -> None:
         menu_actions = self.menuOpen_recent.actions()
         before_action = menu_actions[0] if menu_actions else None
         self.menuOpen_recent.insertAction(before_action, filename_action)
-        add_clear_recent_files_action_to_menu(self)
+        add_clear_recent_files_action_to_menu(self, app)
     else:
         logging.info("'%s' already exists in recent files menu.", filename)
 
