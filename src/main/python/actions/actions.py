@@ -589,7 +589,7 @@ def act_open(self, app_context) -> None:
         open_ytplaylist_file(self, app_context, filename[0])
 
 
-def open_ytplaylist_file(self, app_context, filename: str) -> None:
+def open_ytplaylist_file(self, app, app_context, filename: str) -> None:
     """
     The open_ytplaylist_file function opens a .ytplaylist file containing
     a list of YouTube video IDs. The function then adds the videos to the playlist
@@ -618,7 +618,7 @@ def open_ytplaylist_file(self, app_context, filename: str) -> None:
         playlist.import_from_dict(self, ytplaylist_dict)
         self.lineEdit_url_id.setFocus()
     enable_components(self)
-    add_recent_filename(self, filename)
+    add_recent_filename(self, app, filename)
 
 
 def import_txt_or_csv_file(self, app_context, filename: tuple[str, str]) -> None:

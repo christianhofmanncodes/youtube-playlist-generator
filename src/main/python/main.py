@@ -507,7 +507,7 @@ class MainWindow(QMainWindow, QtStyleTools):
 
                     if file.check_file_format(str(url.toLocalFile()), ".ytplaylist"):
                         actions.open_ytplaylist_file(
-                            self, app_context, str(url.toLocalFile())
+                            self, app, app_context, str(url.toLocalFile())
                         )
                     elif file.check_file_format(str(url.toLocalFile()), ".txt"):
                         filename = (str(url.toLocalFile()), "Text file (*.txt)")
