@@ -104,7 +104,7 @@ def act_recent_file(self, app_context, action):
     The act_recent_file function is a function that is called when the user clicks
     on one of the recent files in the recent files menu. It takes as input an action,
     which is a QAction object. If the action's text is RECENT_FILES_STRING,
-    then it removes all actions from self.recent_files_menu and then adds them back in
+    then it removes all actions from self.menuOpen_recent and then adds them back in
     (except for RECENT_FILES_STRING).
     Otherwise, it calls the process_filename function with that file name.
 
@@ -113,9 +113,9 @@ def act_recent_file(self, app_context, action):
     :return: The action that is clicked on.
     """
     if action.text() == RECENT_FILES_STRING:
-        actions = self.recent_files_menu.actions()
+        actions = self.menuOpen_recent.actions()
         for action_to_remove in actions:
-            self.recent_files_menu.removeAction(action_to_remove)
+            self.menuOpen_recent.removeAction(action_to_remove)
     else:
         process_filename(self, action, app_context)
         logging.info("Imported file: %s successfully.", action.text())
