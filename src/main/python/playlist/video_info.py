@@ -24,8 +24,8 @@ def get_video_info(video_id: str) -> dict | None:
         logging.warning("Video id %s is unavailable.", video_id)
         youtube_object = {}
 
-    if youtube_object != {}:
-        return {
+    return (
+        {
             "title": youtube_object.title,
             "author": youtube_object.author,
             "channel_id": youtube_object.channel_id,
@@ -38,7 +38,9 @@ def get_video_info(video_id: str) -> dict | None:
             "rating": youtube_object.rating,
             "views": youtube_object.views,
         }
-    return None
+        if youtube_object
+        else None
+    )
 
 
 def get_playlist_length(playlist_url: str) -> str:
