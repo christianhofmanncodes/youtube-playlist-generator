@@ -1,6 +1,7 @@
 """dialogs.video_info_dialog module"""
 
 import logging
+import ssl
 import sys
 import urllib
 
@@ -88,12 +89,16 @@ class VideoInfoDialog(QDialog):
         """
         url = video_information["thumbnail_url"]
 
-        with urllib.request.urlopen(url) as response:
-            data = response.read()
+        if url.lower().startswith("https"):
+            ctx = ssl._create_default_https_context()
+            with urllib.request.urlopen(url, context=ctx) as response:
+                data = response.read()
 
-        img = QImage()
-        img.loadFromData(data)
-        self.lbl_thumbnail.setPixmap(QPixmap(img))
+            img = QImage()
+            img.loadFromData(data)
+            self.lbl_thumbnail.setPixmap(QPixmap(img))
+        else:
+            raise ValueError from None
 
     def translate_video_info_dialog(self) -> None:
         """
