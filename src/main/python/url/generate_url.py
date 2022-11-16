@@ -4,7 +4,7 @@ import logging
 import ssl
 from urllib import error, request
 
-from dialogs import creating_url
+from dialogs import builtin_dialogs, creating_url
 
 
 def playlist_url(self, video_ids_url: str) -> str:
@@ -19,6 +19,13 @@ def playlist_url(self, video_ids_url: str) -> str:
     """
     if not video_ids_url.lower().startswith("https"):
         raise ValueError from None
+    if "\n" in video_ids_url:
+        builtin_dialogs.show_error_dialog(
+            self,
+            "Not allowed character in URL",
+            "Please check your video ids for not allowed characters!",
+        )
+        video_ids_url.replace("\n", "")
     try:
         ctx = ssl._create_default_https_context()
         with request.urlopen(video_ids_url, context=ctx) as response:

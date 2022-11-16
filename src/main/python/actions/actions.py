@@ -850,14 +850,18 @@ def generate_playlist_url(self, app_context) -> None:
     :param app_context: Used to Pass the app object to the function.
     :return: None.
     """
+    self.textEdit_playlist_generated_url.setText("")
+    self.textEdit_playlist_generated_url.setEnabled(False)
+    self.pushButton_copy.setEnabled(False)
     playlist.generate_playlist(self, app_context)
     playlist_url = self.textEdit_playlist_generated_url.toPlainText()
-    show_info_dialog(
-        self,
-        "Playlist generated successfully",
-        f"""Playlist length for generated playlist:
-        {video_info.get_playlist_length(playlist_url)}""",
-    )
+    if playlist_url != "":
+        show_info_dialog(
+            self,
+            "Playlist generated successfully",
+            f"""Playlist length for generated playlist:
+            {video_info.get_playlist_length(playlist_url)}""",
+        )
 
 
 def act_settings(self, app, app_context) -> None:
