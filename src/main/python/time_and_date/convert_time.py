@@ -1,4 +1,4 @@
-"""module time_and_date.time"""
+"""module time_and_date.convert_time"""
 
 import time
 

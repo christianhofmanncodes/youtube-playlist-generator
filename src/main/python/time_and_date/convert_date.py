@@ -1,4 +1,4 @@
-"""module time_and_date.date"""
+"""module time_and_date.convert_date"""
 
 from datetime import datetime
 

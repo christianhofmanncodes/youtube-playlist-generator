@@ -2,8 +2,12 @@
 
 import logging
 
+from PyQt6.QtCore import Qt, pyqtSlot
+from PyQt6.QtGui import QAction
+from PyQt6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMessageBox
+
 from dialogs import import_playlist, reset_playlist
-from dialogs.dialogs import show_info_dialog, show_question_dialog
+from dialogs.builtin_dialogs import show_info_dialog, show_question_dialog
 from dialogs.settings_dialog import SettingsDialog
 from dialogs.video_info_dialog import VideoInfoDialog
 from file import file
@@ -14,9 +18,6 @@ from menu.menu import (
     open_ytplaylist_file_from_menu,
 )
 from playlist import playlist, video_info
-from PyQt6.QtCore import Qt, pyqtSlot
-from PyQt6.QtGui import QAction
-from PyQt6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMessageBox
 from settings.operations import (
     check_if_language_was_changed,
     get_settings,

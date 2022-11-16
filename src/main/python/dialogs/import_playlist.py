@@ -1,7 +1,8 @@
-"""dialogs.playlist_import_dialog module"""
+"""module dialogs.import_playlist"""
 
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QLabel, QVBoxLayout
+
 from settings.settings import APP_ICON
 
 

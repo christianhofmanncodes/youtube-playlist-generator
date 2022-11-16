@@ -1,4 +1,4 @@
-"""file.file module"""
+"""module file.file"""
 
 import json
 import logging

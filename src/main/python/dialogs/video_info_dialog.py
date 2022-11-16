@@ -1,4 +1,4 @@
-"""dialogs.video_info_dialog module"""
+"""module dialogs.video_info_dialog"""
 
 import logging
 import ssl

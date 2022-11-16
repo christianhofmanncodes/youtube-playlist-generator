@@ -1,4 +1,5 @@
-"""main module"""
+"""module main"""
+
 import logging
 import sys
 
@@ -12,7 +13,7 @@ from fbs_runtime.application_context.PyQt6 import ApplicationContext
 from qt_material import QtStyleTools, apply_stylesheet
 
 from actions import actions
-from dialogs import dialogs, license_dialog
+from dialogs import builtin_dialogs, license_dialog
 from file import file
 from settings.operations import get_settings, load_settings, save_settings
 from settings.settings import (
@@ -516,7 +517,7 @@ class MainWindow(QMainWindow, QtStyleTools):
                         filename = (str(url.toLocalFile()), "CSV file (*.csv)")
                         actions.import_txt_or_csv_file(self, app_context, filename)
                     else:
-                        dialogs.show_error_dialog(
+                        builtin_dialogs.show_error_dialog(
                             self,
                             "Unknown file format",
                             "This file format is not supported!",

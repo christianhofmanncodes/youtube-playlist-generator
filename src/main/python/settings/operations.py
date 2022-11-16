@@ -1,4 +1,4 @@
-"""settings.operations module"""
+"""module settings.operations"""
 
 import json
 

@@ -2,12 +2,13 @@
 
 import logging
 
+from PyQt6.QtGui import QAction, QKeySequence
+
 from actions import actions
 from dialogs import import_playlist
-from dialogs.dialogs import show_error_dialog
+from dialogs.builtin_dialogs import show_error_dialog
 from file.file import check_file_format, read_json_file
 from playlist.playlist import check_if_items_in_playlist, import_from_dict
-from PyQt6.QtGui import QAction, QKeySequence
 from settings import operations
 from settings.settings import RECENT_FILES_STRING, SETTING_FILE_LOCATION
 

@@ -1,4 +1,5 @@
-"""dialogs.settings_dialog module"""
+"""module dialogs.settings_dialog"""
+
 import logging
 import sys
 
