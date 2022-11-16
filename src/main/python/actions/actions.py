@@ -634,10 +634,7 @@ def get_list_of_strings(filename: tuple[str, str]) -> list[str]:
     """
     if filename[1] == "Text file (*.txt)":
         return read_txt_file(filename[0])
-    elif filename[1] == "CSV file (*.csv)":
-        return read_csv_file(filename[0])
-    else:
-        return []
+    return read_csv_file(filename[0]) if filename[1] == "CSV file (*.csv)" else []
 
 
 def replace_empty_strings_in_list(list_of_strings: list[str]) -> list[str]:
