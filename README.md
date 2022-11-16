@@ -34,15 +34,15 @@ As of version 0.0.5, the CLI version will no longer be developed.
 - Rename specific items
 - Change order of playlist items (via drag and drop)
 - Delete specific items
-- Shuffle-mode
+- Shuffle mode
 - Generate playlist URL
 - Automatically open generated URL in default web browser
 - Copy URL to clipboard
-- Open .ytplaylist file
-- Save .ytplaylist file
-- Import a .txt file (items must be in new lines) or .csv file (items must be comma-separated)
-- Export playlist items as a .txt or .csv file
-- Drag & Drop a .yt-playlist file or a .txt or .csv file onto the window
+- Open `.ytplaylist` file
+- Save `.ytplaylist` file
+- Import a `.txt` file (items must be in new lines) or `.csv` file (items must be comma-separated)
+- Export playlist items as a `.txt` or `.csv` file
+- Drag & Drop a `.yt-playlist` file or a `.txt` or `.csv` file onto the window to import them
 - Fetch YouTube video information (title, channel, length, description, views, publish date and thumbnail)
 - Darkmode & Whitemode (switchable in settings)
 - Display playlist duration (after playlist generated successfully)
@@ -74,10 +74,14 @@ As of version 0.0.5, the CLI version will no longer be developed.
 
 ## Installation
 
-Just download and run the newest version from the Releases.
+Just download, install and run the newest version from the Releases.
 Choose your file according to the operating system (Windows, Linux or macOS) you are using.
 
-Launch the program. Now you can either create a new playlist by adding an URL or ID to the playlist one by one, or you can open a `.ytplaylist` file. If you want to save your playlist, you can save the playlist to a `.ytplaylist` file with all its items and the playlist title. Share it with a friend if you want.
+Now you can either create a new playlist by adding an URL or ID to the playlist one by one, or you can open a `.ytplaylist` file.
+There is also an option to import multiple URLs or video IDs via a `.txt` or `.csv` file.  
+If you want to save your playlist, you can save the playlist to a `.ytplaylist` file with all its items and the playlist title.
+Share it with a friend if you want.
+You can also export only the playlist items into a `.txt` or `.csv` file.
 
 ## Run Locally
 
@@ -112,7 +116,6 @@ Run the app
 ```
 
 Note: On Linux and macOS you have to use `pip3` and `python3`.  
-Pandas only needs to be installed if you want to use the CLI version.
 
 ## Security
 
@@ -188,7 +191,7 @@ https://invidious.namazso.eu/watch?v=
 ### Can I batch import URLs / video IDs?
 
 As requested in [#2](https://github.com/christianhofmanncodes/youtube-playlist-generator/issues/2) the function has been added to version 0.2.0.
-Just click on "Import" in the menu and select the .txt file you want to import accordingly.
+Just click on "Import" in the menu and select the `.txt`or the `.csv` file you want to import accordingly.
 
 It should look something like this:
 
@@ -226,9 +229,9 @@ UNFk6_to5_0
 ygJgQAYZVi0
 https://www.youtube.com/watch?v=gRnuFC4Ualw
 k6jqx9kZgPM
-````
+```
 
-If you want to import a .csv file, just select the file extension in the file dialog.
+If you want to import a `.csv file`, just select the file extension in the file dialog.
 
 It should look something like this:
 
