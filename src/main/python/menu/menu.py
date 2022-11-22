@@ -176,6 +176,15 @@ def apply_shortcuts_to_actions(self, app_context):
         self.actionSave.setShortcut(
             QKeySequence(settings_dict["keyboard_shortcuts"][0]["savePlaylist"])
         )
+        self.actionSave_as.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["saveAsPlaylist"])
+        )
+        self.actionImport.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["importItems"])
+        )
+        self.actionExport.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["exportItems"])
+        )
         self.actionAdd_item.setShortcut(
             QKeySequence(settings_dict["keyboard_shortcuts"][0]["addItem"])
         )
@@ -190,6 +199,12 @@ def apply_shortcuts_to_actions(self, app_context):
         )
         self.actionGenerate_Playlist.setShortcut(
             QKeySequence(settings_dict["keyboard_shortcuts"][0]["generatePlaylist"])
+        )
+        self.actionAscending.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["sortAscending"])
+        )
+        self.actionDescending.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["sortDescending"])
         )
         self.actionCount_items.setShortcut(
             QKeySequence(settings_dict["keyboard_shortcuts"][0]["countItems"])
