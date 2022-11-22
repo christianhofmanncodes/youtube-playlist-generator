@@ -54,6 +54,7 @@ def disable_components(self) -> None:
     self.actionShuffle.setEnabled(False)
     self.actionRename_item.setEnabled(False)
     self.actionSave.setEnabled(False)
+    self.actionSave_as.setEnabled(False)
     self.actionRemove_duplicates.setEnabled(False)
     self.actionCount_items.setEnabled(False)
     self.menuSort_items.setEnabled(True)
@@ -79,6 +80,7 @@ def enable_components(self) -> None:
     self.actionGenerate_Playlist.setEnabled(True)
     self.actionShuffle.setEnabled(True)
     self.actionSave.setEnabled(True)
+    self.actionSave_as.setEnabled(True)
     self.actionRemove_duplicates.setEnabled(True)
     self.actionCount_items.setEnabled(True)
     self.menuSort_items.setEnabled(True)
@@ -144,6 +146,7 @@ def act_new(self, app_context) -> None:
                 self.lineEdit_playlist_title.clear()
                 self.textEdit_playlist_generated_url.clear()
                 self.lineEdit_playlist_title.setFocus()
+                self.statusBar.clearMessage()
         else:
             logging.debug("Playlist reset cancelled.")
             logging.debug("No item was deleted!")
@@ -157,6 +160,7 @@ def act_new(self, app_context) -> None:
             self.lineEdit_playlist_title.clear()
             self.textEdit_playlist_generated_url.clear()
             self.lineEdit_playlist_title.setFocus()
+            self.statusBar.clearMessage()
 
 
 def act_undo(self) -> None:
@@ -303,6 +307,7 @@ def act_sort_items_ascending(self) -> None:
     self.listWidget_playlist_items.setSortingEnabled(True)
     self.listWidget_playlist_items.sortItems(Qt.SortOrder.AscendingOrder)
     self.listWidget_playlist_items.setSortingEnabled(False)
+    self.actionSave.setEnabled(True)
 
 
 def act_sort_items_descending(self) -> None:
@@ -317,6 +322,7 @@ def act_sort_items_descending(self) -> None:
     self.listWidget_playlist_items.setSortingEnabled(True)
     self.listWidget_playlist_items.sortItems(Qt.SortOrder.DescendingOrder)
     self.listWidget_playlist_items.setSortingEnabled(False)
+    self.actionSave.setEnabled(True)
 
 
 def act_url_id_text_change(self) -> None:
@@ -363,6 +369,7 @@ def act_shuffle(self):
     :return: A list of shuffled playlist items.
     """
     playlist.shuffle(self)
+    self.actionSave.setEnabled(True)
 
 
 def act_about(self):
@@ -448,6 +455,7 @@ def act_rename_item(self) -> None:
         item = list_widget.item(index)
         item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEditable)
     playlist.make_item_editable(self)
+    self.actionSave.setEnabled(True)
 
 
 def act_add_item(self) -> None:
@@ -485,6 +493,7 @@ def act_add_item(self) -> None:
         self.lineEdit_url_id.clear()
         self.pushButton_new.setEnabled(True)
         self.actionReset_Playlist.setEnabled(True)
+        self.actionSave.setEnabled(True)
 
         if playlist.playlist_widget_has_x_or_more_items(self, 1):
             self.actionCount_items.setEnabled(True)
@@ -494,6 +503,7 @@ def act_add_item(self) -> None:
             self.pushButton_generate.setEnabled(True)
             self.actionGenerate_Playlist.setEnabled(True)
             self.actionSave.setEnabled(True)
+            self.actionSave_as.setEnabled(True)
             self.actionRemove_duplicates.setEnabled(True)
             self.menuSort_items.setEnabled(True)
             self.actionAscending.setEnabled(True)
@@ -532,6 +542,7 @@ def act_delete_item(self) -> None | bool:
         self.listWidget_playlist_items.takeItem(
             self.listWidget_playlist_items.row(item)
         )
+    self.actionSave.setEnabled(True)
     if playlist.is_playlist_widget_empty(self):
         disable_components(self)
 
@@ -544,6 +555,7 @@ def act_delete_item(self) -> None | bool:
         self.actionGenerate_Playlist.setEnabled(False)
         self.pushButton_shuffle_playlist.setEnabled(False)
         self.actionSave.setEnabled(False)
+        self.actionSave_as.setEnabled(False)
         self.actionRemove_duplicates.setEnabled(False)
         self.menuSort_items.setEnabled(False)
         self.actionAscending.setEnabled(False)
@@ -602,7 +614,7 @@ def open_ytplaylist_file(self, app, app_context, filename: str) -> None:
     :return: None.
     """
     ytplaylist_dict = read_json_file(filename)
-    logging.debug("Playlist to be imported:")
+    logging.debug("Playlist to be opened:")
     logging.debug(ytplaylist_dict)
     if playlist.check_if_items_in_playlist(self):
         logging.debug("There are already items in playlist!")
@@ -620,6 +632,7 @@ def open_ytplaylist_file(self, app, app_context, filename: str) -> None:
         self.lineEdit_url_id.setFocus()
     enable_components(self)
     add_recent_filename(self, app, filename)
+    self.statusBar.showMessage(filename, 0)
 
 
 def get_list_of_strings(filename: tuple[str, str]) -> list[str]:
@@ -791,7 +804,26 @@ def act_export(self) -> None:
 
 def act_save(self) -> None:
     """
-    The act_save function is called when the user clicks on the "Save" button.
+    The act_save function saves the current playlist to a file.
+    The filename is taken from the status bar, and it's contents are generated
+    from the current playlist. The function also disables saving until another
+    playlist is loaded.
+
+    :param self: Used to Access the class attributes.
+    :return: None.
+    """
+    filename = self.statusBar.currentMessage()
+    ytplaylist_dict = playlist.generate_dict_from_fields(
+        self.lineEdit_playlist_title.text(),
+        playlist.output_list_from_playlist_ids(self),
+    )
+    file.export_ytplaylist_file(filename, ytplaylist_dict)
+    self.actionSave.setEnabled(False)
+
+
+def act_save_as(self) -> None:
+    """
+    The act_save_as function is called when the user clicks on the "Save as..." button.
     It will open a file dialog to get a path from the user, and then generate
     a .ytplaylist-file using that path. The function will also log what happened.
 
@@ -805,7 +837,7 @@ def act_save(self) -> None:
             "",
             "YouTube Playlist file (*.ytplaylist)",
         ):
-            logging.debug("Playlist exported under:")
+            logging.debug("Playlist saved under:")
             logging.debug(filename[0])
             ytplaylist_dict = playlist.generate_dict_from_fields(
                 self.lineEdit_playlist_title.text(),
@@ -813,7 +845,7 @@ def act_save(self) -> None:
             )
             file.export_ytplaylist_file(filename[0], ytplaylist_dict)
     except FileNotFoundError:
-        logging.error("Error during export process! No file was exported.")
+        logging.error("Error during process! No file was saved.")
 
 
 def act_generate(self, app_context) -> None:
