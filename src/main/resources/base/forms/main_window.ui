@@ -878,6 +878,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Ascending</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
+   </property>
   </action>
   <action name="actionDescending">
    <property name="enabled">
@@ -885,6 +888,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Descending</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+D</string>
    </property>
   </action>
   <action name="actionCount_items">
