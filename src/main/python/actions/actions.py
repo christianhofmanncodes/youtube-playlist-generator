@@ -926,19 +926,24 @@ def act_settings(self, app, app_context) -> None:
             "option_2": dlg.checkBox_option2.isChecked(),
             "language": dlg.comboBox_language.currentText(),
             "theme": radio_button_theme,
-            "shortcut_1": dlg.label_keyboard_shortcuts_option1.text(),
-            "shortcut_2": dlg.label_keyboard_shortcuts_option2.text(),
-            "shortcut_3": dlg.label_keyboard_shortcuts_option3.text(),
-            "shortcut_4": dlg.label_keyboard_shortcuts_option4.text(),
-            "shortcut_5": dlg.label_keyboard_shortcuts_option5.text(),
-            "shortcut_6": dlg.label_keyboard_shortcuts_option6.text(),
-            "shortcut_7": dlg.label_keyboard_shortcuts_option7.text(),
-            "shortcut_8": dlg.label_keyboard_shortcuts_option8.text(),
-            "shortcut_9": dlg.label_keyboard_shortcuts_option9.text(),
-            "shortcut_10": dlg.label_keyboard_shortcuts_option10.text(),
-            "shortcut_11": dlg.label_keyboard_shortcuts_option11.text(),
-            "shortcut_12": dlg.label_keyboard_shortcuts_option12.text(),
-            "shortcut_13": dlg.label_keyboard_shortcuts_option13.text(),
+            "shortcut_1": dlg.tableWidget.item(0, 2).text(),
+            "shortcut_2": dlg.tableWidget.item(1, 2).text(),
+            "shortcut_3": dlg.tableWidget.item(2, 2).text(),
+            "shortcut_4": dlg.tableWidget.item(3, 2).text(),
+            "shortcut_5": dlg.tableWidget.item(4, 2).text(),
+            "shortcut_6": dlg.tableWidget.item(5, 2).text(),
+            "shortcut_7": dlg.tableWidget.item(6, 2).text(),
+            "shortcut_8": dlg.tableWidget.item(7, 2).text(),
+            "shortcut_9": dlg.tableWidget.item(8, 2).text(),
+            "shortcut_10": dlg.tableWidget.item(9, 2).text(),
+            "shortcut_11": dlg.tableWidget.item(10, 2).text(),
+            "shortcut_12": dlg.tableWidget.item(11, 2).text(),
+            "shortcut_13": dlg.tableWidget.item(12, 2).text(),
+            "shortcut_14": dlg.tableWidget.item(13, 2).text(),
+            "shortcut_15": dlg.tableWidget.item(14, 2).text(),
+            "shortcut_16": dlg.tableWidget.item(15, 2).text(),
+            "shortcut_17": dlg.tableWidget.item(16, 2).text(),
+            "shortcut_18": dlg.tableWidget.item(17, 2).text(),
         }
 
         logging.debug(components_dict)
@@ -951,6 +956,10 @@ def act_settings(self, app, app_context) -> None:
                 settings_dict, SETTING_FILE_LOCATION, app_context
             )
             SettingsDialog.restart_if_confirmed(self, app, app_context)
+        else:
+            save_settings_to_conf_file(
+                settings_dict, SETTING_FILE_LOCATION, app_context
+            )
 
 
 def act_video_information(self, app, app_context) -> None:
