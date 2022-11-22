@@ -131,6 +131,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.actionOpen.triggered.connect(self.act_open)
         self.menuOpen_recent.triggered.connect(self.act_recent_file)
         self.actionSave.triggered.connect(self.act_save)
+        self.actionSave_as.triggered.connect(self.act_save_as)
         self.actionImport.triggered.connect(self.act_import)
         self.actionExport.triggered.connect(self.act_export)
         self.actionAbout.triggered.connect(self.act_about)
@@ -163,6 +164,10 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.actionAbout_Qt.triggered.connect(self.act_about_qt)
         self.actionLicense.triggered.connect(self.act_license)
 
+        self.lineEdit_playlist_title.textChanged.connect(
+            lambda: self.actionSave.setEnabled(True)
+        )
+
     def act_new(self):
         """Action for new."""
         actions.act_new(self, app_context)
@@ -182,6 +187,10 @@ class MainWindow(QMainWindow, QtStyleTools):
     def act_save(self):
         """Action for save."""
         actions.act_save(self)
+
+    def act_save_as(self):
+        """Action for save as."""
+        actions.act_save_as(self)
 
     def act_about(self):
         """Action for about."""
@@ -352,6 +361,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.actionImport.setText(app.translate("MainWindow", "Import"))
         self.actionExport.setText(app.translate("MainWindow", "Export"))
         self.actionSave.setText(app.translate("MainWindow", "Save"))
+        self.actionSave_as.setText(app.translate("MainWindow", "Save as..."))
         self.actionAbout.setText(app.translate("MainWindow", "About"))
         self.actionSettings.setText(app.translate("MainWindow", "Settings"))
         self.actionQuit.setText(app.translate("MainWindow", "Quit"))
