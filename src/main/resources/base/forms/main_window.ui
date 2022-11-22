@@ -56,6 +56,9 @@
   <property name="locale">
    <locale language="English" country="Germany"/>
   </property>
+  <property name="dockNestingEnabled">
+   <bool>false</bool>
+  </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>false</bool>
   </property>
@@ -451,6 +454,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="menuOpen_recent"/>
     <addaction name="separator"/>
     <addaction name="actionSave"/>
+    <addaction name="actionSave_as"/>
     <addaction name="separator"/>
     <addaction name="actionImport"/>
     <addaction name="actionExport"/>
@@ -552,6 +556,11 @@ p, li { white-space: pre-wrap; }
    <addaction name="menuEdit"/>
    <addaction name="menuPlaylist"/>
    <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="sizeGripEnabled">
+    <bool>false</bool>
+   </property>
   </widget>
   <action name="actionOpen">
    <property name="text">
@@ -963,10 +972,21 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionEmpty">
    <property name="text">
-    <string> </string>
+    <string/>
    </property>
    <property name="visible">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionSave_as">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
  </widget>
