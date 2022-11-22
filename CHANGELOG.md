@@ -19,11 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A proper [Undo FrameWork](https://doc.qt.io/qtforpython/overviews/qtwidgets-tools-undoframework-example.html)
 - Translate all dialogs
 - More language translations
+- Shortcuts to Import, Export, Save as and Sort by Ascending and Descending
 
 ### Changed
 
 - Open and Open recent option in menu is now grouped together
-- Moving items in playlist via drag and drop copies them now (hold Ctr/Cmd to prevent this behavior)
+- Moving items in playlist via drag and drop copies them now (hold Ctrl/Cmd to prevent this behavior)
+- Redesign of the "Keyboard Shortcuts" tab in Settings (now uses a table to display all shortcuts)
 
 ### Fixed
 
@@ -31,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Clear recent files is now directly displayed after new file was added to the recent files menu (not anymore only after restart)
 - Bug if no playlist item is selected, open VideoInfoDialog with information about the video instead of displaying information QMessageBox
 - Crash when playlist contains wrong video ids or video ids with not allowed characters (for example "\n")
+- Bug if no language was changed in settings, no settings would be saved even though they were changed
 
 ### Security
 
