@@ -108,8 +108,13 @@ def write_json_file(filename: str, content: dict) -> None:
     :param content:dict: Used to Store the content that will be written into the json file.
     :return: None.
     """
-    with open(filename, "w", encoding="UTF-8") as file:
-        json.dump(content, file, indent=4)
+    try:
+        with open(filename, "w", encoding="UTF-8") as file:
+            json.dump(content, file, indent=4)
+    except json.decoder.JSONDecodeError:
+        logging.error("JSON file empty!")
+    except FileNotFoundError:
+        logging.error("File %s not found!", filename)
 
 
 def check_file_format(filename: str, file_format: str) -> bool:
