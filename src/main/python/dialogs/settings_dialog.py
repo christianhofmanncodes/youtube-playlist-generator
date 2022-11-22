@@ -202,8 +202,11 @@ class SettingsDialog(QDialog):
     def change_button_shortcut_clicked(self) -> None:
         """Get text from keySequenceEdit field and change selected cell in table."""
         if self.keySequenceEdit.keySequence().toString() != "":
-            self.tableWidget.setCurrentItem(
-                QTableWidgetItem(self.keySequenceEdit.keySequence().toString())
+            current_row = self.tableWidget.currentRow()
+            self.tableWidget.setItem(
+                current_row,
+                2,
+                QTableWidgetItem(self.keySequenceEdit.keySequence().toString()),
             )
 
     def reset_button_defaults_clicked(self) -> None:
