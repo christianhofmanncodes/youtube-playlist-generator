@@ -230,561 +230,593 @@
     <attribute name="title">
      <string>Keyboard Shortcuts</string>
     </attribute>
-    <widget class="QGroupBox" name="groupBox_keyboard_shortcuts">
+    <widget class="QTableWidget" name="tableWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>10</y>
        <width>661</width>
-       <height>431</height>
+       <height>381</height>
       </rect>
      </property>
-     <property name="title">
-      <string>Keyboard Shortcuts</string>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <widget class="QKeySequenceEdit" name="keySequenceEdit">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>411</width>
-        <height>51</height>
-       </rect>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="showGrid">
+      <bool>false</bool>
+     </property>
+     <property name="gridStyle">
+      <enum>Qt::NoPen</enum>
+     </property>
+     <property name="cornerButtonEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="horizontalHeaderVisible">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="horizontalHeaderCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>150</number>
+     </attribute>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>210</number>
+     </attribute>
+     <attribute name="horizontalHeaderHighlightSections">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderMinimumSectionSize">
+      <number>21</number>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>30</number>
+     </attribute>
+     <attribute name="verticalHeaderHighlightSections">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderStretchLastSection">
+      <bool>false</bool>
+     </attribute>
+     <row>
+      <property name="text">
+       <string>newPlaylist</string>
       </property>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>140</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>openPlaylist</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_8">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option8_text">
-         <property name="text">
-          <string>Generate</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option8">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Cmd+G</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option8">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>90</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>savePlaylist</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_7">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option7_text">
-         <property name="text">
-          <string>Shuffle</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option7">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Alt+S</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option7">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>190</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>saveAsPlaylist</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_9">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option9_text">
-         <property name="text">
-          <string>Count items</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option9">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Alt+C</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option9">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>240</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>importItems</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_10">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option10_text">
-         <property name="text">
-          <string>Clear all items</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option10">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Cmd+Alt+C</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option10">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>340</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>exportItems</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option6_text">
-         <property name="text">
-          <string>Rename item</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option6">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Cmd+Alt+R</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option6">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>390</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>addItem</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_13">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option13_text">
-         <property name="text">
-          <string>Copy URL</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option13">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Cmd+U</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option13">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>340</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>deleteItem</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_12">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option12_text">
-         <property name="text">
-          <string>Remove duplicates</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option12">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Alt+D</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option12">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>190</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>renameItem</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option3_text">
-         <property name="text">
-          <string>Save playlist</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option3">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Cmd+S</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option3">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>240</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>shufflePlaylist</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option4_text">
-         <property name="text">
-          <string>Add item</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option4">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Return</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option4">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>90</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>generatePlaylist</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option1_text">
-         <property name="text">
-          <string>New playlist</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option1">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Ctrl+N</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option1">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>140</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>sortAscending</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option2_text">
-         <property name="text">
-          <string>Open playlist</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option2">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Cmd+O</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option2">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>290</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>sortDescending</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option5_text">
-         <property name="text">
-          <string>Delete item</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option5">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Backspace</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option5">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="layoutWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>290</y>
-        <width>291</width>
-        <height>32</height>
-       </rect>
+     </row>
+     <row>
+      <property name="text">
+       <string>countItems</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_11">
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option11_text">
-         <property name="text">
-          <string>Get video information</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_keyboard_shortcuts_option11">
-         <property name="font">
-          <font>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Alt+I</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_change_option11">
-         <property name="text">
-          <string>Change</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+     </row>
+     <row>
+      <property name="text">
+       <string>clearAllItems</string>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string>getVideoInformation</string>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string>removeDuplicates</string>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string>copyURL</string>
+      </property>
+     </row>
+     <column>
+      <property name="text">
+       <string>Command</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Description</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Keyboard Shortcut</string>
+      </property>
+     </column>
+     <item row="0" column="0">
+      <property name="text">
+       <string>newPlaylist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="0" column="1">
+      <property name="text">
+       <string>Create new playlist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="0" column="2">
+      <property name="text">
+       <string>Ctrl+N</string>
+      </property>
+     </item>
+     <item row="1" column="0">
+      <property name="text">
+       <string>openPlaylist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="1" column="1">
+      <property name="text">
+       <string>Open existing .ytplaylist file</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="1" column="2">
+      <property name="text">
+       <string>Ctrl+O</string>
+      </property>
+     </item>
+     <item row="2" column="0">
+      <property name="text">
+       <string>savePlaylist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="2" column="1">
+      <property name="text">
+       <string>Save opened playlist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="2" column="2">
+      <property name="text">
+       <string>Ctrl+S</string>
+      </property>
+     </item>
+     <item row="3" column="0">
+      <property name="text">
+       <string>saveAsPlaylist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="3" column="1">
+      <property name="text">
+       <string>Save playlist as .ytplaylist file</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="3" column="2">
+      <property name="text">
+       <string>Ctrl+Shift+S</string>
+      </property>
+     </item>
+     <item row="4" column="0">
+      <property name="text">
+       <string>importItems</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="4" column="1">
+      <property name="text">
+       <string>Import items from .txt or .csv file</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="4" column="2">
+      <property name="text">
+       <string>Ctrl+I</string>
+      </property>
+     </item>
+     <item row="5" column="0">
+      <property name="text">
+       <string>exportItems</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="5" column="1">
+      <property name="text">
+       <string>Export items to .txt or .csv file</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="5" column="2">
+      <property name="text">
+       <string>Ctrl+E</string>
+      </property>
+     </item>
+     <item row="6" column="0">
+      <property name="text">
+       <string>addItem</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="6" column="1">
+      <property name="text">
+       <string>Add new item (video id or URL) to playlist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="6" column="2">
+      <property name="text">
+       <string>Return</string>
+      </property>
+     </item>
+     <item row="7" column="0">
+      <property name="text">
+       <string>deleteItem</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="7" column="1">
+      <property name="text">
+       <string>Delete selected item from playlist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="7" column="2">
+      <property name="text">
+       <string>Backspace</string>
+      </property>
+     </item>
+     <item row="8" column="0">
+      <property name="text">
+       <string>renameItem</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="8" column="1">
+      <property name="text">
+       <string>Rename selected item in playlist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="8" column="2">
+      <property name="text">
+       <string>Ctrl+Alt+R</string>
+      </property>
+     </item>
+     <item row="9" column="0">
+      <property name="text">
+       <string>shufflePlaylist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="9" column="1">
+      <property name="text">
+       <string>Apply shuffle mode to playlist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="9" column="2">
+      <property name="text">
+       <string>Alt+S</string>
+      </property>
+     </item>
+     <item row="10" column="0">
+      <property name="text">
+       <string>generatePlaylist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="10" column="1">
+      <property name="text">
+       <string>Generate playlist URL</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="10" column="2">
+      <property name="text">
+       <string>Ctrl+G</string>
+      </property>
+     </item>
+     <item row="11" column="0">
+      <property name="text">
+       <string>sortAscending</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="11" column="1">
+      <property name="text">
+       <string>Sort items ascending</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="11" column="2">
+      <property name="text">
+       <string>Ctrl+Shift+A</string>
+      </property>
+     </item>
+     <item row="12" column="0">
+      <property name="text">
+       <string>sortDescending</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="12" column="1">
+      <property name="text">
+       <string>Sort items descending</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="12" column="2">
+      <property name="text">
+       <string>Ctrl+Shift+D</string>
+      </property>
+     </item>
+     <item row="13" column="0">
+      <property name="text">
+       <string>countItems</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="13" column="1">
+      <property name="text">
+       <string>Count all items in playlist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="13" column="2">
+      <property name="text">
+       <string>Alt+C</string>
+      </property>
+     </item>
+     <item row="14" column="0">
+      <property name="text">
+       <string>clearAllItems</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="14" column="1">
+      <property name="text">
+       <string>Remove all items in playlist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="14" column="2">
+      <property name="text">
+       <string>Ctrl+Alt+C</string>
+      </property>
+     </item>
+     <item row="15" column="0">
+      <property name="text">
+       <string>getVideoInformation</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="15" column="1">
+      <property name="text">
+       <string>Display video information to selected video id</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="15" column="2">
+      <property name="text">
+       <string>Alt+I</string>
+      </property>
+     </item>
+     <item row="16" column="0">
+      <property name="text">
+       <string>removeDuplicates</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="16" column="1">
+      <property name="text">
+       <string>Remove any duplicates in playlist</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="16" column="2">
+      <property name="text">
+       <string>Alt+D</string>
+      </property>
+     </item>
+     <item row="17" column="0">
+      <property name="text">
+       <string>copyURL</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="17" column="1">
+      <property name="text">
+       <string>Copy generated playlist URL</string>
+      </property>
+      <property name="flags">
+       <set>ItemIsSelectable|ItemIsEnabled</set>
+      </property>
+     </item>
+     <item row="17" column="2">
+      <property name="text">
+       <string>Ctrl+U</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QKeySequenceEdit" name="keySequenceEdit">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>400</y>
+       <width>551</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="keySequence">
+      <string notr="true"/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_change_shortcut">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>410</y>
+       <width>101</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Change</string>
+     </property>
     </widget>
    </widget>
   </widget>
