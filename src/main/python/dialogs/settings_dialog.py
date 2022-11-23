@@ -147,6 +147,46 @@ class SettingsDialog(QDialog):
             1, app.translate("SettingsDialog", "Keyboard Shortcuts")
         )
 
+        self.tableWidget.setHorizontalHeaderLabels(
+            [
+                app.translate("SettingsDialog", "Command"),
+                app.translate("SettingsDialog", "Description"),
+                app.translate("SettingsDialog", "Keyboard shortcut"),
+            ]
+        )
+
+        keyboard_shortcuts_descriptions = [
+            app.translate("SettingsDialog", "Create new playlist"),
+            app.translate("SettingsDialog", "Open existing .ytplaylist file"),
+            app.translate("SettingsDialog", "Save opened playlist"),
+            app.translate("SettingsDialog", "Save playlist as .ytplaylist file"),
+            app.translate("SettingsDialog", "Import items from .txt or .csv file"),
+            app.translate("SettingsDialog", "Export items to .txt or .csv file"),
+            app.translate(
+                "SettingsDialog", "Add new item (video id or URL) to playlist"
+            ),
+            app.translate("SettingsDialog", "Delete selected item from playlist"),
+            app.translate("SettingsDialog", "Rename selected item in playlist"),
+            app.translate("SettingsDialog", "Apply shuffle mode to playlist"),
+            app.translate("SettingsDialog", "Generate playlist URL"),
+            app.translate("SettingsDialog", "Sort items ascending"),
+            app.translate("SettingsDialog", "Sort items descending"),
+            app.translate("SettingsDialog", "Count all items in playlist"),
+            app.translate("SettingsDialog", "Remove all items in playlist"),
+            app.translate(
+                "SettingsDialog", "Display video information to selected video id"
+            ),
+            app.translate("SettingsDialog", "Remove any duplicates in playlist"),
+            app.translate("SettingsDialog", "Copy generated playlist URL"),
+        ]
+
+        for row_index, shortcut_description in enumerate(
+            keyboard_shortcuts_descriptions
+        ):
+            self.tableWidget.setItem(
+                row_index, 1, QTableWidgetItem(str(shortcut_description))
+            )
+
         self.pushButton_change_shortcut.setText(
             app.translate("SettingsDialog", "Change")
         )
