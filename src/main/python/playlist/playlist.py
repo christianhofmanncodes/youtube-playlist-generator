@@ -4,7 +4,7 @@ import logging
 import random
 
 from actions import actions
-from dialogs import dialogs
+from dialogs import builtin_dialogs
 from settings import operations
 from settings.settings import SETTING_FILE_LOCATION
 from strings import check_string, replace_string
@@ -119,7 +119,9 @@ def remove_duplicates_from_playlist(self) -> None:
 
     self.listWidget_playlist_items.clear()
     import_from_dict(self, ytplaylist_dict)
-    dialogs.show_info_dialog(self, "Success!", "Any duplicates have been deleted.")
+    builtin_dialogs.show_info_dialog(
+        self, "Success!", "Any duplicates have been deleted."
+    )
 
     if not playlist_widget_has_x_or_more_items(self, 1):
         self.actionClear_all_items.setEnabled(False)
@@ -164,7 +166,7 @@ def check_if_items_in_playlist(self) -> bool:
     return number_of_items >= 1
 
 
-def generate_dict_from_fields(playlist_title: str, playlist_ids: list) -> dict:
+def generate_dict_from_fields(playlist_title: str, playlist_ids: list[str]) -> dict:
     """
     The generate_dict_from_fields function takes a playlist title and list of IDs as arguments.
     It returns a dictionary with the playlist title as the key and the list of IDs as its value.

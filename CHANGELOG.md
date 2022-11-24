@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Compare changes to last version]
 
+## [0.2.0] - 2022-11-30
+
+### Added
+
+- Import function to batch import multiple video IDs / URLs via .txt and .csv file [#2](https://github.com/christianhofmanncodes/youtube-playlist-generator/issues/2)
+- Export function to export playlist items to `.csv` or `.txt` file
+- Drag & Drop a `.yt-playlist` file or a `.txt` or `.csv` file onto the window
+- New Video Info Dialog to display YouTube video information (title, channel, length, description, views, publish date and thumbnail)
+- Display playlist duration (after playlist generated successfully)
+- More language translations
+- Shortcuts to Import, Export, Save as and Sort by Ascending and Descending
+
+### Changed
+
+- Open and Open recent option in menu is now grouped together
+- Moving items in playlist via drag and drop copies them now (hold Ctrl/Cmd to prevent this behavior)
+- Redesign of the "Keyboard Shortcuts" tab in Settings (now uses a table to display all shortcuts)
+
+### Fixed
+
+- Open recent file menu is now correctly translated and placed after the open file option
+- Clear recent files is now directly displayed after new file was added to the recent files menu (not anymore only after restart)
+- Bug if no playlist item is selected, open VideoInfoDialog with information about the video instead of displaying information QMessageBox
+- Crash when playlist contains wrong video ids or video ids with not allowed characters (for example "\n")
+- Bug if no language was changed in settings, no settings would be saved even though they were changed
+
+### Security
+
+- Fix vulnerability [CWE-22](https://cwe.mitre.org/data/definitions/22.html) "Audit url open for permitted schemes. Allowing use of "file:" or custom schemes is often unexpected.": Validate URL before opening it with urllib.
+
 ## [0.1.0] - 2022-10-30
 
 ### Added
@@ -144,7 +174,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - This is the initial release of YouTube Playlist Generator
 
-[Compare changes to last version]: https://github.com/christianhofmanncodes/youtube-playlist-generator/compare/v0.0.5-alpha...v0.1.0
+[Compare changes to last version]: https://github.com/christianhofmanncodes/youtube-playlist-generator/compare/v0.1.0...v0.2.0
+[0.2.0]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.2.0
 [0.1.0]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.1.0
 [0.0.5-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.5-alpha
 [0.0.4-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.4-alpha

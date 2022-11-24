@@ -14,6 +14,7 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
 [![Crowdin](https://badges.crowdin.net/youtube-playlist-generator/localized.svg)](https://crowdin.com/project/youtube-playlist-generator)
+[![Liberapay](https://img.shields.io/liberapay/receives/youtube-playlist-generator.svg)](https://liberapay.com/youtube-playlist-generator)
 
 Generate YouTube playlists without an account.
 
@@ -33,13 +34,18 @@ As of version 0.0.5, the CLI version will no longer be developed.
 - Rename specific items
 - Change order of playlist items (via drag and drop)
 - Delete specific items
-- Shuffle-mode
+- Shuffle mode
 - Generate playlist URL
 - Automatically open generated URL in default web browser
 - Copy URL to clipboard
-- Open .ytplaylist file
-- Save .ytplaylist file
+- Open `.ytplaylist` file
+- Save `.ytplaylist` file
+- Import a `.txt` file (items must be in new lines) or `.csv` file (items must be comma-separated)
+- Export playlist items as a `.txt` or `.csv` file
+- Drag & Drop a `.yt-playlist` file or a `.txt` or `.csv` file onto the window to import them
+- Fetch YouTube video information (title, channel, length, description, views, publish date and thumbnail)
 - Darkmode & Whitemode (switchable in settings)
+- Display playlist duration (after playlist generated successfully)
 - Recent files in File menu
 - Supported languages (switchable in settings)
   - English
@@ -68,10 +74,14 @@ As of version 0.0.5, the CLI version will no longer be developed.
 
 ## Installation
 
-Just download and run the newest version from the Releases.
+Just download, install and run the newest version from the Releases.
 Choose your file according to the operating system (Windows, Linux or macOS) you are using.
 
-Launch the program. Now you can either create a new playlist by adding an URL or ID to the playlist one by one, or you can open a `.ytplaylist` file. If you want to save your playlist, you can save the playlist to a `.ytplaylist` file with all its items and the playlist title. Share it with a friend if you want.
+Now you can either create a new playlist by adding an URL or ID to the playlist one by one, or you can open a `.ytplaylist` file.
+There is also an option to import multiple URLs or video IDs via a `.txt` or `.csv` file.  
+If you want to save your playlist, you can save the playlist to a `.ytplaylist` file with all its items and the playlist title.
+Share it with a friend if you want.
+You can also export only the playlist items into a `.txt` or `.csv` file.
 
 ## Run Locally
 
@@ -106,7 +116,6 @@ Run the app
 ```
 
 Note: On Linux and macOS you have to use `pip3` and `python3`.  
-Pandas only needs to be installed if you want to use the console version.
 
 ## Security
 
@@ -115,10 +124,6 @@ You can check for security issues with the following commands:
 ```bash
   sudo chmod +x src/main/python/scanners/bandit.sh
   sudo sh src/main/python/scanners/bandit.sh
-```
-
-```bash
-  safety check
 ```
 
 You can also find the results of sonarcloud checks here:
@@ -161,9 +166,8 @@ Simply free up some space.
 
 ## Roadmap
 
-- Drag & Drop a .yt-playlist file into the playlist items section
-- Fetch YouTube video information (title, channel and thumbnail)
-- Display playlist duration
+- Add a proper [Undo FrameWork](https://doc.qt.io/qtforpython/overviews/qtwidgets-tools-undoframework-example.html)
+- Translate all dialogs
 
 ## FAQ
 
@@ -181,6 +185,57 @@ https://www.youtu.be/
 https://invidious.namazso.eu/watch?v=
 ```
 
+### Can I batch import URLs / video IDs?
+
+As requested in [#2](https://github.com/christianhofmanncodes/youtube-playlist-generator/issues/2) the function has been added to version 0.2.0.
+Just click on "Import" in the menu and select the `.txt`or the `.csv` file you want to import accordingly.
+
+It should look something like this:
+
+```text
+Hbb5GPxXF1w
+4vbDFu0PUew
+Moq0aOiTUOA
+qfVuRQX0ydQ
+juQvizeZJFM
+```
+
+You can also use URLs:
+
+```text
+https://youtu.be/gQlMMD8auMs
+https://www.youtube.com/watch?v=gQlMMD8auMs
+https://www.youtube.com/watch?v=f6YDKF0LVWw
+https://www.youtube.com/watch?v=UNFk6_to5_0
+https://www.youtube.com/watch?v=ygJgQAYZVi0
+https://www.youtube.com/watch?v=gRnuFC4Ualw
+https://www.youtube.com/watch?v=k6jqx9kZgPM
+```
+
+Or you can mix them too:
+
+```text
+Hbb5GPxXF1w
+4vbDFu0PUew
+Moq0aOiTUOA
+qfVuRQX0ydQ
+juQvizeZJFM
+https://youtu.be/gQlMMD8auMs
+f6YDKF0LVWw
+UNFk6_to5_0
+ygJgQAYZVi0
+https://www.youtube.com/watch?v=gRnuFC4Ualw
+k6jqx9kZgPM
+```
+
+If you want to import a `.csv file`, just select the file extension in the file dialog.
+
+It should look something like this:
+
+```csv
+Hbb5GPxXF1w,4vbDFu0PUew,Moq0aOiTUOA,qfVuRQX0ydQ,juQvizeZJFM
+```
+
 ## Acknowledgements
 
 - [Python](https://github.com/python/)
@@ -188,6 +243,7 @@ https://invidious.namazso.eu/watch?v=
 - [PyQt6](https://www.riverbankcomputing.com/software/pyqt/)
 - [Qt-Material](https://github.com/UN-GCPDS/qt-material)
 - [fbs](https://build-system.fman.io/)
+- [pytube](https://github.com/pytube/pytube)
 
 ## Contributing
 

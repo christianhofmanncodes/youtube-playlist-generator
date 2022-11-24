@@ -20,3 +20,27 @@ def create_comma_separated_string(content_list: list) -> str:
     :return: A string with commas after each item from the list.
     """
     return ",".join(content_list)
+
+
+def remove_empty_strings_in_list(list_of_strings: list) -> list[str]:
+    """
+    The remove_empty_strings_in_list function takes a list of strings
+    and returns a list without empty strings.
+
+    :param list_of_strings:list: The list of strings to remove empty strings
+    :return: A list of strings with empty strings removed
+    """
+    return [i for i in list_of_strings[0] if i]
+
+
+def format_int_with_commas(number: int) -> str:
+    """
+    The format_int_with_commas function takes an integer as input and returns a string with the
+    number formatted with commas. For example, if the input is 123456789,
+    then this function will return "123,456,789".
+
+    :param self: Used to Access variables that belongs to the class.
+    :param number:int: Used to Pass the number that will be formatted.
+    :return: A string with commas in place of the thousands separator.
+    """
+    return f"{number:,}"

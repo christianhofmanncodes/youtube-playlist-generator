@@ -2,12 +2,13 @@
 
 import logging
 
+from PyQt6.QtGui import QAction, QKeySequence
+
 from actions import actions
 from dialogs import import_playlist
-from dialogs.dialogs import show_error_dialog
+from dialogs.builtin_dialogs import show_error_dialog
 from file.file import check_file_format, read_json_file
 from playlist.playlist import check_if_items_in_playlist, import_from_dict
-from PyQt6.QtGui import QAction, QKeySequence
 from settings import operations
 from settings.settings import RECENT_FILES_STRING, SETTING_FILE_LOCATION
 
@@ -26,16 +27,16 @@ def get_menu_config(app_context) -> dict:
 def get_recent_files_items_menu(self) -> list:
     """
     The get_recent_files_items_menu function returns a list of the recent files from the menu.
-    The function returns a list with all the text from each action in self.recent_files_menu,
+    The function returns a list with all the text from each action in self.menuOpen_recent,
     which is ordered by most recent first.
 
     :param self: Used to Access the attributes and methods of the parent class.
     :return: A list containing the text of all actions in the recent files menu.
     """
-    return [action.text() for action in self.recent_files_menu.actions()[::-1]]
+    return [action.text() for action in self.menuOpen_recent.actions()[::-1]]
 
 
-def add_clear_recent_files_action_to_menu(self) -> None:
+def add_clear_recent_files_action_to_menu(self, app) -> None:
     """
     The add_clear_recent_files_action_to_menu function adds
     a clear recent files option to the recent files menu.
@@ -49,13 +50,13 @@ def add_clear_recent_files_action_to_menu(self) -> None:
     )
 
     if not clear_recent_files_option:
-        self.recent_files_menu.addSeparator()
+        self.menuOpen_recent.addSeparator()
         self.action = QAction()
-        self.action.setText(RECENT_FILES_STRING)
-        self.recent_files_menu.addAction(self.action)
+        self.action.setText(app.translate("Menu", RECENT_FILES_STRING))
+        self.menuOpen_recent.addAction(self.action)
 
 
-def load_recent_files(self, app_context) -> None:
+def load_recent_files(self, app, app_context) -> None:
     """
     The load_recent_files function adds items to the recent files menu.
 
@@ -68,8 +69,8 @@ def load_recent_files(self, app_context) -> None:
         file_names = menu_config["recent_files"]
         logging.debug(file_names)
         for file_name in file_names:
-            add_recent_filename(self, file_name)
-        add_clear_recent_files_action_to_menu(self)
+            add_recent_filename(self, app, file_name)
+        add_clear_recent_files_action_to_menu(self, app)
 
     else:
         logging.info("No recent files!")
@@ -89,7 +90,7 @@ def check_if_filename_already_exist(self, filename) -> bool:
     return filename in all_recent_files
 
 
-def add_recent_filename(self, filename) -> None:
+def add_recent_filename(self, app, filename) -> None:
     """
     The add_recent_filename function adds a filename to the recent files menu.
     It does this by creating an action for the filename and inserting it into the menu.
@@ -101,9 +102,10 @@ def add_recent_filename(self, filename) -> None:
     """
     if not check_if_filename_already_exist(self, filename):
         filename_action = QAction(filename, self)
-        menu_actions = self.recent_files_menu.actions()
+        menu_actions = self.menuOpen_recent.actions()
         before_action = menu_actions[0] if menu_actions else None
-        self.recent_files_menu.insertAction(before_action, filename_action)
+        self.menuOpen_recent.insertAction(before_action, filename_action)
+        add_clear_recent_files_action_to_menu(self, app)
     else:
         logging.info("'%s' already exists in recent files menu.", filename)
 
@@ -134,14 +136,15 @@ def open_ytplaylist_file_from_menu(self, action, app_context) -> None:
                     actions.act_new(self, app_context)
                     import_from_dict(self, ytplaylist_dict)
                     self.lineEdit_url_id.setFocus()
-                self.recent_files_menu.addSeparator()
+                self.menuOpen_recent.addSeparator()
                 self.new_action = QAction()
                 self.new_action.setText(RECENT_FILES_STRING)
-                self.recent_files_menu.addAction(self.new_action)
+                self.menuOpen_recent.addAction(self.new_action)
             else:
                 import_from_dict(self, ytplaylist_dict)
                 self.lineEdit_url_id.setFocus()
             actions.enable_components(self)
+            self.statusBar.showMessage(filename, 0)
         else:
             show_error_dialog(
                 self,
@@ -149,7 +152,7 @@ def open_ytplaylist_file_from_menu(self, action, app_context) -> None:
                 f"File '{filename}' not found!\n\nMaybe it was deleted?",
             )
 
-            self.recent_files_menu.removeAction(action)
+            self.menuOpen_recent.removeAction(action)
     else:
         show_error_dialog(
             self,
@@ -157,7 +160,7 @@ def open_ytplaylist_file_from_menu(self, action, app_context) -> None:
             f"File '{filename}' is not a valid 'ytplaylist' file!",
         )
 
-        self.recent_files_menu.removeAction(action)
+        self.menuOpen_recent.removeAction(action)
 
 
 def apply_shortcuts_to_actions(self, app_context):
@@ -173,6 +176,15 @@ def apply_shortcuts_to_actions(self, app_context):
         self.actionSave.setShortcut(
             QKeySequence(settings_dict["keyboard_shortcuts"][0]["savePlaylist"])
         )
+        self.actionSave_as.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["saveAsPlaylist"])
+        )
+        self.actionImport.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["importItems"])
+        )
+        self.actionExport.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["exportItems"])
+        )
         self.actionAdd_item.setShortcut(
             QKeySequence(settings_dict["keyboard_shortcuts"][0]["addItem"])
         )
@@ -187,6 +199,12 @@ def apply_shortcuts_to_actions(self, app_context):
         )
         self.actionGenerate_Playlist.setShortcut(
             QKeySequence(settings_dict["keyboard_shortcuts"][0]["generatePlaylist"])
+        )
+        self.actionAscending.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["sortAscending"])
+        )
+        self.actionDescending.setShortcut(
+            QKeySequence(settings_dict["keyboard_shortcuts"][0]["sortDescending"])
         )
         self.actionCount_items.setShortcut(
             QKeySequence(settings_dict["keyboard_shortcuts"][0]["countItems"])

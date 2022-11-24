@@ -1,27 +1,14 @@
-"""settings.operations module"""
+"""module settings.operations"""
 
 import json
 
 from file.file import read_json_file
 from menu import menu
-
 from settings.settings import (
     DEFAULT_SETTINGS_FILE_LOCATION,
     RECENT_FILES_STRING,
     SETTING_FILE_LOCATION,
 )
-
-
-def create_recent_file_menu(self) -> None:
-    """
-    The create_recent_file_menu function creates a menu that lists the most recently opened files.
-
-    :param self: Used to Access the variables and methods.
-    :return: The recent_files_menu.
-    """
-    self.file_menu = self.menuFile
-    self.recent_files_menu = self.file_menu.addMenu("&Open recent")
-    self.recent_files_menu.triggered.connect(self.act_recent_file)
 
 
 def get_settings(filename: str, app_context) -> dict:
@@ -108,16 +95,21 @@ def output_settings_as_dict(
                 "newPlaylist": components_dict["shortcut_1"],
                 "openPlaylist": components_dict["shortcut_2"],
                 "savePlaylist": components_dict["shortcut_3"],
-                "addItem": components_dict["shortcut_4"],
-                "deleteItem": components_dict["shortcut_5"],
-                "renameItem": components_dict["shortcut_6"],
-                "shufflePlaylist": components_dict["shortcut_7"],
-                "generatePlaylist": components_dict["shortcut_8"],
-                "countItems": components_dict["shortcut_9"],
-                "clearAllItems": components_dict["shortcut_10"],
-                "getVideoInformation": components_dict["shortcut_11"],
-                "removeDuplicates": components_dict["shortcut_12"],
-                "copyURL": components_dict["shortcut_13"],
+                "saveAsPlaylist": components_dict["shortcut_4"],
+                "importItems": components_dict["shortcut_5"],
+                "exportItems": components_dict["shortcut_6"],
+                "addItem": components_dict["shortcut_7"],
+                "deleteItem": components_dict["shortcut_8"],
+                "renameItem": components_dict["shortcut_9"],
+                "shufflePlaylist": components_dict["shortcut_10"],
+                "generatePlaylist": components_dict["shortcut_11"],
+                "sortAscending": components_dict["shortcut_12"],
+                "sortDescending": components_dict["shortcut_13"],
+                "countItems": components_dict["shortcut_14"],
+                "clearAllItems": components_dict["shortcut_15"],
+                "getVideoInformation": components_dict["shortcut_16"],
+                "removeDuplicates": components_dict["shortcut_17"],
+                "copyURL": components_dict["shortcut_18"],
             }
         ],
     }
@@ -136,15 +128,14 @@ def output_menu_config_as_dict(recent_files: list) -> dict:
     return {"recent_files": list(recent_files)}
 
 
-def load_settings(self, app_context) -> None:
+def load_settings(self, app, app_context) -> None:
     """
     The load_settings function loads the settings from menu.config into the program.
 
     :param self: Used to Access the attributes and methods of the class.
     :return: None.
     """
-    create_recent_file_menu(self)
-    menu.load_recent_files(self, app_context)
+    menu.load_recent_files(self, app, app_context)
     menu.apply_shortcuts_to_actions(self, app_context)
 
 
@@ -162,6 +153,8 @@ def remove_unnecessary_entries_from_menu_dict(menu_dict) -> dict:
     menu_items_list = menu_dict["recent_files"]
     for menu_item in menu_items_list:
         if menu_item == RECENT_FILES_STRING:
+            menu_items_list.remove(menu_item)
+        if menu_item == " ":
             menu_items_list.remove(menu_item)
         menu_items_list = [item for item in menu_items_list if item]
     return {"recent_files": menu_items_list}

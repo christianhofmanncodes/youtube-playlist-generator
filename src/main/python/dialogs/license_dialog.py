@@ -1,8 +1,9 @@
-"""module dialogs.license"""
+"""module dialogs.license_dialog"""
 
-from file.file import read_file
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QDialog, QTextEdit
+
+from file.file import read_file
 from settings.settings import APP_ICON
 
 

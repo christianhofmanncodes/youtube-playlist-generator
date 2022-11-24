@@ -1,4 +1,4 @@
-"""file.file module"""
+"""module file.file"""
 
 import json
 import logging
@@ -36,6 +36,66 @@ def read_file(filename: str) -> str:
     return file_str
 
 
+def read_txt_file(filename: str) -> list[str]:
+    """
+    The read_txt_file function reads a file and returns a list of strings.
+
+    :param filename:str: Used to Specify the name of the file that is to be read.
+    :return: The content from a file as a list.
+    """
+    strings_list = []
+    with open(filename, "r", encoding="UTF-8") as file:
+        item = file.read().split("\n")
+        strings_list.append(item)
+    return strings_list
+
+
+def write_txt_file(filename: str, content: list) -> None:
+    """
+    The write_txt_file function writes a txt file with the given filename and content.
+    The function takes two arguments:
+        - filename (str): The name of the file to be written.
+        - content (list): The list containing all video ids.
+
+    :param filename:str: Used to Specify the name of the file that is to be written.
+    :param content:list: Used to Store the content that will be written into the txt file.
+    :return: None.
+    """
+    with open(filename, "w", encoding="UTF-8") as file:
+        for item in content:
+            file.writelines(item + "\n")
+
+
+def write_csv_file(filename: str, content: list) -> None:
+    """
+    The write_csv_file function writes a csv file with the given filename and content.
+    The function takes two arguments:
+        - filename (str): The name of the file to be written.
+        - content (list): The list containing all video ids.
+
+    :param filename:str: Used to Specify the name of the file that is to be written.
+    :param content:list: Used to Store the content that will be written into the txt file.
+    :return: None.
+    """
+    with open(filename, "w", encoding="UTF-8") as file:
+        for item in content:
+            file.writelines(f"{item},")
+
+
+def read_csv_file(filename: str) -> list[str]:
+    """
+    The read_csv_file function reads a file and returns a list of strings.
+
+    :param filename:str: Used to Specify the name of the file that is to be read.
+    :return: The content from a file as a list.
+    """
+    strings_list = []
+    with open(filename, "r", encoding="UTF-8") as file:
+        item = file.read().split(",")
+        strings_list.append(item)
+    return strings_list
+
+
 def write_json_file(filename: str, content: dict) -> None:
     """
     The write_json_file function writes a json file with the given filename and content.
@@ -48,8 +108,13 @@ def write_json_file(filename: str, content: dict) -> None:
     :param content:dict: Used to Store the content that will be written into the json file.
     :return: None.
     """
-    with open(filename, "w", encoding="UTF-8") as file:
-        json.dump(content, file, indent=4)
+    try:
+        with open(filename, "w", encoding="UTF-8") as file:
+            json.dump(content, file, indent=4)
+    except json.decoder.JSONDecodeError:
+        logging.error("JSON file empty!")
+    except FileNotFoundError:
+        logging.error("File %s not found!", filename)
 
 
 def check_file_format(filename: str, file_format: str) -> bool:

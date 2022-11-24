@@ -1,7 +1,8 @@
-"""dialogs.restart_app module"""
+"""module dialogs.restart_app"""
 
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QLabel, QVBoxLayout
+
 from settings.settings import APP_ICON
 
 

@@ -1,6 +1,6 @@
 """module dialogs.creating_url"""
 
-from dialogs import dialogs
+from dialogs import builtin_dialogs
 
 
 def show_error_creating_url_dialog(self):
@@ -12,7 +12,7 @@ def show_error_creating_url_dialog(self):
     :param self: Used to Access the variables and methods inside of a class.
     :return: A QMessageBox object.
     """
-    return dialogs.show_error_dialog(
+    return builtin_dialogs.show_error_dialog(
         self,
         "Error with creating playlist URL",
         "There was an error with creating the playlist URL."

@@ -1,4 +1,4 @@
-"""dialogs.dialogs module"""
+"""module dialogs.builtin_dialogs"""
 
 from PyQt6.QtWidgets import QMessageBox
 

@@ -1,4 +1,4 @@
-"""tests.test_url module"""
+"""module tests.test_url"""
 
 from strings import check_string
 from url import url

@@ -1,18 +1,20 @@
-"""main module"""
+"""module main"""
+
 import logging
 import sys
 
+from PyQt6 import uic
+from PyQt6.QtCore import QTranslator, Qt
+from PyQt6.QtGui import QFont, QIcon
+from PyQt6.QtWidgets import QApplication, QMainWindow
 import darkdetect
 from fbs_runtime import platform
 from fbs_runtime.application_context.PyQt6 import ApplicationContext
-from PyQt6 import uic
-from PyQt6.QtCore import QLocale, QTranslator, pyqtSlot
-from PyQt6.QtGui import QFont, QIcon, QAction
-from PyQt6.QtWidgets import QApplication, QMainWindow
 from qt_material import QtStyleTools, apply_stylesheet
 
 from actions import actions
-from dialogs import license_dialog
+from dialogs import builtin_dialogs, license_dialog
+from file import file
 from settings.operations import get_settings, load_settings, save_settings
 from settings.settings import (
     APP_ICON,
@@ -21,6 +23,7 @@ from settings.settings import (
     SETTING_FILE_LOCATION,
     WHITE_THEME_LOCATION,
 )
+from translate import translator
 
 if platform.is_windows():
     from ctypes import windll
@@ -61,7 +64,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         """
         license_dialog.create_license_dialog(self, app_context)
         self.set_theme()
-        load_settings(self, app_context)
+        load_settings(self, app, app_context)
 
     def set_theme(self) -> None:
         """
@@ -126,7 +129,11 @@ class MainWindow(QMainWindow, QtStyleTools):
         """
         self.actionNew.triggered.connect(self.act_new)
         self.actionOpen.triggered.connect(self.act_open)
+        self.menuOpen_recent.triggered.connect(self.act_recent_file)
         self.actionSave.triggered.connect(self.act_save)
+        self.actionSave_as.triggered.connect(self.act_save_as)
+        self.actionImport.triggered.connect(self.act_import)
+        self.actionExport.triggered.connect(self.act_export)
         self.actionAbout.triggered.connect(self.act_about)
         self.actionSettings.triggered.connect(self.act_settings)
 
@@ -157,17 +164,33 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.actionAbout_Qt.triggered.connect(self.act_about_qt)
         self.actionLicense.triggered.connect(self.act_license)
 
+        self.lineEdit_playlist_title.textChanged.connect(
+            lambda: self.actionSave.setEnabled(True)
+        )
+
     def act_new(self):
         """Action for new."""
         actions.act_new(self, app_context)
 
     def act_open(self):
         """Action for open."""
-        actions.act_open(self, app_context)
+        actions.act_open(self, app, app_context)
+
+    def act_import(self):
+        """Action for import."""
+        actions.act_import(self, app_context)
+
+    def act_export(self):
+        """Action for import."""
+        actions.act_export(self)
 
     def act_save(self):
         """Action for save."""
         actions.act_save(self)
+
+    def act_save_as(self):
+        """Action for save as."""
+        actions.act_save_as(self)
 
     def act_about(self):
         """Action for about."""
@@ -260,7 +283,7 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def act_video_information(self):
         """Action when item in playlist clicked."""
-        actions.act_video_information(self)
+        actions.act_video_information(self, app, app_context)
 
     def act_copy_url(self):
         """Action for copy_url."""
@@ -286,7 +309,6 @@ class MainWindow(QMainWindow, QtStyleTools):
         """Action for license."""
         actions.act_license(self)
 
-    @pyqtSlot(QAction)
     def act_recent_file(self, action):
         """Action for recent_file."""
         actions.act_recent_file(self, app_context, action)
@@ -326,27 +348,20 @@ class MainWindow(QMainWindow, QtStyleTools):
 
     def install_translator(self, settings_dict) -> None:
         """Installs the Translator based on the program language settings."""
-        if settings_dict["general"][0]["programLanguage"] == "English":
-            logging.info("Program language is English.")
-
-        elif settings_dict["general"][0]["programLanguage"] == "Deutsch":
-            data = app_context.get_resource("forms/translations/de/MainWindow.qm")
-            german = QLocale(QLocale.Language.German, QLocale.Country.Germany)
-            self.trans.load(german, data)
-            app.instance().installTranslator(self.trans)
-
-        elif settings_dict["general"][0]["programLanguage"] == "Español":
-            data = app_context.get_resource("forms/translations/es-ES/MainWindow.qm")
-            german = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
-            self.trans.load(german, data)
-            app.instance().installTranslator(self.trans)
+        translator.install_translator(
+            self, app, app_context, settings_dict, "MainWindow.qm"
+        )
 
     def translate_menu(self) -> None:
         """Translates the Menu based on language settings"""
         self.menuFile.setTitle(app.translate("MainWindow", "&File"))
         self.actionNew.setText(app.translate("MainWindow", "New playlist"))
         self.actionOpen.setText(app.translate("MainWindow", "Open"))
+        self.menuOpen_recent.setTitle(app.translate("MainWindow", "Open recent"))
+        self.actionImport.setText(app.translate("MainWindow", "Import"))
+        self.actionExport.setText(app.translate("MainWindow", "Export"))
         self.actionSave.setText(app.translate("MainWindow", "Save"))
+        self.actionSave_as.setText(app.translate("MainWindow", "Save as..."))
         self.actionAbout.setText(app.translate("MainWindow", "About"))
         self.actionSettings.setText(app.translate("MainWindow", "Settings"))
         self.actionQuit.setText(app.translate("MainWindow", "Quit"))
@@ -446,6 +461,79 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.translate_menu()
         self.translate_main_window()
         self.translate_tooltips()
+
+    def dragEnterEvent(self, event):
+        """
+        The dragEnterEvent function accepts the drag event if it has urls.
+        If not, it ignores the event.
+
+        :param self: Used to Access the attributes and methods of the parent class.
+        :param event: Used to Specify the type of event that is being handled.
+        :return: A boolean value.
+        """
+
+        if event.mimeData().hasUrls:
+            event.accept()
+        else:
+            event.ignore()
+
+    def dragMoveEvent(self, event):
+        """
+        The dragMoveEvent function is called when the user moves the mouse while dragging an item.
+        It is used to determine whether or not a drop action can occur at a given location,
+        and if so, what kind of action should be taken. If the mimeData contains URLs then
+        it sets the dropAction to CopyAction and accepts the event.
+        Otherwise it ignores the event.
+
+        :param self: Used to Access the attributes and methods of the parent class.
+        :param event: Used to Handle the event.
+        :return: The action that the user wants to perform on the files.
+        """
+
+        if event.mimeData().hasUrls():
+            event.setDropAction(Qt.DropAction.CopyAction)
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        """
+        The dropEvent function accepts a QDropEvent and determines
+        whether the dropped item is a local file. If it is,
+        it appends the path to the list of links. If not, it ignores the event.
+
+        :param self: Used to Access the attributes and methods of the class.
+        :param event: Used to Determine the action of the drop event.
+        :return: A boolean value that indicates whether the event was accepted.
+        """
+        if event.mimeData().hasUrls():
+            event.setDropAction(Qt.DropAction.CopyAction)
+            event.accept()
+
+            links = []
+            for url in event.mimeData().urls():
+                if url.isLocalFile():
+                    links.append(str(url.toLocalFile()))
+                    logging.info(url.toLocalFile())
+
+                    if file.check_file_format(str(url.toLocalFile()), ".ytplaylist"):
+                        actions.open_ytplaylist_file(
+                            self, app, app_context, str(url.toLocalFile())
+                        )
+                    elif file.check_file_format(str(url.toLocalFile()), ".txt"):
+                        filename = (str(url.toLocalFile()), "Text file (*.txt)")
+                        actions.import_txt_or_csv_file(self, app_context, filename)
+                    elif file.check_file_format(str(url.toLocalFile()), ".csv"):
+                        filename = (str(url.toLocalFile()), "CSV file (*.csv)")
+                        actions.import_txt_or_csv_file(self, app_context, filename)
+                    else:
+                        builtin_dialogs.show_error_dialog(
+                            self,
+                            "Unknown file format",
+                            "This file format is not supported!",
+                        )
+        else:
+            event.ignore()
 
 
 if __name__ == "__main__":
