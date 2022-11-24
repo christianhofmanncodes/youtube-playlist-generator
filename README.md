@@ -126,10 +126,6 @@ You can check for security issues with the following commands:
   sudo sh src/main/python/scanners/bandit.sh
 ```
 
-```bash
-  safety check
-```
-
 You can also find the results of sonarcloud checks here:
 
 [sonarcloud](https://sonarcloud.io/project/overview?id=christianhofmanncodes_youtube-playlist-generator)
