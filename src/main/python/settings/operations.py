@@ -1,5 +1,7 @@
 """module settings.operations"""
 
+from typing import List
+
 import json
 
 from file.file import read_json_file
@@ -115,7 +117,7 @@ def output_settings_as_dict(
     }
 
 
-def output_menu_config_as_dict(recent_files: list) -> dict:
+def output_menu_config_as_dict(recent_files: List) -> dict:
     """
     The output_menu_config_as_dict function generates a dictionary from the recent files list.
     The output_menu_config_as_dict function takes in a list of strings and returns a dictionary.

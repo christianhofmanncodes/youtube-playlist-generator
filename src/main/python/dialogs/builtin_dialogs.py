@@ -1,6 +1,6 @@
 """module dialogs.builtin_dialogs"""
 
-from PyQt6.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox
 
 
 def show_question_dialog(self, title: str, text: str):

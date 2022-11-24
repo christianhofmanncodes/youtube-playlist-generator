@@ -1,10 +1,10 @@
 """module actions.actions"""
 
 import logging
+from typing import List, Tuple, Union
 
-from PyQt6.QtCore import Qt, pyqtSlot
-from PyQt6.QtGui import QAction
-from PyQt6.QtWidgets import QApplication, QFileDialog, QInputDialog, QMessageBox
+from PyQt5.QtCore import Qt, pyqtSlot
+from PyQt5.QtWidgets import QAction, QApplication, QFileDialog, QInputDialog, QMessageBox
 
 from dialogs import import_playlist, reset_playlist
 from dialogs.builtin_dialogs import show_info_dialog, show_question_dialog
@@ -526,7 +526,7 @@ def act_remove_duplicates(self) -> None:
         playlist.remove_duplicates_from_playlist(self)
 
 
-def act_delete_item(self) -> None | bool:
+def act_delete_item(self) -> Union[bool, None]:
     """
     The act_delete_item function is a function that is called
     when the user clicks on the delete item button.
@@ -635,7 +635,7 @@ def open_ytplaylist_file(self, app, app_context, filename: str) -> None:
     self.statusBar.showMessage(filename, 0)
 
 
-def get_list_of_strings(filename: tuple[str, str]) -> list[str]:
+def get_list_of_strings(filename: Tuple[str, str]) -> List[str]:
     """
     The get_list_of_strings function takes a tuple of strings as input.
     The first string is the filename, and the second string is the filetype.
@@ -651,11 +651,11 @@ def get_list_of_strings(filename: tuple[str, str]) -> list[str]:
     return read_csv_file(filename[0]) if filename[1] == "CSV file (*.csv)" else []
 
 
-def replace_empty_strings_in_list(list_of_strings: list[str]) -> list[str]:
+def replace_empty_strings_in_list(list_of_strings: List) -> List:
     """
     The replace_empty_strings_in_list function removes empty strings from a list of strings.
 
-    :param list_of_strings:list[str]: Used to Specify the list of strings that will be processed.
+    :param list_of_strings:list: Used to Specify the list of strings that will be processed.
     :return: A list of strings with all empty strings removed.
     """
     return (
@@ -665,14 +665,14 @@ def replace_empty_strings_in_list(list_of_strings: list[str]) -> list[str]:
     )
 
 
-def create_video_ids_list(list_of_strings: list[str]) -> list[str]:
+def create_video_ids_list(list_of_strings: List) -> List:
     """
     The create_video_ids_list function takes a list of strings
     and returns a new list with the same elements,
     except that any string which is not a valid YouTube URL
     will be converted to its corresponding video ID.
 
-    :param list_of_strings:list[str]: Used to Pass a list of strings to the function.
+    :param list_of_strings:list: Used to Pass a list of strings to the function.
     :return: A list of video ids from a list of strings.
     """
     video_ids_list = []
@@ -687,14 +687,14 @@ def create_video_ids_list(list_of_strings: list[str]) -> list[str]:
     return video_ids_list
 
 
-def generate_dict_from_video_ids_list(video_ids_list: list[str]) -> dict:
+def generate_dict_from_video_ids_list(video_ids_list: List) -> dict:
     """
     The generate_dict_from_video_ids_list function takes a list of video IDs
     and returns a dictionary with the video IDs as keys and empty strings as values.
     This is useful for creating an initial playlist dictionary, which
     will be used to create the final playlist.
 
-    :param video_ids_list:list[str]: Used to Pass a list of video ids to the function.
+    :param video_ids_list:list: Used to Pass a list of video ids to the function.
     :return: A dictionary with the video_ids as keys and empty strings as values.
     """
     return playlist.generate_dict_from_fields("", video_ids_list)
@@ -731,7 +731,7 @@ def import_items_into_playlist(self, app_context, ytplaylist_dict: dict) -> None
     # add_recent_filename(self, filename[0])
 
 
-def import_txt_or_csv_file(self, app_context, filename: tuple[str, str]) -> None:
+def import_txt_or_csv_file(self, app_context, filename: Tuple[str, str]) -> None:
     """
     The import_txt_or_csv_file function imports a list of video IDs or URLs from a text file,
     CSV file, or URL into the current playlist. The function checks if there are any items
@@ -831,12 +831,13 @@ def act_save_as(self) -> None:
     :return: None.
     """
     try:
-        if filename := QFileDialog.getSaveFileName(
+        filename = QFileDialog.getSaveFileName(
             self,
             "Export YouTube Playlist file",
             "",
             "YouTube Playlist file (*.ytplaylist)",
-        ):
+        )
+        if filename:
             logging.debug("Playlist saved under:")
             logging.debug(filename[0])
             ytplaylist_dict = playlist.generate_dict_from_fields(
@@ -984,7 +985,8 @@ def act_video_information(self, app, app_context) -> None:
         video_id = ""
 
     if video_id != "":
-        if video_information := video_info.get_video_info(video_id):
+        video_information = video_info.get_video_info(video_id)
+        if video_information:
             dlg = VideoInfoDialog(app, app_context, video_information)
             if dlg.exec():
                 logging.info("VideInfoDialog successfully opened.")

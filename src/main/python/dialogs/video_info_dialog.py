@@ -5,11 +5,11 @@ import ssl
 import sys
 import urllib
 
-from PyQt6 import uic
-from PyQt6.QtCore import QLocale, QTranslator
-from PyQt6.QtGui import QFont, QIcon, QImage, QPixmap
-from PyQt6.QtWidgets import QApplication, QDialog
-from fbs_runtime.application_context.PyQt6 import ApplicationContext
+from PyQt5 import uic
+from PyQt5.QtCore import QLocale, QTranslator
+from PyQt5.QtGui import QFont, QIcon, QImage, QPixmap
+from PyQt5.QtWidgets import QApplication, QDialog
+from fbs_runtime.application_context.PyQt5 import ApplicationContext
 
 from settings.operations import get_settings
 from settings.settings import APP_ICON, SETTING_FILE_LOCATION

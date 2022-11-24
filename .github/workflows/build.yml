@@ -30,15 +30,15 @@ jobs:
           sudo add-apt-repository -y ppa:brightbox/ruby-ng-experimental
           sudo add-apt-repository ppa:ubuntu-toolchain-r/test
           sudo apt update
-          sudo apt install -y --no-install-recommends python3-dev python3-venv pyqt6-dev libpython3.9-dev gcc-4.9 squashfs-tools fcitx-frontend-qt6 rubygems ruby2.7 ruby2.7-dev libruby2.7 ruby-xmlrpc
+          sudo apt install -y --no-install-recommends python3-dev python3-venv pyqt5-dev libpython3.6-dev squashfs-tools fcitx-frontend-qt5 rubygems ruby2.7 ruby2.7-dev libruby2.7 ruby-xmlrpc
           sudo gem install fpm
           python3 -m venv fbs
           source fbs/bin/activate
           pip3 install pip -U
           pip3 install -r requirements/base.txt
           fbs freeze
-          cp /usr/lib/x86_64-linux-gnu/qt6/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so target/$PACKAGE_NAME/PyQt6/Qt/plugins/platforminputcontexts
-          sudo chmod +x target/$PACKAGE_NAME/PyQt6/Qt/plugins/platforminputcontexts/*.so
+          cp /usr/lib/x86_64-linux-gnu/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so target/$PACKAGE_NAME/PyQt5/Qt/plugins/platforminputcontexts
+          sudo chmod +x target/$PACKAGE_NAME/PyQt5/Qt/plugins/platforminputcontexts/*.so
           fbs installer
 
       - name: Upload a Build Artifact
@@ -62,7 +62,7 @@ jobs:
       - name: Build dmg
         shell: bash
         run: |
-          sudo conda create -n fbs python=3.9.5 -y -q
+          sudo conda create -n fbs python=3.6 -y -q
           eval "$(conda shell.bash hook)"
           conda activate fbs
           sudo pip3 install pip -U
@@ -89,7 +89,7 @@ jobs:
 
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.9.5"
+          python-version: "3.6"
 
       # Runs a set of commands using the runners shell
       - name: Build exe

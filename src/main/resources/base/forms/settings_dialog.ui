@@ -34,10 +34,10 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>330</x>
-     <y>500</y>
-     <width>341</width>
-     <height>32</height>
+     <x>420</x>
+     <y>480</y>
+     <width>251</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="orientation">
@@ -53,7 +53,7 @@
      <x>10</x>
      <y>20</y>
      <width>681</width>
-     <height>481</height>
+     <height>461</height>
     </rect>
    </property>
    <property name="tabPosition">
@@ -145,9 +145,9 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>40</y>
-        <width>131</width>
-        <height>24</height>
+        <y>30</y>
+        <width>151</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="currentText">
@@ -236,7 +236,7 @@
        <x>10</x>
        <y>10</y>
        <width>661</width>
-       <height>381</height>
+       <height>351</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -792,31 +792,46 @@
       </property>
      </item>
     </widget>
-    <widget class="QKeySequenceEdit" name="keySequenceEdit">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>400</y>
-       <width>551</width>
-       <height>51</height>
+       <y>380</y>
+       <width>661</width>
+       <height>37</height>
       </rect>
      </property>
-     <property name="keySequence">
-      <string notr="true"/>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_change_shortcut">
-     <property name="geometry">
-      <rect>
-       <x>570</x>
-       <y>410</y>
-       <width>101</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Change</string>
-     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="80,20">
+      <property name="spacing">
+       <number>-1</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QKeySequenceEdit" name="keySequenceEdit">
+        <property name="keySequence">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_change_shortcut">
+        <property name="text">
+         <string>Change</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>
@@ -827,7 +842,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>500</y>
+     <y>480</y>
      <width>331</width>
      <height>31</height>
     </rect>

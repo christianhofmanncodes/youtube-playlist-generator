@@ -1,8 +1,10 @@
 """module menu.menu"""
 
 import logging
+from typing import List
 
-from PyQt6.QtGui import QAction, QKeySequence
+from PyQt5.QtGui import QKeySequence
+from PyQt5.QtWidgets import QAction
 
 from actions import actions
 from dialogs import import_playlist
@@ -24,7 +26,7 @@ def get_menu_config(app_context) -> dict:
     )
 
 
-def get_recent_files_items_menu(self) -> list:
+def get_recent_files_items_menu(self) -> List:
     """
     The get_recent_files_items_menu function returns a list of the recent files from the menu.
     The function returns a list with all the text from each action in self.menuOpen_recent,

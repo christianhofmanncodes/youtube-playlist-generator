@@ -7,7 +7,7 @@ from pytube import Playlist, YouTube, exceptions
 from time_and_date import convert_time
 
 
-def get_video_info(video_id: str) -> dict | None:
+def get_video_info(video_id: str) -> dict:
     """
     The get_video_info function accepts a YouTube video ID as an argument
     and returns the following:
