@@ -2,7 +2,7 @@
 
 import logging
 
-from PyQt6.QtCore import QLocale, QTranslator
+from PyQt5.QtCore import QLocale, QTranslator
 
 
 def install_translator(

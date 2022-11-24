@@ -1,5 +1,7 @@
 """module file.file"""
 
+from typing import List
+
 import json
 import logging
 
@@ -36,7 +38,7 @@ def read_file(filename: str) -> str:
     return file_str
 
 
-def read_txt_file(filename: str) -> list[str]:
+def read_txt_file(filename: str) -> List:
     """
     The read_txt_file function reads a file and returns a list of strings.
 
@@ -50,7 +52,7 @@ def read_txt_file(filename: str) -> list[str]:
     return strings_list
 
 
-def write_txt_file(filename: str, content: list) -> None:
+def write_txt_file(filename: str, content: List) -> None:
     """
     The write_txt_file function writes a txt file with the given filename and content.
     The function takes two arguments:
@@ -66,7 +68,7 @@ def write_txt_file(filename: str, content: list) -> None:
             file.writelines(item + "\n")
 
 
-def write_csv_file(filename: str, content: list) -> None:
+def write_csv_file(filename: str, content: List) -> None:
     """
     The write_csv_file function writes a csv file with the given filename and content.
     The function takes two arguments:
@@ -82,7 +84,7 @@ def write_csv_file(filename: str, content: list) -> None:
             file.writelines(f"{item},")
 
 
-def read_csv_file(filename: str) -> list[str]:
+def read_csv_file(filename: str) -> List:
     """
     The read_csv_file function reads a file and returns a list of strings.
 

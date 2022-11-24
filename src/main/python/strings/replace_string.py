@@ -1,5 +1,6 @@
 """module strings.replace_string"""
 
+from typing import List
 
 def replace_space_in_string(string: str) -> str:
     """
@@ -11,7 +12,7 @@ def replace_space_in_string(string: str) -> str:
     return string.replace(" ", "%20")
 
 
-def create_comma_separated_string(content_list: list) -> str:
+def create_comma_separated_string(content_list: List) -> str:
     """
     The create_comma_separated_string function takes a list of strings
     and returns a string with all the items separated by commas.
@@ -22,7 +23,7 @@ def create_comma_separated_string(content_list: list) -> str:
     return ",".join(content_list)
 
 
-def remove_empty_strings_in_list(list_of_strings: list) -> list[str]:
+def remove_empty_strings_in_list(list_of_strings: List) -> List:
     """
     The remove_empty_strings_in_list function takes a list of strings
     and returns a list without empty strings.

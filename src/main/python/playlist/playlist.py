@@ -1,5 +1,7 @@
 """module playlist.playlist"""
 
+from typing import List
+
 import logging
 import random
 
@@ -83,7 +85,7 @@ def make_item_editable(self) -> None:
         self.listWidget_playlist_items.edit(index)
 
 
-def output_list_from_playlist_ids(self) -> list:
+def output_list_from_playlist_ids(self) -> List:
     """
     The output_list_from_playlist_ids function returns a list of the items in the playlist.
     It is called by other functions to get a list of the items in the playlist.
@@ -166,7 +168,7 @@ def check_if_items_in_playlist(self) -> bool:
     return number_of_items >= 1
 
 
-def generate_dict_from_fields(playlist_title: str, playlist_ids: list[str]) -> dict:
+def generate_dict_from_fields(playlist_title: str, playlist_ids: List) -> dict:
     """
     The generate_dict_from_fields function takes a playlist title and list of IDs as arguments.
     It returns a dictionary with the playlist title as the key and the list of IDs as its value.

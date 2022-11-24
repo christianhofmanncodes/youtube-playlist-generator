@@ -2,19 +2,19 @@
 
 import logging
 import sys
+from typing import Union
 
-from PyQt6 import uic
-from PyQt6.QtCore import QTranslator, Qt
-from PyQt6.QtGui import QFont, QIcon
-from PyQt6.QtWidgets import QApplication, QMainWindow
-import darkdetect
-from fbs_runtime import platform
-from fbs_runtime.application_context.PyQt6 import ApplicationContext
-from qt_material import QtStyleTools, apply_stylesheet
-
+from PyQt5 import uic
+from PyQt5.QtCore import QTranslator, Qt
+from PyQt5.QtGui import QFont, QIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow
 from actions import actions
+import darkdetect
 from dialogs import builtin_dialogs, license_dialog
+from fbs_runtime import platform
+from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from file import file
+from qt_material import QtStyleTools, apply_stylesheet
 from settings.operations import get_settings, load_settings, save_settings
 from settings.settings import (
     APP_ICON,
@@ -105,7 +105,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.setFont(QFont("Roboto"))
         self.compare_os_with_settings_theme()
 
-    def compare_os_with_settings_theme(self) -> str | None:
+    def compare_os_with_settings_theme(self) -> Union[str, None]:
         """
         The compare_os_with_settings_theme function compares the OS theme to the settings theme.
         Return appTheme if they mismatch.

@@ -3,12 +3,12 @@
 import logging
 import sys
 
-from PyQt6 import uic
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QFont, QIcon
-from PyQt6.QtWidgets import QApplication, QDialog, QTableWidgetItem
+from PyQt5 import uic
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont, QIcon
+from PyQt5.QtWidgets import QApplication, QDialog, QTableWidgetItem
 import darkdetect
-from fbs_runtime.application_context.PyQt6 import ApplicationContext
+from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from qt_material import apply_stylesheet
 
 from dialogs import restart_app
