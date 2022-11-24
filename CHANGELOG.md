@@ -16,8 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Drag & Drop a `.yt-playlist` file or a `.txt` or `.csv` file onto the window
 - New Video Info Dialog to display YouTube video information (title, channel, length, description, views, publish date and thumbnail)
 - Display playlist duration (after playlist generated successfully)
-- A proper [Undo FrameWork](https://doc.qt.io/qtforpython/overviews/qtwidgets-tools-undoframework-example.html)
-- Translate all dialogs
 - More language translations
 - Shortcuts to Import, Export, Save as and Sort by Ascending and Descending
 

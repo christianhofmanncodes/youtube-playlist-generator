@@ -166,7 +166,8 @@ Simply free up some space.
 
 ## Roadmap
 
-- Open an [Issue](https://github.com/christianhofmanncodes/youtube-playlist-generator/issues/new/choose) for a new feature request.
+- Add a proper [Undo FrameWork](https://doc.qt.io/qtforpython/overviews/qtwidgets-tools-undoframework-example.html)
+- Translate all dialogs
 
 ## FAQ
 
