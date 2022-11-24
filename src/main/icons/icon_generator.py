@@ -1,3 +1,5 @@
+"""module icon_generator"""
+
 import os
 import sys
 
