@@ -19,7 +19,7 @@ def get_video_info(video_id: str) -> dict | None:
     :return: A dictionary containing information about the video.
     """
     try:
-        youtube_object = YouTube(f"http://youtube.com/watch?v={video_id}")
+        youtube_object = YouTube(f"https://youtube.com/watch?v={video_id}")
     except exceptions.PytubeError:
         logging.warning("Video id %s is unavailable.", video_id)
         youtube_object = {}
