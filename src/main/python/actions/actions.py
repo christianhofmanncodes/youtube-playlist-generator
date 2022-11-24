@@ -837,7 +837,7 @@ def act_save_as(self) -> None:
             "",
             "YouTube Playlist file (*.ytplaylist)",
         )
-        if filename: 
+        if filename:
             logging.debug("Playlist saved under:")
             logging.debug(filename[0])
             ytplaylist_dict = playlist.generate_dict_from_fields(
