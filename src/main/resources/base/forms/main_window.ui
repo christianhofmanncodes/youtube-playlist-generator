@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>460</width>
-    <height>570</height>
+    <height>550</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,13 +22,13 @@
   <property name="minimumSize">
    <size>
     <width>460</width>
-    <height>570</height>
+    <height>550</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>460</width>
-    <height>570</height>
+    <height>550</height>
    </size>
   </property>
   <property name="font">
@@ -110,7 +110,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>481</y>
+      <y>450</y>
       <width>391</width>
       <height>44</height>
      </rect>
@@ -162,7 +162,7 @@ p, li { white-space: pre-wrap; }
       <x>10</x>
       <y>400</y>
       <width>441</width>
-      <height>70</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -193,7 +193,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>409</x>
-      <y>481</y>
+      <y>450</y>
       <width>41</width>
       <height>44</height>
      </rect>
@@ -233,7 +233,7 @@ p, li { white-space: pre-wrap; }
       <x>404</x>
       <y>70</y>
       <width>44</width>
-      <height>44</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="cursor">
