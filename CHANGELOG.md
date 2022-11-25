@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Revert to PyQt5 and Python3.6 in order to build bins automatically via GitHub Actions
+- Revert to PyQt5 and make code work with Python3.6
 - Open and Open recent option in menu is now grouped together
 - Moving items in playlist via drag and drop copies them now (hold Ctrl/Cmd to prevent this behavior)
 - Redesign of the "Keyboard Shortcuts" tab in Settings (now uses a table to display all shortcuts)
