@@ -37,8 +37,10 @@ class RestartAppDialog(QDialog):
 
         self.vbox_layout = QVBoxLayout()
         message = QLabel(
-            """To update the language settings the program needs to be restarted.
-            Do you want to restart now?"""
+            (
+                "To update the language settings the program needs to be restarted.\n"
+                "Do you want to restart now?"
+            )
         )
         self.vbox_layout.addWidget(message)
         self.vbox_layout.addWidget(self.button_box)

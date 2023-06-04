@@ -26,6 +26,7 @@ As of version 0.0.5, the CLI version will no longer be developed.
 ## Features
 
 - Add URL or ID
+- Add playlist URL
 - Specify playlist title
 - Create new playlist (deletes all items in the playlist)
 - Playlist Tools (Count items, Clear all items, Remove duplicates)
@@ -51,6 +52,7 @@ As of version 0.0.5, the CLI version will no longer be developed.
   - English
   - Deutsch (German)
   - Español (Spanish)
+  - Polski (Polish)
 
 ## Screenshots
 
@@ -183,6 +185,8 @@ The program supports both YouTube and Invidious links of any type.
 https://www.youtube.com/watch?v=
 https://www.youtu.be/
 https://invidious.namazso.eu/watch?v=
+https://youtube.com/playlist?list=
+https://invidious.namazso.eu/playlist?list=
 ```
 
 ### Can I batch import URLs / video IDs?

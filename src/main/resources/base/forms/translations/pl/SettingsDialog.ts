@@ -6,18 +6,18 @@
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="126"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Ustawienia</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="129"/>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="128"/>
       <source>General</source>
-      <translation type="unfinished">General</translation>
+      <translation>Ogólne</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="131"/>
       <source>Open URL in Web Browser after playlist was generated</source>
-      <translation type="unfinished">Open URL in Web Browser after playlist was generated</translation>
+      <translation>Otwórz adres URL w przeglądarce po wygenerowaniu playlisty</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="136"/>
@@ -27,22 +27,22 @@
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="140"/>
       <source>Language</source>
-      <translation type="unfinished">Language</translation>
+      <translation>Język</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="141"/>
       <source>Theme</source>
-      <translation type="unfinished">Theme</translation>
+      <translation>Motyw</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="143"/>
       <source>Reset to defaults</source>
-      <translation type="unfinished">Reset to defaults</translation>
+      <translation>Przywróć domyślne</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="147"/>
       <source>Keyboard Shortcuts</source>
-      <translation type="unfinished">Keyboard Shortcuts</translation>
+      <translation>Skróty Klawiszowe</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="152"/>
@@ -52,17 +52,17 @@
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="153"/>
       <source>Description</source>
-      <translation type="unfinished">Description</translation>
+      <translation>Opis</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="154"/>
       <source>Keyboard shortcut</source>
-      <translation type="unfinished">Keyboard shortcut</translation>
+      <translation>Skróty klawiszowe</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="159"/>
       <source>Create new playlist</source>
-      <translation type="unfinished">Create new playlist</translation>
+      <translation>Utwórz nową playlistę</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="160"/>
@@ -77,7 +77,7 @@
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="162"/>
       <source>Save playlist as .ytplaylist file</source>
-      <translation type="unfinished">Save playlist as .ytplaylist file</translation>
+      <translation>Zapisz playlistę jako plik .ytplaylist</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="163"/>
@@ -97,7 +97,7 @@
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="168"/>
       <source>Delete selected item from playlist</source>
-      <translation type="unfinished">Delete selected item from playlist</translation>
+      <translation>Usuń wybrany element z playlisty</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="169"/>
@@ -112,7 +112,7 @@
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="171"/>
       <source>Generate playlist URL</source>
-      <translation type="unfinished">Generate playlist URL</translation>
+      <translation>Wygeneruj adres URL playlisty</translation>
     </message>
     <message>
       <location filename="../../../../python/dialogs/settings_dialog.py" line="172"/>

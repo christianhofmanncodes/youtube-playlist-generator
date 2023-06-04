@@ -11,12 +11,12 @@
     <message>
       <location filename="../../../../python/main.py" line="358"/>
       <source>New playlist</source>
-      <translation type="unfinished">New playlist</translation>
+      <translation>Nowa playlista</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="359"/>
       <source>Open</source>
-      <translation type="unfinished">Open</translation>
+      <translation>Otwórz</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="360"/>
@@ -26,17 +26,17 @@
     <message>
       <location filename="../../../../python/main.py" line="361"/>
       <source>Import</source>
-      <translation type="unfinished">Import</translation>
+      <translation>Importuj</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="362"/>
       <source>Export</source>
-      <translation type="unfinished">Export</translation>
+      <translation>Eksportuj</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="363"/>
       <source>Save</source>
-      <translation type="unfinished">Save</translation>
+      <translation>Zapisz</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="364"/>
@@ -51,12 +51,12 @@
     <message>
       <location filename="../../../../python/main.py" line="366"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Ustawienia</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="367"/>
       <source>Quit</source>
-      <translation type="unfinished">Quit</translation>
+      <translation>Wyjdź</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="369"/>
@@ -66,7 +66,7 @@
     <message>
       <location filename="../../../../python/main.py" line="370"/>
       <source>Undo</source>
-      <translation type="unfinished">Undo</translation>
+      <translation>Cofnij</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="371"/>
@@ -76,17 +76,17 @@
     <message>
       <location filename="../../../../python/main.py" line="372"/>
       <source>Cut</source>
-      <translation type="unfinished">Cut</translation>
+      <translation>Wytnij</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="373"/>
       <source>Copy</source>
-      <translation type="unfinished">Copy</translation>
+      <translation>Skopiuj</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="374"/>
       <source>Paste</source>
-      <translation type="unfinished">Paste</translation>
+      <translation>Wklej</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="375"/>
@@ -96,7 +96,7 @@
     <message>
       <location filename="../../../../python/main.py" line="376"/>
       <source>Find</source>
-      <translation type="unfinished">Find</translation>
+      <translation>Znajdź</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="378"/>
@@ -128,7 +128,7 @@
       <location filename="../../../../python/main.py" line="422"/>
       <location filename="../../../../python/main.py" line="383"/>
       <source>Generate</source>
-      <translation type="unfinished">Generate</translation>
+      <translation>Wygeneruj</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="385"/>
@@ -213,7 +213,7 @@
     <message>
       <location filename="../../../../python/main.py" line="416"/>
       <source>URL or ID</source>
-      <translation type="unfinished">URL or ID</translation>
+      <translation>Adres URL lub ID</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="419"/>
@@ -248,7 +248,7 @@
     <message>
       <location filename="../../../../python/main.py" line="436"/>
       <source>Create new playlist</source>
-      <translation type="unfinished">Create new playlist</translation>
+      <translation>Utwórz nową playlistę</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="439"/>
@@ -268,12 +268,12 @@
     <message>
       <location filename="../../../../python/main.py" line="448"/>
       <source>Playlist URL</source>
-      <translation type="unfinished">Playlist URL</translation>
+      <translation>Adres URL Playlisty</translation>
     </message>
     <message>
       <location filename="../../../../python/main.py" line="451"/>
       <source>Copy generated URL</source>
-      <translation type="unfinished">Copy generated URL</translation>
+      <translation>Skopiuj wygenerowany adres URL</translation>
     </message>
   </context>
 </TS>

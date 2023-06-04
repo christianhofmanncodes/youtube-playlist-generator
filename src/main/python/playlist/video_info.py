@@ -2,7 +2,7 @@
 
 import logging
 
-from pytube import Playlist, YouTube, exceptions
+from pytube import Playlist, Search, YouTube, exceptions
 
 from time_and_date import convert_time
 
@@ -39,7 +39,7 @@ def get_video_info(video_id: str) -> dict:
             "views": youtube_object.views,
         }
         if youtube_object
-        else None
+        else {}
     )
 
 
@@ -66,3 +66,50 @@ def get_playlist_length(playlist_url: str) -> str:
         video_duration_list.append(youtube_object.length)
 
     return convert_time.convert_hours_minutes_seconds(sum(video_duration_list))
+
+
+def get_playlist_items(playlist_url: str) -> list:
+    """
+    The get_playlist_items function takes a YouTube playlist URL as input
+    and returns a list of all the video URLs in that playlist.
+
+    :param playlist_url:str: Used to specify the playlist URL.
+    :return: A list of video URLs.
+    """
+    playlist_object = Playlist(playlist_url)
+    return list(playlist_object.video_urls)
+
+
+def search_for_videos(search_term: str) -> tuple:
+    """
+    The search_for_videos function takes a search term as an argument
+    and returns a list of videos that match the search term.
+
+    :param search_term:str: Used to Define the search term that will be used to find videos.
+    :return: A list of results.
+    """
+    search_object = Search(search_term)
+    logging.info(f"Found {len(search_object.results)} search results.")
+    return search_object, search_object.results
+
+
+def return_video_ids_from_search_object(search_object) -> list:
+    """
+    The return_video_ids_from_search_object function takes in a search object
+    and returns a list of video ids.
+
+    :param search_object: Used to Store the search results from a youtube api call.
+    :return: A list of video ids.
+    """
+    return [search_result.video_id for search_result in search_object]
+
+
+def get_more_search_results(search_object):
+    """
+    The get_more_search_results function takes a search object as input
+    and returns the next set of results from that search.
+
+    :param search_object: Used to Get the next page of results.
+    :return: A new search object.
+    """
+    return search_object.get_next_results()

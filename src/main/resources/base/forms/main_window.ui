@@ -292,7 +292,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>10</x>
       <y>70</y>
-      <width>381</width>
+      <width>331</width>
       <height>44</height>
      </rect>
     </property>
@@ -417,6 +417,41 @@ p, li { white-space: pre-wrap; }
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="pushButton_search">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>70</y>
+      <width>44</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="toolTip">
+     <string>Search for YouTube video</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../icon/button_icon_search.svg</normaloff>../icon/button_icon_search.svg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBarApp">
    <property name="geometry">
@@ -533,6 +568,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="menuTools"/>
     <addaction name="separator"/>
     <addaction name="actionCopy_URL"/>
+    <addaction name="separator"/>
+    <addaction name="actionSearch_for_videos"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="font">
@@ -993,6 +1030,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionSearch_for_videos">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Search for videos</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+S</string>
    </property>
   </action>
  </widget>

@@ -6,7 +6,7 @@
     <message>
       <location filename="../../../../python/dialogs/video_info_dialog.py" line="102"/>
       <source>Video information</source>
-      <translation type="unfinished">Video information</translation>
+      <translation>Informacje o filmiku</translation>
     </message>
   </context>
 </TS>

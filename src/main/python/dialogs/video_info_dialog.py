@@ -130,6 +130,12 @@ class VideoInfoDialog(QDialog):
             data = app_context.get_resource(
                 "forms/translations/es-ES/VideoInfoDialog.qm"
             )
-            german = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
-            self.trans.load(german, data)
+            spanish = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
+            self.trans.load(spanish, data)
+            app.instance().installTranslator(self.trans)
+
+        elif settings_dict["general"][0]["programLanguage"] == "Polski":
+            data = app_context.get_resource("forms/translations/pl/VideoInfoDialog.qm")
+            polish = QLocale(QLocale.Language.Polish, QLocale.Country.Poland)
+            self.trans.load(polish, data)
             app.instance().installTranslator(self.trans)

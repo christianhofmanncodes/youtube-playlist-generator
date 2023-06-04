@@ -157,6 +157,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.actionRemove_duplicates.triggered.connect(self.act_remove_duplicates)
         self.actionGet_video_information.triggered.connect(self.act_video_information)
         self.actionCopy_URL.triggered.connect(self.act_copy_url)
+        self.actionSearch_for_videos.triggered.connect(self.act_search_videos)
 
         self.actionGithub.triggered.connect(self.act_github)
         self.actionReport_a_bug.triggered.connect(self.act_report_a_bug)
@@ -244,6 +245,10 @@ class MainWindow(QMainWindow, QtStyleTools):
     def act_add_item(self):
         """Action for add_item."""
         actions.act_add_item(self)
+
+    def act_search_videos(self):
+        """Action for search_videos."""
+        actions.act_search_videos(self, app, app_context)
 
     def act_delete_item(self):
         """Action for delete_item."""
@@ -339,6 +344,7 @@ class MainWindow(QMainWindow, QtStyleTools):
             self.act_click_playlist_item
         )
         self.pushButton_add.clicked.connect(self.act_add_item)
+        self.pushButton_search.clicked.connect(self.act_search_videos)
         self.listWidget_playlist_items.itemDoubleClicked.connect(self.act_rename_item)
         self.pushButton_new.clicked.connect(self.act_new)
         self.pushButton_delete_item.clicked.connect(self.act_delete_item)
@@ -399,6 +405,9 @@ class MainWindow(QMainWindow, QtStyleTools):
         )
 
         self.actionCopy_URL.setText(app.translate("MainWindow", "Copy URL"))
+        self.actionSearch_for_videos.setText(
+            app.translate("MainWindow", "Search for videos")
+        )
 
         self.menuHelp.setTitle(app.translate("MainWindow", "&Help"))
         self.actionAbout_Qt.setText(app.translate("MainWindow", "About Qt"))
