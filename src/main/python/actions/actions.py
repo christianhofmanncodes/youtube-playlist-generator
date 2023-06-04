@@ -1065,7 +1065,8 @@ def act_search_videos(self, app, app_context):
     The act_search_videos function is called when the user clicks
     on the "Search" button in the main window.
     The results are displayed in a table widget with checkboxes next to each row.
-    The user can select one or more rows and click "Add Selected Videos" to add them to their playlist.
+    The user can select one or more rows
+    and click "Add Selected Videos" to add them to their playlist.
 
     :param self: Used to Refer to the current instance of the class.
     :param app: Used to Pass the QApplication instance to the SearchResultsDialog class.
@@ -1075,7 +1076,7 @@ def act_search_videos(self, app, app_context):
     text = self.lineEdit_url_id.text()
     if text != "":
         search_object, search_results = video_info.search_for_videos(text)
-        dlg = SearchResultsDialog(app, app_context, search_results, search_object)
+        dlg = SearchResultsDialog(app_context, search_results, search_object)
         if dlg.exec():
             logging.info("SearchResultsDialog successfully opened.")
             checked_list = [

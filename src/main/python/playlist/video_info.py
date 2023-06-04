@@ -89,7 +89,7 @@ def search_for_videos(search_term: str) -> tuple:
     :return: A list of results.
     """
     search_object = Search(search_term)
-    logging.info(f"Found {len(search_object.results)} search results.")
+    logging.info("Found %s search results.", len(search_object.results))
     return search_object, search_object.results
 
 

@@ -31,9 +31,7 @@ class SearchResultsDialog(QDialog):
     Class for the search results dialog with all its components and functions.
     """
 
-    def __init__(
-        self, app, app_context, search_results, search_object, parent=None
-    ) -> None:
+    def __init__(self, app_context, search_results, search_object, parent=None) -> None:
         """
         The __init__ function is called automatically every time
         the class is being used to create a new object.
@@ -148,6 +146,16 @@ class SearchResultsDialog(QDialog):
         self.lbl_result_count.setText(f"{len(video_ids_list)} videos found")
 
     def button_load_more_search_results_clicked(self, search_object) -> None:
+        """
+        The button_load_more_search_results_clicked function is called
+        when the user clicks on the "Load More" button.
+        It calls get_more_search_results to retrieve more search results
+        from the API, and then fills out those results in the GUI.
+
+        :param self: Used to Refer to the object that is calling the function.
+        :param search_object: Used to Get the next page of search results.
+        :return: None.
+        """
         search_results = get_more_search_results(search_object)
         if search_results is not None:
             self.fill_out_info(search_results)
