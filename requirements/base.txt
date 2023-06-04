@@ -21,6 +21,7 @@ PyQt5-sip
 pytube
 PyYAML
 qt-material
+requests
 smmap
 stevedore
 urllib3

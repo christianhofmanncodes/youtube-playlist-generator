@@ -3,7 +3,7 @@
 import logging
 import ssl
 import sys
-import urllib
+import requests
 
 from PyQt5 import uic
 from PyQt5.QtCore import QLocale, QTranslator, Qt
@@ -177,9 +177,9 @@ class SearchResultsDialog(QDialog):
         url = video_information["thumbnail_url"]
 
         if url.lower().startswith("https"):
-            ctx = ssl._create_default_https_context()
-            with urllib.request.urlopen(url, context=ctx) as response:
-                data = response.read()
+            response = requests.get(url, verify=True, timeout=1000)
+            logging.debug(response.status_code)
+            data = response.content
 
             img = QImage()
             img.loadFromData(data)
