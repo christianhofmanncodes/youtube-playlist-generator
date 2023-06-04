@@ -8,6 +8,7 @@ bandit src/main/python/dialogs/reset_playlist.py
 bandit src/main/python/dialogs/restart_app.py
 bandit src/main/python/dialogs/settings_dialog.py
 bandit src/main/python/dialogs/video_info_dialog.py
+bandit src/main/python/dialogs/search_results_dialog.py
 bandit src/main/python/file/file.py
 bandit src/main/python/menu/menu.py
 bandit src/main/python/playlist/playlist.py

@@ -89,6 +89,8 @@ def search_for_videos(search_term: str) -> tuple:
     :return: A list of results.
     """
     search_object = Search(search_term)
+    if search_object.results is None:
+        return None, None
     logging.info("Found %s search results.", len(search_object.results))
     return search_object, search_object.results
 

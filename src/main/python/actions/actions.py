@@ -1,7 +1,7 @@
 """module actions.actions"""
 
 import logging
-from typing import List, Tuple, Union
+from typing import List, Literal, Tuple, Union
 
 from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.QtWidgets import (
@@ -697,7 +697,7 @@ def open_ytplaylist_file(self, app, app_context, filename: str) -> None:
     self.statusBar.showMessage(filename, 0)
 
 
-def get_list_of_strings(filename: Tuple[str, str]) -> List[str]:
+def get_list_of_strings(filename: Tuple[str, str] | Literal[""]) -> List[str]:
     """
     The get_list_of_strings function takes a tuple of strings as input.
     The first string is the filename, and the second string is the filetype.
@@ -793,7 +793,9 @@ def import_items_into_playlist(self, app_context, ytplaylist_dict: dict) -> None
     # add_recent_filename(self, filename[0])
 
 
-def import_txt_or_csv_file(self, app_context, filename: Tuple[str, str]) -> None:
+def import_txt_or_csv_file(
+    self, app_context, filename: Tuple[str, str] | Literal[""]
+) -> None:
     """
     The import_txt_or_csv_file function imports a list of video IDs or URLs from a text file,
     CSV file, or URL into the current playlist. The function checks if there are any items
@@ -984,6 +986,8 @@ def act_settings(self, app, app_context) -> None:
             radio_button_theme = "white"
         elif radio_button_dark_state:
             radio_button_theme = "dark"
+        else:
+            radio_button_theme = "normal"
 
         components_dict = {
             "option_1": dlg.checkBox_option1.isChecked(),
@@ -1060,7 +1064,7 @@ def act_video_information(self, app, app_context) -> None:
             )
 
 
-def act_search_videos(self, app, app_context):
+def act_search_videos(self, app_context):
     """
     The act_search_videos function is called when the user clicks
     on the "Search" button in the main window.
@@ -1076,26 +1080,27 @@ def act_search_videos(self, app, app_context):
     text = self.lineEdit_url_id.text()
     if text != "":
         search_object, search_results = video_info.search_for_videos(text)
-        dlg = SearchResultsDialog(app_context, search_results, search_object)
-        if dlg.exec():
-            logging.info("SearchResultsDialog successfully opened.")
-            checked_list = [
-                dlg.tableWidget_search_results.item(index, 11).text()
-                for index in range(dlg.tableWidget_search_results.rowCount())
-                if (
-                    dlg.tableWidget_search_results.item(index, 0).checkState()
-                    == Qt.CheckState.Checked
-                )
-            ]
+        if search_object and search_results is not None:
+            dlg = SearchResultsDialog(app_context, search_results, search_object)
+            if dlg.exec():
+                logging.info("SearchResultsDialog successfully opened.")
+                checked_list = [
+                    dlg.tableWidget_search_results.item(index, 11).text()
+                    for index in range(dlg.tableWidget_search_results.rowCount())
+                    if (
+                        dlg.tableWidget_search_results.item(index, 0).checkState()
+                        == Qt.CheckState.Checked
+                    )
+                ]
 
-            for video_id in checked_list:
-                self.listWidget_playlist_items.addItem(str(video_id))
+                for video_id in checked_list:
+                    self.listWidget_playlist_items.addItem(str(video_id))
 
-                item = self.listWidget_playlist_items.findItems(
-                    video_id, Qt.MatchFlag.MatchRegularExpression
-                )[0]
+                    item = self.listWidget_playlist_items.findItems(
+                        video_id, Qt.MatchFlag.MatchRegularExpression
+                    )[0]
 
-                item.setSelected(True)
-                self.listWidget_playlist_items.scrollToItem(item)
+                    item.setSelected(True)
+                    self.listWidget_playlist_items.scrollToItem(item)
 
-            enable_components_after_add_act(self)
+                enable_components_after_add_act(self)

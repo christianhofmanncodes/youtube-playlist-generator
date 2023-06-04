@@ -16,18 +16,24 @@ def install_translator(
 
     elif settings_dict["general"][0]["programLanguage"] == "Deutsch":
         data = app_context.get_resource(f"forms/translations/de/{qm_file}")
-        german = QLocale(QLocale.Language.German, QLocale.Country.Germany)
+        german = QLocale(
+            language=QLocale.Language.German, country=QLocale.Country.Germany
+        )
         self.trans.load(german, data)
         app.instance().installTranslator(self.trans)
 
     elif settings_dict["general"][0]["programLanguage"] == "Español":
         data = app_context.get_resource(f"forms/translations/es-ES/{qm_file}")
-        spanish = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
+        spanish = QLocale(
+            language=QLocale.Language.Spanish, country=QLocale.Country.Spain
+        )
         self.trans.load(spanish, data)
         app.instance().installTranslator(self.trans)
 
     elif settings_dict["general"][0]["programLanguage"] == "Polski":
         data = app_context.get_resource(f"forms/translations/pl/{qm_file}")
-        polish = QLocale(QLocale.Language.Polish, QLocale.Country.Poland)
+        polish = QLocale(
+            language=QLocale.Language.Polish, country=QLocale.Country.Poland
+        )
         self.trans.load(polish, data)
         app.instance().installTranslator(self.trans)
