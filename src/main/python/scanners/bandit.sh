@@ -1,7 +1,7 @@
 bandit src/main/python/main.py
 bandit src/main/python/actions/actions.py
 bandit src/main/python/dialogs/creating_url.py
-bandit src/main/python/dialogs/dialogs.py
+bandit src/main/python/dialogs/builtin_dialogs.py
 bandit src/main/python/dialogs/import_playlist.py
 bandit src/main/python/dialogs/license_dialog.py
 bandit src/main/python/dialogs/reset_playlist.py
@@ -18,8 +18,8 @@ bandit src/main/python/settings/settings.py
 bandit src/main/python/strings/check_string.py
 bandit src/main/python/strings/replace_string.py
 bandit src/main/python/time_and_date/convert_date.py
-bandit src/main/python/time_and_date/translator.py
-bandit src/main/python/translate/convert_time.py
+bandit src/main/python/time_and_date/convert_time.py
+bandit src/main/python/translate/translator.py
 bandit src/main/python/url/generate_url.py
 bandit src/main/python/url/open_url.py
 bandit src/main/python/url/url.py

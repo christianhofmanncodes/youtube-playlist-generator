@@ -1,7 +1,6 @@
 """module dialogs.search_results_dialog"""
 
 import logging
-import ssl
 import sys
 import requests
 
