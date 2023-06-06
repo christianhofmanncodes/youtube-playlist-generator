@@ -64,7 +64,9 @@ class SearchDialog(QDialog):
         self.translate_search_results_dialog()
 
         self.search_results = []
-        self.search_object = {}
+        self.search_object = None
+
+        self.tableWidget_search_results.resizeColumnsToContents()
 
         self.buttonBox.button(QDialogButtonBox.Ok).setAutoDefault(False)
         self.buttonBox.button(QDialogButtonBox.Ok).setDefault(False)
@@ -191,13 +193,14 @@ class SearchDialog(QDialog):
         :param search_object: Used to Get the next page of search results.
         :return: None.
         """
-        search_results = get_more_search_results(search_object)
-        if search_results is not None:
-            self.fill_out_info(search_results)
-        else:
-            show_warning_dialog(
-                self, "No more search results", "There are no more search results!"
-            )
+        if search_object is not None:
+            search_results = get_more_search_results(search_object)
+            if search_results is not None:
+                self.fill_out_info(search_results)
+            else:
+                show_warning_dialog(
+                    self, "No more search results", "There are no more search results!"
+                )
 
     def load_thumbnail(self, video_information) -> None:
         """

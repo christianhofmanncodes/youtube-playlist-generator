@@ -114,4 +114,5 @@ def get_more_search_results(search_object):
     :param search_object: Used to Get the next page of results.
     :return: A new search object.
     """
-    return search_object.get_next_results()
+    if search_object is not None:
+        return search_object.get_next_results()
