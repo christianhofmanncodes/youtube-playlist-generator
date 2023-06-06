@@ -6,7 +6,13 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtCore import QLocale, QTranslator, Qt
 from PyQt5.QtGui import QFont, QIcon, QImage, QPixmap
-from PyQt5.QtWidgets import QAbstractScrollArea, QApplication, QDialog, QTableWidgetItem
+from PyQt5.QtWidgets import (
+    QAbstractScrollArea,
+    QApplication,
+    QDialog,
+    QDialogButtonBox,
+    QTableWidgetItem,
+)
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 import requests
 
@@ -60,10 +66,14 @@ class SearchDialog(QDialog):
         self.search_results = []
         self.search_object = {}
 
+        self.buttonBox.button(QDialogButtonBox.Ok).setAutoDefault(False)
+        self.buttonBox.button(QDialogButtonBox.Ok).setDefault(False)
+
         self.lineEdit_search_field.textChanged.connect(self.act_search_field_change)
         self.toolButton_load_more_search_results.clicked.connect(
             lambda: self.button_load_more_search_results_clicked(self.search_object)
         )
+        self.lineEdit_search_field.returnPressed.connect(self.search_videos)
         self.pushButton_search.clicked.connect(self.search_videos)
 
     def fill_out_info(self, search_results) -> None:
@@ -220,7 +230,7 @@ class SearchDialog(QDialog):
         :return: None.
         """
         self.setWindowTitle(
-            app.translate("SearchDialog", "Search Results"),
+            app.translate("SearchDialog", "Search"),
         )
 
     def translate_ui(self):

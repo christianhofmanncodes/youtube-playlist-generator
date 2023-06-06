@@ -29,10 +29,13 @@
       </size>
      </property>
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::NoFrame</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
      </property>
      <widget class="QLineEdit" name="lineEdit_search_field">
       <property name="geometry">
@@ -44,7 +47,7 @@
        </rect>
       </property>
       <property name="toolTip">
-       <string>Enter URL or ID</string>
+       <string>Enter any search query</string>
       </property>
       <property name="styleSheet">
        <string notr="true"/>
@@ -216,6 +219,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_search_field</tabstop>
+  <tabstop>pushButton_search</tabstop>
+  <tabstop>tableWidget_search_results</tabstop>
+  <tabstop>toolButton_load_more_search_results</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -225,8 +234,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>464</x>
-     <y>515</y>
+     <x>476</x>
+     <y>701</y>
     </hint>
     <hint type="destinationlabel">
      <x>464</x>
@@ -241,8 +250,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>464</x>
-     <y>515</y>
+     <x>476</x>
+     <y>701</y>
     </hint>
     <hint type="destinationlabel">
      <x>464</x>
