@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import (
 
 from dialogs import import_playlist, reset_playlist
 from dialogs.builtin_dialogs import show_info_dialog, show_question_dialog
-from dialogs.search_results_dialog import SearchResultsDialog
+from dialogs.search_dialog import SearchDialog
 from dialogs.settings_dialog import SettingsDialog
 from dialogs.video_info_dialog import VideoInfoDialog
 from file import file
@@ -334,7 +334,7 @@ def act_sort_items_descending(self) -> None:
 
 def act_url_id_text_change(self) -> None:
     """
-    The act_url_id_text_change function enables the Add and Search button only
+    The act_url_id_text_change function enables the Add button only
     if the lineEdit_url_id is not empty.
 
     :param self: Used to Access the attributes and methods of the class.
@@ -343,15 +343,9 @@ def act_url_id_text_change(self) -> None:
     if self.lineEdit_url_id.text():
         self.pushButton_add.setEnabled(True)
         self.actionAdd_item.setEnabled(True)
-
-        self.pushButton_search.setEnabled(True)
-        self.actionSearch_for_videos.setEnabled(True)
     else:
         self.pushButton_add.setEnabled(False)
         self.actionAdd_item.setEnabled(False)
-
-        self.pushButton_search.setEnabled(False)
-        self.actionSearch_for_videos.setEnabled(False)
 
 
 def act_click_playlist_item(self) -> None:
@@ -1067,40 +1061,37 @@ def act_video_information(self, app, app_context) -> None:
 def act_search_videos(self, app_context):
     """
     The act_search_videos function is called when the user clicks
-    on the "Search" button in the main window.
+    on the "Search" button in the SearchDialog.
     The results are displayed in a table widget with checkboxes next to each row.
     The user can select one or more rows
     and click "Add Selected Videos" to add them to their playlist.
 
     :param self: Used to Refer to the current instance of the class.
-    :param app: Used to Pass the QApplication instance to the SearchResultsDialog class.
-    :param app_context: Used to Pass the application context to the SearchResultsDialog class.
+    :param app: Used to Pass the QApplication instance to the SearchDialog class.
+    :param app_context: Used to Pass the application context to the SearchDialog class.
     :return: A list of video_ids that are checked in the search results dialog.
     """
-    text = self.lineEdit_url_id.text()
-    if text != "":
-        search_object, search_results = video_info.search_for_videos(text)
-        if search_object and search_results is not None:
-            dlg = SearchResultsDialog(app_context, search_results, search_object)
-            if dlg.exec():
-                logging.info("SearchResultsDialog successfully opened.")
-                checked_list = [
-                    dlg.tableWidget_search_results.item(index, 11).text()
-                    for index in range(dlg.tableWidget_search_results.rowCount())
-                    if (
-                        dlg.tableWidget_search_results.item(index, 0).checkState()
-                        == Qt.CheckState.Checked
-                    )
-                ]
+    dlg = SearchDialog(app_context)
+    if dlg.exec():
+        logging.info("SearchDialog successfully opened.")
 
-                for video_id in checked_list:
-                    self.listWidget_playlist_items.addItem(str(video_id))
+        if dlg.search_object and dlg.search_results is not None:
+            checked_list = [
+                dlg.tableWidget_search_results.item(index, 11).text()
+                for index in range(dlg.tableWidget_search_results.rowCount())
+                if (
+                    dlg.tableWidget_search_results.item(index, 0).checkState()
+                    == Qt.CheckState.Checked
+                )
+            ]
+            for video_id in checked_list:
+                self.listWidget_playlist_items.addItem(str(video_id))
 
-                    item = self.listWidget_playlist_items.findItems(
-                        video_id, Qt.MatchFlag.MatchRegularExpression
-                    )[0]
+                item = self.listWidget_playlist_items.findItems(
+                    video_id, Qt.MatchFlag.MatchRegularExpression
+                )[0]
 
-                    item.setSelected(True)
-                    self.listWidget_playlist_items.scrollToItem(item)
+                item.setSelected(True)
+                self.listWidget_playlist_items.scrollToItem(item)
 
-                enable_components_after_add_act(self)
+            enable_components_after_add_act(self)

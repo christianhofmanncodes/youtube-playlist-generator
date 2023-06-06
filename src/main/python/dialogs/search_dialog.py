@@ -1,16 +1,17 @@
-"""module dialogs.search_results_dialog"""
+"""module dialogs.search_dialog"""
 
 import logging
 import sys
-import requests
 
 from PyQt5 import uic
 from PyQt5.QtCore import QLocale, QTranslator, Qt
 from PyQt5.QtGui import QFont, QIcon, QImage, QPixmap
 from PyQt5.QtWidgets import QAbstractScrollArea, QApplication, QDialog, QTableWidgetItem
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
+import requests
 
 from dialogs.builtin_dialogs import show_warning_dialog
+from playlist import video_info
 from playlist.video_info import (
     get_more_search_results,
     get_video_info,
@@ -25,12 +26,12 @@ app = QApplication(sys.argv)
 app_context = ApplicationContext()
 
 
-class SearchResultsDialog(QDialog):
+class SearchDialog(QDialog):
     """
     Class for the search results dialog with all its components and functions.
     """
 
-    def __init__(self, app_context, search_results, search_object, parent=None) -> None:
+    def __init__(self, app_context, parent=None) -> None:
         """
         The __init__ function is called automatically every time
         the class is being used to create a new object.
@@ -47,7 +48,7 @@ class SearchResultsDialog(QDialog):
 
         super().__init__(parent)
         uic.loadUi(
-            app_context.get_resource("forms/search_results_dialog.ui"),
+            app_context.get_resource("forms/search_dialog.ui"),
             self,
         )
         self.setWindowIcon(QIcon(app_context.get_resource(APP_ICON)))
@@ -55,11 +56,15 @@ class SearchResultsDialog(QDialog):
 
         self.translate_ui()
         self.translate_search_results_dialog()
-        self.fill_out_info(search_results)
 
+        self.search_results = []
+        self.search_object = {}
+
+        self.lineEdit_search_field.textChanged.connect(self.act_search_field_change)
         self.toolButton_load_more_search_results.clicked.connect(
-            lambda: self.button_load_more_search_results_clicked(search_object)
+            lambda: self.button_load_more_search_results_clicked(self.search_object)
         )
+        self.pushButton_search.clicked.connect(self.search_videos)
 
     def fill_out_info(self, search_results) -> None:
         """
@@ -144,6 +149,27 @@ class SearchResultsDialog(QDialog):
 
         self.lbl_result_count.setText(f"{len(video_ids_list)} videos found")
 
+    def search_videos(self) -> None:
+        """
+        The search_videos function is called when the user clicks on the search button.
+        It takes in a string from the lineEdit_search_field and passes it to video_info.py's
+        search_for_videos function, which returns a tuple of two objects:
+        (a Search object, and a list of Video objects).
+        The first element is stored as self.searchObject,
+        while each element in the second is appended to self.videoList.
+
+        :param self: Used to Access the class attributes and methods.
+        :return: Search_object and search_results.
+        """
+        text = self.lineEdit_search_field.text()
+        if text != "":
+            search_object, search_results = video_info.search_for_videos(text)
+            self.search_results = search_results
+            self.search_object = search_object
+            self.fill_out_info(search_results)
+        else:
+            search_object, search_results = None, None
+
     def button_load_more_search_results_clicked(self, search_object) -> None:
         """
         The button_load_more_search_results_clicked function is called
@@ -188,13 +214,13 @@ class SearchResultsDialog(QDialog):
 
     def translate_search_results_dialog(self) -> None:
         """
-        The translate_video_info_dialog function is used to translate the SearchResultsDialog.
+        The translate_video_info_dialog function is used to translate the SearchDialog.
 
         :param self: Used to Access the attributes and methods of the class.
         :return: None.
         """
         self.setWindowTitle(
-            app.translate("SearchResultsDialog", "Search Results"),
+            app.translate("SearchDialog", "Search Results"),
         )
 
     def translate_ui(self):
@@ -207,25 +233,33 @@ class SearchResultsDialog(QDialog):
             logging.info("Program language is English.")
 
         elif settings_dict["general"][0]["programLanguage"] == "Deutsch":
-            data = app_context.get_resource(
-                "forms/translations/de/SearchResultsDialog.qm"
-            )
+            data = app_context.get_resource("forms/translations/de/SearchDialog.qm")
             german = QLocale(QLocale.Language.German, QLocale.Country.Germany)
             self.trans.load(german, data)
             app.instance().installTranslator(self.trans)
 
         elif settings_dict["general"][0]["programLanguage"] == "Español":
-            data = app_context.get_resource(
-                "forms/translations/es-ES/SearchResultsDialog.qm"
-            )
+            data = app_context.get_resource("forms/translations/es-ES/SearchDialog.qm")
             spanish = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
             self.trans.load(spanish, data)
             app.instance().installTranslator(self.trans)
 
         elif settings_dict["general"][0]["programLanguage"] == "Polski":
-            data = app_context.get_resource(
-                "forms/translations/pl/SearchResultsDialog.qm"
-            )
+            data = app_context.get_resource("forms/translations/pl/SearchDialog.qm")
             polish = QLocale(QLocale.Language.Polish, QLocale.Country.Poland)
             self.trans.load(polish, data)
             app.instance().installTranslator(self.trans)
+
+    def act_search_field_change(self):
+        """
+        The act_search_field_change function enables the search button
+        if there is text in the search field.
+        If there is no text, it disables the button.
+
+        :param self: Used to Represent the instance of the class.
+        :return: A boolean value.
+        """
+        if self.lineEdit_search_field.text():
+            self.pushButton_search.setEnabled(True)
+        else:
+            self.pushButton_search.setEnabled(False)

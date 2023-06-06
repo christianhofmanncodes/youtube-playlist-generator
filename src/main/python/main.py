@@ -346,7 +346,6 @@ class MainWindow(QMainWindow, QtStyleTools):
             self.act_click_playlist_item
         )
         self.pushButton_add.clicked.connect(self.act_add_item)
-        self.pushButton_search.clicked.connect(self.act_search_videos)
         self.listWidget_playlist_items.itemDoubleClicked.connect(self.act_rename_item)
         self.pushButton_new.clicked.connect(self.act_new)
         self.pushButton_delete_item.clicked.connect(self.act_delete_item)
