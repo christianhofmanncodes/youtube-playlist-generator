@@ -109,7 +109,7 @@ def process_filename(self, action, app_context):
 
 
 @pyqtSlot(QAction)
-def act_recent_file(self, app_context, action):
+def act_recent_file(self, app_context, action) -> None:
     """
     The act_recent_file function is a function that is called when the user clicks
     on one of the recent files in the recent files menu. It takes as input an action,

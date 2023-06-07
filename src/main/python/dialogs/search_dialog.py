@@ -91,16 +91,19 @@ class SearchDialog(QDialog):
         :param self: Used to Represent the instance of the class.
         :return: A boolean value.
         """
-        if not self.get_checked_items():
-            if (
-                show_question_dialog(
-                    self, "No items selected", "You have no items selected. Continue?"
-                )
-                == QMessageBox.StandardButton.Yes
-            ):
+        if self.tableWidget_search_results.rowCount() > 0:
+            if not self.get_checked_items():
+                if (
+                    show_question_dialog(
+                        self,
+                        "No items selected",
+                        "You have no items selected. Continue?",
+                    )
+                    == QMessageBox.StandardButton.Yes
+                ):
+                    super().accept()
+            elif self.get_checked_items():
                 super().accept()
-        elif self.get_checked_items():
-            super().accept()
 
     def get_checked_items(self) -> list:
         """
