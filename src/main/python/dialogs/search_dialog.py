@@ -123,8 +123,7 @@ class SearchDialog(QDialog):
                     == Qt.CheckState.Checked
                 )
             ]
-        else:
-            return []
+        return []
 
     def fill_out_info(self, search_results) -> None:
         """
