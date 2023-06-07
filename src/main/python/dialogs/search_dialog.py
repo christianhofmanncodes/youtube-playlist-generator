@@ -12,11 +12,12 @@ from PyQt5.QtWidgets import (
     QDialog,
     QDialogButtonBox,
     QTableWidgetItem,
+    QMessageBox,
 )
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 import requests
 
-from dialogs.builtin_dialogs import show_warning_dialog
+from dialogs.builtin_dialogs import show_question_dialog, show_warning_dialog
 from playlist import video_info
 from playlist.video_info import (
     get_more_search_results,
@@ -77,6 +78,53 @@ class SearchDialog(QDialog):
         )
         self.lineEdit_search_field.returnPressed.connect(self.search_videos)
         self.pushButton_search.clicked.connect(self.search_videos)
+
+    def accept(self) -> None:
+        """
+        The accept function is called when the user clicks OK.
+        It is reimplemented here to check if any items are selected,
+        and if not, ask the user whether they want to continue.
+        If they do not want to continue, it does nothing
+        (i.e., it does not call super().accept()).
+        Otherwise, it calls super().accept(), which closes the dialog.
+
+        :param self: Used to Represent the instance of the class.
+        :return: A boolean value.
+        """
+        if not self.get_checked_items():
+            if (
+                show_question_dialog(
+                    self, "No items selected", "You have no items selected. Continue?"
+                )
+                == QMessageBox.StandardButton.Yes
+            ):
+                super().accept()
+        elif self.get_checked_items():
+            super().accept()
+
+    def get_checked_items(self) -> list:
+        """
+        The get_checked_items function returns a list of the checked items
+        in the tableWidget_search_results.
+        The function first checks to see if there are any rows in the tableWidget_search_results.
+        If there are, it returns a list of all the values from column 11
+        (the 'video_id' column) for each row where that row's checkbox is checked.
+        If no rows exist, an empty list is returned.
+
+        :param self: Used to Refer to the class itself.
+        :return: A list of the checked items.
+        """
+        if self.tableWidget_search_results.rowCount() >= 1:
+            return [
+                self.tableWidget_search_results.item(index, 11).text()
+                for index in range(self.tableWidget_search_results.rowCount())
+                if (
+                    self.tableWidget_search_results.item(index, 0).checkState()
+                    == Qt.CheckState.Checked
+                )
+            ]
+        else:
+            return []
 
     def fill_out_info(self, search_results) -> None:
         """
