@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Search for YouTube videos by its title and choose the video(s) you want to add to the playlist
 - Translations (switchable in settings)
   - Polski (Polish)
+  - Nederlands (Dutch)
 
 ### Changed
 

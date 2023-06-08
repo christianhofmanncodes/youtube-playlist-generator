@@ -319,6 +319,12 @@ class SearchDialog(QDialog):
             self.trans.load(polish, data)
             app.instance().installTranslator(self.trans)
 
+        elif settings_dict["general"][0]["programLanguage"] == "Nederlands":
+            data = app_context.get_resource("forms/translations/nl/SearchDialog.qm")
+            dutch = QLocale(QLocale.Language.Dutch, QLocale.Country.Netherlands)
+            self.trans.load(dutch, data)
+            app.instance().installTranslator(self.trans)
+
     def act_search_field_change(self):
         """
         The act_search_field_change function enables the search button

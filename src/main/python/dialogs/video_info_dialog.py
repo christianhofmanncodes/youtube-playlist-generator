@@ -138,3 +138,9 @@ class VideoInfoDialog(QDialog):
             polish = QLocale(QLocale.Language.Polish, QLocale.Country.Poland)
             self.trans.load(polish, data)
             app.instance().installTranslator(self.trans)
+
+        elif settings_dict["general"][0]["programLanguage"] == "Dutch":
+            data = app_context.get_resource("forms/translations/nl/VideoInfoDialog.qm")
+            dutch = QLocale(QLocale.Language.Dutch, QLocale.Country.Netherlands)
+            self.trans.load(dutch, data)
+            app.instance().installTranslator(self.trans)

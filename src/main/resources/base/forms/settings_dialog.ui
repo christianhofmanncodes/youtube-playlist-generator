@@ -173,6 +173,11 @@
         <string>Polski</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>Nederlands</string>
+       </property>
+      </item>
      </widget>
     </widget>
     <widget class="QGroupBox" name="groupBox_theme">

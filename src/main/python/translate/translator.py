@@ -31,3 +31,9 @@ def install_translator(
         polish = QLocale(QLocale.Language.Polish, QLocale.Country.Poland)
         self.trans.load(polish, data)
         app.instance().installTranslator(self.trans)
+
+    elif settings_dict["general"][0]["programLanguage"] == "Nederlands":
+        data = app_context.get_resource(f"forms/translations/nl/{qm_file}")
+        dutch = QLocale(QLocale.Language.Dutch, QLocale.Country.Netherlands)
+        self.trans.load(dutch, data)
+        app.instance().installTranslator(self.trans)

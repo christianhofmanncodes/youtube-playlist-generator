@@ -54,6 +54,7 @@ Since version 0.0.5 the CLI version is no longer developed.
   - Deutsch (German)
   - Español (Spanish)
   - Polski (Polish)
+  - Nederlands (Dutch)
 
 ## Screenshots
 
