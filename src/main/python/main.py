@@ -1,6 +1,5 @@
 """module main"""
 
-import importlib
 import logging
 import sys
 from typing import Union
@@ -28,10 +27,10 @@ from settings.settings import (
 from translate import translator
 
 if platform.is_windows():
-    importlib.import_module(ctypes)
+    import ctypes
 
     APP_ID = f"christianhofmann.youtube-playlist-generator.gui.{APP_VERSION}"
-    cytpes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
 
 logging.info("OS: %s", platform.name())
 
