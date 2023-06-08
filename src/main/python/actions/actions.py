@@ -1006,6 +1006,7 @@ def act_settings(self, app, app_context) -> None:
             "shortcut_16": dlg.tableWidget.item(15, 2).text(),
             "shortcut_17": dlg.tableWidget.item(16, 2).text(),
             "shortcut_18": dlg.tableWidget.item(17, 2).text(),
+            "shortcut_19": dlg.tableWidget.item(18, 2).text(),
         }
 
         logging.debug(components_dict)

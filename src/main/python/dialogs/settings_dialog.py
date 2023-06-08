@@ -179,6 +179,7 @@ class SettingsDialog(QDialog):
             ),
             app.translate("SettingsDialog", "Remove any duplicates in playlist"),
             app.translate("SettingsDialog", "Copy generated playlist URL"),
+            app.translate("SettingsDialog", "Search for videos by its title"),
         ]
 
         for row_index, shortcut_description in enumerate(
