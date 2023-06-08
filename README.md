@@ -53,7 +53,7 @@ Since version 0.0.5 the CLI version is no longer developed.
   - English
   - Deutsch (German)
   - Español (Spanish)
-  - Polski (Polish)
+  - Polski (Polish) thanks to [poduszkowiec_](https://crowdin.com/profile/poduszkowiec_)
   - Nederlands (Dutch)
 
 ## Screenshots

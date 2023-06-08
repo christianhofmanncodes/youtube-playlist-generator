@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - YouTube Playlist Generator will automatically extract the playlist items for you
 - Search for YouTube videos by its title and choose the video(s) you want to add to the playlist
 - Translations (switchable in settings)
-  - Polski (Polish)
+  - Polski (Polish) thanks to [poduszkowiec_](https://crowdin.com/profile/poduszkowiec_)
   - Nederlands (Dutch)
 
 ### Changed
@@ -25,8 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Dialog info text is now correctly indented
-
-### Deleted
 
 ### Security
 
