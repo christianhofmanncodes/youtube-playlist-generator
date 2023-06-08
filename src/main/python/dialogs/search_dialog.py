@@ -4,15 +4,15 @@ import logging
 import sys
 
 from PyQt5 import uic
-from PyQt5.QtCore import QLocale, QTranslator, Qt
+from PyQt5.QtCore import QLocale, QSize, QTranslator, Qt
 from PyQt5.QtGui import QFont, QIcon, QImage, QPixmap
 from PyQt5.QtWidgets import (
     QAbstractScrollArea,
     QApplication,
     QDialog,
     QDialogButtonBox,
-    QTableWidgetItem,
     QMessageBox,
+    QTableWidgetItem,
 )
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 import requests
@@ -60,6 +60,9 @@ class SearchDialog(QDialog):
         )
         self.setWindowIcon(QIcon(app_context.get_resource(APP_ICON)))
         self.setFont(QFont("Roboto"))
+
+        self.resize(QSize(460, 100))
+        self.setMaximumSize(QSize(460, 100))
 
         self.translate_ui()
         self.translate_search_results_dialog()
@@ -210,6 +213,9 @@ class SearchDialog(QDialog):
             self.tableWidget_search_results.resizeColumnsToContents()
 
         self.lbl_result_count.setText(f"{len(video_ids_list)} videos found")
+        self.resize(QSize(1475, 706))
+        self.setMaximumSize(QSize(16777215, 16777215))
+        self.setMinimumSize(QSize(1475, 706))
 
     def search_videos(self) -> None:
         """
