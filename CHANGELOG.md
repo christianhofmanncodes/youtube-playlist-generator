@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Show generated playlist length in StatusBar instead of MessageBox
+
 ### Fixed
 
 - Dialog info text is now correctly indented
@@ -26,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deleted
 
 ### Security
+
+- Remove urllib for security reasons, instead use requests
 
 ## [0.2.0] - 2022-11-30
 
