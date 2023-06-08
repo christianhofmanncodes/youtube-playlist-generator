@@ -946,13 +946,12 @@ def generate_playlist_url(self, app_context) -> None:
     playlist.generate_playlist(self, app_context)
     playlist_url = self.textEdit_playlist_generated_url.toPlainText()
     if playlist_url != "":
-        show_info_dialog(
-            self,
-            "Playlist generated successfully",
+        self.statusBar.showMessage(
             (
-                "Playlist length for generated playlist:\n"
+                "Playlist length for generated playlist: "
                 f"{video_info.get_playlist_length(playlist_url)}"
             ),
+            0,
         )
 
 
