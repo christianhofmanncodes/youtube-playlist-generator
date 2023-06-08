@@ -4,7 +4,7 @@
 # YouTube Playlist Generator
 
 ![GitHub top language](https://img.shields.io/badge/language-python-orange)
-![Python Version](https://img.shields.io/badge/python-3.10.6-yellow)
+![Python Version](https://img.shields.io/badge/python-3.11.3-yellow)
 ![License](https://img.shields.io/badge/license-GNU%20v3.0-blue)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=christianhofmanncodes_youtube-playlist-generator&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=christianhofmanncodes_youtube-playlist-generator)
@@ -20,33 +20,34 @@ Generate YouTube playlists without an account.
 
 ## Please note
 
-This project originally contained both a CLI and a GUI version.
-As of version 0.0.5, the CLI version will no longer be developed.
+This project contained both a CLI and a GUI version.  
+Since version 0.0.5 the CLI version is no longer developed.
 
 ## Features
 
 - Add URL or ID
 - Add playlist URL
 - Specify playlist title
+- Search for videos and add them to the playlist
 - Create new playlist (deletes all items in the playlist)
 - Playlist Tools (Count items, Clear all items, Remove duplicates)
 - Sort items (Ascending & Descending)
-- Search for items in playlist (Find)
+- Find items in playlist
 - Rename specific items
 - Change order of playlist items (via drag and drop)
 - Delete specific items
 - Shuffle mode
 - Generate playlist URL
-- Automatically open generated URL in default web browser
+- Open generated URL in default web browser
 - Copy URL to clipboard
 - Open `.ytplaylist` file
 - Save `.ytplaylist` file
 - Import a `.txt` file (items must be in new lines) or `.csv` file (items must be comma-separated)
 - Export playlist items as a `.txt` or `.csv` file
-- Drag & Drop a `.yt-playlist` file or a `.txt` or `.csv` file onto the window to import them
-- Fetch YouTube video information (title, channel, length, description, views, publish date and thumbnail)
-- Darkmode & Whitemode (switchable in settings)
-- Display playlist duration (after playlist generated successfully)
+- Drag & Drop a `.yt-playlist` file, a `.txt` or `.csv` file onto the window to import them
+- Fetch YouTube video information
+- Dark Mode & White Mode (switchable in settings)
+- Display playlist duration (after playlist generated)
 - Recent files in File menu
 - Supported languages (switchable in settings)
   - English
@@ -76,14 +77,13 @@ As of version 0.0.5, the CLI version will no longer be developed.
 
 ## Installation
 
-Just download, install and run the newest version from the Releases.
+Download, install and run the newest version from the Releases.
 Choose your file according to the operating system (Windows, Linux or macOS) you are using.
 
 Now you can either create a new playlist by adding an URL or ID to the playlist one by one, or you can open a `.ytplaylist` file.
-There is also an option to import multiple URLs or video IDs via a `.txt` or `.csv` file.  
-If you want to save your playlist, you can save the playlist to a `.ytplaylist` file with all its items and the playlist title.
-Share it with a friend if you want.
-You can also export only the playlist items into a `.txt` or `.csv` file.
+There is also an option to import URLs or video IDs via a `.txt` or `.csv` file.
+You can save your playlist to a `.ytplaylist` file with all its items and the playlist title.
+Share it with a friend if you want. There is also an option to only export the playlist items into a `.txt` or `.csv` file.
 
 ## Run Locally
 
@@ -150,14 +150,14 @@ sudo apt-get install gcc-4.9
 sudo apt-get upgrade libstdc++6
 ```
 
-### PyQt6 cannot be installed via pip
+### PyQt5 cannot be installed via pip
 
 ```bash
 pip3 install --upgrade pip
-pip3 install PyQt6
+pip3 install PyQt5
 ```
 
-### Failed to extract PyQt6/Qt6/plugins/egldeviceintegrations/libqeglfs-emu-integration.so: failed to open target file! fopen: No such file or directory
+### Failed to extract PyQt5/Qt5/plugins/egldeviceintegrations/libqeglfs-emu-integration.so: failed to open target file! fopen: No such file or directory
 
 `export QT_QPA_EGLFS_FB=/dev/fbX`
 
@@ -170,6 +170,7 @@ Simply free up some space.
 
 - Add a proper [Undo FrameWork](https://doc.qt.io/qtforpython/overviews/qtwidgets-tools-undoframework-example.html)
 - Translate all dialogs
+- Revamped user interface with new features
 
 ## FAQ
 
@@ -192,7 +193,7 @@ https://invidious.namazso.eu/playlist?list=
 ### Can I batch import URLs / video IDs?
 
 As requested in [#2](https://github.com/christianhofmanncodes/youtube-playlist-generator/issues/2) the function has been added to version 0.2.0.
-Just click on "Import" in the menu and select the `.txt`or the `.csv` file you want to import accordingly.
+Click on "Import" in the menu and select the `.txt`or the `.csv` file you want to import.
 
 It should look something like this:
 
@@ -232,7 +233,7 @@ https://www.youtube.com/watch?v=gRnuFC4Ualw
 k6jqx9kZgPM
 ```
 
-If you want to import a `.csv file`, just select the file extension in the file dialog.
+If you want to import a `.csv file`, select the file extension in the file dialog.
 
 It should look something like this:
 
@@ -243,8 +244,8 @@ Hbb5GPxXF1w,4vbDFu0PUew,Moq0aOiTUOA,qfVuRQX0ydQ,juQvizeZJFM
 ## Acknowledgements
 
 - [Python](https://github.com/python/)
-- [Qt6](https://doc.qt.io/qtforpython-6/index.html)
-- [PyQt6](https://www.riverbankcomputing.com/software/pyqt/)
+- [Qt5](https://doc.qt.io/qtforpython-5/index.html)
+- [PyQt5](https://www.riverbankcomputing.com/software/pyqt/)
 - [Qt-Material](https://github.com/UN-GCPDS/qt-material)
 - [fbs](https://build-system.fman.io/)
 - [pytube](https://github.com/pytube/pytube)
@@ -256,7 +257,11 @@ Contributions are always welcome!
 See `CONTRIBUTING.md` for ways to get started.
 
 You can report any issues and are welcome to create pull requests.
-Please use the labels accordingly: `bug` for bugs, `documentation` for improvements to the documentation and `enhancement` for feature requests.
+Please use the following labels:
+
+- `bug` for bugs,
+- `documentation` for improvements to the documentation
+_ `enhancement` for feature requests
 
 ### Translations
 
