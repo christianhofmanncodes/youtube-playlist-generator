@@ -112,6 +112,7 @@ def output_settings_as_dict(
                 "getVideoInformation": components_dict["shortcut_16"],
                 "removeDuplicates": components_dict["shortcut_17"],
                 "copyURL": components_dict["shortcut_18"],
+                "searchVideos": components_dict["shortcut_19"],
             }
         ],
     }

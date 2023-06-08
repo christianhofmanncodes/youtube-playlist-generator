@@ -24,6 +24,18 @@ def is_string_valid_youtube_url(string: str) -> bool:
     return "watch?" in string or "be/" in string
 
 
+def is_string_playlist_url(string: str) -> bool:
+    """
+    The is_string_playlist_url function checks if the string contains
+    either "playlist" or "list" in it.
+    If it does, then the function returns True, otherwise False.
+
+    :param string:str: Used to Pass a string value to the function.
+    :return: A boolean value.
+    """
+    return "playlist" in string or "list" in string
+
+
 def has_space_in_string(string: str) -> bool:
     """
     The has_space_in_string function returns True if a space is in the string passed to it.

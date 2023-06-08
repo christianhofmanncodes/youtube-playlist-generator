@@ -4,276 +4,279 @@
   <context>
     <name>MainWindow</name>
     <message>
-      <location filename="../../../../python/main.py" line="357"/>
+      <location filename="src/main/python/main.py" line="364"/>
       <source>&amp;File</source>
-      <translation type="unfinished">&amp;File</translation>
+      <translation>&amp;Bestand</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="358"/>
+      <location filename="src/main/python/main.py" line="365"/>
       <source>New playlist</source>
-      <translation type="unfinished">New playlist</translation>
+      <translation>Nieuwe afspeellijst</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="359"/>
+      <location filename="src/main/python/main.py" line="366"/>
       <source>Open</source>
-      <translation type="unfinished">Open</translation>
+      <translation>Open</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="360"/>
+      <location filename="src/main/python/main.py" line="367"/>
       <source>Open recent</source>
-      <translation type="unfinished">Open recent</translation>
+      <translation>Open recente</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="361"/>
+      <location filename="src/main/python/main.py" line="368"/>
       <source>Import</source>
-      <translation type="unfinished">Import</translation>
+      <translation>Importeer</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="362"/>
+      <location filename="src/main/python/main.py" line="369"/>
       <source>Export</source>
-      <translation type="unfinished">Export</translation>
+      <translation>Exporteer</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="363"/>
+      <location filename="src/main/python/main.py" line="370"/>
       <source>Save</source>
-      <translation type="unfinished">Save</translation>
+      <translation>Opslaan</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="364"/>
+      <location filename="src/main/python/main.py" line="371"/>
       <source>Save as...</source>
-      <translation type="unfinished">Save as...</translation>
+      <translation>Opslaan als...</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="365"/>
+      <location filename="src/main/python/main.py" line="372"/>
       <source>About</source>
-      <translation type="unfinished">About</translation>
+      <translation>Over</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="366"/>
+      <location filename="src/main/python/main.py" line="373"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Instellingen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="367"/>
+      <location filename="src/main/python/main.py" line="374"/>
       <source>Quit</source>
-      <translation type="unfinished">Quit</translation>
+      <translation>Stoppen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="369"/>
+      <location filename="src/main/python/main.py" line="376"/>
       <source>&amp;Edit</source>
-      <translation type="unfinished">&amp;Edit</translation>
+      <translation>B&amp;ewerken</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="370"/>
+      <location filename="src/main/python/main.py" line="377"/>
       <source>Undo</source>
-      <translation type="unfinished">Undo</translation>
+      <translation>Annuleren</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="371"/>
+      <location filename="src/main/python/main.py" line="378"/>
       <source>Redo</source>
-      <translation type="unfinished">Redo</translation>
+      <translation>Opnieuw</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="372"/>
+      <location filename="src/main/python/main.py" line="379"/>
       <source>Cut</source>
-      <translation type="unfinished">Cut</translation>
+      <translation>Zagen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="373"/>
+      <location filename="src/main/python/main.py" line="380"/>
       <source>Copy</source>
-      <translation type="unfinished">Copy</translation>
+      <translation>Kopiëer</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="374"/>
+      <location filename="src/main/python/main.py" line="381"/>
       <source>Paste</source>
-      <translation type="unfinished">Paste</translation>
+      <translation>Plakken</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="375"/>
+      <location filename="src/main/python/main.py" line="382"/>
       <source>Select All</source>
-      <translation type="unfinished">Select All</translation>
+      <translation>Alles selecteren</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="376"/>
+      <location filename="src/main/python/main.py" line="383"/>
       <source>Find</source>
-      <translation type="unfinished">Find</translation>
+      <translation>Vinden</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="378"/>
+      <location filename="src/main/python/main.py" line="385"/>
       <source>&amp;Playlist</source>
-      <translation type="unfinished">&amp;Playlist</translation>
+      <translation>&amp;Afspeellijst</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="379"/>
+      <location filename="src/main/python/main.py" line="386"/>
       <source>Add item</source>
-      <translation type="unfinished">Add item</translation>
+      <translation>Item toevoegen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="380"/>
+      <location filename="src/main/python/main.py" line="387"/>
       <source>Delete item</source>
-      <translation type="unfinished">Delete item</translation>
+      <translation>Item verwijderen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="381"/>
+      <location filename="src/main/python/main.py" line="388"/>
       <source>Rename item</source>
-      <translation type="unfinished">Rename item</translation>
+      <translation>Item hernoemen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="421"/>
-      <location filename="../../../../python/main.py" line="382"/>
+      <location filename="src/main/python/main.py" line="431"/>
       <source>Shuffle</source>
-      <translation type="unfinished">Shuffle</translation>
+      <translation>Shuffle</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="422"/>
-      <location filename="../../../../python/main.py" line="383"/>
+      <location filename="src/main/python/main.py" line="432"/>
       <source>Generate</source>
-      <translation type="unfinished">Generate</translation>
+      <translation>Genereren</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="385"/>
+      <location filename="src/main/python/main.py" line="392"/>
       <source>Sort items</source>
-      <translation type="unfinished">Sort items</translation>
+      <translation>Items ordenen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="386"/>
+      <location filename="src/main/python/main.py" line="393"/>
       <source>Ascending</source>
-      <translation type="unfinished">Ascending</translation>
+      <translation>Oplopend</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="387"/>
+      <location filename="src/main/python/main.py" line="394"/>
       <source>Descending</source>
-      <translation type="unfinished">Descending</translation>
+      <translation>Aflopend</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="389"/>
+      <location filename="src/main/python/main.py" line="396"/>
       <source>Tools</source>
-      <translation type="unfinished">Tools</translation>
+      <translation>Tools</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="390"/>
+      <location filename="src/main/python/main.py" line="397"/>
       <source>Count items</source>
-      <translation type="unfinished">Count items</translation>
+      <translation>Items tellen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="392"/>
+      <location filename="src/main/python/main.py" line="398"/>
       <source>Clear all items</source>
-      <translation type="unfinished">Clear all items</translation>
+      <translation>Alle items wissen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="395"/>
+      <location filename="src/main/python/main.py" line="401"/>
       <source>Get video information</source>
-      <translation type="unfinished">Get video information</translation>
+      <translation>Video-informatie krijgen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="398"/>
+      <location filename="src/main/python/main.py" line="404"/>
       <source>Remove duplicates</source>
-      <translation type="unfinished">Remove duplicates</translation>
+      <translation>Duplicaten verwijderen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="401"/>
+      <location filename="src/main/python/main.py" line="408"/>
       <source>Copy URL</source>
-      <translation type="unfinished">Copy URL</translation>
+      <translation>URL kopiëren</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="403"/>
+      <location filename="src/main/python/main.py" line="409"/>
+      <source>Search for videos</source>
+      <translation>Zoeken naar video's</translation>
+    </message>
+    <message>
+      <location filename="src/main/python/main.py" line="413"/>
       <source>&amp;Help</source>
-      <translation type="unfinished">&amp;Help</translation>
+      <translation>&amp;Help</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="404"/>
+      <location filename="src/main/python/main.py" line="414"/>
       <source>About Qt</source>
-      <translation type="unfinished">About Qt</translation>
+      <translation>Over Qt</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="405"/>
+      <location filename="src/main/python/main.py" line="415"/>
       <source>Contact</source>
-      <translation type="unfinished">Contact</translation>
+      <translation>Contact</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="406"/>
+      <location filename="src/main/python/main.py" line="416"/>
       <source>GitHub</source>
-      <translation type="unfinished">GitHub</translation>
+      <translation>GitHub</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="407"/>
+      <location filename="src/main/python/main.py" line="417"/>
       <source>License</source>
-      <translation type="unfinished">License</translation>
+      <translation>Licentie</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="408"/>
+      <location filename="src/main/python/main.py" line="418"/>
       <source>Report a bug</source>
-      <translation type="unfinished">Report a bug</translation>
+      <translation>Meld een bug</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="413"/>
+      <location filename="src/main/python/main.py" line="422"/>
       <source>Playlist title</source>
-      <translation type="unfinished">Playlist title</translation>
+      <translation>Titel afspeellijst</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="416"/>
+      <location filename="src/main/python/main.py" line="425"/>
       <source>URL or ID</source>
-      <translation type="unfinished">URL or ID</translation>
+      <translation>URL of ID</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="419"/>
+      <location filename="src/main/python/main.py" line="429"/>
       <source>New</source>
-      <translation type="unfinished">New</translation>
+      <translation>Nieuw</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="420"/>
+      <location filename="src/main/python/main.py" line="430"/>
       <source>Delete Item</source>
-      <translation type="unfinished">Delete Item</translation>
+      <translation>Item verwijderen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="425"/>
+      <location filename="src/main/python/main.py" line="434"/>
       <source>Playlist URL will show up here...</source>
-      <translation type="unfinished">Playlist URL will show up here...</translation>
+      <translation>Afspeellijst URL verschijnt hier...</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="431"/>
+      <location filename="src/main/python/main.py" line="440"/>
       <source>Add a playlist title here</source>
-      <translation type="unfinished">Add a playlist title here</translation>
+      <translation>Voeg hier een titel voor de afspeellijst toe</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="433"/>
+      <location filename="src/main/python/main.py" line="443"/>
       <source>Enter URL or ID</source>
-      <translation type="unfinished">Enter URL or ID</translation>
+      <translation>Voer URL of ID in</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="434"/>
+      <location filename="src/main/python/main.py" line="444"/>
       <source>Add new item</source>
-      <translation type="unfinished">Add new item</translation>
+      <translation>Nieuw item toevoegen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="436"/>
+      <location filename="src/main/python/main.py" line="445"/>
       <source>Create new playlist</source>
-      <translation type="unfinished">Create new playlist</translation>
+      <translation>Maak een nieuwe afspeellijst</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="439"/>
+      <location filename="src/main/python/main.py" line="448"/>
       <source>Delete selected item</source>
-      <translation type="unfinished">Delete selected item</translation>
+      <translation>Verwijder geselecteerd item</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="442"/>
+      <location filename="src/main/python/main.py" line="451"/>
       <source>Apply Shuffle</source>
-      <translation type="unfinished">Apply Shuffle</translation>
+      <translation>Shuffle toepassen</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="445"/>
+      <location filename="src/main/python/main.py" line="454"/>
       <source>Generate Playlist URL</source>
-      <translation type="unfinished">Generate Playlist URL</translation>
+      <translation>Afspeellijst URL genereren</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="448"/>
+      <location filename="src/main/python/main.py" line="457"/>
       <source>Playlist URL</source>
-      <translation type="unfinished">Playlist URL</translation>
+      <translation>Afspeellijst URL</translation>
     </message>
     <message>
-      <location filename="../../../../python/main.py" line="451"/>
+      <location filename="src/main/python/main.py" line="460"/>
       <source>Copy generated URL</source>
-      <translation type="unfinished">Copy generated URL</translation>
+      <translation>Kopieer gegenereerde URL</translation>
     </message>
   </context>
 </TS>

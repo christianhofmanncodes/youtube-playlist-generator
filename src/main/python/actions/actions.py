@@ -1,13 +1,20 @@
 """module actions.actions"""
 
 import logging
-from typing import List, Tuple, Union
+from typing import List, Literal, Tuple, Union
 
 from PyQt5.QtCore import Qt, pyqtSlot
-from PyQt5.QtWidgets import QAction, QApplication, QFileDialog, QInputDialog, QMessageBox
+from PyQt5.QtWidgets import (
+    QAction,
+    QApplication,
+    QFileDialog,
+    QInputDialog,
+    QMessageBox,
+)
 
 from dialogs import import_playlist, reset_playlist
 from dialogs.builtin_dialogs import show_info_dialog, show_question_dialog
+from dialogs.search_dialog import SearchDialog
 from dialogs.settings_dialog import SettingsDialog
 from dialogs.video_info_dialog import VideoInfoDialog
 from file import file
@@ -102,7 +109,7 @@ def process_filename(self, action, app_context):
 
 
 @pyqtSlot(QAction)
-def act_recent_file(self, app_context, action):
+def act_recent_file(self, app_context, action) -> None:
     """
     The act_recent_file function is a function that is called when the user clicks
     on one of the recent files in the recent files menu. It takes as input an action,
@@ -383,8 +390,10 @@ def act_about(self):
     return QMessageBox.about(
         self,
         "About YouTube Playlist Generator",
-        f"""YouTube Playlist Generator by Christian Hofmann\n
-        Version {APP_VERSION} ({RELEASE_DATE})""",
+        (
+            "YouTube Playlist Generator\nby Christian Hofmann\n"
+            f"\nVersion {APP_VERSION} ({RELEASE_DATE})"
+        ),
     )
 
 
@@ -481,37 +490,84 @@ def act_add_item(self) -> None:
             item = self.listWidget_playlist_items.findItems(
                 user_id, Qt.MatchFlag.MatchRegularExpression
             )[0]
+
+        elif check_string.is_string_valid_url(
+            text
+        ) and check_string.is_string_playlist_url(text):
+            playlist_items = video_info.get_playlist_items(text)
+
+            cut_ids_playlist_items = [
+                cut_url_to_id(playlist_item) for playlist_item in playlist_items
+            ]
+
+            self.listWidget_playlist_items.addItems(cut_ids_playlist_items)
+
+            item = self.listWidget_playlist_items.findItems(
+                cut_ids_playlist_items[-1], Qt.MatchFlag.MatchRegularExpression
+            )[0]
+
         else:
             self.listWidget_playlist_items.addItem(str(text))
 
             item = self.listWidget_playlist_items.findItems(
                 text, Qt.MatchFlag.MatchRegularExpression
             )[0]
+
         item.setSelected(True)
         self.listWidget_playlist_items.scrollToItem(item)
+        enable_components_after_add_act(self)
 
-        self.lineEdit_url_id.clear()
-        self.pushButton_new.setEnabled(True)
-        self.actionReset_Playlist.setEnabled(True)
+
+def enable_components_after_add_act(self) -> None:
+    """
+    The enable_components_after_add_act function enables the following components:
+        - The lineEdit_url_id component.
+        - The pushButton_new component.
+        - The actionReset_Playlist action.
+        - The actionSave action.
+
+       If the playlist widget has 1 or more items, then it enables the following components:
+            *The Count Items menu item under Tools menu item.*
+
+            *The Clear All Items menu item under Tools menu item.*
+
+       If the playlist widget has 2 or more items, then it enables the following components:
+            *The Generate Playlist button.*
+
+            *The Generate Playlist menu item under File Menu Item*
+
+            *The Save As... menu Item*
+
+       If there are 3 or more items in a playlist, then it enables these two actions/components:
+            *The Shuffle menu Item*
+
+            *The pushButton_shuffle_playlist component*
+
+    :param self: Used to Access the class attributes and methods.
+    :return: None.
+    """
+    self.lineEdit_url_id.clear()
+    self.pushButton_new.setEnabled(True)
+    self.actionReset_Playlist.setEnabled(True)
+    self.actionSave.setEnabled(True)
+
+    if playlist.playlist_widget_has_x_or_more_items(self, 1):
+        self.actionCount_items.setEnabled(True)
+        self.actionClear_all_items.setEnabled(True)
+
+    if playlist.playlist_widget_has_x_or_more_items(self, 2):
+        self.pushButton_generate.setEnabled(True)
+        self.actionGenerate_Playlist.setEnabled(True)
         self.actionSave.setEnabled(True)
+        self.actionSave_as.setEnabled(True)
+        self.actionRemove_duplicates.setEnabled(True)
+        self.menuSort_items.setEnabled(True)
+        self.actionAscending.setEnabled(True)
+        self.actionDescending.setEnabled(True)
 
-        if playlist.playlist_widget_has_x_or_more_items(self, 1):
-            self.actionCount_items.setEnabled(True)
-            self.actionClear_all_items.setEnabled(True)
-
-        if playlist.playlist_widget_has_x_or_more_items(self, 2):
-            self.pushButton_generate.setEnabled(True)
-            self.actionGenerate_Playlist.setEnabled(True)
-            self.actionSave.setEnabled(True)
-            self.actionSave_as.setEnabled(True)
-            self.actionRemove_duplicates.setEnabled(True)
-            self.menuSort_items.setEnabled(True)
-            self.actionAscending.setEnabled(True)
-            self.actionDescending.setEnabled(True)
-
-        if playlist.playlist_widget_has_x_or_more_items(self, 3):
-            self.pushButton_shuffle_playlist.setEnabled(True)
-            self.actionShuffle.setEnabled(True)
+    if playlist.playlist_widget_has_x_or_more_items(self, 3):
+        self.pushButton_shuffle_playlist.setEnabled(True)
+        self.actionShuffle.setEnabled(True)
 
 
 def act_remove_duplicates(self) -> None:
@@ -635,7 +691,7 @@ def open_ytplaylist_file(self, app, app_context, filename: str) -> None:
     self.statusBar.showMessage(filename, 0)
 
 
-def get_list_of_strings(filename: Tuple[str, str]) -> List[str]:
+def get_list_of_strings(filename: Tuple[str, str] | Literal[""]) -> List[str]:
     """
     The get_list_of_strings function takes a tuple of strings as input.
     The first string is the filename, and the second string is the filetype.
@@ -731,7 +787,9 @@ def import_items_into_playlist(self, app_context, ytplaylist_dict: dict) -> None
     # add_recent_filename(self, filename[0])
 
 
-def import_txt_or_csv_file(self, app_context, filename: Tuple[str, str]) -> None:
+def import_txt_or_csv_file(
+    self, app_context, filename: Tuple[str, str] | Literal[""]
+) -> None:
     """
     The import_txt_or_csv_file function imports a list of video IDs or URLs from a text file,
     CSV file, or URL into the current playlist. The function checks if there are any items
@@ -831,13 +889,12 @@ def act_save_as(self) -> None:
     :return: None.
     """
     try:
-        filename = QFileDialog.getSaveFileName(
+        if filename := QFileDialog.getSaveFileName(
             self,
             "Export YouTube Playlist file",
             "",
             "YouTube Playlist file (*.ytplaylist)",
-        )
-        if filename:
+        ):
             logging.debug("Playlist saved under:")
             logging.debug(filename[0])
             ytplaylist_dict = playlist.generate_dict_from_fields(
@@ -889,11 +946,12 @@ def generate_playlist_url(self, app_context) -> None:
     playlist.generate_playlist(self, app_context)
     playlist_url = self.textEdit_playlist_generated_url.toPlainText()
     if playlist_url != "":
-        show_info_dialog(
-            self,
-            "Playlist generated successfully",
-            f"""Playlist length for generated playlist:
-            {video_info.get_playlist_length(playlist_url)}""",
+        self.statusBar.showMessage(
+            (
+                "Playlist length for generated playlist: "
+                f"{video_info.get_playlist_length(playlist_url)}"
+            ),
+            0,
         )
 
 
@@ -921,6 +979,8 @@ def act_settings(self, app, app_context) -> None:
             radio_button_theme = "white"
         elif radio_button_dark_state:
             radio_button_theme = "dark"
+        else:
+            radio_button_theme = "normal"
 
         components_dict = {
             "option_1": dlg.checkBox_option1.isChecked(),
@@ -945,6 +1005,7 @@ def act_settings(self, app, app_context) -> None:
             "shortcut_16": dlg.tableWidget.item(15, 2).text(),
             "shortcut_17": dlg.tableWidget.item(16, 2).text(),
             "shortcut_18": dlg.tableWidget.item(17, 2).text(),
+            "shortcut_19": dlg.tableWidget.item(18, 2).text(),
         }
 
         logging.debug(components_dict)
@@ -985,8 +1046,7 @@ def act_video_information(self, app, app_context) -> None:
         video_id = ""
 
     if video_id != "":
-        video_information = video_info.get_video_info(video_id)
-        if video_information:
+        if video_information := video_info.get_video_info(video_id):
             dlg = VideoInfoDialog(app, app_context, video_information)
             if dlg.exec():
                 logging.info("VideInfoDialog successfully opened.")
@@ -996,3 +1056,42 @@ def act_video_information(self, app, app_context) -> None:
                 "Error while fetching video information",
                 f"The id '{video_id}' is invalid.",
             )
+
+
+def act_search_videos(self, app_context):
+    """
+    The act_search_videos function is called when the user clicks
+    on the "Search" button in the SearchDialog.
+    The results are displayed in a table widget with checkboxes next to each row.
+    The user can select one or more rows
+    and click "Add Selected Videos" to add them to their playlist.
+
+    :param self: Used to Refer to the current instance of the class.
+    :param app: Used to Pass the QApplication instance to the SearchDialog class.
+    :param app_context: Used to Pass the application context to the SearchDialog class.
+    :return: A list of video_ids that are checked in the search results dialog.
+    """
+    dlg = SearchDialog(app_context)
+    if dlg.exec():
+        logging.info("SearchDialog successfully opened.")
+
+        if dlg.search_object and dlg.search_results is not None:
+            checked_list = [
+                dlg.tableWidget_search_results.item(index, 11).text()
+                for index in range(dlg.tableWidget_search_results.rowCount())
+                if (
+                    dlg.tableWidget_search_results.item(index, 0).checkState()
+                    == Qt.CheckState.Checked
+                )
+            ]
+            for video_id in checked_list:
+                self.listWidget_playlist_items.addItem(str(video_id))
+
+                item = self.listWidget_playlist_items.findItems(
+                    video_id, Qt.MatchFlag.MatchRegularExpression
+                )[0]
+
+                item.setSelected(True)
+                self.listWidget_playlist_items.scrollToItem(item)
+
+            enable_components_after_add_act(self)

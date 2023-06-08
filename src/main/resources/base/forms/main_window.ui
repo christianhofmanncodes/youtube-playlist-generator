@@ -533,6 +533,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="menuTools"/>
     <addaction name="separator"/>
     <addaction name="actionCopy_URL"/>
+    <addaction name="separator"/>
+    <addaction name="actionSearch_for_videos"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="font">
@@ -993,6 +995,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionSearch_for_videos">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Search for videos</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+S</string>
    </property>
   </action>
  </widget>

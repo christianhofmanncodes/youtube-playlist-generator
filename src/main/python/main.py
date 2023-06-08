@@ -1,5 +1,6 @@
 """module main"""
 
+import importlib
 import logging
 import sys
 from typing import Union
@@ -8,13 +9,14 @@ from PyQt5 import uic
 from PyQt5.QtCore import QTranslator, Qt
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from actions import actions
 import darkdetect
-from dialogs import builtin_dialogs, license_dialog
 from fbs_runtime import platform
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
-from file import file
 from qt_material import QtStyleTools, apply_stylesheet
+
+from actions import actions
+from dialogs import builtin_dialogs, license_dialog
+from file import file
 from settings.operations import get_settings, load_settings, save_settings
 from settings.settings import (
     APP_ICON,
@@ -26,10 +28,10 @@ from settings.settings import (
 from translate import translator
 
 if platform.is_windows():
-    from ctypes import windll
+    importlib.import_module(ctypes)
 
     APP_ID = f"christianhofmann.youtube-playlist-generator.gui.{APP_VERSION}"
-    windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
+    cytpes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(APP_ID)
 
 logging.info("OS: %s", platform.name())
 
@@ -157,6 +159,7 @@ class MainWindow(QMainWindow, QtStyleTools):
         self.actionRemove_duplicates.triggered.connect(self.act_remove_duplicates)
         self.actionGet_video_information.triggered.connect(self.act_video_information)
         self.actionCopy_URL.triggered.connect(self.act_copy_url)
+        self.actionSearch_for_videos.triggered.connect(self.act_search_videos)
 
         self.actionGithub.triggered.connect(self.act_github)
         self.actionReport_a_bug.triggered.connect(self.act_report_a_bug)
@@ -244,6 +247,10 @@ class MainWindow(QMainWindow, QtStyleTools):
     def act_add_item(self):
         """Action for add_item."""
         actions.act_add_item(self)
+
+    def act_search_videos(self):
+        """Action for search_videos."""
+        actions.act_search_videos(self, app_context)
 
     def act_delete_item(self):
         """Action for delete_item."""
@@ -399,6 +406,9 @@ class MainWindow(QMainWindow, QtStyleTools):
         )
 
         self.actionCopy_URL.setText(app.translate("MainWindow", "Copy URL"))
+        self.actionSearch_for_videos.setText(
+            app.translate("MainWindow", "Search for videos")
+        )
 
         self.menuHelp.setTitle(app.translate("MainWindow", "&Help"))
         self.actionAbout_Qt.setText(app.translate("MainWindow", "About Qt"))

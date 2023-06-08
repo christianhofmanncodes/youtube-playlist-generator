@@ -22,6 +22,6 @@ Please follow these guidelines before sending your pull request and making contr
 - Please test your code. Make sure new features work as well as existing core features such as adding videos and generating the playlist URL.
 - Please make sure your code does not violate any standards set by Pylint.
 
-# Setting up Your Environment
+## Setting up Your Environment
 
 Check out the [README.md](https://github.com/christianhofmanncodes/youtube-playlist-generator/blob/main/README.md#run-locally) to learn how to set up your environment and get started.

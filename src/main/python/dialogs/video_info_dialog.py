@@ -1,15 +1,14 @@
 """module dialogs.video_info_dialog"""
 
 import logging
-import ssl
 import sys
-import urllib
 
 from PyQt5 import uic
 from PyQt5.QtCore import QLocale, QTranslator
 from PyQt5.QtGui import QFont, QIcon, QImage, QPixmap
 from PyQt5.QtWidgets import QApplication, QDialog
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
+import requests
 
 from settings.operations import get_settings
 from settings.settings import APP_ICON, SETTING_FILE_LOCATION
@@ -90,9 +89,9 @@ class VideoInfoDialog(QDialog):
         url = video_information["thumbnail_url"]
 
         if url.lower().startswith("https"):
-            ctx = ssl._create_default_https_context()
-            with urllib.request.urlopen(url, context=ctx) as response:
-                data = response.read()
+            response = requests.get(url, verify=True, timeout=1000)
+            logging.debug(response.status_code)
+            data = response.content
 
             img = QImage()
             img.loadFromData(data)
@@ -130,6 +129,18 @@ class VideoInfoDialog(QDialog):
             data = app_context.get_resource(
                 "forms/translations/es-ES/VideoInfoDialog.qm"
             )
-            german = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
-            self.trans.load(german, data)
+            spanish = QLocale(QLocale.Language.Spanish, QLocale.Country.Spain)
+            self.trans.load(spanish, data)
+            app.instance().installTranslator(self.trans)
+
+        elif settings_dict["general"][0]["programLanguage"] == "Polski":
+            data = app_context.get_resource("forms/translations/pl/VideoInfoDialog.qm")
+            polish = QLocale(QLocale.Language.Polish, QLocale.Country.Poland)
+            self.trans.load(polish, data)
+            app.instance().installTranslator(self.trans)
+
+        elif settings_dict["general"][0]["programLanguage"] == "Dutch":
+            data = app_context.get_resource("forms/translations/nl/VideoInfoDialog.qm")
+            dutch = QLocale(QLocale.Language.Dutch, QLocale.Country.Netherlands)
+            self.trans.load(dutch, data)
             app.instance().installTranslator(self.trans)

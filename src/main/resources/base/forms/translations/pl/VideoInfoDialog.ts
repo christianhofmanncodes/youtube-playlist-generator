@@ -4,9 +4,9 @@
   <context>
     <name>VideoInfoDialog</name>
     <message>
-      <location filename="../../../../python/dialogs/video_info_dialog.py" line="102"/>
+      <location filename="src/main/python/dialogs/video_info_dialog.py" line="109"/>
       <source>Video information</source>
-      <translation type="unfinished">Video information</translation>
+      <translation>Informacje o filmiku</translation>
     </message>
   </context>
 </TS>

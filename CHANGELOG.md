@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Compare changes to last version]
 
+## [0.3.0] - 2023-16-09
+
+### Added
+
+- You can now paste YouTube playlist URLs into to the URL or ID field
+  - YouTube Playlist Generator will automatically extract the playlist items for you
+- Search for YouTube videos by its title and choose the video(s) you want to add to the playlist
+- Translations (switchable in settings)
+  - Polski (Polish) thanks to [poduszkowiec_](https://crowdin.com/profile/poduszkowiec_)
+  - Nederlands (Dutch)
+
+### Changed
+
+- Show generated playlist length in StatusBar instead of MessageBox
+
+### Fixed
+
+- Dialog info text is now correctly indented
+
+### Security
+
+- Remove urllib for security reasons, instead use requests
+
 ## [0.2.0] - 2022-11-30
 
 ### Added
@@ -175,7 +198,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - This is the initial release of YouTube Playlist Generator
 
-[Compare changes to last version]: https://github.com/christianhofmanncodes/youtube-playlist-generator/compare/v0.1.0...v0.2.0
+[Compare changes to last version]: https://github.com/christianhofmanncodes/youtube-playlist-generator/compare/v0.2.0...v0.3.0
+[0.3.0]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.3.0
 [0.2.0]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.2.0
 [0.1.0]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.1.0
 [0.0.5-alpha]: https://github.com/christianhofmanncodes/youtube-playlist-generator/releases/tag/v0.0.5-alpha

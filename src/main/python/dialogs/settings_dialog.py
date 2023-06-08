@@ -6,7 +6,7 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QIcon
-from PyQt5.QtWidgets import QApplication, QDialog, QTableWidgetItem
+from PyQt5.QtWidgets import QAbstractScrollArea, QApplication, QDialog, QTableWidgetItem
 import darkdetect
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from qt_material import apply_stylesheet
@@ -72,6 +72,7 @@ class SettingsDialog(QDialog):
         self.pushButton_reset_defaults.clicked.connect(
             self.reset_button_defaults_clicked
         )
+        self.tableWidget.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
 
     def load_settings(self, settings_dict: dict) -> None:
         """
@@ -178,6 +179,7 @@ class SettingsDialog(QDialog):
             ),
             app.translate("SettingsDialog", "Remove any duplicates in playlist"),
             app.translate("SettingsDialog", "Copy generated playlist URL"),
+            app.translate("SettingsDialog", "Search for videos by its title"),
         ]
 
         for row_index, shortcut_description in enumerate(
@@ -186,6 +188,7 @@ class SettingsDialog(QDialog):
             self.tableWidget.setItem(
                 row_index, 1, QTableWidgetItem(str(shortcut_description))
             )
+            self.tableWidget.resizeColumnsToContents()
 
         self.pushButton_change_shortcut.setText(
             app.translate("SettingsDialog", "Change")
